@@ -15,6 +15,36 @@ local MODS = {
     { names = { "workshop-1505270912" }, file = "true_range/moves_sim_te", label = "Tropical Experience" },
 }
 
+-- (a move written by hand as another's run offline, its frames moved on (copy = { prefab, move }, shift = frames, drop = { fields },
+-- the rest laid over it) - Uncompromising Mode's ice hounds' spike line is the Glacial Hound's own (one IceSpike function),
+-- shot at frame 24 of their quickattack, not 8. nil if that one isn't there)
+function ModData.Copy(data, e)
+    local src = data[e.copy[1]] ~= nil and data[e.copy[1]][e.copy[2]] or nil
+    if type(src) ~= "table" then return nil end
+    local shift = e.shift or 0
+    local function Deep(t)
+        local c = {}
+        for f, x in pairs(t) do c[f] = type(x) == "table" and Deep(x) or x end
+        return c
+    end
+    local n = Deep(src)
+    for _, list in ipairs({ n.maps or {}, n.free or {} }) do
+        for _, m in ipairs(list) do
+            for _, s in ipairs(m.steps or {}) do s.at = (s.at or 0) + shift end
+        end
+    end
+    -- (its other frames too - set_until left at 19, the line given over to its spikes as the first came up: each drawn only as
+    -- it struck)
+    for _, f in ipairs({ "first", "set_until", "lock" }) do
+        if type(n[f]) == "number" then n[f] = n[f] + shift end
+    end
+    for _, f in ipairs(e.drop or {}) do n[f] = nil end
+    for f, x in pairs(e) do
+        if f ~= "copy" and f ~= "shift" and f ~= "drop" then n[f] = x end
+    end
+    return n
+end
+
 -- enabled: function(folder name) -> whether that mod is on. Returns the names of those laid over.
 function ModData.Apply(enabled)
     -- (how long the moves data takes to load in the game's own Lua, and what it holds - said once: whether loading it boss by
@@ -83,9 +113,17 @@ function ModData.Apply(enabled)
                                 if data[k][hk] == nil then data[k][hk] = hv end
                             end
                         elseif type(k) == "string" and k:sub(1, 1) ~= "_" and type(v) == "table" then
+                            -- (one drawn as another (_alias - an ice hound as a hound) given a move of its own: the other's moves
+                            -- first, as its own - else it'd have only the one)
+                            local al = data._alias ~= nil and data._alias[k] or nil
+                            if data[k] == nil and al ~= nil and type(data[al]) == "table" then
+                                data[k] = {}
+                                for mv2, e2 in pairs(data[al]) do data[k][mv2] = e2 end
+                            end
                             data[k] = data[k] or {}
                             for mv, e in pairs(v) do
-                                if data[k][mv] == nil then
+                                if type(e) == "table" and e.copy ~= nil then e = ModData.Copy(data, e) end
+                                if e ~= nil and (data[k][mv] == nil or e.replace) then
                                     data[k][mv] = e
                                     if tables[k] ~= nil then tables[k][mv] = nil end
                                 end

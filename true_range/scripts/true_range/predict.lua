@@ -503,6 +503,17 @@ function Predict.PickAlike(ent, a, m1, m2, seen)
                 if (tx - x) ^ 2 + (tz - z) ^ 2 < s.far * s.far then return false, "near" end
             end
         end
+        -- (and only with it this near or nearer (sim.near) - the ice hound's bite, past 3 off its quickattack's spike line
+        -- instead (UM SGhound doattack): the bite drawn for the spike line, 11 struck undrawn, 2026-10-29. TR_OLD_NEAR: as before)
+        if s.near ~= nil and not rawget(_G, "TR_OLD_NEAR") then
+            local combat = ent.replica ~= nil and ent.replica.combat or nil
+            local tgt = combat ~= nil and combat:GetTarget() or nil
+            if tgt ~= nil and tgt.Transform ~= nil then
+                local x, _, z = ent.Transform:GetWorldPosition()
+                local tx, _, tz = tgt.Transform:GetWorldPosition()
+                if (tx - x) ^ 2 + (tz - z) ^ 2 > s.near * s.near then return false, "far" end
+            end
+        end
         if s.on ~= nil then
             local W = rawget(_G, "TheWorld")
             local map = W ~= nil and W.Map or nil

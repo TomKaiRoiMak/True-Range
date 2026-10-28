@@ -35,6 +35,14 @@ return {
     -- run offline only as the end of its atk: no move begun at it, its claw at frame 46 (DoAttack, its range 3 and your body)
     -- struck undrawn as it ran at you 3 a second, 3 of 383 on the bench, 2026-10-28. Drawn round it as it runs)
     boulder_crab = { uppercut = { anims = { "uppercut" }, around = "Z21m2011h2A11f2E11e2G11d2I11c2K11b2M11a2O11a2O11Z2Q11Z2Q11Z2Q11Z2Q11Z2Q11Y2S11Z2Q11Z2Q11Z2Q11Z2Q11Z2Q11a2O11a2O11b2M11c2K11d2I11e2G11f2E11h2A11m20", first = 46, frame = "target", maps = { { dist = 1, path = "0.00", steps = { { at = 46, cells = "Z21m2011h2A11f2E11e2G11d2I11c2K11b2M11a2O11a2O11Z2Q11Z2Q11Z2Q11Z2Q11Z2Q11Y2S11Z2Q11Z2Q11Z2Q11Z2Q11Z2Q11a2O11a2O11b2M11c2K11d2I11e2G11f2E11h2A11m20" } } }, { dist = 2, path = "0.00", same = true }, { dist = 3, path = "0.00", same = true }, { dist = 4, path = "0.00", same = true }, { dist = 5, path = "0.00", same = true }, { dist = 6, path = "0.00", same = true }, { dist = 7, path = "0.00", same = true }, { dist = 8, path = "0.00", same = true }, { dist = 9, path = "0.00", same = true }, { dist = 10, path = "0.00", same = true }, { dist = 11, path = "0.00", same = true }, { dist = 12, path = "0.00", same = true }, { dist = 13, path = "0.00", same = true }, { dist = 14, path = "0.00", same = true }, { dist = 15, path = "0.00", same = true }, { dist = 16, path = "0.00", same = true } }, random = false, single = true } },
+    -- (the ice hound's quickattack (UM postinit SGhound.lua 416): from past 3 off, atk_pre slowed to .3, at frame 24 its IceSpike -
+    -- the Glacial Hound's own spike line (GlacialProjectile), shot there at frame 8. Not run offline: UM's postinit stategraphs
+    -- aren't in the runs. A player's game drew each spike only as it struck, 11 struck undrawn (replay CLIENT 2026-10-29)
+    icehound = { ["atk_pre~quickattack"] = { copy = { "glacialhound", "atk_pre~ice_howl_attack" }, shift = 16, drop = { "from", "from_self" },
+        -- (on into idle: atk_pre sped back up at 24, over a few frames on, the line still going out 0.5 s)
+        anims = { "atk_pre" }, far = 3, lock = 24 },
+        -- (and its bite only from within 3 - the hound's own, as it was)
+        atk_pre = { copy = { "hound", "atk_pre" }, near = 3.2, replace = true } },
     _hazards = {
         lavaeslime = { by = { "lavae2" }, delay = 90, effects = "fire", lasting = true, moved = false, steps = { { at = 0, cells = "X21m2011h2A11f2E11d2I11c2K11b2M11a2O11Z2Q11Z2Q11Y2S11Y2S11X2U11X2U11X2U11X2U11X2U11W2W111X2U11X2U11X2U11X2U11X2U11Y2S11Y2S11Z2Q11Z2Q11a2O11b2M11c2K11d2I11f2E11h2A11m20" } } },
     },
