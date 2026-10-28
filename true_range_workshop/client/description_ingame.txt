@@ -1,0 +1,6 @@
+True Range (Client) - for servers that don't have True Range.
+
+See where an attack will land, before it lands.
+Less exact than the server version: a moment late with ping.
+
+Press O in game for settings.

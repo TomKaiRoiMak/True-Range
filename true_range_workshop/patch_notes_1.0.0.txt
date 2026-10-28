@@ -1,0 +1,9 @@
+1.0.0 - out of beta
+
+True Range is now a full release. Thanks to everyone who tested the beta.
+
+- Attack warnings for the bosses and most monsters of the base game and its events: the real area each move will hit, drawn as it winds up, worked out from the monster's own game code
+- Projectiles drawn where they will land while still in the air; things that hurt you by being close get a ring
+- Your weapon reach (green), the yellow ring where a monster starts attacking you, and body rings for you and your friends
+- Settings window in the game (O): change everything without leaving, saved on your computer
+- All testing tools from the beta are switched off - no extra logging, no test keys

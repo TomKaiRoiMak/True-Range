@@ -1,0 +1,6 @@
+﻿1.0.1 - first release
+
+- The client version of True Range, for servers that don't have it: only you need it
+- The same move shapes as True Range, drawn from what your game sees
+- Steps aside by itself on a server that has True Range
+- Settings window in the game (O)

@@ -1,0 +1,34 @@
+unit strict_check	ok
+unit test_sim	ok
+unit glidetest	ok
+unit segtris	ok
+unit pool_hide	ok
+unit turn_groups	ok
+unit near_holes	ok
+unit flash_aim	ok
+unit body_ring	ok
+unit group_same	ok
+atom fallbacks	1
+edge slivers	7
+edge spikes	7800
+put-down shapes slid	2
+synthetic strikes	3754
+synthetic missed	33
+synthetic unchecked	1
+synthetic warned too late	0
+synthetic drawn while it can't strike	0
+synthetic drawn-in no strike	180
+synthetic flicker frames	1
+synthetic errors	0
+synthetic glitches (vanish/shrink/jump/dropped/wobble)	435
+game said NOT drawn (newest log)	0
+real strikes	4576
+real missed	141
+real unchecked	9
+real warned too late	9
+real drawn while it can't strike	1
+real drawn-in no strike	1342
+real flicker frames	9
+real errors	0
+real glitches (vanish/shrink/jump/dropped/wobble)	913
+installed in the game	same as tested

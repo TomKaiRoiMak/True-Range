@@ -1,0 +1,57 @@
+[h1]True Range (Client)[/h1]
+
+[b]See exactly where an attack will land - on any server.[/b]
+
+The client version of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3817047528]True Range[/url], for servers that don't have it. Only you need it - the host doesn't have to install anything.
+
+When a boss or monster winds up, the real area its move will hit is drawn on the ground under you. Every move was worked out ahead of time from the monster's own game code - where it aims, how far it leaps or charges, where it stops.
+
+[h2]Reading the colours[/h2]
+[list]
+[*][b]Faint red[/b] - part of the move that comes later
+[*][b]Red[/b] - coming soon
+[*][b]Yellow[/b] - about to strike: move now
+[*][b]Deep red[/b] - striking now
+[*][b]Purple[/b] - only freezes or puts you to sleep
+[*][b]Pale[/b] - how far a monster reaches, for those that strike anywhere in range
+[/list]
+
+[h2]What gets a warning[/h2]
+[list]
+[*][b]Every move of every boss and monster[/b] of the base game and its events, up to the latest rifts
+[*][b]Shots[/b] - drawn as a lane, or where they'll land, only when they're coming at you
+[*][b]What monsters leave behind[/b] - ice spikes, falling junk, lasers, crystals, sinkholes, spell circles, fire
+[*][b]Things that hurt you just by being close[/b] - tentacles, bombs, spores and more
+[/list]
+
+[h2]Mod support[/h2]
+Turned on by itself when the server runs these mods.
+[list]
+[*][b]Uncompromising Mode[/b] (the regular version and the beta) - its new monsters and bosses and every move it adds to the game's own
+[*][b]Tropical Experience[/b] - the monsters and bosses of Shipwrecked, Hamlet and the Forge
+[/list]
+
+[h2]Rings around you and your friends[/h2]
+[list]
+[*][b]Green[/b] - how far your weapon reaches
+[*][b]Yellow outline[/b] - how close a monster gets before it starts attacking you
+[*][b]Body ring[/b] - orange while an attack can hit you where you stand, red when you're hit
+[*][b]Friends[/b] - a body ring each, and their reach in light blue if you want it
+[*][b]Abigail[/b] - her reach while she's fighting (or always, or never)
+[/list]
+
+[h2]Client vs server version[/h2]
+The client version only knows what your game sees, so it's a little less exact:
+[list]
+[*]Warnings come a moment late with ping
+[*]Ranges are read from what your game is told (the monster's attack range, the weapon it holds), not from the server
+[*]No help from the server with where a move is aimed or how far into it a monster is
+[/list]
+[b]Hosting, or the server can add mods?[/b] Use [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3817047528]True Range[/url] (the server mod) instead - everyone gets the exact version.
+[b]Joined a server that has True Range?[/b] Leave this on - it steps aside by itself and the server's version takes over.
+
+[h2]Settings[/h2]
+Press [b]O[/b] in the game. Changes take effect at once and are saved on your computer.
+
+[h2]Bugs and feedback[/h2]
+An attack that hit you outside the red, or a warning where nothing struck? Tell me in the comments on [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3817047528]True Range[/url] - the monster and the move is all I need.

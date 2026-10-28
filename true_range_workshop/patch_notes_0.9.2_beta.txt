@@ -1,0 +1,15 @@
+0.9.2 beta
+
+- Offline runs now tick the way the game does (its tick a 32-bit float, a hair over 1/30 s): count-downs inside a move fired a frame late offline - the Eye of Terror's charge struck every 4th frame there, every 3rd in the game, so its last strike reached past where it really stops (drawn over you, not struck). All bosses' data rebuilt: fewer misses and fewer drawn-but-not-struck everywhere
+
+- Much less work per frame with many things on the ground (Toadstool's mushroom bombs and spore clouds, the Great Depths Worm's segments) - the frame-rate drops there:
+  - each shape's corners filled only on the outside of a turn, and only where the gap would show: pieces drawn a frame down by about 2-3x (worm 5058 -> 2737, Toadstool 1814 -> 671, one Malbatross shape 332 -> 140), looking the same
+  - lines back to one piece each (not two)
+  - nothing new made for every corner, every frame: memory made per frame with the worm 642 KB -> 95 KB (the game's clean-ups, the stutters, far rarer)
+  - shapes kept for reuse let go only once unused for a moment - the worm's moving segments no longer made every shape over and over
+  - (host, testing log) worm segments written to the log only while spiked - a hundred segments every tick were thousands of lines a second
+- With friends: a move drawn at the one it really goes at - the server now tells, with its poses, whom the move set off at (Klaus' bite went on at you while a friend's blow had turned him to them: drawn on the friend). Not yet seen in a game
+- Several Great Depths Worms at once no longer stall the game every few seconds (the game clearing away what the mod made: half a second at a time):
+  - each shape worked out once for how it's turned and laid wherever it is - not made over for every segment that moved a little: worked out 15050 times in a test fight, now 34
+  - the holes the worm comes out of kept as they're made - not searched for round every segment, every frame
+  - nothing new made per thing on the ground per frame

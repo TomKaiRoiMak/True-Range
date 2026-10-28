@@ -1,0 +1,47 @@
+1.1.6
+
+- Lighter body rings and yellow rings: each drawn with as many pieces as its size needs (12 for a small monster), not 60 - with many monsters on screen, these were a big part of what the game had to draw (thanks to a player's testing)
+- Now named True Range+ in the game, with its new icon
+- Fixed: some pieces of the drawn shapes were missing in the last version - parts of filled areas and the corners of outlines (a line of code lost in 1.1.5)
+- Rings drawn without a group (some outlines round an area) use as many pieces as their size needs too, like the body rings
+- Klaus' quick swipe right after his bite is now drawn ahead - on a server (caves, or joining a friend) it came with no warning at all, about 1 in 10 of his blows
+- Celestial Champion's tri-beam: the side beams were drawn turned in about 3 degrees (0.7 off at their far end) - fixed, all three now within a degree of where the lasers come down (the Clockwork Bishop's charge steadier too)
+- Celestial Champion's tri-beam (and other moves that keep aiming after they lock - Klaus' chomp, leaps): on a server (caves, or a friend's), aimed where the server has you, not where your screen shows you - the side beams were drawn a little off you
+- Uncompromising Mode's Deerclops: its swipe right after being hit turns with you, as the game's own does - it was drawn the way it faced as it began, its far ice spikes coming down outside what was drawn (up to 40 degrees off)
+- Moon Spider's spikes: drawn out to where the furthest of them can come up (about 1 in 10 came up outside what was drawn)
+- Ancient Fuelweaver's spike spiral: drawn round the atrium gate, where the game sets it out - it was drawn round the Fuelweaver, wherever in the arena it stood
+- The new bosses from the game's October 23 update: Hound Batilisk and its Blighted form (swoop, and the leap onto your head), Rock Master and its Blighted form (claw, snip, dash - each of the Blighted one's dashes one after another), Shrouded Queen (her swipe of shadows, her vines, the shadow missiles she throws back at whoever strikes her, the spikes rising in her arena), Grim Harrier (pounce), Umbral Abomination (punch, teleport - timed to when it comes up, however long it stays under - optic blast, drawn round it as it chases you down, and the Shadow Thrall mouths, horns and hands it calls up), the Blighted Great Depths Worm (its spiked segments and holes, as the worm's) - and the Rock Lobster's and Batilisk's new moves
+- Lag Compensation on: charges and swipes that lock onto you as they start (the Ancient Guardian's charge, Bearger's swipes, the Eye of Terror's charge and 38 more) now aim where the server has you, as other moves already did - no more drawn after you, then snapping back as the charge sets off
+- On a server (caves, or joining a friend): fast things that strike round themselves as they go (the Shrouded Queen's vines and shadow missiles, ghosts) are drawn where they really are - your game shows them a moment behind (about 0.1 s): her vines struck you before ever being drawn under you
+- Thrown things (the Ink Blights' balls, fireballs, goo, the Sea Weed's seeds, ink and more): where they'll come down no longer slides to and fro as they fly - drawn where all its guesses average, not the newest one
+- Eye of Terror and the Twins (Uncompromising Mode): a charge begun while walking goes the way it was walking - it was drawn at you for its first third of a second, then flipped round the other way
+- Uncompromising Mode's Retinazer (the laser twin), its mouth's lasers 3 to 5 in a row: each drawn the way it faces as it fires - only the first was aimed, the rest drawn that same way as you went round it
+- Uncompromising Mode's Eye of Terror's mini eye shot: drawn in front of it as it shoots (the mini eye strikes only there, 2 to 4.5 ahead) - standing close, you were struck before it was ever seen; and on a server, the mini eyes in flight are drawn where they really are
+- Shadow Thrall mouths and horns called up by the Umbral Abomination: the mouth's first bite out of its portal is drawn; the horns' leap is drawn the way they face as they leap (they turn to you only so far), not always at you
+- More monsters than "Most monsters drawn": those striking right now are kept first - in a swarm of the Eye of Terror's mini eyes, one biting you could be left out for the nearest 16; and a boss before its own swarm - Moonmaw, further off than its lavae, was left out and its spinning ring of lavae struck undrawn
+- Klaus' blue deer: its ice circle drawn as big as it really is right now, growing to its full size (outlined) - it was drawn smaller, shrinking, while the real one froze you
+- On a server: the deer's spells drawn where the server has you as it casts, not where your screen shows you
+- On a server: a monster striking as it runs (Moonmaw's lavae, snapper turtles, fruit bats...) drawn where it really is, not a moment behind
+- Filled circles (Klaus' deer's ice circle, Uncompromising Mode's fireballs, arenas): drawn as big as they are - a circle could be drawn up to a quarter smaller, the size of one drawn before it
+- Uncompromising Mode's lavae: the burning slime one leaves as it dies is drawn (4 round it) - it blows up a few seconds later, setting alight all round it, with nothing drawn
+- Uncompromising Mode's Magma Hound and Pepper Dragon: their fire breath stays drawn a moment after it ends - each fireball sets alight all ahead of them up to half a second later, after the breath was over
+- Uncompromising Mode's Rock Lobster: its uppercut straight out of walking is drawn (it was drawn only after its other attack)
+- The Umbral Abomination's optic blast: its fall at the end drawn round it where it comes down, after chasing you as long as it likes - it was drawn where a set chase would have ended, up to 4 off
+- The Celestial Champion's roll: the end of a roll stays drawn as it stops - it strikes as it stops, its lane gone a frame before
+- The Umbral Abomination's optic blast: drawn round it as it chases you (its beam, wider once it widens), from where it comes up after teleporting onto you
+- The Blighted Rock Master's dashes: its last dash of a chain drawn stopping where it stops - it was drawn sliding on and snipping far ahead, as if it dashed again
+- The Great Depths Worm's mounds: the ring round each is drawn only as its head comes up out of one or goes down into it (when it swallows) - it was drawn round every mound all the while, outside the spiked segments that really strike
+- On a server: Moonmaw's lavae no longer drawn running on past where they stop to stab, then jumping back
+- Thrown things (the Ink Blights' balls and more): where they come down drawn still - it crept on a hair each frame
+- On a server: the Umbral Abomination teleporting onto you no longer flicks its shape out past where it comes up and back
+- The Umbral Abomination's teleport: drawn where it is under the ground as it comes after you, and round it as it comes up - it was drawn on far past where it came up
+- A boss whose move is nearly ready: its warning glow lights up and stays lit - it pulsed twice, going out a frame between, a ring blinking round it (the Umbral Abomination and others)
+- Thrown things (the Ink Blights' balls and more): where they come down is drawn once it's sure - its first guesses, up to 3 off, were drawn and then jumped over; and held there as it lands, not slid over as it strikes
+- A boss whose move is nearly ready: its warning glow stays lit until the move begins - it went out a frame or two just before, a ring blinking round it (the Umbral Abomination and others)
+- Thrown things lobbed high (the Ink Blights' balls): no ring drawn round them up in the air, blinking and creeping along under them as they flew - only where they come down
+- Thrown things (the Ink Blights' balls and more): where they came down drawn still once they lie there - it jumped over a little two frames after they touched down
+- A boss whose move is nearly ready: its glow no longer goes out a frame before the move's shape comes up
+- On a server: the Umbral Abomination teleporting for its optic blast no longer drawn a frame past where it comes up
+- A boss whose move is nearly ready: its glow stays lit as the server's word moves it from one cooldown to the next - it went out and faded in again (the Umbral Abomination)
+- Thrown things (the Ink Blights' balls and more): where they come down drawn once its first guesses have settled (a long throw a moment later, a short one as before) - they were drawn early, then stepped over as the guesses came right
+- The Umbral Abomination's optic blast: as it winds up, drawn round you (it comes up on you) - it was drawn out ahead of it as if it ran there; its beam drawn round the beam itself as it chases you, where it is by now - it was drawn round the Abomination

@@ -1,0 +1,6 @@
+1.1.5
+
+- Playing on someone else's server (or a dedicated one): every move that aims at you - Bearger's ground pound wave and Deerclops' laser in Uncompromising Mode, and the rest - now aims where the server has you, so its warning lines up with the real attack. With lag, or just after joining, they were drawn turned on past it, then snapped back
+- Note: with the game's Lag Compensation on, your character is shown a little ahead of where the server has you - you can still be struck while you look just clear (the game's own effects show the same)
+- New setting "Most monsters drawn" (also in the O window): at most this many monsters' attacks drawn at once - the one under your mouse, those after you, then the nearest. 4 to 64, or all on screen; 16 by default. Fewer runs smoother with a crowd
+- Smoother with a swarm: many warnings lying over each other (Uncompromising Mode's Bee Queen guards diving, killer bees) no longer work out where each one's outline is hidden under the others, every frame

@@ -1,0 +1,32 @@
+1.1.0
+
+- Abigail: her attack range is no longer shown all the time. New setting "Abigail's reach" (in the O window too): only while she's after something (default), always, or off
+- Gestalt Abigail: her own, smaller strike range (she only hits in her dashes)
+- Abigail's commands: Attack At and Haunt At show where she'll pick her target as you aim them (a gestalt's Attack At: how far her dash strikes); Scare shows how far it reaches round her while the command wheel is open
+- Uncompromising Mode support: its new monsters and bosses (Hooded Widow, Wilting Dragonfly, Moonmaw Dragonfly, Pepper Dragon, its rats, shadows and more) and the moves it adds to the game's own (Moose's super hop and tornadoes, Bee Queen's stomp, Eye of Terror's laser, Krampus, Treeguard and more), worked out from Uncompromising Mode's own code - on only when it is
+- Uncompromising Mode: what monsters throw or leave behind - Walrus' bear traps, Spider Queen's web bombs, Hooded Widow's web mortar, Crab King's geysers, Ice Hound spikes, fireballs and fire, shadow goo, Treeguard root spikes, Moonmaw's shards
+- A move done again straight after itself (a hop after a hop, dash after dash, bite after bite) is drawn again each time - the second was drawn as nothing
+- Uncompromising Mode: Deerclops' mutations - the strong one's uppercut and combo, the enraged one's laser, the icy one's freezing cast and swipe - drawn from Uncompromising Mode's own code
+- Deerclops' swipe (its ice spikes come up by chance): now goes red to yellow to deep red as it strikes, like other attacks - it was one pale colour all along
+- Ice circles (Klaus' deer, Uncompromising Mode's Deerclops): overlapping circles are drawn as one shape - one outline round them all, lighter to draw when there are many
+- Ancient Guardian: its leap from far away (over 16 off) is drawn where it really lands - it was drawn short, stopping at 18
+- Uncompromising Mode, Moonmaw Dragonfly: its spin with its lavae drawn as the ring they really strike (out to 6, not right by it); its crystals falling from the sky are drawn as each comes down; its swipe's crystal line keeps the way it faced as it began
+- Uncompromising Mode, Wilting Dragonfly: its dash drawn as one lane along its way; its bite drawn as far as it really reaches (6 round it); its lava spit puddle drawn its real size (3 round, was 3.5)
+- Uncompromising Mode, Moose / Mother Goose: their plain attack drawn once (it was drawn twice over), the super hop aimed the way it really goes
+- Uncompromising Mode, Shadow Bishop: its new attack - off to your side, then charging straight through - each charge's lane drawn from where it appears, as wide as its level
+- Uncompromising Mode, Hooded Widow: the swipes on its charge are drawn
+- Uncompromising Mode, Bearger: its ground pound's line of sinkholes drawn towards you, as it really goes - it was drawn the way Bearger faced
+- Uncompromising Mode, Moonmaw Dragonfly: its spin drawn as one round area
+- Uncompromising Mode, Deerclops: its uppercut stops following you once it has struck - it was drawn turning after you to the end of the move
+- Uncompromising Mode: moves whose aim the drawing stretched on to their last thing set off (Bearger's sinkholes, Deerclops' swipe, Moonmaw's swipe and others) now stop following you when the game does
+- Moves whose danger comes from what they set off (sinkholes, lasers, ice) now follow you only as long as the game really aims them (Eye of Terror and the Twins' lasers, the glacial hound)
+- Two moves begun the same way, drawn both till it's clear which (the Celestial Champion's chop and summon, its stab): the second stops following you when the game stops aiming it - it kept turning after you to the end; and where the two lie over each other they're drawn as one shape, one outline round both - not two outlines crossing, darker where they overlapped
+- Celestial Champion's dash: its lane and the blow it ends with drawn as one shape - two outlines crossed at its end
+- Shapes over each other read as one: where one's outline runs inside another's, it isn't drawn - Uncompromising Mode's Bearger's rocks coming down side by side, the Celestial Champion's stab over its spike trail, a pound over its sinkholes were outlines crossing each other's insides
+- A pound's ring drawn only where it really strikes - with the Minotaur's leap, the Great Depths Worm's dirt, a monster's own pound: Uncompromising Mode's Bearger's rocks put the same ring down for show, and each was drawn as a Minotaur's stomp, 5 round, where nothing struck
+- Moves of the game's own monsters worked out again with the newest rules (moves whose aim followed you on to their last thing set off now stop when the game does, and more): a few drawn a little less where nothing strikes
+- Uncompromising Mode, Bearger: each sinkhole strikes twice, half a second apart - both drawn; it was drawn only for the first, gone as the second struck
+- Uncompromising Mode: Bee Queen's guards diving down drawn where their shadow is; fire breathed by fire and magma hounds; the glacial, magma, spore and lightning hounds' own attacks and bites; a Koalefant's stomp; a full mosquito's burst
+- Monsters that shoot (MacTusk's blow darts and traps, spitters, tentacles, lizardmen, the knight boat, octopus, scorpions): no more huge dark ring round them - their shot is drawn as a lane, or where it lands, only when it's coming at you
+- Tropical Experience, Yellow Lizardman: its zap strikes you wherever you stand within 20 of it - now a mark on you as it zaps you, its reach pale round it; it was a dark ring 20 round it, cut square at its edges
+- Tropical Experience, the Forge's Elemental (summoned by a book): drawn only when it's after you (if you strike it) - a mark on you, its reach pale; it was a dark ring round it as it shot monsters near you

@@ -1,0 +1,3 @@
+1.1.4
+
+- Uncompromising Mode (regular version): now uses the same warnings as the beta (On The Rocks!) - 1.1.3's own set for it drew some moves wrong (Bearger's rocks twice their size)

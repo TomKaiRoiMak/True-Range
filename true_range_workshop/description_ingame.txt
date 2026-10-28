@@ -1,0 +1,6 @@
+True Range - see exactly where an attack will land, before it lands.
+
+Real attack areas for bosses and monsters, worked out from the game's own code.
+Your weapon reach, and body rings for you and your friends.
+
+Press O in game for settings.

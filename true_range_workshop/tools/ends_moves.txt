@@ -1,0 +1,10 @@
+# Moves built with sim_moves.lua -ends (struck again once out of reach / after a while - each spot's
+# end written): tools/verify.ps1 runs these bosses again with -ends after the full run and puts these
+# moves in (tests/splice.lua boss:move). A full run alone drops their "ends" - the Scrappy Werepig's
+# tackle went yellow never red 49% more, the Celestial Champion's dash missed 3 (2026-10-16).
+daywalker2:laser_pre
+daywalker2:throw_pre
+daywalker2:tackle_pre
+daywalker2:atk3
+daywalker2:atk_object
+alterguardian_phase4_lunarrift:dash_pre

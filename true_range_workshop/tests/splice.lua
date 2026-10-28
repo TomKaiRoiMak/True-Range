@@ -1,0 +1,98 @@
+-- luajit splice.lua <full moves_sim.lua> <part moves_sim.lua> <out> <boss,boss,...>
+-- A run of a few bosses only (sim_moves.lua -only=...), put into the full data: those bosses'
+-- moves taken from the part, the rest kept; the things they set off (_hazards) taken from the
+-- part too where the part made them, every other kept. tools/verify.ps1 -Only.
+local full = dofile(arg[1])
+local part = dofile(arg[2])
+local only = {}
+-- (boss:move - that one move alone from the part, the rest of the boss as it is: a rebuild taken but
+-- for a move it made worse, kept as it was)
+for p in (arg[4] or ""):gmatch("[^,]+") do
+    local b, m = p:match("^([%w_]+):(.+)$")
+    -- (field:<name> - that field alone, from every move of the part's into the same move kept here: the rest as it is -
+    -- anim_at put into data a rebuild would have changed besides, 2026-10-26)
+    if b == "field" then
+        local n = 0
+        for boss, pmoves in pairs(part) do
+            local fmoves = type(pmoves) == "table" and boss:sub(1, 1) ~= "_" and full[boss] ~= nil and (full[boss].moves or full[boss]) or nil
+            for key, pm in pairs(fmoves ~= nil and (pmoves.moves or pmoves) or {}) do
+                if type(pm) == "table" and type(fmoves[key]) == "table" and fmoves[key].anims ~= nil then
+                    if fmoves[key][m] ~= pm[m] then n = n + 1 end
+                    fmoves[key][m] = pm[m]
+                end
+            end
+        end
+        print("field " .. m .. ": " .. n .. " moves")
+        b = nil
+        p = nil
+        FIELD_ONLY = FIELD_ONLY == nil and true or FIELD_ONLY
+    end
+    if p == nil then
+    elseif b ~= nil then
+        FIELD_ONLY = false
+        local fm = full[b] and (full[b].moves or full[b])
+        local pm = part[b] and (part[b].moves or part[b])
+        assert(fm ~= nil, "no boss " .. b)
+        fm[m] = pm ~= nil and pm[m] or nil
+    else only[p] = true FIELD_ONLY = false end
+end
+for p in pairs(only) do full[p] = part[p] end
+full._hazards = full._hazards or {}
+-- (boss:move alone: that move, nothing else of the part - not its things: a part run in Uncompromising Mode's
+-- world put the Celestial Champion's spike trail into its data drawn with the move only (in_move), the walls
+-- then drawn by nothing, 2026-10-20)
+local moves_alone = next(only) == nil
+for k, v in pairs(moves_alone and {} or part._hazards or {}) do
+    -- (one made by these bosses - or by nothing else: the part's)
+    -- (only one these bosses set off - not every other the part made too: a part run in Uncompromising Mode's world,
+    -- put into its data, brought 20 of the game's own things in with it, 2026-10-20)
+    local mine = false
+    for _, b in ipairs(v.by or {}) do if only[b] then mine = true end end
+    if mine then full._hazards[k] = v end
+end
+-- (and one made only by these bosses that the part no longer makes - drawn now with their move (the
+-- Possessed Varg's flames, its breath one shape): gone, not kept from before)
+for k, v in pairs(full._hazards) do
+    if part._hazards == nil or part._hazards[k] == nil then
+        local only_these = v.by ~= nil and #v.by > 0
+        for _, b in ipairs(v.by or {}) do if not only[b] then only_these = false end end
+        if only_these then full._hazards[k] = nil end
+    end
+end
+for k, v in pairs(FIELD_ONLY and {} or part._alias or {}) do full._alias = full._alias or {} full._alias[k] = v end
+-- (one drawn as another before, run on its own now - the Sea Strider, a spider till then: no longer so)
+for k in pairs(FIELD_ONLY and {} or full._alias or {}) do
+    if part[k] ~= nil then full._alias[k] = nil end
+end
+
+-- written back as Lua, keys in order (the same each time)
+local out = {}
+local function W(s) out[#out + 1] = s end
+local function Key(k)
+    if type(k) == "string" and k:match("^[%a_][%w_]*$") then return k end
+    return "[" .. (type(k) == "string" and string.format("%q", k) or tostring(k)) .. "]"
+end
+local function Val(v, ind)
+    local t = type(v)
+    if t == "string" then return string.format("%q", v) end
+    if t == "number" then return string.format("%.17g", v) end
+    if t ~= "table" then return tostring(v) end
+    local keys, n = {}, #v
+    for k in pairs(v) do
+        if not (type(k) == "number" and k >= 1 and k <= n and k == math.floor(k)) then keys[#keys + 1] = k end
+    end
+    table.sort(keys, function(a, b) return tostring(a) < tostring(b) end)
+    local parts = {}
+    for i = 1, n do parts[#parts + 1] = Val(v[i], ind .. "    ") end
+    for _, k in ipairs(keys) do parts[#parts + 1] = Key(k) .. " = " .. Val(v[k], ind .. "    ") end
+    if #parts == 0 then return "{}" end
+    local flat = "{ " .. table.concat(parts, ", ") .. " }"
+    -- (one line each but the top two levels - as small as the file the runs write)
+    if #flat < 200 or #ind >= 8 then return flat end
+    return "{\n" .. ind .. "    " .. table.concat(parts, ",\n" .. ind .. "    ") .. ",\n" .. ind .. "}"
+end
+W("-- generated by tools/sim_moves.lua (spliced: tests/splice.lua)\nreturn " .. Val(full, "") .. "\n")
+local f = assert(io.open(arg[3], "wb"))
+f:write(table.concat(out))
+f:close()
+print("spliced " .. (arg[4] or "") .. " into " .. arg[3])

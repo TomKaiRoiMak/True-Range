@@ -1,0 +1,33 @@
+0.9.4 beta
+
+NEW
+- Settings window in the game: press O (changeable). Changes take effect at once and are saved on your computer. Reset goes back to the mod settings.
+- Other players: a body ring round each friend, and (optional) their weapon reach in light blue.
+- Your own reach (green) now shows again, by the weapon you hold.
+- Yellow ring is back: how close each monster gets before it starts attacking you.
+- Rings, reach and body outlines are half as strong, so they hide less.
+- The show-all key (R) is removed.
+
+NOW DRAWN (no warning before)
+- Clockwork Rook charge, Gnarwail body slam, Werepig bite, Year of the Horse knights (kick and joust), Prime Mate, Spitter spider (bite and web), Sea Strider, Ticoon, Royal Rabbit Enforcer, Pig King mini-game pigs, Lurking Nightmare (bite and horns), Shadow/Lunar Merms, Moon Stone pigs, Wagstaff drones, Lustrous Weevil, Slurper leap.
+- Projectiles drawn where they will land while still in the air: Ewecus phlegm, Sea Weed spit, Misshapen Bird bile, Crab King cannonballs, Shriek balls, squid ink.
+- MacTusk's blowdart and the Spitter's web: the lane is drawn from the dart itself as it flies.
+- Rings for things that hurt you by being close: every tentacle's aggro range, Dread Mites and their red bombs, moon spores, gelblobs, Great Depths Worm mounds, sliding Pengulls.
+- Birchnut roots, Brightshade vines, Jitters, the Ancient Guardian's shadow tentacles, Possessed Varg fire breath, Clockwork Bishop shot.
+
+FIXED
+- Ancient Guardian: charge too wide and too long, jump moving as it landed.
+- Scion: dash wobbling and sliding forward, supernova too small or flat on one side.
+- Frostjaw, Twins, Eye of Terror: shapes moving at the moment of damage; Eye of Terror's mouth charge now a wave like the Twins.
+- Rictus and Celestial Champion: shape kept following you after the move ended.
+- Clockwork Bishop: stopped aiming too early.
+- Rook and Ancient Guardian charges stop where the game really stops them.
+- Crab Knight spin: right direction and length.
+- Possessed Varg / Lunar Buzzard fire: drawn as the real flames, right size, gone as they die down.
+- Skittersquid, Slurper, Weevil, Pengull, Lurking Nightmare: shapes no longer slide after you.
+- Sea Weed, Ewecus, Misshapen Bird: no fake ring round them when they spit.
+- Moon spores, Birchnut roots, cannonballs, Sea Weed spit: drawn a little too big.
+- Many smaller shape and timing fixes across the bosses.
+
+PERFORMANCE
+- Big frame rate gains with many things on screen (worm segments, deerclops spikes, body rings) and less work for the host.

@@ -1,0 +1,26 @@
+# One repo for True Range and what tests it: the mod, its workshop (tools, tests, notes), and the two test mods.
+# Everything else in this folder (other mods, patches) stays out.
+/*
+!/.gitignore
+!/true_range/
+!/true_range_workshop/
+!/tr_testbench/
+!/tr_lagjoin/
+
+# never: the server's secret (bench clusters copy it in)
+cluster_token.txt
+**/cluster_token.txt
+
+# trash folders (moved here instead of deleted)
+_trash_*/
+
+# big and remade: bench logs, expanded copies, replays, game scripts, server worlds
+/true_range_workshop/tests/work/
+/true_range_workshop/old/
+/true_range_workshop/tests/logs/
+/true_range_workshop/tests/perf_logs/
+/true_range_workshop/tests/controls/
+
+# scratch output
+*.ppm
+*.err

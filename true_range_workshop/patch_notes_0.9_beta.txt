@@ -1,0 +1,14 @@
+0.9 beta - first public test
+
+- Boss attack warnings: when a boss starts a move, the real area it will hit is drawn on the ground - worked out ahead of time by running each boss's own game code, not guessed
+- Colours: faint red = coming later, red = coming soon, yellow = about to strike, deep red = striking now
+- Follows the fight: aims, leaps and charges move with you as the boss tracks you, and stop where the boss really stops
+- Things bosses leave behind are drawn too: ice spikes, falling junk, lasers, crystals, spell circles
+- Purple shapes: attacks that only freeze or put you to sleep
+- Rings for every monster: red where its attack lands on you, yellow where it starts attacking
+- Your own reach (green) and your body ring (orange while you stand in danger, red when hit)
+- R shows every ring near you; everything else is in the mod's settings
+- Works with Uncompromising Mode and Tropical Experience monsters
+- Server mod: players who join get it automatically
+
+Known: a few moves are still a little off at their edges (the Twins' charges, the Scion's dash). Please report anything that hits you outside the red, or misses you inside it.

@@ -1,0 +1,4 @@
+﻿1.0.1
+
+- New: True Range (Client) for servers that don't have True Range - https://steamcommunity.com/sharedfiles/filedetails/?id=3819645697
+- Works with it: a player who has it on a server with True Range gets one set of warnings, not two

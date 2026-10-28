@@ -1,0 +1,346 @@
+1.0.0 - first release
+
+- Rings on the ground showing how far monsters really reach, with the server's real numbers (weapons, mods and buffs included):
+  - Red: step inside it (your middle) and its attack lands on you
+  - Yellow: inside it, it starts attacking (shown when different from red)
+  - Purple: its splash damage, around whoever it attacks
+- Green ring: your own reach (a target whose edge touches it can be hit); faint green: where you start swinging
+- Which monsters: the one under your mouse, plus the ones after you (or every one nearby: a setting)
+- Key (R by default): show every ring near you on / off
+- Player settings: which monsters, your own ring (off / with the key / in a fight / always), the key, the yellow ring
+- Harmless critters (birds, butterflies, rabbits...) get no rings
+- Bosses' own attacks, read from the game's code: Bearger's swipe (6 around a point 1 in front of it - only the front half hits) replaces its plain red ring; the Armored Bearger's butt slam (purple, behind it)
+- Ground pounds (purple): every monster that uses the game's ground pound shows how far it reaches
+- By default every monster near you and your own ring show all the time
+- Deerclops (and Tropical Experience's ice Deerclops): its ice spikes reach 9 in front (a cone 35 degrees to each side) and 4 all round; the Crystal Deerclops' ice lance shows around whoever it's after
+- The yellow ring always shows: inside it the monster stops and attacks, outside it walks after you (when it's the same as the red ring, only red shows)
+- Attack warnings: while a boss winds up, the real shape it will hit is outlined with orange dots, turning with it - Bearger's swipes (a half circle in front), ground pounds, the Armored Bearger's butt slam, Deerclops' ice spikes (a narrow fan in front and a small circle around it), its laser (a strip), the Crystal Deerclops' ice lance (around where you stood)
+- Attack warnings are drawn with solid lines (a thick outline, faint lines inside)
+- Bosses' fan-shaped attacks (Deerclops' spikes, Bearger's swipe) show as their real fan all the time, not a circle
+- Your body ring: a small ring around you (the part attacks have to reach) - orange while you stand where an attack reaches you, red when you're hit (setting "Your body ring")
+- Lines and warnings lie on the ground under characters (the mod's own shapes), and warnings are filled in
+- Before a monster attacks, its rings and shapes are faint; the warning while it winds up is bright
+- Monsters' bodies: a faint ring shows where you bump into them
+- Ground pounds (Bearger's, the Armored Bearger's butt slam) show their real waves: where each one reaches, a ring closing in as the moment comes, then the wave front rolling out on time and the part it has swept
+- Warnings are red, their inside breathing in and out; rings and shapes shown before an attack are at 75% so they read but stay apart from a real warning
+- Deerclops' ice spikes come out near to far: the warning shows that wave rolling out on time
+- Bearger's next attack: its ground pound's purple ring fades back in as the 10-second cooldown runs out, then blinks (with the reach of each wave inside): that means its next attack will be the pound, not a swipe - read from how its stategraph picks
+- The warning no longer pulses
+- When Bearger's pound is ready and what it's after comes into its reach, the pound's red warning shows right away - before it starts the move
+- Attack warnings for every monster: the mod comes with the attack moves of 760+ monsters (the game's, Uncompromising Mode's and Tropical Experience's), read from their code - which animation starts each attack and on which frame it lands. When one starts, its reach fills in red towards the moment it hits
+- The server learns: each time a monster's attack lands, it notes how far and how wide (in front of it) it reached and when; after a few hits the warning takes that shape. What it learns is kept between games and sent to players only for the monsters they meet, and only when something new was learned
+- Charges, beams and what comes next, learned by watching bosses and big monsters: how far a move carries it (a charge's path is drawn from where it set off to where it will stop, as wide as its hits reach), hits that always land in a straight line ahead (a beam), and which move usually follows which - during a wind-up, the charge or beam it leads into already shows along where it faces
+- A charge's path stays where the charge started (it no longer slides along with the monster when its animation loops); the part it has already passed disappears, and the stop point stays put
+- A charge's path is as wide as its hits actually reach to its sides (it was too wide), and reaches as far past the stop point as its hits land in front of it
+- Charge paths and beams have properly round ends (the filled band stuck out past them in square corners)
+- How far a move carries a monster now averages every time it's used, not just the times it moved: a charge's wind-down that slides now and then is no longer taken for another charge (what was learned about travel before is relearned)
+- The next charge or beam only shows when it follows that move at least half the time - and it shows already while the previous charge winds down, for monsters that charge again and again
+- What comes after a move is learned apart for when the monster turned during it (took aim) and when it held still: a charge that winds down into another shows the next one once it turns to aim, and the last charge of a run (it holds still) no longer warns of one more
+- A learned attack shape is never smaller than the hit range the game checks (it only knew how far hits had happened to land, so it could shrink far below the real reach)
+- Bosses' attacks measured exactly, without anyone getting hit: while a boss's move is still being learned, its attack is shown points that aren't really there (probes) scattered over the area it looks at; its own code decides which it hits, and those are only noted (no damage, nothing happens in the world). Which points were hit and which weren't gives the real shape - its reach, its width, blind spots, a circle in front of it - after the first time it's used, sharpened over 5 rounds, then probing stops for good. Attack code that can't take probes is left alone after one try
+- Probes also measure damage a move sets off a moment later (Deerclops' ice spikes), and a shape can be in two parts: a circle all round the boss plus a fan (Deerclops: spikes close by all round, and a cone far ahead)
+- Leaps told apart from charges: a move that only hits once it has come most of the way is a leap - only where it lands is drawn, not the whole way there; and a leap that lands where its target stood (the Nightmare Werepig's slam) is drawn on its target
+- Attacks that only ever hit what the monster is after (Klaus' swipes and chomp) are told apart from area attacks: drawn all round it out to its reach (no blind spot - it turns to whoever it's after), red and warning only if you're the one it's after; just outlined when it's after someone else
+- Leaps that aim again on the way (Klaus' chomp) are recognised: whether a move is a leap is judged against each leap's own length, and a leap counts as going for its target when it ends up by it - drawn on its target as it moves
+- Things bosses set off are measured too - crystals, spikes, lasers, anything that hurts from its own code a moment after the boss's move - each around itself; players near the boss see them outlined where they lie, and turn orange inside one
+- Attacks that land in the same pattern every time but fit no fan (the Celestial Champion's lasers going three ways) are drawn as a map of where they really hit
+- Moves that chase (the Celestial Champion's spin) are drawn as a path from the boss to whoever it's after, following them
+- A charge that sets off another way (rolls, one after another) is drawn from where it turned
+- Whether a move is a leap is also judged from where the monster is when its damage comes, so dodging every time no longer hides it
+- Probes no longer skip attacks that also smash trees and rocks on the way (the Celestial Champion's spin and spike walls)
+- Everything probed before is probed once more with all of the above
+- Probes take the effects attacks put on what they hit (a glow, a push) - the Celestial Champion's lasers can be measured now; moves that gave up on probes before get another try
+- Hits while a boss stands about or walks (something it set off hit you) no longer count as a move of its own - no more circle blinking around it as it idles
+- Charge paths have half discs at their ends (no darker overlap where the band and the ends met)
+- A leap shows a thin line of its way to where it lands (nothing on the way is hit)
+- A boss's next phase (or a minion it calls) is no longer taken for something it set off - that mixed up the Celestial Champion's phases; everything is probed again
+- Hits by things a boss set off (spikes, lasers) no longer count as the boss's own move (no more huge reach after a spike hit you)
+- Something thrown at the target (the Crystal Deerclops' ice lance) is drawn around the target, not as a cone from the boss
+- A monster that only bites what it's after (wargs, hounds) is no longer drawn as a cone after a few hits in front of it: a cone from hits alone only when it hit more than its target
+- Your body ring only turns orange near a monster for its hit range when nothing is known of its moves; otherwise its moves tell
+- A laser's blasts (they fight, but aren't creatures) no longer get monster rings
+- Probes only answer an attack's small searches (10 or less): a boss looking wider - who to aim its next spikes at - aimed them at probes (the Celestial Champion's spike walls went off in odd places); everything is probed again
+- Probes also note where the boss's target stood: an attack laid out by where its target is - lasers aimed through it, sweeps across it - is mapped as seen from there, or scaled by how far it was, whichever holds steadiest; the Celestial Champion's three lasers come out as three, at your distance
+- An animation a boss also uses just to start running (the Nightmare Werepig's pounce starts like its run) no longer foretells the move - no more warnings flashing up as it turns to run
+- The Celestial Champion (all three phases) is now foretold from the game's own attack code, run ahead of time against a field of stand-ins with its target at every distance from 2 to 16: its lasers (three beams through where you stand), its sweep (three arcs), its rolls, tantrum, spin and spike walls come out exactly as they hit, for how far you are. Nothing about it is guessed or learned in play any more
+- Offline runs also move the target mid-move, to find when an attack stops aiming: the Celestial Champion's lasers and sweep follow you until it locks its aim, then stay where it aimed - run off after that and the drawing stays put, like the real thing
+- The Celestial Champion's rolls are drawn a roll at a time, from where it turned for the next one
+- Things a boss sets off are outlined around themselves the moment they appear, before they hurt: the falling crystals, and the spike trails with the wall they raise where they stop
+- The spike-wall move no longer ends early (its looping animation counts as the move too)
+- Things a boss sets off are shown hitting in the order they really do: a spike wall rises spike by spike from the middle out once its trail stops, each part shown until it has risen; a crystal's outline goes once it has landed
+- The old ways of foretelling attacks (learned in play, probes on the server, moves read from frames) are switched off for now: only bosses run offline from the game's code are foretold; other monsters keep their rings
+- Offline runs use each animation's real length (read from the game's animation files): the Celestial Champion's rolls are 8 long, not 10, and after its last roll its slide and slam are drawn from where it starts winding down
+- A spike wall's parts stay outlined until the last spike covering them has risen (no more bitten-looking patches)
+- Offline-run shapes are twice as fine (cells a quarter of a unit across)
+- Attacks aimed at the target are laid out towards the target, not the way the boss faces: up close behind it, its lasers no longer show the wrong way round
+- Moves that chase (the spin) are drawn from where the boss is now to where its target is now, every moment
+- Each roll is drawn from where it really starts rolling - not from where it began winding up
+- While a spike trail runs, the stretch where its wall may come up is shown (it stops at a random moment, 10 to 20 on): from as far as it has got to the most it runs, as wide as its wall; once it stops, the wall itself, spike by spike
+- The offline-run shapes are packed (about half the size)
+- The Celestial Champion's rolls are drawn as the cells each roll really hits (some 2 to each side - the wider capsule before took in its closing slam too)
+- A spike trail's stretch shows only once it's on its way, along the way it runs (no more box flashing the wrong way as it appears)
+- For now only cells are drawn (true_range/render): range rings, body rings, outlines and the old shapes are off; an attack only on its target shows as cells all round the boss, only when you're its target
+- A running spike trail shows nothing until it stops (where it will can't be told) - no more box flashing up as the wall-raising move starts
+- Five more bosses run offline from the game's own code: Bearger (swipe, its swipe combos, ground pound), Deerclops (ice spikes), the Eye of Terror (charge, chomp), Klaus (swipes and chomp at its target) and the Nightmare Werepig (pounce, slam)
+- A spike trail's wall goes along with it again while it runs, and comes up where it stops
+- Offline-run moves keep when each part hits: a ground pound's waves roll out (each part gone once struck, darker just before), lasers go blast by blast
+- Moves that aren't the same each time (Deerclops' ice spikes, the Celestial Champion's falling crystals) are run many more times and shown lightly over everywhere they may hit; each ice spike as it comes up is outlined round itself until it strikes
+- An attack on its target only is drawn where the boss is when it strikes: Klaus' chomp lands on you, not round where it set off
+- Moves laid out the way the boss faces (the Nightmare Werepig's slam - it turns slower than you run) follow its facing, not you
+- The Eye of Terror's charges are drawn one at a time, each from where it set off - its later phase's runs of charges too
+- Offline runs: a boss bumps into whoever it's after instead of going through them (unless charging or flying) - the Nightmare Werepig's slam with you close now lands on you, not past you
+- Klaus' chomp is drawn where it aimed once it has (it aims again partway), not following you after - no more box past you as it lands
+- After the Eye of Terror's charge (or the last of a run) nothing more is drawn
+- Klaus' chomp shows only its bite: the swipe it may follow up with if you're still close is its own move, drawn when it comes (no more two circles at once)
+- Between the Eye of Terror's charges the next one is drawn lightly the way it's turning, for as long as it would wait before charging again; after its last one that fades within about half a second
+- Offline runs: a boss shoves whoever it walks into (it's far heavier) rather than stopping at them
+- A move with a run-up first (the Nightmare Werepig's pounce) is drawn from where it leaps, with the distance to you from there - not from where the run-up began
+- The Nightmare Werepig's slam straight off (after a pounce that hit you, or getting up worn out) is a move of its own; its pounce is as it comes running at you
+- Aim-lock times count from when a move is seen to begin (Bearger's swipes stop aiming at the right moment after standing up)
+- Klaus enraged (bigger) has its own offline runs: its chomp and swipes reach as far as they really do then (the chomp reaching you further off)
+- Between the Eye of Terror's charges, the next one is drawn (at full strength) once it turns round to you - which it only does when another is coming; after its last charge nothing more shows
+- Moves laid out the way the boss faces (the Nightmare Werepig's slam) use how far you are along that way: off to its side, it lands short of you - drawn so
+- Aim-lock times found to the exact frame (Klaus' chomp stops following you as it really does, a few frames sooner)
+- Moves that keep following their target to the end (the Celestial Champion's phase 2 spin) are drawn from where they began, towards where you are now - not pushed along with the boss past you
+- (Testing, to be removed) each offline-run move a boss makes is written to the log: which one, how big the boss is, where it aimed and how far it really went
+- Offline runs: a boss drawn bigger moves that much further under its own power (the game's physics works in its scaled size) - Klaus' chomp leaps up to some 11 (15 enraged), not 7 (9); Deerclops too
+- The Celestial Champion's phase 2 spin (it chases you as fast as you run, for a random while) is drawn round itself wherever it is, not as a path out past you
+- (Testing, to be removed) the log also says, as each drawn part strikes, whether you stood in it, and when you were really hit
+- A move whose damage all comes after it stops aiming is drawn from where the boss stands and faces at that moment, not from where it began - the Nightmare Werepig turning after you during its slam no longer leaves its circle to one side of where it lands
+- A move laid out the way the boss faces, with you well off to its side (over 60 degrees), is drawn going its full way
+- Every drawn attack has a faint band just outside its edge (half a unit): right at the edge, a frame or a step decides whether it hits
+- Offline-run moves get a bright outline round their cells, cut across the corners - the shape they make (true_range/render: outline)
+- Parts of a move struck again and again (the Celestial Champion's phase 1 stomping, 3 to 5 times) stay drawn until its last strike, not just the first
+- Gestalts the Celestial Champion calls up (phases 1-3) are run offline too and drawn as the way each will fly - from where it rises, the way it faces (set at you as it rises) - darker just before it goes, gone once it stops. Works for anything a boss sets off that strikes as it flies
+- (Testing, to be removed) the log says how far each gestalt flew and whether you stood in its drawn way
+- A move's parts still to strike get one outline round them all, not one each drawn over one another (a gestalt's flight, the Celestial Champion's beams, a spike wall); which part strikes next still shows darker, the struck parts go - so it shows which way and how fast it goes
+- Things a boss sets off whose strikes are all in the move drawn already (the Celestial Champion's laser blasts) aren't drawn again over it
+- Which way and how fast a move goes: its parts are shaded by how soon they strike (darkest next, fading to the last), and a yellow arrow runs from the part striking next to the last one
+- A gestalt's way is taken away as soon as it slows down (it drifts on, harmless, after it's done) - not a second or more later
+- The yellow arrow is gone (it could point the wrong way); instead a bright yellow line runs round the part striking next (within 0.15s) - it moves along the move as fast as the move goes. Later parts are drawn less faint than before
+- The part of a move about to strike (within 0.3s) is all yellow - step out of the yellow. The bright line round it is gone
+- Gestalts show even far from the boss that called them up (they rise round you, the boss may be well away)
+- A gestalt's way shows only once it has turned to face it (as it finishes rising) - not pointing the wrong way first
+- Outlines are white; the part about to strike is cyan (was yellow)
+- The Enlightening Snare (what the Celestial Champion's crystals leave) shows its reach while it's there - it pulses, knocking out and draining sanity, within about 3 of it
+- Offline runs: what a boss sets off goes on after the move (flying, falling, pulsing, its timers running), and a spot struck by two things (a crystal landing, then the snare it leaves) counts for each
+- Three colours: faint red where a move will strike (much fainter than before), yellow just before (0.3s), deep red as it strikes. Outlines red again, fainter
+- Faint red a little stronger; yellow now 0.5s before a strike, at half strength; the Celestial Champion's phase 2 spin shows yellow before its first strike and deep red while it spins
+- The faint band now runs along both sides of a move's edge (half a unit in, a quarter out), the outline in the middle of it: inside the band it may or may not hit; in the solid part inside, it hits
+- Moves' timing runs on the world's clock: with the game paused, what's drawn waits too (it went on before, out of step once unpaused)
+- Offline runs: a speed a boss sets shows half a frame later, as the game's physics (two steps a frame) has it - the Nightmare Werepig's slam lands where it really does, some half a unit short of before
+- The faint band along the edges is off (true_range/render: band)
+- Offline runs, checked against the game: no half-frame physics delay after all; a boss is stopped by whoever it runs into (not shoving them on), right where it touches them; targets every half unit up to 10 - the Nightmare Werepig's slam now lands where it really does near and far
+- Offline runs: a speed a boss sets takes hold a fifth of a frame late (measured: the Nightmare Werepig's slam lands about 0.3 shorter than taking hold at once)
+- Traced the Nightmare Werepig tick by tick in the game: its slam lands exactly where the offline run says (5.6 on from where it stops aiming); the fifth-of-a-frame delay is gone again
+- Where a move is drawn from once it stops aiming is taken at that very moment (kept moment by moment), not when it's next drawn - the Werepig leaps the frame after it stops aiming, so a frame late put its whole slam up to a unit too far on
+- Offline runs: the tick after a boss changes speed it goes 85% of the way to the new speed (traced in the game: 75-95%, varying) - the Werepig's slam at its longest lands 5.4-5.6 on, varying by that much each time
+- A thin dark band along the inside of each move's edge: where the game itself decides it one way or the other each time (true_range/render: band)
+- Moves' timing a frame later: a boss's animation runs a frame ahead of its attack code (traced) - Klaus' chomp no longer drawn a step short, and where a move is drawn from when it stops aiming is right
+- Gestalts' ways are as wide as they really strike (within 1.4 of their middle, not 1.9); the larger gestalts of phase 3 (luck) are run offline too
+- Parts of a move that strike on and on (a laser burning on after its first strike, stomp after stomp) stay deep red while they do, not faint red after the first
+- A gestalt's way goes from behind it as it flies - no trail of what it has passed lingering
+- Each part of a move is timed to its very frame (was to within 3): yellow and deep red come when the game strikes, not up to 2 frames early (the data is larger: about 500KB)
+- Moves that aim at where you stand (the Celestial Champion's lasers, and every other one that stops aiming at some point) take where you stood the very frame it last looked - was 1-2 frames later, so running while it aimed put them a little off
+- Moves whose shape goes with how far you are (lasers landing where you stood, leaps) are run every quarter step of distance, not every half to whole one - the Celestial Champion's sweep no longer misses you by a hair at its edge; moves that look the same at every distance stay as few as before (the data is about 1.1MB; only the distance in use is unpacked, so it takes little memory)
+- A boss whose target isn't known to your game for a moment (it happens mid-move) is taken to be after the nearest player it faces - the Celestial Champion's laser was sometimes not drawn at all
+- New bosses run offline from the game's code: Dragonfly (its bite, and on fire: its longer bite and ground pounds - told apart by its fiery look), Bee Queen, Moose/Goose, Malbatross (its bite and its swoop), Antlion (the sand spikes it raises round you - each spike outlined as it rises)
+- A boss already moving as it starts a move that doesn't move it (Dragonfly biting as it flies on) has the move drawn round where it is now, not left behind where it began
+- The Malbatross' swoop is drawn the way it set off (it stops turning early), not following you as it flies
+- Rings round your body and each boss's body (where you bump into it) show even with the other rings off (true_range/render: bodies)
+- Checked offline against you walking, running, dodging and stopping, and the boss already on the move, for every move (1305 cases: all but 4 drawn where they really hit). Fixed from that:
+  - A leap that stops at whoever's in its way (the Werepig's pounce and slam) is drawn its whole way once you're off its path, and stopping at you while you're on it
+  - A move aimed before it shows (the Werepig's pounce, set going as it starts running) is laid out the way the boss faces, not towards where you've run to since
+  - The Werepig's pounce was drawn about 1 further on than it lands
+  - The Malbatross' swoop no longer shows a ring round where it passes you
+- Every move is now checked offline that way, the random ones, charges and spins included (1503 cases, all drawn where they really hit). Fixed from that:
+  - Standing a little off to one side of a leap's way, it bumps you further on than square on - drawn so (the Werepig's slam)
+  - Moves with you closer than 2 (under a flying boss) use their own maps, not the ones for 2
+- Smaller monsters and animals run offline from the game's code too: hounds (fire, ice, moon, clay, mutated, hedge hounds as well), spiders (and their kinds), spider warriors (their leap), tallbirds, pigs and pig guards, bunnymen, merms and merm guards, beefalo, koalefants, Volt Goats, killer bees (and bees), mosquitoes, frogs, bats, pengulls, catcoons (their pounce), tentacles, Krampus, clockwork knights, Vargs - each move's reach drawn where it really bites, checked offline with you moving about (2433 cases, 1 off: dodging a spider warrior's leap at the last moment)
+- The edge of every move is drawn where its reach really ends or a hair beyond, never short of it: a cell is drawn if any of it is in reach, not only its middle (monsters strike at the very edge of their reach - right where you stand - and you could be struck just outside what was drawn: a frog at 3.4, Bearger's swipe at 7.4); the dark band along the inside of the edge is where it may or may not reach
+- The offline runs come out the same every time (an animation's length was sometimes taken from another monster's file with the same animation name - a spider's bite could vanish)
+- The Celestial Champion's spin stays drawn as it winds down - it still strikes then (it vanished a moment before its last hit)
+- A boss's move that's nearly off cooldown (Bearger's and Dragonfly's ground pounds, Klaus' chomp, the Eye of Terror's charge, the Celestial Champion's roll and spikes...) makes the boss's body edge glow, two soft pulses: it may come any moment now (or its move's outline flashes instead - true_range/render: cooldown)
+- Lighter to draw: about half as many pieces on the ground (edges straightened where they hardly bend, the dark band drawn along the edge, rows of cells joined into blocks) - a big laser went from about 650 pieces to 310
+- A leap that stops at whoever's in its way is drawn stopping at you only while you're still ahead of it and in its way - step off its path mid-leap and it's drawn going its whole way (the Werepig's pounce)
+- A part that strikes twice (the Werepig's pounce: as it lands and again with its claw) no longer pops back up as the boss gets up after the move
+- Edges drawn as smooth curves, not the steps of the cells they're made of
+- The yellow (about to strike) and deep red (striking) parts have smooth edges too; the cooldown glow is a smooth ring
+- Smooth all round: the dark band along a move's edge follows its smooth outline and hides the cells' steps beneath it; where parts of different colours meet (yellow next to deep red), a smooth dark seam between them
+- Each part of a move is filled with triangles cut to its smooth outline, drawn live: no blocky cell steps, and every part keeps its own colour as the move rolls on (waves, how fast and which way it goes all still show)
+- No lines between the triangles, and no colour poking out past the edge: each triangle's shape is now the anim's own corners (sharp, exact - tools/tri_geometry.ps1, run after compiling trshapes), not a picture with a soft edge, and they're cut fat, not long thin slivers
+- Lines are sharp-edged too, meeting exactly end to end
+- The dark band along a move's edge is solid: even all along, no darker spots where its pieces join
+- Faster: about 40% fewer pieces on the ground for the same move; pieces that haven't moved since the last frame aren't touched; a new distance (you moving while it aims) is worked out at most one a frame - until then the nearest one already made is shown - so running about while a boss aims no longer stutters
+- No hitch on the first big move: the ground pieces are made ahead, a few a frame, after you join (the Celestial Champion's first laser made 380 at once)
+- No more stutter or long freezes during big moves: a move's shape is now cut once into pieces (each struck by the same steps), each piece filled once, and the lines between them made once - shared, so they meet exactly; as the move goes on only the pieces' colours change. Worked out per frame it was 12-16ms and about 1MB of garbage (which froze the game for up to a second when collected); now well under 1ms and a few KB. A distance drawn already is kept while you step about within a hair of it
+- Its outside edge stays one smooth curve however many pieces lie along it
+- Lighter still with many bosses at once: where each piece lies on the ground is worked out once while the boss (or what it set off) stays put - for every one of a kind at once (a field of traps), not just a few - and a thing on the move is drawn straight without keeping anything; a new distance (you moving while a boss aims) is worked out at most twice a second; more ground pieces made ahead (2700, over the first few seconds)
+- A move that strikes where it likes (the Celestial Champion's falling crystals): its faint "may strike here" shape stays whole until the last one lands, then goes at once - it used to fade away piece by piece
+- The Celestial Champion's lasers stay one shape after its animation ends while they still burn (they came apart into separate circles); only when it's killed mid-move are they drawn on their own
+- Many more bosses and monsters run offline from the game's own code: the Mutated Deerclops (claws, ice laser, ice lances), Mutated Bearger and Warg, the Twins of Terror, Toadstool (and Misery Toadstool), the Ancient Guardian (bite, and its leap - landing on you), the Ancient Fuelweaver (strikes, bone spikes), Spider Queen, Treeguards, Crab King's claws, Frostjaw (Sharkboi), Scrappy Werepig, WX boss robot (stomp, leap), the Celestial Champion's rift form (slam, dash), Shadow Knight, Shadow Thralls (horns, mouth), Lunar Thrall plant, evolved Gestalt guards, Vault pillar guards, Archive centipede, Fused Shadeling - and Rock Lobsters, Depths Worms, Slurpers, Eyeplants, big tentacles, Mosslings, Birchnutters, Buzzards, Lavae, Suspicious Peepers, Grass Gators, Ewecus, shadow creatures (land and sea), cave vent mites, Vault crawlers, chest mimics, teenbirds and smallbirds, mutated birds, Bee Queen's guards, MacTusk, Skittersquids, Rock Jaws, Crab King's mobs, sea weeds, Pig King's fighters, Clockwork Bishops, Splumonkeys (their swings; thrown things not yet)
+- (tools) anim_lengths.lua made from every animation in the game; the offline runs' fake world handles more of the game's code (collision masks: a leap over you lands on you)
+- Scrappy Werepig's cannon: laid out where it aims as it fires, the whole beam (it was drawn as a spin round itself, the beam's far part missing)
+- Shadow Thrall (mouth): its bites one after another, each re-aimed - drawn round it towards you all the while
+- Vault pillar guard: its second blow drawn up to where it goes on into the third
+- Things thrown in an arc are now run too: Toadstool's mushroom bombs (drawn round each where it lands, until it goes off), Ewecus' snot
+- Armored Bearger: its butt slam is drawn; standing up after a ground pound no longer flashes its swipe for a moment (that stand-up looks the same as the start of its swipe - the swipe is drawn from its own blow on)
+- Shadow Knight, Rook and Bishop at levels 2 and 3 too (bigger, reaching further); the Rook's and Bishop's teleporting strikes are drawn (they strike all round where they land)
+- Crab King's knight crabs, and their spin
+- Frostjaw's dive: laid out the way it has turned to (it comes round to you only so fast), as far as you were
+- (testing) the log says when each thing a boss set off is first looked at
+- Shadow pieces at levels 2 and 3 (and any boss run offline at more than one size) now really use their own bigger shapes in the game - the level 1 shape was being picked for every size
+- Armored Bearger's butt slam: leaping backwards onto you, as far as you are (3 to 6) - it was drawn leaping away
+- Klaus' deer: their plain kick, and their spell circles - fire for the red, ice for the blue - where you stood as they cast
+- Scrappy Werepig's junk throw: where the junk may come down round you
+- Frostjaw: its dive from standing, and its dives and torpedo aimed ahead of you as you run (where you'll be .3s on, as it does)
+- Enraged Dragonfly's pound: out as far as it sets you alight, not only as far as it hits
+- (tools) the offline runs: things updated every tick run every tick; freezing and setting alight count as being struck; a boss may be run with its target behind it, handed a list of targets, or counted with all it set off; much faster where nothing could be found
+- Frostjaw's dives: aimed ahead of you by how fast you're going right then (setting off in its last moment of aiming, it leapt much further than drawn); with you well off to its side it jumps only its shortest way, as its code does (it was drawn going its whole way)
+- Mutated Deerclops: a second ice lance thrown straight after the first (its other arm) is drawn too
+- Scrappy Werepig's tackle: it chases you, so with you off its way it goes its whole way (about 21) - drawn so; still within its reach of turning to you (about 6 off its way), it stops at you
+- Scrappy Werepig's junk: each piece drawn where it comes down - they all appear in one spot and slide out to land round you; and where the junk may land, run properly (offline you stood exactly in line with it, and its code then skipped aiming at you)
+- Klaus' deer: their burning fire and ice circles drawn as one shape (made piece by piece pulse by pulse, they stalled the game for a moment as they appeared)
+- (tools) the offline runs: how far one goes with you off to its side, how far off its way a chasing one still turns to you, and things carried off by their own code before they come down are all found from the game's code
+- No more little outlined squares dotted inside shapes (the Mutated Deerclops' ice lance, Klaus' deer circles...): a thing turned at an angle left single cells out of its shape, each drawn as a tiny hole - they're filled now, and edges come out smoother
+- Armored Bearger's butt slam: how far behind it you are counts (it was drawn leaping its furthest); with you beside it rather than behind, it leaps its shortest (3), as its code does
+- Frostjaw coming up: all round it stays shown until it leaps (it strikes there every moment it's coming up - stepping in was a hit outside what was drawn)
+- Scrappy Werepig's junk: its "may land here" stays, aimed where you were, while the junk is up in the air (it vanished as the throw ended)
+- (tools) the offline runs: a boss searching the same spot frame after frame keeps what it struck there in danger until its last search
+- A move's outline that only slides along with you (Klaus' deer casting where you stand, the Ancient Guardian's leap, the Celestial Champion's beam) now follows you smoothly - it used to jump to a new spot only every half second
+- The cooldown "ready again soon" outline is twice as thick
+- Scrappy Werepig's tackle: running on ahead of it no longer makes its shape vanish before it reaches you (each part now goes only once it has charged past it)
+- Scrappy Werepig's junk: each piece's landing spot worked out from how long it has been falling (by its own animation) - it was overshot by however late it was first seen
+- Ancient Guardian: its stomp is back (its leap begins with the same animation and had replaced it) - both are shown until it either leaps or stays put
+- Two moves that begin alike no longer replace one another offline; the one listed first is shown when they can't be told apart
+- Ancient Guardian's charge: drawn as a straight lane - aimed at you while it paws the ground, then fixed as it runs (up to 25 on, as its brain runs it), struck as it gets there
+- What's in the way now counts: a boss charging, rolling or sliding on the ground stops at rocks, pillars and walls it can't break, and no walking boss goes past the sea's edge or the end of the land - its shape is cut there (a leap goes over rocks, but still not into the sea)
+- Frostjaw: coming up out of the ground stays a full circle round it (the "slide along with you" of the previous change moved it off with the landing)
+- Scrappy Werepig's junk: its first moments no longer guess a landing spot off in empty ground (how fast it goes is now judged over a few frames)
+- (tools) the offline runs: going through players and over rocks for a while, as the game's helpers set it, is now run (it was skipped); which moves bump into rocks as they go is noted
+- (tools) the offline runs take about 1.5 minutes instead of 5: a thing's timed jobs are let go once it's gone (the Celestial Champion's lasers left thousands, sorted every frame), runs are started longest first and each slot takes the next as soon as it's free
+- The part about to strike next keeps its whole outline, also where it lies under a part striking now - Frostjaw's landing over where it came up out of the ground is a full circle, not one with a bite out of it
+- Ancient Guardian's charge: once it's running, drawn from where it is, the way it's really going (sliding along a wall it ran into) and only as far as it has still to go
+- Scrappy Werepig's tackle: once it has stopped (it struck you, or gave up), what lay ahead of it is gone
+- Scrappy Werepig's junk: a piece's landing spot is shown only once it's sure - a straight line through everywhere it has been seen, the same twice running (no more guesses off in empty ground as it sets off)
+- Frostjaw's dive from standing: laid out the way it faces - step well off to its side and it stops turning to you, and jumps only its shortest way (it was drawn going as far as you were)
+- Frostjaw's dives: step out of how far round it turns to you (45 degrees, found from its code) and it lets you go, keeping where you were as you stepped out - drawn that far along, even when that was while it was still swimming at you (it was drawn going its shortest way)
+- Shapes may now reach 34 ahead (26 before): the Ancient Guardian's charge is round at its far end from the start (it was cut square), the Twins' charges and the Celestial Champion's roll reach their whole way
+- Frostjaw's dives: you behind it count as far as in front (its code takes how far along you are either way), and where it keeps you as you step out of its reach of turning is where you'd be a moment on, by how fast you go (dashing off behind it, it leapt 6 when 2 was drawn)
+- Ancient Guardian's charge: laid where it set off and cleared behind it by how far it has really gone - no longer stretched on past where it stops; only once a wall turns it off its line is it drawn from where it is, and never longer than it has left
+- Frostjaw's dive from under the ice: run from when it starts swimming at you (out of sight, half a second before it comes up) - where it keeps you is where you were the first moment you were out of its 45 degrees from then on, as its code does (it was taken from an earlier moment)
+- Ancient Guardian's charge: no more flicker as it runs - its line is taken from the way it really runs (not quite where it aimed at you), and a wall turning it makes one new line from there, not a new shape every frame
+- (tools) replay.lua: replays a game's trace (the boss and you, tick by tick, and each hit that landed) through the mod's own drawing, offline - says every hit that wasn't drawn, every "drawn, not hit", and every frame the drawing flickered off
+- (testing) the trace now logs every tick of each boss near you (any state, with its id and your speed) and each hit that really lands
+- Frostjaw: where it keeps you as it lets you go is taken from its first frame of following you on - the frame before, it was still turning to you
+- Moves that don't turn to you as they begin are laid out the way the boss faces (Frostjaw's second and third swipes and its slide, the Twins' and Eye of Terror's chomps, Toadstool's pound, Crab King's claws and more - 17 in all): they were turned towards you, so standing well off to its side you were drawn in a swipe that couldn't reach you
+- (tools) verify.ps1: every check in one go - unit tests, the offline runs (and what got worse since last time), every offline run replayed through the mod's own drawing (1210 strikes over all bosses), and every game log kept so far replayed - one summary, against the last one
+- (testing) the trace also logs what's round each boss near you: the ground it may stand on (40 round, every unit) and each thing with a body (where, how big, its collision group, whether it can be broken) - the replay's world answers from it
+- The shark's bites one after another are drawn (they begin as its single bite does; both are drawn when they can't be told apart)
+- Vault pillar guard's spin: no longer gone for a frame each time it goes round
+- A boss run offline is drawn without waiting on the server's word about it - the Ancient Guardian charging in from far off was drawn only once it came near (part way through its charge)
+- Shapes reach a little less past the real reach (each cell counted as struck by a quarter cell's leeway, not half - measured against the game logs: fewer "in it, not struck", no more missed)
+- The next part's own outline inside a part striking now only when it comes well after it (a blow struck twice a frame apart showed as two shapes, one in the other)
+- (tools) verify.ps1 replays the game logs with the server's word arriving as it does in the game (late for a boss coming in from far off)
+- Frostjaw's dive: once it leaps, the shape follows how far it's really leaping (seen from its speed) - not only where you stood as it last looked; its pop-up circle no longer stays drawn as danger until it lands
+- A spot struck again much later (Frostjaw landing over where it came up) is shown in danger only for that later strike, not all the way between
+- The dark band along an edge now meets itself at every corner (the edge looked drawn twice, with small notches - Armored Bearger's swipe)
+- A cooldown's warning is not shown for the very move the boss is making (the server's last word on it was from before it began)
+- Parts a move strikes a frame or two apart (a swipe sweeping on - Armored Bearger's) are shown as one, in one colour with one edge: the second's thin rim showed as yellow slivers and notches along the edge
+- A boss stopped short of where it was going (Frostjaw's slide with you in its way) has its shape moved back with it - it strikes round where it really is
+- Fixed a crash (a testing switch left in the drawing code)
+- Bosses run offline now have their real body size offline (Armored Bearger, Frostjaw, the Ancient Guardian, the Scrappy Werepig and others set it a way the offline runs missed): they no longer go through you there - a lunge or slide stopped by you is drawn stopped
+- A boss pushed or knocked off its way: its shape slides along with it (to the side at once, along its way once it slows) - it strikes where it really is
+- A boss going on into another of its moves (Armored Bearger's combo) is drawn as that move from its start - the second swipe was taken for the end of the first and not drawn
+- Bosses run offline are picked from 40 away (was 24): Frostjaw setting off its torpedo from about 24 away flickered in and out
+- A thin rim struck a few frames after the part inside it (Armored Bearger's butt slam) is shown with that part, one colour, one edge
+- (tools) verify.ps1: the replay now flags shapes gone for a moment, halved, jumping, or dropped when a boss is too far off; reading an undeclared global; slivercheck.lua finds jagged rims in the offline data; the sim says "NO BODY" for a boss with no size
+- Every monster that fights is now run offline, found in the game's own files (129 kinds, was 97): among them the otter, slurtle, molebat, warglet, fruit dragon, pirate monkeys, the Celestial Champion's rift form, and more
+- Moves that put a status on you are known: sleep, freezing, fire, knockback, slowed, stuck, disarmed; a move that does no harm, only a status (Klaus' deer's spells, a gestalt's sleep), is drawn in purple
+- Monsters that were made wrong offline are made right: the Spider (was taken for a hat), the Merm, the Mutated Warg, the Crawling Horror, the Chest Mimic (as it shows itself), birds, tentacles - all with their real body size
+- (tools) the offline runs say "NO BODY" for a monster with no size, counted by verify.ps1 (now none)
+- Offline runs go tick by tick as the game does: a state's time running out comes before its strikes that tick, and a boss strikes from where it is before it moves on (Frostjaw's torpedo was drawn a frame - half a unit - further than it reaches, and you stood in it unhurt)
+- The line between two colours inside a shape is smooth (Armored Bearger's butt slam: its inner ring came out in steps); parts shown as one are cut as one, and thin rings struck one after another (Klaus' deer's spells) shown together
+- A boss shoved about as it swings (you pushing into Armored Bearger, it bounced back several units): its shape follows where it really is every frame, quickly, as far as 12 units - not only once it slows down; a frame early or late on its own way is not taken for a shove
+- (tools) verify.ps1 keeps one log per game session (a session copied twice had its strikes counted twice)
+- Klaus' deer's spell circles (ice, fire) are drawn in purple like the spell itself - they only freeze or burn, no harm (the circle was red over the purple spell)
+- Toadstool's spore cloud is shown: a circle as far as it harms you, all the while it's there (every lingering cloud that harms what's in it, found in the game's files)
+- The Celestial Champion's falling crystals: where they may land stays where it was set, round where the boss stood as it called them - not moving on with the boss
+- (tools) the trace notes a boss's strike only when you were in its reach (a blow you dodged was counted as a hit); replays of older logs leave out strikes further off than any real hit of that boss
+- The Celestial Champion's spin (and any spin round itself): its shape no longer turns round and back every frame as it spins over you, nor shakes with it - turned to you only from 2 away, where it is eased (its edge was a blur)
+- A charge's "in your way or off it" is told with some give: stepping a hair across its edge as it aims no longer flips its shape between stopping at you and going its whole way
+- (tools) the trace notes each thing a boss sets off (spike trails, crystals, circles, clouds) and its hits on you - "[tr_haz]", testing only; tests/replay_haz.lua draws them as the mod does and checks each hit; the replay also flags a shape going back and forth (WOBBLE)
+- A boss aiming at you no longer flashes its shape back onto itself for a moment: when the game briefly doesn't say whom it's after (a move's first frame, its target changing), the one it was after a moment ago is kept (up to 3 seconds)
+- The Eye of Terror's and the Twins' charge: its first frame no longer drawn behind them before they've turned round to you
+- The Scrappy Werepig's junk throw: drawn towards you while it rummages (it turns to you to throw) - not the way it faced, behind it, then jumping across to you
+- The War Machine's (wagboss_robot) homing missiles are shown: a circle round each missile where it'll burst, redder the lower it comes (the offline runs now follow things up and down - the missiles went off at once before)
+- A ground pound's ring from something with no moves of its own - the Great Depths Worm's dirt as it surfaces - is shown, as big as that pound reaches (scaled with the ring), only as it strikes; a ring from a boss's own move is still drawn with that move
+- (tools) replay_haz.lua counts shapes drawn round you with no hit near, and checks blows from what isn't traced itself (the worm's dirt) against the rings there
+- The Great Depths Worm's spiked body segments are shown: a circle round a spiked segment as it comes up out of a hole and goes down into the next (where its spikes strike, as far as the game's own code reaches) - not round plain segments or the head
+- The Ancient Guardian's charge: all within its reach of where it is now stays drawn as it runs - its gore strikes whoever comes within reach, ahead of it or beside it (that part was gone once it had first got there)
+- A shape that goes with how far you are, as the boss aims (Bearger's lunges...): slides smoothly as you run in or off, its far edge between the two distances made either side of you - no longer stepping a unit at a time
+- Klaus' deer: their fire and ice circles stay where they were put down - the deer walking off no longer takes the drawn circles with it (it showed as two rings, one moving with the deer); the same for the Mutated Deerclops' laser once it's down
+- (tools) monsters other than bosses are traced too while they're after you (the deer were never traced, so the replays never saw them); tests/slidecheck.lua runs every move that strikes by what it puts down with the boss walking off and fails if the shape goes with it; the replay flags it too (SLIDE)
+- The War Machine's homing missiles are really shown now: they're hidden from the game's own searches (CLASSIFIED), so the mod never found one - things it knows are now kept as they're made
+- The War Machine: its stomping tantrum and its orbital strike (the laser from the sky, a circle following you until it comes down) are shown; its offline runs now begin with it switched on to fight, as in the game
+- Bosses listed by hand get the attacks found for them on their own as well (each found from the game's code, helpers it strikes through included) - none of a move's own later states split off
+- The Eye of Terror and the Twins: their charge as an eye (first phase) is run too - Retinazor charges 20, Spazmatism 9 - and the mouth form only once it has been seen turning ("transform"); it was drawn as the mouth's all along
+- The Celestial Scion's dash: both its runs drawn from the start, one after the other, and bending your way as it steers - not its second half only once it got there
+- The Scion's slam: the second blow is shown coming, counting down, not as "striking" all the while after the first
+- The Ancient Guardian's charge: as wide as its gore really reaches (its hit range, not its attack range on top of its body) - 1.2 narrower all round
+- Klaus' deer: once their circles are down, only the circles are drawn - not the spell's own shape too, a second ring flickering beside them
+- The Scrappy Werepig's junk throw: aimed at you only until it turns to throw, then the way it faces; set as it lets go - not following you after; where each piece really comes down is shown as it falls
+- (tools) new replay checks: OUTRAN / OVERDRAWN (a charge going further than drawn, or drawn well past where it stopped), LATE (where it got to drawn only as it got there), OUTSIDE (what it threw coming down where nothing was drawn); the game's own "drawn: NOT" count in the newest log; the replays find each boss's stategraph from the offline runs (the Twins, a Varg... were never replayed)
+- The Eye of Terror's and the Twins' charge: no big round blob round you at its end, going along with you as you ran (a strike its own charge gave you was drawn again as a disc round you)
+- The Eye of Terror's charges one after another: the next one shown only while it turns to you right after a charge - not as it taunts after its last (it turns to you then too)
+- The War Machine's orbital strike: drawn where the beam is all along, as it slides onto you - not run on to an empty spot at first; and on all the while it burns (6 seconds) - it was gone as it first struck
+- The Celestial Scion's supernova is shown (the offline runs never let its wide blast find anyone)
+- Monsters' moves found by a new coverage run (every state of every stategraph, every branch on its flags): Bearger's and Armored Bearger's pound into a stagger, the Knight's joust, the Rabbit Kings' dropkick, a Lunar Grazer's spawn, the Shadow Thrall's landing, the Cookie Cutter's leap...
+- (tools) verify: coverage - each blow the game's code strikes that the mod has nothing for (UNCOVERED), each state that won't run here (NOTRUN); replay: FOLLOWS (a shape going along with you after it stops aiming), the boss's own track found by its GUID (the checks against how it moved never had it in newer logs), things judged only against the boss that set them off
+- (tools) verify.ps1 -Only boss,boss: only those bosses run offline again and replayed, put into the data as it is (tests/splice.lua) - about 30 seconds, not 4 minutes; the coverage run goes alongside the offline runs (full verify about 3.3 minutes)
+- Armored Bearger's butt slam: drawn once - its wind-up was taken in as a move of its own too, a second shape over the first
+- The War Machine's orbital strike: aimed at you until its beam is there - not left where you stood as it began, nor short of you when you're far off
+- The War Machine's stomping (and any move striking again as its animation goes round): no longer gone for a frame as the animation starts over
+- New core (REDESIGN.md, first three moves): Klaus' red deer's fire spell, the Scrappy Werepig's junk throw and the War Machine's orbital strike are drawn from tables of where they really strike with you at each place round the boss (the game's own code run offline, all the way round, out to 40) - one rule: until the frame it stops looking where you are, it follows you; from then, it stays where you were then. Once what strikes is there (the circle, the junk, the beam), that is drawn instead; and if it should be there by now and isn't, nothing is coming for you (the War Machine's signal only calling drones, or you too far) - no shape left on you
+- (tools) tools/build_tables.lua (-client: true_range/moves_table); replay: the things bosses set off fed in as the game makes them ([tr_haz]); FOLLOWS goes by a table's deciding frame
+- Klaus' blue deer's ice spell moved to the new tables too: until it casts, where it will freeze is shown on you (the ice really comes up right where you stand, within 0.4); once the ice is there, only the ice is drawn - not the spell's own shape on top of it as well (two rings, one a little off the other, looked like a thick jagged rim)
+- Klaus' deer spells: no small ring flashing up inside the big one before the circle comes (the parts of a growing ice/fire circle were drawn apart, by when each is struck - it's drawn whole now: the real circle is drawn itself once there)
+- New core tried on every move run offline (192): each move's table is kept only where the replays of every game log and offline run show it doing better than before (tools/table_gate.ps1) - now 9: Klaus' deer spells, the Scrappy Werepig's junk, the War Machine's orbital strike, the Ancient Guardian's leap, Armored Bearger's butt slam, the Shadow Thrall's (horns) jump, the Ancient Fuelweaver's spikes, the Celestial Scion's burst; the rest as before
+- (tools) tools/build_all_tables.ps1: every move's table, each move split by angle over all cores (5.5 min for all); rows struck alike kept once (12MB -> 4.5MB); tools/table_gate.ps1: replays with and without tables, per move
+- New core, round 2: the tables now also carry a blow on its target alone (the reach round the boss as it strikes - a hound's bite, Krampus' swipe), a second strike where the first already struck (Klaus' second claw), and where the boss went and which way it faced frame by frame - the shape moved and turned on by how far the real boss is off that (pushed, stopped by you, not turning after you); eased between the places run (no jumping as you cross from one to the next). Kept where the replays show it better: now 23 moves (Armored Bearger's butt slam, Frostjaw's dive and third bite, Malbatross' bite, Krampus, Moose/Goose, Treeguard, penguins, slurper, the Twins' (Spazmatism) charge, the vault pillar guard's (vault_pillar_guard) third attack, Crystal Deerclops' bite and ice throw, the Ancient Guardian's bite, Scrappy Werepig's junk and object throw...) - the rest as before
+- New core, round 3 (closing what it lacked against the old way, every move tried): two moves begun alike drawn together (the shark's bites); only on whoever it's after when that's you (a chop at someone else: nothing); one animation biting again and again is each time a new go (the eye plant); each blow of a move set by where you were at its own moment (Klaus' chomp lands where it aimed at frame 26, its quick swipe after goes for you then; Armored Bearger re-aims every swipe); a run stops where the boss goes on into another of its moves (a combo's next swipe is its own move); a miss (you out of reach) no longer counts as "where it strikes follows you"; what it strikes by is hidden only once it's drawn on its own (the Celestial Champion's lasers are drawn with its move); one the throw before put down isn't this one's (Crystal Deerclops' lances); places nearer than 2 run too (a plant's bite); the boss's real facing, not eased, every frame. Kept where the replays show it as good or better: 28 moves
+- (tools) the game logs now carry each boss's animation by name (anim=); the replays tell an attack's _pst from it begun again in older logs too
+- Where you standing makes a boss go on into another of its moves is now shown, lightly, just before it looks (found in the game's own code, every move): Bearger's and Armored Bearger's swipes going on into the next (you still in front of it, in reach), Frostjaw's bites one after another, the vault pillar guard's - a moment to step out of it and end the combo
+- New core, round 4: finer places where what a move strikes changes fast from one to the next (1532 more, in 36 moves - the Celestial Champion's, Bearger's swipes, the Werepig's slam...), eased between unevenly spaced ones; a row whose middle goes with its target is moved on to just where you are; now 38 moves, kept only where the replays show none more missed than before and the rest no worse - and the three seen right in the game (the deer's fire spell, the Scrappy Werepig's junk, the War Machine's orbital strike); Crystal Deerclops' lance and Klaus' leap stay as before (the tables still miss there)
+- (tools) the offline runs now also have you wandering about (4 random walks, made the same every time) - twice the checks; the replays don't take what's shown aside (where it goes on) for the move's own shape
+- Armored Bearger: no ring flashing up for a moment after its ground pound and its butt slam are over (the pound's ring effect plays on after the blow; it was drawn on its own as soon as the move ended - something learnt from the Ancient Guardian's pound, striking nothing here). A thing drawn with its boss's move isn't drawn on its own for a second after that move ends
+- Where standing makes it go on into its next move: worked out cell by cell now (was every half unit, its edge in steps)
+- Deerclops' and Crystal Deerclops' swipe: the spikes' way no longer turns after you once it has stopped turning (frame 16 in its code - it was taken as aiming on until its spikes were down, frame 39). A move's deciding frame from the game's code now stands where the old way guessed it from what the move puts down
+- Things a boss sets off: their clock runs from when first seen, also while drawn with their move - a pound's ring (there 3 seconds) no longer came up anew, struck nothing, a while after Armored Bearger's pound or butt slam
+- The Nightmare Werepig's slam: drawn once - its wind-up, over before the slam strikes, was drawn on where it began as well as the slam itself where it lands (a move going on into the rest of itself isn't drawn on after)
+- The Scrappy Werepig's junk: one heap, where you are as it aims - pieces told apart only by where they happened to fall were taken as aimed at another moment (one deciding frame for a move that strikes at random)
+- The Scrappy Werepig's junk: one heap moved on with you as it aims - not another place's heap each time you crossed into it (the heap changing shape and jumping a unit or so as you walked)
+- The Scrappy Werepig's junk: drawn as everywhere it may fall (16 throws worked out offline and put together, as the Deerclops' ice spikes are) - not one throw's heap, a piece now and then falling outside it
+- The Celestial Champion's roll and spin, and the Ancient Fuelweaver's spikes: worked out offline as many times over as the junk is (16) where they don't go the same way twice, all put together
+- The Scrappy Werepig's junk: where it really comes down when you run - once thrown it turns after you 45 degrees at most and goes only so much further or shorter, so it fell 3 to 5 off where the heap was drawn on you; now drawn where it falls (within about half a unit, as worked out offline from the game's own code)
+- The Scrappy Werepig holding its junk (its target lost as it wound up, waiting till it has one again): the same throw drawn on, then on to where it lands - not left where it was as the throw began (that throw came down 6 to 16 off it)
+- The Scrappy Werepig's junk thrown at you far off (over 20 away, or well off to its side): drawn where it comes down - no further than it can throw - not on you 28 away while it lands 21 off; and the heap no longer flung the other way for a frame as it turned round holding its junk
+- The Scrappy Werepig waiting its time out with no target and throwing anyway (the way it faces, not at anyone): no longer drawn on you; the junk itself drawn as it comes down, at once
+- The Scrappy Werepig's tackle reaching you sooner than worked out offline: once it lifts you, its run is over and the lift is drawn round where it stands - not the rest of a longer run left on behind it in crescents and horns
+- The Scrappy Werepig's tackle: drawn as what it really strikes as it runs - a round hit just ahead of it, frame after frame - one shape with one edge: what's in reach now, and what's still to come; no more crescents with horns sticking out behind it and a notch where it stands
+- The Scrappy Werepig's lift: gone once its last strike is over (its sixth frame) - not kept on red to the lift's end
+- The Scrappy Werepig's cannon breaking (its "hit"): the blast's ring no longer flashes back for a frame
+- The outline round every shape solid and lighter: seen on the deep red of a part striking now (it was the same red as that, lost in it); and its joints no longer show as beads
+- The dark band along each shape's edge as thin as its outline - no longer sticking out past it in spikes at sharp corners
+- The Ancient Guardian's charge: drawn as far as it really runs - up to you (its whole 25 at most), not the full 25 every time; and where it gives up once you're well off its way (over 60 degrees off and 10 or more away), not on past that
+- The Scrappy Werepig's falling junk: each piece turns red as it really strikes, timed from when it appeared on the server, and on the frame it really strikes (its 15th, not the 16th worked out offline) - not a few frames late, after its damage was already done
+- The Nightmare Werepig's slam (and any leap or lunge as fast): its landing no longer jumps back at it for a moment as it leaps, then out to you again - your game sees it a frame or two late, and it was taken for a shorter leap
+- Crystal Deerclops' ice lance as you walk off while it aims: follows you - no longer kept short of you for half a second, then jumping 3 units on at once
+- Crystal Deerclops' ice lance: its ring where it really comes down once aimed (it was up to a quarter unit too far - drawn over you as you stood just out of it); and following you smoothly as you walk off while it aims, no more steps of a unit at a time - never past the 14 it throws at most
+- The Scrappy Werepig's junk: once a piece of a throw has struck you, the rest of that throw are drawn faint - they can't strike you again (one throw strikes each one once; seen while you host)
+- Lavae (and any that strike once as they leap): once its bite is over, its shape stays where it struck - no longer pulled back after it as your body stopped its leap short
+- Where a part striking now lies over one striking soon (red over yellow), it's drawn as one clean layer - no longer in red and yellow stripes; every kind of fill now has its own layer, faint at the bottom, striking now on top, edges over all
+- The Ancient Guardian's charge: once it stops (its brain giving up on you off its way), the rest of its way is no longer drawn on ahead of it while it stands biting
+- The Celestial Champion's roll: the roll after this one drawn faint - it turns round to you before it, so it won't go on straight where it was drawn as a second warning
+- The Rabbit King's dropkick: drawn as far as it really flies - its whole 12 when you're off its way, not stopping short at 5; your being in its way told by how far it reaches round itself, not by its body; and nothing drawn on once it has landed on you
+- Klaus enraged: his chomp drawn as far as he really leaps at you further off - up to 15 (9 times his size), not cut off at 11 for you 13 or more away

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="b5">
+ <folder id="0" name="square"><file id="0" name="square/square-0.png" width="64" height="64" pivot_x="0.5" pivot_y="0.5"/></folder>
+ <folder id="1" name="disc"><file id="0" name="disc/disc-0.png" width="256" height="256" pivot_x="0.5" pivot_y="0.5"/></folder>
+ <folder id="2" name="wedge"><file id="0" name="wedge/wedge-0.png" width="256" height="256" pivot_x="0" pivot_y="0.5"/></folder>
+ <folder id="3" name="tri"><file id="0" name="tri/tri-0.png" width="256" height="256" pivot_x="0" pivot_y="0"/></folder>
+ <entity id="0" name="trshapes">
+  <animation id="0" name="square" length="100" interval="100" looping="false">
+   <mainline><key id="0" time="0"><object_ref id="0" timeline="0" key="0" z_index="0"/></key></mainline>
+   <timeline id="0" name="square"><key id="0" time="0" spin="0"><object folder="0" file="0" x="0" y="0" angle="0"/></key></timeline>
+  </animation>
+  <animation id="1" name="disc" length="100" interval="100" looping="false">
+   <mainline><key id="0" time="0"><object_ref id="0" timeline="0" key="0" z_index="0"/></key></mainline>
+   <timeline id="0" name="disc"><key id="0" time="0" spin="0"><object folder="1" file="0" x="0" y="0" angle="0"/></key></timeline>
+  </animation>
+  <animation id="2" name="wedge" length="100" interval="100" looping="false">
+   <mainline><key id="0" time="0"><object_ref id="0" timeline="0" key="0" z_index="0"/></key></mainline>
+   <timeline id="0" name="wedge"><key id="0" time="0" spin="0"><object folder="2" file="0" x="0" y="0" angle="0"/></key></timeline>
+  </animation>
+  <animation id="3" name="tri" length="100" interval="100" looping="false">
+   <mainline><key id="0" time="0"><object_ref id="0" timeline="0" key="0" z_index="0"/></key></mainline>
+   <timeline id="0" name="tri"><key id="0" time="0" spin="0"><object folder="3" file="0" x="0" y="0" angle="0"/></key></timeline>
+  </animation>
+ </entity>
+</spriter_data>

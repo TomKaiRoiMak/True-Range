@@ -1,0 +1,22 @@
+51%  sim_moves.lua:1331
+  -- 100%  sim_moves.lua:1331
+40%  sim_moves.lua:1016
+  -- 26%  sim_moves.lua:1333
+  -- 17%  sim_moves.lua:1261
+  -- 14%  sim_moves.lua:1214
+  -- 13%  sim_moves.lua:1314
+  -- 11%  sim_moves.lua:1323
+  --  8%  sim_moves.lua:1328
+  --  3%  sim_moves.lua:1171
+ 3%  sim_moves.lua:NewEntity
+  -- 16%  sim_moves.lua:410
+  -- 11%  sim_moves.lua:425
+  --  7%  sim_moves.lua:444
+  --  7%  sim_moves.lua:417
+  --  6%  sim_moves.lua:434
+  --  6%  sim_moves.lua:466
+  --  6%  sim_moves.lua:485
+  --  4%  sim_moves.lua:451
+  --  3%  sim_moves.lua:413
+  --  3%  sim_moves.lua:454
+  --  3%  sim_moves.lua:445

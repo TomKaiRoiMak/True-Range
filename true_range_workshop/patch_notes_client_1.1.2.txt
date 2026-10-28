@@ -1,0 +1,23 @@
+1.1.2
+
+Everything new in True Range 1.1.2, in the client version too - drawn from what your game sees, as before.
+
+New: mod support
+- Uncompromising Mode: its new monsters and bosses (Hooded Widow, Wilting Dragonfly, Moonmaw Dragonfly, Pepper Dragon, Clockwork Pawns, Automaton Abomination, its hounds, rats, shadows and more) and the moves it adds to the game's own (Deerclops' mutations, Bearger's sinkholes, Moose's super hop, Bee Queen's stomp, Eye of Terror's laser and more) - on only when the server has it
+- Tropical Experience: Shipwrecked's, Hamlet's and the Forge's monsters and bosses (Tiger Shark, Dragoon, Pugalisk, Ancient Hulk, Infernal Swineclops, Boarrior, the Kraken, MacTusk, lizardmen, spiders and more) - on only when the server has it
+- What monsters throw or leave behind in these mods: bear traps, web bombs, geysers, ice spikes, fireballs and fire, shadow goo, root spikes, cannonballs
+
+New: Abigail
+- Her attack range is no longer shown all the time. New setting "Abigail's reach" (also in the O window): only while she's after something (default), always, or off
+- Gestalt Abigail gets her own, smaller strike range; Attack At, Haunt At and Scare show where she'll act as you aim them
+
+Better warnings
+- Monsters that shoot (blow darts, spit, ink, cannonballs): their shot is drawn as a lane, or where it lands - no more huge dark ring round them that never hit anyone
+- Monsters that strike you anywhere in range with no shot to dodge (Tropical Experience's Yellow Lizardman, the Forge's Elemental): a mark on you as they strike, their reach shown pale - only when they're after you
+- A move done again straight after itself (a hop after a hop, a bite after a bite) is drawn again each time
+- Moves stop following you when the game stops aiming them - they kept turning after you to the end
+- Leaps and dashes drawn where they really land (Klaus, Ancient Guardian, spiders' jumps and more)
+- Shapes over each other are drawn as one shape with one outline, not outlines crossing
+
+Fixes
+- On with True Range at once (a server that has it): no longer clashes with it - the server's mod is used, and its log no longer fills with "Invalid RPC code: true_range"

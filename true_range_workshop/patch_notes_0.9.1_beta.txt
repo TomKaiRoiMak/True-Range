@@ -1,0 +1,33 @@
+0.9.1 beta
+
+- Attacks that go for every player nearby at once now warn each of them, not only the one the boss is after: Klaus' deer spells, the Ancient Fuelweaver's bone snares
+- The Celestial Champion's roll: only the roll it's on is drawn - the next one waits until it has turned to aim again
+- Shadow Thrall mouths: their leap is warned where it lands, from when they crouch to jump - not only as they come down; and a mouth coming out of hiding straight into a bite is drawn too (it was missed entirely)
+- The Misery Toadstool's dark mushroom bombs are drawn (they weren't at all)
+- The Vault Pillar Guard's leaping smash at the end of its punch combo is drawn (only the one it starts on its own was)
+- A move done again straight after itself (the Celestial Champion summoning, chop after chop) is drawn each time - only the first was
+- The Celestial Champion's roll ending: when it's stopped short (rolling into you), the slam is drawn where it really stops, and all round it - it had a gap behind
+- Celestial Champion gestalts (all sizes) are drawn as far as they really fly - the last stretch was missing, and on a laggy server the drawing ran out before they arrived
+- Celestial Champion phase 3 crystals: no more guessed area turning after you - each crystal is drawn where it really falls, as it comes (the same for the Antlion's sand spikes)
+- The Scion's dash is drawn as one shape, not two pieces end to end; and the stop at its end is drawn all round it (only its front was)
+- Eye of Terror as a mouth: its charges one after another are drawn even if you came after it transformed
+- The Scion's dash shows its stop from the start: it strikes all round itself as it stops and slides on - that used to appear only as it struck, as if the dash suddenly reached further
+- The Celestial Champion's spin, rushing at you: drawn reaching out the way it's coming, as far as it gets in half a second - it was drawn only round where it was, under you only as it got there
+- Armored Bearger's ground pound is drawn once - it was drawn twice over (as the pound and as the pound it staggers after), its edges doubled and jagged
+- Klaus' bite: drawn where it really lands from the start - it leaps a moment before it stops aiming, and was drawn about 1.5 short until then (you outside it, bitten)
+- The Werepig's slam, you off to its side: drawn landing where you'd be in its way - it showed its full leap past you, and came in short only a beat before it hit
+- The Vault Guard's leap: drawn where it lands from the start - it turns to you once more just before it leaps, and was drawn following its own body instead, under you only as it came down
+- The Celestial Champion's spin, setting off at you: drawn reaching your way as soon as it moves (it waited a few frames to see how fast), and grown out smoothly, not in one jump
+- Klaus' bite and the Vault Guard's leap no longer pull back the moment they stop aiming: the boss is seen a frame or two late as it sets off, and the shape stepped back by that much
+- Shapes no longer jump in and out within a single frame (seen frame by frame while paused - Klaus' bite as it stopped aiming): drawn the same however often the game draws between its ticks, and a boss setting off before it stops aiming is measured from where it began
+- Outlines: the corners are filled - each straight piece of the edge (and of the dark band inside it) used to end square, leaving a notch at every corner, very visible on the deep red of a strike
+- Edges and fills no longer fight over which is on top as a blow strikes: the game's pieces are kept apart by what they draw (each its own drawing order), not passed from an outline to a fill when the colours change over
+- Edges, bands and seams are now laid with the same triangle pieces as the fills: the game kept the drawing order only among pieces of one kind, and the band slipped under the deep red of a strike while its corners sat on top - the edge seemed to jump in and out
+- Klaus' bite no longer jumps out and back the frame it stops aiming: a hair off its offline run that first frame is its timing, not a shove, and isn't followed
+- Edges: the outline now lies just outside the shape and the dark band inside it is gone - nothing is laid over anything else, so the game's own ordering of pieces (by where they lie, not only by layer) can no longer put the fill over the edge here and under it there
+- The dark band is back, now just outside the shape between it and the outline (nothing overlaps); and shapes no longer flicker in and out in the first fights after joining (pieces were being made mid-frame)
+- A boss's pose as it stops aiming now comes from the server (where it really was at that frame), not from what your game saw of it - seen a frame late and slid between ticks, that was guessed, and Klaus' bite jumped back and out again the frame it stopped aiming. The server sends each nearby boss's pose with its move's frame while it attacks
+- How far a boss gets before it stops aiming is learned from the server as you fight it: the same each time within a game (Klaus' bite went 1.36 one game, 1.62 another - offline 1.55), so from its second go on the shape no longer steps back as it stops aiming
+- Bosses already in a later form when you join or load the game (the Eye of Terror as a mouth, loaded from a save): the server tells which form they're in, so their moves are drawn as that form from the first one - the Eye's charges were drawn as an eye's, short, the shape sliding along under it
+- The Eye of Terror's taunt after a charge no longer shows a charge to come: it was taken for its mouth form (whose offline run happened to end in a taunt), with more charges after; the server also tells which form a boss is in now - the Eye turns back into an eye when it heals past its turning point
+- New check (testing): a move drawn while the boss is in a state it can't strike from (taunting, idling, flinching) - none left
