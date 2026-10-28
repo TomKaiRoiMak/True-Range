@@ -3874,10 +3874,12 @@ local function DrawHazardInner(ent, x, z, rot, px, pz, now, in_moves, sfx)
         -- (by its speed over its last frames here - it flies 0.3 s all told, too short for LeadMoving's steady tenths)
         local world = rawget(_G, "TheWorld")
         local lh = s.lh
+        s.led = 0
         if not rawget(_G, "TR_OLD_HAZLEADMOVED") and SimMoves.hazard_lead > 0 and not (world ~= nil and world.ismastersim)
             and lh ~= nil and #lh >= 2 and now - lh[1][1] > FRAMES / 2 and now - lh[1][1] < .3 then
             local k = SimMoves.hazard_lead / (now - lh[1][1])
             x, z = x + (ex - lh[1][2]) * k, z + (ez - lh[1][3]) * k
+            s.led = math.sqrt((ex - lh[1][2]) ^ 2 + (ez - lh[1][3]) ^ 2) * k
         end
     end
     -- (one that moves and strikes a while after it's made (h.delay, run offline from when it was made): not
@@ -3909,7 +3911,9 @@ local function DrawHazardInner(ent, x, z, rot, px, pz, now, in_moves, sfx)
             local drawn = math.sqrt((x - s.jx) ^ 2 + (z - s.jz) ^ 2)
             local went = math.sqrt((ex - s.jex) ^ 2 + (ez - s.jez) ^ 2)
             -- (or held off where it is - one not thrown drawn more than 1 from it: left behind as it flew on)
-            local off = not s.lobbed and math.sqrt((x - ex) ^ 2 + (z - ez) ^ 2) > 1
+            -- (past where it was led on to on purpose (s.led - a player's game, on as fast as it goes): a boulder rolling at 12 a
+            -- second drawn 1.3 on, every frame of it counted a jump - 577 in a client replay, 2026-10-29; TR_OLD_JUMPLED: so)
+            local off = not s.lobbed and math.sqrt((x - ex) ^ 2 + (z - ez) ^ 2) > 1 + ((not rawget(_G, "TR_OLD_JUMPLED")) and s.led or 0)
             if drawn > went + 1 or off then jump[ent.prefab] = (jump[ent.prefab] or 0) + 1 local jev = rawget(_G, "TR_JUMP_EV") if jev ~= nil and #jev < 400 then jev[#jev + 1] = string.format("JUMP %.3f %s guid=%d drawn=%.2f went=%.2f off=%s lobbed=%s rose=%s start=%s", now, ent.prefab, ent.GUID, drawn, went, tostring(off), tostring(s.lobbed), tostring(s.rose), tostring(start)) end end        end
         s.jx, s.jz, s.jex, s.jez, s.jt = x, z, ex, ez, now
     end
