@@ -30,7 +30,19 @@ function StatesOf($sg) {
     # (and the states Uncompromising Mode adds to it (its postinit/stategraphs, AddStategraphPostInit - not in game_scripts_um),
     # and CommonStates' own: AddCombatStates' "attack" playing "atk" or its anims.attack, AddSimpleState's - the NEVER moves
     # found no state for, 2026-10-28)
-    foreach ($p in @((Join-Path $sgDir "$sg.lua"), (Join-Path $UmPost "$sg.lua"))) {
+    # (UM's postinit files found by the stategraph they name - AddStategraphPostInit("pig") lives in SGpigbunny.lua, not
+    # SGpig.lua: the pig guards' counter_atk and paw found no state, 2026-10-28)
+    $files = @((Join-Path $sgDir "$sg.lua"), (Join-Path $UmPost "$sg.lua"))
+    $base = Join-Path $sgDir "$sg.lua"
+    if ((Test-Path $base) -and (Test-Path $UmPost)) {
+        $sgName = [regex]::Match([IO.File]::ReadAllText($base), 'StateGraph\(\s*"([^"]+)"').Groups[1].Value
+        if ($sgName -ne "") {
+            foreach ($pf in Get-ChildItem $UmPost -Filter '*.lua') {
+                if ([regex]::IsMatch([IO.File]::ReadAllText($pf.FullName), 'AddStategraphPostInit\(\s*"' + [regex]::Escape($sgName) + '"')) { $files += $pf.FullName }
+            }
+        }
+    }
+    foreach ($p in ($files | Select-Object -Unique)) {
         if (-not (Test-Path $p)) { continue }
         $t = [IO.File]::ReadAllText($p)
         $parts = [regex]::Split($t, 'State\s*\{')
