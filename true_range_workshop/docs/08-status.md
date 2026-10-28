@@ -29,7 +29,7 @@
 | 3 | ลาวาวง moonmaw NOT drawn 2–6/รอบ (คุณอยู่ขอบนอกของส่วนที่วาด) | ตอนนี้ `[tr_lagframe]` มี `ext` แล้ว วิเคราะห์ต่อได้ |
 | 4 | หนอน: วัดฝั่ง client เพิ่ม | testbench เริ่มฉากหนอนได้แล้ว (2026-10-28) — รันรอบยาวขึ้น |
 | 5 | บอสพลาดที่เหลือ (ขอบ < 1 cell, testbench artifacts) | catcoon, rocky warp dash, vault_crawler, twins charge, stumpling — ดูประวัติ |
-| 6 | ท่า NEVER (bench บังคับ state) | bench บังคับ 69 บอส (2026-10-28_1637): NEVER 109 → 73, replay missed 12 / 13,944 — ท่าที่ได้ทดสอบใหม่วาดถูก ; pigman charge_attack 1 พลาด = บังคับเข้า state ท้ายท่าตรง ๆ (ในเกมมาหลัง charge_pre/loop เสมอ) ไม่ใช่บั๊ก. ที่เหลือ: 20 บอส state เลือกอนิเมชันจากตัวแปร (แมงมุม `atk` ฯลฯ) หาไม่เจอ ; การบังคับ state ของ Mutated ใส่ Deerclops ปกติทำ server ล่ม (ตัดออกจากไฟล์บังคับ) |
+| 6 | ท่า NEVER (bench บังคับ state) | bench บังคับ 69 บอส (2026-10-28_1637): NEVER 109 → 73, replay missed 12 / 13,944 — ท่าที่ได้ทดสอบใหม่วาดถูก ; pigman charge_attack 1 พลาด = บังคับเข้า state ท้ายท่าตรง ๆ (ในเกมมาหลัง charge_pre/loop เสมอ) ไม่ใช่บั๊ก. แมงมุม (SetStateGraph ในนิพจน์) หาได้แล้ว: bench บังคับ 9 บอส (1651) missed 2 / 2,505 — ทั้งคู่ `trapdoor_attack` ที่ถูกบังคับตอนหันผิดทาง แล้วหันกลับ 100° กลางพุ่ง (ในเกมออกจากรูโดยหันหาเป้าแล้ว — น่าจะเป็นผลของการบังคับ ยังไม่ยืนยัน). ที่เหลือ: 11 บอส (knight joust, shadow_knight, stalker spike, beeguard stab_pst ฯลฯ) state เลือกอนิเมชันจากตัวแปร ; การบังคับ state ของ Mutated ใส่ Deerclops ปกติทำ server ล่ม (ตัดออกจากไฟล์บังคับ) |
 
 ## หลังปล่อย 1.1.6 (ตกลงกันแล้ว)
 
