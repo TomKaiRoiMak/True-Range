@@ -31,6 +31,25 @@
 
 > path เหล่านี้ฝังอยู่ในสคริปต์ราว 25 ไฟล์ — ถ้าเครื่องคุณต่าง ให้ค้นทั้ง `Games Manager` และ `900782082` ใน `tools\` กับ `tests\` แล้วแก้ให้ครบ
 
+### โฟลเดอร์อื่นใน `D:\Work\Coding\dont starve\` (ไม่ใช่ True Range)
+
+| โฟลเดอร์ | คืออะไร |
+|---|---|
+| `tmir_quick`, `tmir_modded_bosses` | ทดสอบ TMIR (local) |
+| `find_me`, `crockpot_guide`, `fps_meter`, `boss_report` | mod อื่น — ไม่อยู่ใน repo นี้ |
+| `server_patches`, `workshop_patches` | แพตช์ server/mod ของ cluster |
+| `_trash_*` | ของที่ย้ายมาแทนการลบ — ลบเองเมื่อแน่ใจ |
+
+### `true_range_workshop\tests\work\` (ใหญ่ ไม่อยู่ใน git สร้างใหม่ได้)
+
+| โฟลเดอร์ | หมายเหตุ |
+|---|---|
+| `bench_logs` | log ของ bench ทุกครั้ง (~85 GB) — ดูแลด้วย `tools\prune_bench_logs.ps1` |
+| `bench_x` | สำเนาขยายสำหรับ replay — สร้างใหม่ได้ |
+| `bench_replay` | ผล replay แยกต่อ share |
+| `bench_server` | config/world ของ server ทดสอบ (มี cluster token — ห้ามเผยแพร่) |
+| `game_scripts*`, `game_scripts.hash` | โค้ดเกม/UM/TE แตกออกมา (แตกใหม่หลังเกมอัปเดต) |
+
 ## Git
 
 ```
