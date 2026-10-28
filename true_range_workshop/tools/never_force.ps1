@@ -20,6 +20,13 @@ function SgOf($boss) {
             foreach ($m in [regex]::Matches($t, 'SetStateGraph\([^\n]*?"(SG[^"]+)"')) { $sgs += $m.Groups[1].Value }
         }
     }
+    # (none named so - its prefab made by a function, Prefab(name, ...), or its SetStateGraph built from its name: the
+    # stategraph file of its own name, or less "_nightmare" - the knights', rooks', Ancient Fuelweaver's, 2026-10-28)
+    if ($sgs.Count -eq 0) {
+        foreach ($cand in @("SG$boss", ("SG" + ($boss -replace '_nightmare$', '')), ("SG" + ($boss -replace '^shadow_', 'shadow')))) {
+            if (Test-Path (Join-Path $sgDir "$cand.lua")) { $sgs += $cand }
+        }
+    }
     $sgOf[$boss] = @($sgs | Select-Object -Unique)
     return $sgOf[$boss]
 }
@@ -43,6 +50,7 @@ function StatesOf($sg) {
             }
         }
     }
+    $later = @(); $names = @{}
     foreach ($p in ($files | Select-Object -Unique)) {
         if (-not (Test-Path $p)) { continue }
         $t = [IO.File]::ReadAllText($p)
@@ -51,6 +59,15 @@ function StatesOf($sg) {
             $n = [regex]::Match($part, 'name\s*=\s*"([^"]+)"')
             $a = [regex]::Match($part, 'PlayAnimation\(\s*"([^"]+)"')
             if ($n.Success -and $a.Success -and -not $map.ContainsKey($a.Groups[1].Value)) { $map[$a.Groups[1].Value] = $n.Groups[1].Value }
+            # (and every other animation it plays or queues - not only its first: Mutated Deerclops' throw_2 after throw, the
+            # Shadow Knight's atk after atk_pre, the small bird's PushAnimation("atk") - 11 bosses' NEVER moves found no state,
+            # 2026-10-28; taken after all the first ones, below)
+            if ($n.Success) {
+                foreach ($m in [regex]::Matches($part, '(?:Play|Push)Animation\(\s*"([^"]+)"')) {
+                    $later += , @($m.Groups[1].Value, $n.Groups[1].Value)
+                }
+                $names[$n.Groups[1].Value] = $true
+            }
         }
         foreach ($m in [regex]::Matches($t, 'CommonStates\.AddSimpleState\(\s*\w+\s*,\s*"([^"]+)"\s*,\s*"([^"]+)"')) {
             if (-not $map.ContainsKey($m.Groups[2].Value)) { $map[$m.Groups[2].Value] = $m.Groups[1].Value }
@@ -62,6 +79,10 @@ function StatesOf($sg) {
             if (-not $map.ContainsKey($an)) { $map[$an] = 'attack' }
         }
     }
+    foreach ($l in $later) { if (-not $map.ContainsKey($l[0])) { $map[$l[0]] = $l[1] } }
+    # (an animation picked by a variable: the state of its own name, or of it less its side - the Knight's joust_pre,
+    # Bearger's butt_pre_L in "butt_pre")
+    $map['?names'] = $names
     $statesOf[$sg] = $map
     return $map
 }
@@ -73,6 +94,15 @@ foreach ($l in Get-Content $Bench) {
             $anim = ($mv -split '[~@]')[0].Trim()
             $st = $null
             foreach ($sg in (SgOf $boss)) { $m = StatesOf $sg; if ($m.ContainsKey($anim)) { $st = $m[$anim]; break } }
+            if ($st -eq $null) {
+                foreach ($sg in (SgOf $boss)) {
+                    $nm = (StatesOf $sg)['?names']
+                    foreach ($cand in @($anim, ($anim -replace '_[LR]$', ''), ($anim -replace 's$', ''), ($anim + 's'))) {
+                        if ($nm.ContainsKey($cand)) { $st = $cand; break }
+                    }
+                    if ($st -ne $null) { break }
+                }
+            }
             if ($st -ne $null) { $states += $st } else { $unknown += $mv }
         }
         $states = @($states | Select-Object -Unique)
