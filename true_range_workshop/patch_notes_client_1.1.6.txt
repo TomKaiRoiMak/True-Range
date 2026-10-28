@@ -50,3 +50,4 @@
 - Bearger's butt slam: drawn whichever way it turns - turning right (butt_pre_R, half its slams) it wasn't drawn at all
 - The Shadow Runner's long pounce at you from afar: drawn - only its short one was
 - Moonmaw's lava pups: their stab drawn steady as they glide to a stop - it jumped about a unit past them and back as they braked (in a player's game, not the host's)
+- Spat's phlegm and other low, quick throws: drawn round them as they fly in a player's game - hidden until they landed, so never seen before they struck

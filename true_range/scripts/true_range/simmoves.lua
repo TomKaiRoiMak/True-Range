@@ -3720,7 +3720,11 @@ local function DrawHazardInner(ent, x, z, rot, px, pz, now, in_moves, sfx)
                                 -- (but not past its last _land_soon s - a short throw (the Moon Tentacle's spines, a Sea Weed's seed)
                                 -- drawn as late as a long one was struck undrawn: from 3 then)
                                 -- (once shown, shown on - its time to land said a hair over and under that, it blinked: la.shown)
-                                if not la.shown and la.n < (tl < SimMoves._land_soon and 3 or SimMoves._land_wait) and not rawget(_G, "TR_OLD_LANDWAIT") then
+                                -- (and down within a quarter of a second: from the first - Spat's phlegm, thrown 3 off and down 6
+                                -- frames later, seen 3 of them in a player's game: never drawn, 26 struck undrawn (replay CLIENT
+                                -- 2026-10-28; the host 0). TR_OLD_LANDNOW: from 3 as before)
+                                local need = (tl < .25 and not rawget(_G, "TR_OLD_LANDNOW")) and 1 or (tl < SimMoves._land_soon and 3 or SimMoves._land_wait)
+                                if not la.shown and la.n < need and not rawget(_G, "TR_OLD_LANDWAIT") then
                                     local ka = math.max(1 / la.n, .1)
                                     la.x, la.z = la.x + (ex - la.x) * ka, la.z + (ez - la.z) * ka
                                     s.memo = nil
@@ -3773,7 +3777,12 @@ local function DrawHazardInner(ent, x, z, rot, px, pz, now, in_moves, sfx)
                 if start == nil and (s.lobbed or (early and s.rose)) and not rawget(_G, "TR_OLD_LAND") then
                     -- (where it was last told it'd come down, still to come: kept - not hidden a frame
                     -- the fit says otherwise, the Wilting Dragonfly's fireballs going up near straight)
-                    if s.land ~= nil and now <= s.land[3] + (early and .2 or 0) then x, z, start = s.land[1], s.land[2], s.land[3] else s.memo = nil SimMoves._Trace(ent, now, "hide: in the air, no landing", y, s) return false end
+                    if s.land ~= nil and now <= s.land[3] + (early and .2 or 0) then x, z, start = s.land[1], s.land[2], s.land[3]
+                    -- (but not one low down, a shoulder's height - flung, not lobbed: round it as it flies - Spat's phlegm, 2 up
+                    -- at most and down 6 frames on, its fall not yet seen in a player's game: hidden all its way, 23 struck undrawn
+                    -- (replay CLIENT 2026-10-28). TR_OLD_LOWAIR: hidden)
+                    elseif y ~= nil and y < 2.1 and not rawget(_G, "TR_OLD_LOWAIR") then SimMoves._Trace(ent, now, "low in the air: round it", y, s)
+                    else s.memo = nil SimMoves._Trace(ent, now, "hide: in the air, no landing", y, s) return false end
                 end
             -- (its last moments of fall, too low to fit: where it was seen to come down, kept - drawn
             -- round it as it fell on, the Shriek's ball, its shape slid on a little as it struck)
