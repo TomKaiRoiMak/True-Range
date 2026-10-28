@@ -26,6 +26,7 @@
 | `tests\pics.ps1` | ภาพของสิ่งที่วาด ณ เวลาที่กำหนด |
 | `tools\lag_frames.ps1`, `lag_land.ps1`, `lagthing_to_haz.ps1` | วิเคราะห์ log ของ lag bench |
 | `tools\never_force.ps1` | สร้างไฟล์บังคับ state จากรายการ NEVER |
+| `tools\went_table.ps1 [-Dir <ผล replay>]` | ท่าพุ่งทุกตัว: ระยะพุ่งจริง vs ข้อมูล (แยกมีเป้า/ไม่มี) — หาท่าที่วาดยาว/สั้นเกิน |
 
 ### สร้างข้อมูล
 
@@ -54,6 +55,8 @@
 | `TR_OLD_LANDAT`, `LANDLOOSE`, `LANDTILL`, `LAND2` | Umbral optic blast/วาร์ป วาดที่ beam/เป้าจริง |
 | `TR_OLD_LEADTP`, `LEADTPSTEP`, `LEADSTOP` | LeadMoving: ไม่นำตอนวาร์ป/ตอนหยุด |
 | `TR_OLD_CHAINLAST` | Rock Master: ครั้งสุดท้ายของ chain dash |
+| `TR_OLD_WENT` | ท่าพุ่งที่ล็อกจุดตอนหยุดเล็ง: วาดจุดตกตามระยะที่บอสตัวนั้นพุ่งจริงในเกมนี้ (แยกมีเป้า/ไม่มีเป้า) — Klaus มีเป้าพุ่ง 8.5 ไม่ใช่ 15 |
+| `TR_OLD_WORMPOUND` | หนอน: วง pound รอบกองดิน (0 ดาเมจ) ไม่วาด |
 | `TR_OLD_WORMDIRT` (modmain) | หนอน: วงกองดินเฉพาะตอนหัวโผล่/ท่อนผ่าน |
 | `TR_OLD_HUNTSTICK` (modmain) | บอสค้างในรายการวาด .3 s หลังไล่ |
 

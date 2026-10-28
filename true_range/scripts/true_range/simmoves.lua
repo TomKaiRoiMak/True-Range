@@ -4536,7 +4536,112 @@ local function LandAt(ent, entry, dist)
     if #s < 2 then return 0 end
     table.sort(s)
     return math.max(-1, math.min(1, s[math.floor((#s + 1) / 2)]))
-end-- (its usual so far: the middle one of those seen - one stopped by you in its way, or shoved, not
+end
+-- How far a move set as it stops aiming really goes, against its run offline - seen as each go ends, this game, kept
+-- apart by whether it was after someone then (its combat target): enraged Klaus' bite in the player's game (2026-10-28,
+-- server log) went 8.3 every time it had a target - its walk taking every other frame of the leap (45 -> 4.6 a second)
+-- - and 15 every time it had none; run offline 12.3. Drawn 4 on past where it came down, "it says I'm hit, I'm not".
+-- The run picked is the one that goes as far as it will - not the shape moved: its path then matches it on its way.
+-- ent -> entry -> "t" / "n" -> the last few { offline, real }. TR_OLD_WENT: as before
+SimMoves.went = setmetatable({}, { __mode = "k" })
+function SimMoves._RunWent(map)
+    local a, b = PathAt(map, 0), PathAt(map, 1e6)
+    return a ~= nil and b ~= nil and b - a or nil
+end
+-- (as a go ends: how far it went from where it began - true_range/predict; log: what Draw kept of it)
+function SimMoves.WentSeen(ent, entry, went, log)
+    if ent == nil or log == nil or log.went_base == nil or log.went_base < 3 or log.went_tgt == nil then return end
+    -- (testing: each go told to whoever keeps them - tests/replay.lua's WENT table, every leap's real going against its run's)
+    local wl = rawget(_G, "TR_WENTLOG")
+    if wl ~= nil then wl[#wl + 1] = { ent.prefab, entry.name or (entry.anims and entry.anims[1]) or "?", log.went_tgt, log.went_base, went, log.went_dist or -1 } end
+    -- (not one that got to whom it went for - stopped by you in its way, not going less far: the Shadow Rocky's dash run 46.9,
+    -- 16.9 to you; taken for its going, the next drawn that short, 81 strikes undrawn on the bench, 2026-10-28)
+    if log.went_dist ~= nil and went >= log.went_dist - 2.5 then return end
+    -- (not one that hardly set off, or flung far off - stopped, cut short, shoved)
+    local ratio = went / log.went_base
+    if ratio < .3 or ratio > 2 then return end
+    local by = SimMoves.went[ent]
+    if by == nil then by = setmetatable({}, { __mode = "k" }) SimMoves.went[ent] = by end
+    local e = by[entry]
+    if e == nil then e = {} by[entry] = e end
+    local k = log.went_tgt and "t" or "n"
+    local list = e[k] or {}
+    e[k] = list
+    list[#list + 1] = { log.went_base, went }
+    if #list > 8 then table.remove(list, 1) end
+end
+-- (how far it really goes for a run going bw offline: the middle of those seen for runs within 1.5 of it - two at least.
+-- None so near: by the nearest ones - as far as they went at most, for a shorter run (its going has a limit of its own:
+-- Klaus' bite after you, 8.3 from 11.7 offline as from 12.9 - not cut down in proportion, it struck past that, 5.35 off),
+-- on in proportion for a longer one; never drawn short of where it may go by guessing. nil: nothing seen)
+function SimMoves._WentFor(list, bw)
+    if list == nil or #list < 2 then return nil end
+    local near, nb = {}, nil
+    for _, v in ipairs(list) do
+        if math.abs(v[1] - bw) <= 1.5 then near[#near + 1] = v[2] end
+        if nb == nil or math.abs(v[1] - bw) < math.abs(nb - bw) then nb = v[1] end
+    end
+    if #near < 2 then
+        near = {}
+        for _, v in ipairs(list) do
+            if math.abs(v[1] - nb) <= 1.5 then near[#near + 1] = v[2] end
+        end
+        if #near < 2 then return nil end
+        table.sort(near)
+        if SimMoves._WentSpread(near) then return nil end
+        local w = near[math.floor((#near + 1) / 2)]
+        return bw < nb and math.min(bw, w) or w * bw / nb
+    end
+    table.sort(near)
+    if SimMoves._WentSpread(near) then return nil end
+    return near[math.floor((#near + 1) / 2)]
+end
+-- (sorted: its middle half over 1 apart - not the same go after go, nothing to go by: the Shadow Rocky's dash, 14.1 to 16.9 for
+-- the same run as you stood; Klaus' bite after you 8.47-8.64)
+function SimMoves._WentSpread(s)
+    local q1, q3 = s[math.floor(#s / 4) + 1], s[math.max(1, math.ceil(#s * 3 / 4))]
+    return q3 - q1 > 1
+end
+-- (how much further on (or back) to draw it: as far as it really goes, less its run's - off by a tenth at least; 0 else.
+-- The run itself kept, the one for where you are: a shorter run's bite reached 4.75 past its landing, the real one 5.35 -
+-- struck, undrawn, 2026-10-28. Drawn moved on by it after the shift for where it's seen (SimMoves.Draw))
+function SimMoves._WentOff(entry, src, dist, ent, log, t, target)
+    local combat = ent ~= nil and ent.replica ~= nil and ent.replica.combat or nil
+    local tgt = log.went_tgt
+    if tgt == nil or t == nil or t < (entry.lock or 0) * FRAMES then tgt = combat == nil or combat:GetTarget() ~= nil end
+    -- (where it began - as true_range/predict measures how far it went)
+    if log.went_start == nil and ent ~= nil then
+        local ex, _, ez = ent.Transform:GetWorldPosition()
+        log.went_start = { ex, ez }
+    end
+    local base = nil
+    for _, map in ipairs(Decode(entry, src)) do
+        if base == nil or math.abs(map.dist - dist) < math.abs(base.dist - dist) then base = map end
+    end
+    if base == nil then return 0 end
+    local bw = SimMoves._RunWent(base)
+    -- (as it stops aiming: kept - what it's set to go then)
+    if log.went_tgt == nil and t ~= nil and t >= (entry.lock or 0) * FRAMES then
+        log.went_tgt, log.went_base = tgt, bw
+        -- (how far whom it went for was then - not the run's distance, one going on past you its own way (46.9))
+        if target ~= nil and target.x ~= nil and log.went_start ~= nil then
+            log.went_dist = math.sqrt((target.x - log.went_start[1]) ^ 2 + (target.z - log.went_start[2]) ^ 2)
+        end
+    end
+    if rawget(_G, "TR_OLD_WENT") or bw == nil or bw < 3 then return 0 end
+    -- (only one striking once, where it comes down - not one striking all along its way: the Shadow Rocky's dash went 16.9 for
+    -- 14.35 run, the shape moved on by that, the start of its way left undrawn - 35 strikes, 2026-10-28)
+    if #MapSteps(base) ~= 1 then return 0 end
+    local e = ent ~= nil and SimMoves.went[ent] ~= nil and SimMoves.went[ent][entry] or nil
+    local want = SimMoves._WentFor(e ~= nil and e[tgt and "t" or "n"] or nil, bw)
+    if want == nil or math.abs(want - bw) < .1 * bw then return 0 end
+    -- (and a little on: go after go it went .2 more or less (8.47-8.64) - set at its middle, a bite at the edge of its
+    -- reach, 5.35 off, went undrawn by .12)
+    want = want + .3
+    log.went_want = want
+    return want - bw
+end
+-- (its usual so far: the middle one of those seen - one stopped by you in its way, or shoved, not
 -- taken for it; 1 - none seen yet)
 local function TravelRatio(ent, key)
     local list = ent ~= nil and SimMoves.travel[ent] ~= nil and SimMoves.travel[ent][key] or nil
@@ -4721,6 +4826,10 @@ function SimMoves.Draw(entry, x, z, rot, target, my_radius, px, pz, t, log, ent,
             local d = entry.fixed and stop or stop + r + .5
             if d < dist then dist, src = d, nil end
         end
+    end
+    -- (a leap set as it stops aiming: how much further on it really goes this game - SimMoves._WentOff)
+    if entry.anchor == "lock" and log ~= nil and not entry.fixed and not entry.still and not entry.random then
+        log.went_off = SimMoves._WentOff(entry, src, dist, ent, log, t, target)
     end
     local best, ready = nil, nil
     for _, map in ipairs(Decode(entry, src)) do
@@ -5079,6 +5188,25 @@ function SimMoves.Draw(entry, x, z, rot, target, my_radius, px, pz, t, log, ent,
             if math.abs(log.shift[1]) + math.abs(log.shift[2]) > .05 then
                 x, z = World(x, z, rot, log.shift[1], log.shift[2])
             end
+        end
+    end
+    -- (and on by as much as it really goes further than its run this game (SimMoves._WentOff) - not twice: the shift for
+    -- where it's seen (stopped short) already that way, only what's left beyond it)
+    -- (where it lands set from where it began, as far as it really goes - not added to the rest of the moving about: the
+    -- drawn start already moved for how far it got before it stopped aiming, 1.5 drawn short again, struck. Seen gone
+    -- further already: from there)
+    if log ~= nil and log.went_off ~= nil and log.went_off ~= 0 and log.went_want ~= nil and log.went_start ~= nil then
+        local ps, c, s = log.went_start, math.cos(rot), math.sin(rot)
+        -- (where its run has it as it strikes, set there - not where its run ends: a frame on at full pace, 1.5 further, the
+        -- bite drawn that short of a real one; it strikes no further on than where it stops)
+        local pend = PathAt(best, entry.first or 1e6)
+        if pend ~= nil then
+            local want = log.went_want
+            if ent ~= nil then
+                local ex, _, ez = ent.Transform:GetWorldPosition()
+                want = math.max(want, (ex - ps[1]) * c - (ez - ps[2]) * s)
+            end
+            x, z = World(x, z, rot, want - ((x - ps[1]) * c - (z - ps[2]) * s + pend), 0)
         end
     end
     -- (set, told by the server where it stood: where it was thought to be as it still aimed a

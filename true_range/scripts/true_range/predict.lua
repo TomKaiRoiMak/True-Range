@@ -975,6 +975,12 @@ local function Track(ent, moves, now, learned_all)
             print(string.format("[true_range] %s %s over: it went %.2f from where it began, %.2fs",
                 ent.prefab, a.move.name, math.sqrt((x - a.x) ^ 2 + (z - a.z) ^ 2), now - a.t0))
         end
+        -- (and kept: how far its leap really goes this game - SimMoves._WentDist; seen at its end, the client's picture
+        -- of it caught up - Klaus' bite seen standing still all through its leap, there at once later)
+        if a.move.sim ~= nil and a.log ~= nil and a.log.went_base ~= nil then
+            local x, _, z = ent.Transform:GetWorldPosition()
+            SimMoves.WentSeen(ent, a.move.sim, math.sqrt((x - a.x) ^ 2 + (z - a.z) ^ 2), a.log)
+        end
         -- (or over within its linger after the last (LINGER) - the Ancient Guardian's leaps one after another (Uncompromising
         -- Mode's leap_attack_pre_quick): each lands as the next begins, a few frames later than run offline - gone that very
         -- frame, its landing undrawn; a friend beside the one it leapt at struck there 35 times unwarned, the testbench's

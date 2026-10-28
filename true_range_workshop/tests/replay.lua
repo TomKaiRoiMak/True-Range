@@ -6,6 +6,7 @@
 --   * every "drawn in, not struck" the drawing itself reports: was there really no strike?
 -- (the mod's log lines, off in the game unless debugging (true_range modmain: debug.txt): on here)
 rawset(_G, "TR_DEBUG", true)
+rawset(_G, "TR_WENTLOG", {})
 rawset(_G, "TR_BOTH", {})
 rawset(_G, "TR_FLIP", {})
 rawset(_G, "TR_JUMP", {})
@@ -234,7 +235,7 @@ do
 end
 -- (TR_MODS=<folder names>: those mods on - their monsters' moves over the game's, as the game lays them: true_range/moddata)
 -- (the drawer's own switches back to before, from the shell: TR_OLD_LAND=1 ... - as the game reads them, globals)
-for _, n in ipairs({ "TR_OLD_LAND", "TR_OLD_FALL", "TR_OLD_AGAIN", "TR_OLD_LANE", "TR_OLD_PENGUIN", "TR_OLD_TURNTELL", "TR_OLD_SAMEALT", "TR_OLD_SAMEFOOT", "TR_OLD_STRAIGHT", "TR_OLD_TELL", "TR_OLD_TELLWAIT", "TR_OLD_SLOW", "TR_OLD_LOB", "TR_OLD_LEAD", "TR_OLD_STILL", "TR_OLD_EARLY", "TR_OLD_HOP", "TR_OLD_LEAPAIM", "TR_OLD_ALTLOCK", "TR_OLD_LEAPTURN", "TR_OLD_FROMTELL", "TR_OLD_TELLSTILL", "TR_OLD_CHAINLOCK", "TR_OLD_TPKEEP", "TR_OLD_TELLWAITALL", "TR_OLD_AGAINLINGER", "TR_OLD_PREGO", "TR_OLD_AHEADLEG", "TR_OLD_FAR", "TR_OLD_FARTELL", "TR_OLD_BYONLY", "TR_OLD_ENDLINGER", "TR_OLD_LANEROW", "TR_OLD_AROUNDONCE", "TR_OLD_AROUNDFACE", "TR_OLD_SHADOWSIZE", "TR_OLD_LEAPSHORT", "TR_OLD_CHAINPOS", "TR_OLD_SELFGAP", "TR_OLD_AHEADOFF", "TR_OLD_SERVERAIM", "TR_OLD_SIMLANE", "TR_OLD_SERVERAIMLOCK", "TR_OLD_SERVERAIMFOLLOW", "TR_OLD_SLIDEFIT", "TR_OLD_ROUND", "TR_OLD_RESTART", "TR_OLD_OFFNET", "TR_OLD_ANIMSYNC", "TR_OLD_SNAP45", "TR_OLD_DONEAFTER", "TR_OLD_HAZLEAD", "TR_OLD_HAZSTEADY", "TR_OLD_AIMLEAD", "TR_OLD_MIDLEFT", "TR_OLD_RELOCK", "TR_OLD_BODYLEAD", "TR_OLD_LIVERADIUS", "TR_OLD_DISCKEY", "TR_OLD_TAIL", "TR_OLD_LAND2", "TR_OLD_PREVLEG", "TR_OLD_SNAPPOS", "TR_OLD_CHAINLAST", "TR_OLD_WORMDIRT", "TR_OLD_LEADSTOP", "TR_OLD_LEADTP", "TR_OLD_LANDHOLD", "TR_OLD_LANDKEEP", "TR_OLD_GLOWPULSE", "TR_OLD_GLOWGRACE", "TR_OLD_AIRSTILL", "TR_OLD_GLOWOVERLAP", "TR_OLD_LEADTPSTEP", "TR_OLD_LANDSTOP", "TR_OLD_GLOWHOLD", "TR_OLD_LANDTILL", "TR_OLD_LANDAT", "TR_OLD_HUNTSTICK", "TR_OLD_LANDLOOSE", "TR_OLD_GLOWAFTERMOVE", "TR_OLD_WORMPOUND", "TR_OLD_LANDWAIT", "TR_OLD_PICKEPIC", "TR_OLD_AIMFACING", "TR_OLD_LANDAVG", "TR_OLD_HAZLEADMOVED", "TR_OLD_FALLBACKANY", "TR_OLD_KEEPHEADING", "TR_OLD_HAZFAST" }) do if os.getenv(n) then rawset(_G, n, true) end end
+for _, n in ipairs({ "TR_OLD_LAND", "TR_OLD_FALL", "TR_OLD_AGAIN", "TR_OLD_LANE", "TR_OLD_PENGUIN", "TR_OLD_TURNTELL", "TR_OLD_SAMEALT", "TR_OLD_SAMEFOOT", "TR_OLD_STRAIGHT", "TR_OLD_TELL", "TR_OLD_TELLWAIT", "TR_OLD_SLOW", "TR_OLD_LOB", "TR_OLD_LEAD", "TR_OLD_STILL", "TR_OLD_EARLY", "TR_OLD_HOP", "TR_OLD_LEAPAIM", "TR_OLD_ALTLOCK", "TR_OLD_LEAPTURN", "TR_OLD_FROMTELL", "TR_OLD_TELLSTILL", "TR_OLD_CHAINLOCK", "TR_OLD_TPKEEP", "TR_OLD_TELLWAITALL", "TR_OLD_AGAINLINGER", "TR_OLD_PREGO", "TR_OLD_AHEADLEG", "TR_OLD_FAR", "TR_OLD_FARTELL", "TR_OLD_BYONLY", "TR_OLD_ENDLINGER", "TR_OLD_LANEROW", "TR_OLD_AROUNDONCE", "TR_OLD_AROUNDFACE", "TR_OLD_SHADOWSIZE", "TR_OLD_LEAPSHORT", "TR_OLD_CHAINPOS", "TR_OLD_SELFGAP", "TR_OLD_AHEADOFF", "TR_OLD_SERVERAIM", "TR_OLD_SIMLANE", "TR_OLD_SERVERAIMLOCK", "TR_OLD_SERVERAIMFOLLOW", "TR_OLD_SLIDEFIT", "TR_OLD_ROUND", "TR_OLD_RESTART", "TR_OLD_OFFNET", "TR_OLD_ANIMSYNC", "TR_OLD_SNAP45", "TR_OLD_DONEAFTER", "TR_OLD_HAZLEAD", "TR_OLD_HAZSTEADY", "TR_OLD_AIMLEAD", "TR_OLD_MIDLEFT", "TR_OLD_RELOCK", "TR_OLD_BODYLEAD", "TR_OLD_LIVERADIUS", "TR_OLD_DISCKEY", "TR_OLD_TAIL", "TR_OLD_LAND2", "TR_OLD_PREVLEG", "TR_OLD_SNAPPOS", "TR_OLD_CHAINLAST", "TR_OLD_WORMDIRT", "TR_OLD_LEADSTOP", "TR_OLD_LEADTP", "TR_OLD_LANDHOLD", "TR_OLD_LANDKEEP", "TR_OLD_GLOWPULSE", "TR_OLD_GLOWGRACE", "TR_OLD_AIRSTILL", "TR_OLD_GLOWOVERLAP", "TR_OLD_LEADTPSTEP", "TR_OLD_LANDSTOP", "TR_OLD_GLOWHOLD", "TR_OLD_LANDTILL", "TR_OLD_LANDAT", "TR_OLD_HUNTSTICK", "TR_OLD_LANDLOOSE", "TR_OLD_GLOWAFTERMOVE", "TR_OLD_WORMPOUND", "TR_OLD_WENT", "TR_OLD_LANDWAIT", "TR_OLD_PICKEPIC", "TR_OLD_AIMFACING", "TR_OLD_LANDAVG", "TR_OLD_HAZLEADMOVED", "TR_OLD_FALLBACKANY", "TR_OLD_KEEPHEADING", "TR_OLD_HAZFAST" }) do if os.getenv(n) then rawset(_G, n, true) end end
 if os.getenv("TR_MODS") then require("true_range/moddata").Apply(function(n) return os.getenv("TR_MODS"):find(n, 1, true) ~= nil end) end
 local Predict = require("true_range/predict")
 local SimMoves = require("true_range/simmoves")
@@ -3363,6 +3364,11 @@ do
     for _, b in ipairs(big_dark) do
         if b.max >= lim then real_print(string.format("BIGDARK %.3f %s %s: %.0f square units drawn dark at once (a ring %.1f round)", b.t, PREFAB, b.move, b.max, math.sqrt(b.max / math.pi))) end
     end
+end
+-- (WENT: each leap set as it stops aiming - how far it really went against its run offline, after a target or not:
+-- true_range/simmoves WentSeen; tools/went_table.ps1 puts every boss's together)
+for _, w in ipairs(TR_WENTLOG) do
+    real_print(string.format("WENT %s %s %s offline=%.2f real=%.2f its target %.2f off", w[1], w[2], w[3] and "target" or "notarget", w[4], w[5], w[6] or -1))
 end
 if (rawget(_G, "WORN_N") or 0) > 0 then real_print(string.format("%s: %d strikes worn on you (not counted)", PREFAB, rawget(_G, "WORN_N"))) end
 real_print(string.format("%s: %d strikes - %d drawn, %d missed; %d drawn-in with no strike; %d unchecked; %d short; %d idle-drawn", PREFAB, ok + missed + unchecked, ok, missed, false_alarm, unchecked, short, idle_draws))
