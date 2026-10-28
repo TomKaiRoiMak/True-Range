@@ -29,7 +29,7 @@
 | 3 | ลาวาวง moonmaw NOT drawn 2–6/รอบ (คุณอยู่ขอบนอกของส่วนที่วาด) | ตอนนี้ `[tr_lagframe]` มี `ext` แล้ว วิเคราะห์ต่อได้ |
 | 4 | หนอน: วัดฝั่ง client เพิ่ม | testbench เริ่มฉากหนอนได้แล้ว (2026-10-28) — รันรอบยาวขึ้น |
 | 5 | บอสพลาดที่เหลือ (ขอบ < 1 cell, testbench artifacts) | catcoon, rocky warp dash, vault_crawler, twins charge, stumpling — ดูประวัติ |
-| 6 | ท่า NEVER (bench บังคับ state) | `never_force.ps1` หา state ได้ครบแล้ว (รวม UM postinit ที่ชื่อไฟล์ไม่ตรง) — รอ bench บังคับรอบใหม่หลัง bench เต็ม 760178 ; บาง state บังคับแล้วยังไม่ตี (mock_dragonfly taunt, snapper speen_pst, wagboss taunt) ต้องดูทีละตัว |
+| 6 | ท่า NEVER (bench บังคับ state) | bench บังคับ 69 บอส (2026-10-28_1637): NEVER 109 → 73, replay missed 12 / 13,944 — ท่าที่ได้ทดสอบใหม่วาดถูก ; pigman charge_attack 1 พลาด = บังคับเข้า state ท้ายท่าตรง ๆ (ในเกมมาหลัง charge_pre/loop เสมอ) ไม่ใช่บั๊ก. ที่เหลือ: 20 บอส state เลือกอนิเมชันจากตัวแปร (แมงมุม `atk` ฯลฯ) หาไม่เจอ ; การบังคับ state ของ Mutated ใส่ Deerclops ปกติทำ server ล่ม (ตัดออกจากไฟล์บังคับ) |
 
 ## หลังปล่อย 1.1.6 (ตกลงกันแล้ว)
 
