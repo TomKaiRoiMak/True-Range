@@ -2321,6 +2321,16 @@ for _, s in ipairs(strikes) do
         end
     end
 end
+-- (a blow through a thing it set off (BYTHING), you inside its move drawn then all the same: said as the boss's - Deerclops'
+-- far ice spikes, 8-9 out, struck the tick they came up: a player's game shows the spike after it (3 frames), its fan drawn
+-- round you all along - 44 "missed" spikes in a client replay, 2026-10-29. OLD_BYTHING_ASBOSS=1: not said)
+if not os.getenv("OLD_BYTHING_ASBOSS") then
+    for _, s in ipairs(by_thing) do
+        if s.t >= math.max(t0, COUNT_FROM) and s.t <= t1 and InPredScene(s.t) and DrawnNear(s.t, s.x, s.z) then
+            real_print(string.format("ASBOSS_DRAWN %.3f %s", s.t, PREFAB))
+        end
+    end
+end
 -- (struck by a thing of its own, from the game's own word of it ("you were struck by"): inside what
 -- was drawn then? THINGMISS - not; only said, apart from the strikes' count)
 do
