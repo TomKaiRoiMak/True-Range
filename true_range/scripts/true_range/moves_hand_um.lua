@@ -38,6 +38,10 @@ return {
     -- (the ice hound's quickattack (UM postinit SGhound.lua 416): from past 3 off, atk_pre slowed to .3, at frame 24 its IceSpike -
     -- the Glacial Hound's own spike line (GlacialProjectile), shot there at frame 8. Not run offline: UM's postinit stategraphs
     -- aren't in the runs. A player's game drew each spike only as it struck, 11 struck undrawn (replay CLIENT 2026-10-29)
+    -- (Bearger's boulders (UM postinit SGbearger shoot, anim "t"): five launched from its own middle at frame 25 - one landing
+    -- on whoever is beside it at once, striking 3 round there (bearger_boulder OnHitInk); never seen in a player's game, 5 struck
+    -- undrawn at 2 off on the lag bench 2026-10-29_0633. Round itself, SimMoves._land; the boulders farther out are drawn as things)
+    bearger = { t = { anims = { "t" }, first = 25, frame = "facing", maps = {}, nothing = true, random = false, single = true, still = true } },
     icehound = { ["atk_pre~quickattack"] = { copy = { "glacialhound", "atk_pre~ice_howl_attack" }, shift = 16, drop = { "from", "from_self" },
         -- (on into idle: atk_pre sped back up at 24, over a few frames on, the line still going out 0.5 s)
         anims = { "atk_pre" }, far = 3, lock = 24 },

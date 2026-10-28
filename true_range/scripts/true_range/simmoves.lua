@@ -3250,6 +3250,10 @@ SimMoves._land = { shrouden = { teleport_pre = {
 -- (Spat's phlegm (moves_hand.lua spat.snot_pre): round its target, 4 (SPAT_PHLEGM_RADIUS, from the phlegm's middle) - aimed
 -- till it's shot (snot frame 21 = the move's 27), kept there till it lands (some 6 frames on). lock_at: in frames of that
 -- animation, where its target was then kept. TR_OLD_SPATSNOT: none)
+-- (UM Bearger's boulders, shot from its middle (moves_hand_um bearger.t): 3 round it, and you 0.5, at frame 25. TR_OLD_BEARSHOOT)
+if not rawget(_G, "TR_OLD_BEARSHOOT") then
+    SimMoves._land.bearger = { t = { { anim = "t", r = 3.5, at = 25, till = 27 } } }
+end
 if not rawget(_G, "TR_OLD_SPATSNOT") then
     SimMoves._land.spat = { snot_pre = {
         { anim = "snot", r = 4, at = 21, till = 29, on_target = true, lock_at = 21 },
