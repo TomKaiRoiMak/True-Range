@@ -3480,6 +3480,9 @@ local function DrawHazardInner(ent, x, z, rot, px, pz, now, in_moves, sfx)
             local _, ey = ent.Transform:GetWorldPosition()
             y = ey or 0
         end
+        -- (and on where it is by now, as the others going fast: the W.A.R.B.O.T.'s missiles skim in low at 17 a second -
+        -- a player's game had them 1.7 back, struck 0.2-0.7 off undrawn, 11 in a client replay 2026-10-29. TR_OLD_BURSTLEAD)
+        if not rawget(_G, "TR_OLD_BURSTLEAD") then x, z = SimMoves.LeadMoving(ent, x, z, now) end
         local list = steps
         local todo = {}
         for i, step in ipairs(list) do
