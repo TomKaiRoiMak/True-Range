@@ -1,3 +1,5 @@
+> เอกสารทีมฉบับเต็มอยู่ที่ [docs/README.md](docs/README.md) — หน้านี้เป็นแผนผังย่อ
+
 # True Range — แผนผังโครงสร้างทั้งหมด
 
 (สถานะ 2026-10-28 · ไฟล์นี้อธิบายว่าแต่ละส่วนคืออะไร คุยกันยังไง และข้อมูลไหลจากไหนไปไหน)
@@ -175,7 +177,7 @@ lag bench (เกมจริง) ──► client_log ทุกเฟรม ─
 install.ps1 (unit test ต้องผ่าน "installed:") → install_client.ps1
    │
    ▼
-lag bench อีกรอบ ยืนยันด้วยตัวเลข ──► VERIFY_PLAN.md + patch_notes_1.1.6 (+ _client ต้องตรงกัน)
+lag bench อีกรอบ ยืนยันด้วยตัวเลข ──► commit (แม่แบบใน VERIFY_PLAN.md) + patch_notes_1.1.6 (+ _client ต้องตรงกัน)
 ```
 
 ---
@@ -209,7 +211,7 @@ lag bench อีกรอบ ยืนยันด้วยตัวเลข �
 
 | ไฟล์ | ใช้ทำอะไร |
 |---|---|
-| `VERIFY_PLAN.md` | บันทึกทุกการวิเคราะห์ ผลวัด สิ่งที่ลองแล้วไม่เอา งานค้าง (อ่านก่อนแก้ทุกครั้ง) |
+| `VERIFY_PLAN.md` | เกณฑ์ "แก้แล้ว" + แม่แบบ commit + กฎ (บันทึกเก่าย้ายไป `docs/history/`) |
 | `REDESIGN.md` | การออกแบบระบบตาราง (moves_table) |
 | `patch_notes_1.1.6.txt` / `patch_notes_client_1.1.6.txt` | สิ่งที่เปลี่ยนในเวอร์ชันนี้ (สองไฟล์ต้องเหมือนกัน) |
 | `description*.txt` | คำอธิบายบน Workshop |

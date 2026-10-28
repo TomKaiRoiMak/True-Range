@@ -26,6 +26,8 @@ True Range คือ mod ของ Don't Starve Together ที่วาด **�
 4. **ห้ามอัปโหลดขึ้น Workshop เอง** เจ้าของโปรเจกต์เป็นคนอัปโหลด และ `tr_testbench`, `tr_lagjoin` ห้ามอัปโหลดเด็ดขาด
 5. **`cluster_token.txt` เป็นความลับ** ห้าม commit / ห้ามแปะในแชต (`.gitignore` กันไว้แล้ว)
 
+กฎทั้งหมด: [VERIFY_PLAN.md §3](../VERIFY_PLAN.md)
+
 ## เอกสารอื่นที่เกี่ยวข้อง
 
 - `../VERIFY_PLAN.md` — เกณฑ์ "แก้แล้ว", แม่แบบ commit, กฎของทีม (สั้น)

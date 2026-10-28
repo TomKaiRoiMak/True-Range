@@ -18,8 +18,9 @@
 1. **หาสาเหตุจากข้อมูลเกมจริง** — บอกได้ว่าเกิดเฟรมไหน ทำไม (lag bench `[tr_lagframe]`/`[tr_lagthing]`, trace ของ bench, ภาพจาก `pics.ps1`) ไม่ใช่จากการอ่านโค้ดอย่างเดียว
 2. **มีสวิตช์ `TR_OLD_xxx`** ปิดกลับได้ และใส่ชื่อในรายการสวิตช์ของ `tests\replay.lua` + `tests\replay_haz.lua`
 3. **A/B แล้วไม่ถดถอย** — replay (ใหม่ vs `TR_OLD_xxx`) บนชุดที่เกี่ยว ถ้ากฎกระทบหลายบอส → replay เต็ม
-4. **ฝั่ง client** (ถ้าเป็นเรื่องแลค/ภาพ) — lag bench ก่อน/หลัง ด้วยตัวเลขเดียวกัน (NOT drawn, false, blinks, jumps/snap backs)
-5. **`install.ps1` ผ่าน** ("installed: ...")
+   (สวิตช์ใน `modmain.lua` replay มองไม่เห็น — A/B ด้วย lag bench `-Old` แทน)
+4. **`install.ps1` ผ่าน** ("installed: ...") แล้ว `install_client.ps1`
+5. **ฝั่ง client** (ถ้าเป็นเรื่องแลค/ภาพ) — lag bench ก่อน/หลัง ด้วยตัวเลขเดียวกัน (NOT drawn, false, blinks, jumps/snap backs) — ต้องติดตั้งก่อน
 6. **patch notes** ทั้งสองไฟล์ + **commit** ตามแม่แบบ
 
 "ลองแล้วไม่เอา" ก็ต้อง commit/บันทึกเหมือนกัน (ตัวเลขที่แย่ลง + ปิดไว้ด้วยสวิตช์ opt-in) — คนต่อไปจะได้ไม่ลองซ้ำ
@@ -44,7 +45,7 @@ Ink Blight: landing ring held still after touchdown (TR_OLD_LANDSTOP)
 ปัญหา:  วงจุดตกขยับตอนลูกถึงพื้น
 สาเหตุ: 78/91 การขยับเกิด 2 เฟรมหลังแตะพื้น: s.stopped ทำให้ข้าม LANDKEEP ไปวาดที่ตำแหน่งจริง (.1–.4 off)
 แก้:    หยุดแล้ว + s.land ห่าง ≤ 1.5 → วาดที่ s.land
-วัด:    lag: ขยับ 0.84 → 0.13 ต่อลูก ; replay: missed/false เท่าเดิม
+วัด:    lag: ขยับ 0.84 → 0.13 ต่อลูก (กฎนี้อย่างเดียว) ; replay: missed/false เท่าเดิม
 ```
 
 ## 3. กฎของทีม
@@ -54,7 +55,10 @@ Ink Blight: landing ring held still after touchdown (TR_OLD_LANDSTOP)
 - **ข้อมูลถูกอย่างเดียวไม่พอ** — ต้องวาดถูกด้วย (replay ผ่าน predict จริง)
 - **ห้ามแก้ไฟล์ที่ bench/replay/build กำลังอ่าน** — ถ้าเผลอ ให้รันใหม่
 - **ติดตั้ง = `install.ps1`** ผ่านก่อน แล้วค่อย `install_client.ps1`
-- **ไม่อัปโหลด Workshop เอง** · `tr_testbench` / `tr_lagjoin` ห้ามอัปโหลด · `cluster_token.txt` ห้ามเผยแพร่
+- **ไม่อัปโหลด Workshop เอง** · `tr_testbench` / `tr_lagjoin` ห้ามอัปโหลด · อัปโหลดจากต้นฉบับ `true_range\` เท่านั้น ไม่ใช่สำเนาในเกม (มี debug.txt) · `cluster_token.txt` ห้ามเผยแพร่
+- **ไม่แตะโลก/เซฟของผู้เล่นโดยไม่ถาม**
+- **เทียบ A/B บน log ชุดเดียวกัน** — รอบ bench ต่างกันให้ตัวเลขต่างกันได้เอง
+- **ตัวตัดสินภาพคือ `[tr_lagframe]` จากเกมจริง** — เครื่องมือจำลอง (proxy) ไม่ใช่ความจริง
 - **เกมอัปเดต = ข้อมูลเก่า** จนกว่าจะแตกโค้ดใหม่และ rebuild ([docs/04](docs/04-data-pipeline.md)) — `install.ps1` เตือน
 - **ใช้ทุก core** กับงานหนัก, เช็คจำนวน process ที่รันอยู่ก่อนเริ่ม, เช็คพื้นที่ D: (bench ไม่เริ่มถ้าเหลือ < 25 GB)
 - **ทดสอบในเกมโดยไม่ต้องให้เจ้าของเล่นเอง** — ใช้ lag bench + log + ภาพ

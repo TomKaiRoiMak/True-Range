@@ -8,10 +8,12 @@
 |---|---|---|
 | Don't Starve Together (Steam) | เกม + dedicated server สำหรับ bench | |
 | Uncompromising Mode (Workshop `3193922031`) | บอสของ UM — bench รันกับ UM เปิดเสมอ | |
-| LuaJIT (`luajit` ใน PATH) | replay, unit test, compile-check | ทุก tool `.lua` รันด้วย luajit |
+| LuaJIT 2.1 (`luajit` ใน PATH) | replay, unit test, compile-check | ทุก tool `.lua` รันด้วย luajit (ดาวน์โหลด build สำหรับ Windows จาก luajit.org หรือ build เอง) |
 | Windows PowerShell 5.1 | สคริปต์ `.ps1` ทั้งหมด | |
-| Git | เวอร์ชันโค้ด | repo อยู่ที่ `D:\Work\Coding\dont starve` |
-| Python (ไม่บังคับ) | แปลงภาพ `.ppm → .png` ของ `tests\pics.ps1` | |
+| Git | เวอร์ชันโค้ด | ติดตั้งที่ `C:\Program Files\Git` — ถ้า PowerShell หา `git` ไม่เจอ: `$env:Path += ';C:\Program Files\Git\cmd'` |
+| Python + Pillow (ไม่บังคับ) | แปลงภาพ `.ppm → .png` ของ `tests\pics.ps1` | `pip install pillow` |
+
+สำหรับ **lag bench** เพิ่มเติม: Steam เปิดและล็อกอินบัญชีที่มี DST, ปิดเกมก่อนรัน, มี `debug.txt` ในสำเนาที่ติดตั้ง (install.ps1 ทำให้), และ cluster `Cluster_4` ที่ตั้ง UM ไว้ (ดูตารางข้างล่าง)
 
 ## โฟลเดอร์ (path ที่ฝังในสคริปต์)
 
@@ -22,9 +24,12 @@
 | `D:\Work\Coding\dont starve\tr_testbench\` | mod ทดสอบฝั่ง server (เสกบอส, ใส่ตัวแทนผู้เล่น) |
 | `D:\Work\Coding\dont starve\tr_lagjoin\` | mod ทดสอบฝั่ง client (เข้าเกมเอง, บันทึกทุกเฟรม) |
 | `D:\Games Manager\Games\steamapps\common\Don't Starve Together\` | เกม (`mods\true_range` คือสำเนาที่เกมอ่านจริง) |
-| `D:\Games Manager\Games\steamapps\workshop\content\322330\3193922031\` | Uncompromising Mode |
+| `D:\Games Manager\Games\steamapps\workshop\content\322330\3193922031\` | Uncompromising Mode (รวม `postinit\`) |
+| `Documents\Klei\DoNotStarveTogether\900782082\Cluster_4\` | ตั้งค่า world/mod (UM) ที่ bench และ lag bench คัดลอกไปใช้ |
+| `Documents\Klei\DoNotStarveTogether\900782082\Cluster_17\cluster_token.txt` | token ของ server ที่ lag bench คัดลอกไปใช้ — **ความลับ** |
+| `Documents\Klei\DoNotStarveTogether\client_log.txt` | log ของเกม (ที่ mod และ lag bench เขียน) |
 
-> ถ้าเครื่องคุณใช้ path ต่างจากนี้ ต้องแก้ใน `tools\install.ps1`, `install_client.ps1`, `run_bench.ps1`, `run_lag.ps1`, `hand_check.ps1` (ค้นคำว่า `Games Manager`)
+> path เหล่านี้ฝังอยู่ในสคริปต์ราว 25 ไฟล์ — ถ้าเครื่องคุณต่าง ให้ค้นทั้ง `Games Manager` และ `900782082` ใน `tools\` กับ `tests\` แล้วแก้ให้ครบ
 
 ## Git
 
@@ -37,12 +42,14 @@ repo: D:\Work\Coding\dont starve      (repo เดียวครอบ true_ran
 
 ไฟล์ข้อมูล `moves_sim*.lua` (≈11 MB) **commit ด้วย** — เพื่อย้อนดูได้ว่าเวอร์ชันที่ปล่อยใช้ข้อมูลอะไร
 
-A/B แบบ worktree:
+A/B แบบ worktree (รันทุกบรรทัดจาก `D:\Work\Coding\dont starve\true_range_workshop`):
 
 ```powershell
-git worktree add ..\tr_ab_old <commit>
-powershell -File tools\install.ps1 -Src ..\tr_ab_old\true_range          # ติดตั้งตัวเก่าเข้าเกม
-powershell -File tests\bench_replay.ps1 -Mod ..\tr_ab_old\true_range     # replay ด้วยตัวเก่า (ผลแยกโฟลเดอร์)
+git worktree add ..\..\tr_ab_old <commit>                                     # ได้ D:\Work\Coding\tr_ab_old
+powershell -File tools\install.ps1 -Src ..\..\tr_ab_old\true_range            # ติดตั้งตัวเก่าเข้าเกม
+powershell -File tests\bench_replay.ps1 -Mod ..\..\tr_ab_old\true_range       # replay ด้วยตัวเก่า (ผลแยกโฟลเดอร์)
+powershell -File tools\install.ps1                                            # เสร็จแล้ว ติดตั้งตัวปัจจุบันกลับ
+git worktree remove ..\..\tr_ab_old
 ```
 
 ## ติดตั้ง mod เข้าเกม
@@ -79,4 +86,6 @@ powershell -File tools\install_client.ps1   # ตัว Client (สร้าง�
 ## การเปิด debug log
 
 `mods\true_range\debug.txt` (ในโฟลเดอร์เกม) — มีไฟล์นี้ mod จะพิมพ์ `[true_range] ...` ละเอียดลง log
-`install.ps1` เก็บไฟล์นี้ไว้ให้ ไม่ลบทิ้งตอนคัดลอก
+`install.ps1` **สร้างไฟล์นี้ในสำเนาที่ติดตั้งทุกครั้ง** (ต้นฉบับไม่มี) — สำเนาในเกมจึงเป็นตัวทดสอบเสมอ
+
+> ⚠ **อัปโหลดจากต้นฉบับ `true_range\` เท่านั้น ห้ามอัปโหลดจาก `mods\true_range`** (มี debug.txt — ผู้เล่นจะได้ log เต็มจอ)

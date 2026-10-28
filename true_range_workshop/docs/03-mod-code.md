@@ -49,9 +49,11 @@
 
 ## modmain.lua — ข้อควรระวัง
 
-- environment ของ modmain **ไม่มี** `setmetatable`, `tonumber`, `pairs` บางตัว ฯลฯ ต้องใช้ `GLOBAL.xxx` — ถ้าลืม เกมจะ crash ตอนโหลด
-  `install.ps1` ตรวจให้ (`modenv_check.lua`) แต่ควรรู้ไว้
-- ตัวแปร global ที่ไม่ได้ประกาศทำ DST crash — ใช้ `rawget(_G, "ชื่อ")` เวลาอ่านสวิตช์
+- environment ของ modmain **ไม่มี** `tonumber, setmetatable, getmetatable, rawget, rawset, pcall, xpcall, select, next, unpack, error, os, io, debug, package, _G` ฯลฯ (รายการเต็ม: `MISSING` ใน `tools\modenv_check.lua`) — ต้องใช้ `GLOBAL.xxx` ถ้าลืม เกมจะ crash ตอนโหลด (`install.ps1` ตรวจให้)
+  (`pairs`, `ipairs`, `print`, `string`, `math`, `table` ใช้ได้)
+- ตัวแปร global ที่ไม่ได้ประกาศทำ DST crash — อ่านสวิตช์แบบนี้:
+  - ใน `modmain.lua`: `GLOBAL.rawget(GLOBAL, "TR_OLD_X")`
+  - ใน `scripts\true_range\*.lua`: `rawget(_G, "TR_OLD_X")`
 
 ## ตัวเลือกดีบัก (global ที่ mod อ่าน)
 

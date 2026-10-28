@@ -53,8 +53,10 @@
 | `TR_OLD_LANDAT`, `LANDLOOSE`, `LANDTILL`, `LAND2` | Umbral optic blast/วาร์ป วาดที่ beam/เป้าจริง |
 | `TR_OLD_LEADTP`, `LEADTPSTEP`, `LEADSTOP` | LeadMoving: ไม่นำตอนวาร์ป/ตอนหยุด |
 | `TR_OLD_CHAINLAST` | Rock Master: ครั้งสุดท้ายของ chain dash |
-| `TR_OLD_WORMDIRT` | หนอน: วงกองดินเฉพาะตอนหัวโผล่/ท่อนผ่าน |
+| `TR_OLD_WORMDIRT` (modmain) | หนอน: วงกองดินเฉพาะตอนหัวโผล่/ท่อนผ่าน |
 | `TR_OLD_HUNTSTICK` (modmain) | บอสค้างในรายการวาด .3 s หลังไล่ |
+
+> สวิตช์ที่มีป้าย (modmain) replay มองไม่เห็น — A/B ด้วย `run_lag.ps1 -Old "..."`
 | `TR_BENCH_OLD_*` | สวิตช์ฝั่ง testbench |
 
 ## คำศัพท์

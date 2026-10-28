@@ -23,7 +23,7 @@
 - `[tr_bench]` เริ่ม/จบฉาก, give up
 
 ```powershell
-powershell -File tools\run_bench.ps1 -All -Rounds 3                 # ทุกบอส (bench เต็ม)
+powershell -File tools\run_bench.ps1 -All -Rounds 3                 # ทุกบอส (bench เต็ม — baseline ใช้ 3 รอบ; ค่าเริ่มต้นคือ 10)
 powershell -File tools\run_bench.ps1 -Bosses shrouden,deerclops      # บางตัว
 powershell -File tools\run_bench.ps1 -Force <ไฟล์> -Rounds 2         # บังคับเข้า state (ท่าที่ไม่เคยออก)
 ```
@@ -44,6 +44,8 @@ powershell -File tests\bench_replay.ps1 -Run tests\work\bench_logs\2026-10-28_08
 powershell -File tests\bench_replay.ps1 -Run <run> -Client 1        # จำลองมุมผู้เล่น Predictive เปิด (0 = ปิด)
 powershell -File tests\bench_replay.ps1 -Run <run> -HazOnly         # เฉพาะของที่ปล่อย
 powershell -File tests\bench_replay.ps1 -Run <run> -Mod <โฟลเดอร์ true_range อื่น>   # A/B (ผลแยกโฟลเดอร์)
+powershell -File tests\bench_replay.ps1 -Run <run> -Bosses shrouden,catcoon     # เฉพาะบางบอส
+powershell -File tests\bench_replay.ps1 -Run <run> -Walk                        # ผู้เล่นเดินเข้า-ออกรอบบอส
 ```
 
 ### อ่านตาราง
@@ -69,7 +71,11 @@ luajit tests\replay.lua ..\true_range <share.txt> tests\work\game_scripts_um <bo
 luajit tests\replay_haz.lua ..\true_range <share.txt>
 ```
 
-> ⚠ ผล replay มี cache ที่ไม่ดู env — ลบไฟล์ผลก่อนรัน A/B ด้วย bench_replay
+> ⚠ A/B ด้วย `bench_replay.ps1`:
+> - cache ดูชื่อ env และสวิตช์ `TR_OLD_*` ที่พบในโค้ดแล้ว แต่ **สวิตช์ใหม่ต้องอยู่ในรายการของ `replay.lua`/`replay_haz.lua`** ไม่งั้นถูกเมิน
+> - ทั้งสองรอบเขียนโฟลเดอร์ผลเดียวกัน (`tests\work\bench_replay\<run>`) — คัดลอก/เปลี่ยนชื่อโฟลเดอร์ผลรอบแรกก่อนรันรอบที่สอง หรือใช้ `-Mod` (แยกโฟลเดอร์ให้เอง)
+> - `NO_CACHE=1` = รันใหม่ทั้งหมด
+> - สวิตช์ใน `modmain.lua` (เช่น `HUNTSTICK`, `WORMDIRT`) **replay มองไม่เห็น** — A/B ได้ด้วย lag bench `-Old` เท่านั้น
 
 ### ตัวช่วยดูทีละเฟรม
 
@@ -86,9 +92,16 @@ server (testbench โหมด lag) + **เกม Steam ของคุณเข
 
 ```powershell
 powershell -File tools\run_lag.ps1 -Bosses shrouden,shadowthrall_wings -Rounds 1
+powershell -File tools\run_lag.ps1 -Bosses moonmaw_dragonfly -Rounds 1 -Old "TR_OLD_LEADSTOP,TR_OLD_LANDSTOP"   # A/B: ตั้งสวิตช์ในเกม client
 ```
 
+พารามิเตอร์: `-Bosses` (ค่าเริ่มต้น deerclops, moose, bearger, mock_dragonfly, moonmaw_dragonfly), `-Rounds` (2), `-Old` (สวิตช์ฝั่ง client), `-Speed` (เร่งเวลา), `-TickRate` (15)
+
+ผล: `tests\work\bench_logs\<วันเวลา>_lag\` มี `client_log.txt` (ส่งให้ตัววิเคราะห์ด้วย `-Log`) และ `server_log.txt`
+
 ระหว่างรัน **อย่าใช้เกม** — มันขยับตัวละครเอง · ห้ามรัน bench/replay หนักพร้อมกัน (timing เพี้ยน)
+
+> ⚠ ถ้าหยุด lag bench กลางทาง (kill) ให้เช็คว่า `mods\modsettings.lua` ของเกมไม่มีบรรทัด `ForceEnableMod("tr_lagjoin")` ค้าง และลบ `mods\tr_lagjoin\join.txt` — ไม่งั้นเกมจะเข้า server ทดสอบเองตอนเปิดครั้งหน้า
 
 ### สิ่งที่ `client_log.txt` บันทึก (ทุกเฟรม)
 
@@ -112,8 +125,8 @@ all, on: frames 24071, jumps 43, snap backs 5 (0.21 per 1000)
 | คำสั่ง | ตอบ |
 |---|---|
 | `tools\lag_frames.ps1 -Log <client_log>` | อะไรกระพริบ (หาย 1–3 เฟรมแล้วกลับ) ต่อเจ้าของ — กรองการย้ายฉากออกแล้ว |
-| `tools\lag_land.ps1 -Log <client_log>` | ลูกโยน: จุดที่วาดห่างจุดตกจริงเท่าไร |
-| `tools\lagthing_to_haz.ps1 -Log <client_log> -Out <trace>` | แปลงสิ่งที่เกม client เห็นจริงเป็น trace → `replay_haz.lua` บนมุม client (ทดลองค่าได้ offline) |
+| `tools\lag_land.ps1 -Log <client_log> [-Prefab <ของ>]` | ลูกโยน: จุดที่วาดห่างจุดตกจริงเท่าไร (ค่าเริ่มต้น `-Prefab shadowthrall_projectile_fx` = Ink Blight) |
+| `tools\lagthing_to_haz.ps1 -Log <client_log> -Out <trace> [-Prefab <ของ>]` | แปลงสิ่งที่เกม client เห็นจริงเป็น trace → `replay_haz.lua` บนมุม client (ทดลองค่าได้ offline) — ค่าเริ่มต้นเฉพาะ Ink Blight เช่นกัน |
 
 ## 4. Unit test
 
