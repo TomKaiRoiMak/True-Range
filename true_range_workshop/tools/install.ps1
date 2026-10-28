@@ -22,6 +22,18 @@ if ($pn -ne $null) {
         Write-Host "not installed: $($pn.Name) and $(Split-Path $twin -Leaf) differ"; exit 1
     }
 }
+# (0c. the moves data built against this game - a game update leaves it out of date silently (2026-10-27's changed 106 combat
+#    scripts, SGshrouden among them): said loud, not stopped - tools\data_game_version.txt, set after a rebuild)
+$gv = 'D:\Games Manager\Games\steamapps\common\Don''t Starve Together\version.txt'
+$dv = Join-Path $PSScriptRoot 'data_game_version.txt'
+if ((Test-Path $gv) -and (Test-Path $dv)) {
+    $game = (Get-Content $gv -TotalCount 1).Trim()
+    $built = (Get-Content $dv -TotalCount 1).Trim()
+    if ($game -ne $built) { Write-Host "WARNING: moves data built for game $built, the game is $game - unpack game_scripts and rebuild (memory: game update = stale scripts)" }
+}
+# (0d. the moves written by hand still naming prefabs and animations the game has - tools\hand_check.ps1)
+& powershell -NoProfile -File (Join-Path $PSScriptRoot 'hand_check.ps1') | Out-Host
+if ($LASTEXITCODE -ne 0) { Write-Host "not installed: a hand-written move names what the game no longer has"; exit 1 }
 foreach ($lf in Get-ChildItem $src -Recurse -Filter '*.lua') {
     & luajit -bl $lf.FullName > $null
     if ($LASTEXITCODE -ne 0) { Write-Host "not installed: $($lf.Name) does not compile"; exit 1 }

@@ -17,6 +17,10 @@ local MODS = {
 
 -- enabled: function(folder name) -> whether that mod is on. Returns the names of those laid over.
 function ModData.Apply(enabled)
+    -- (how long the moves data takes to load in the game's own Lua, and what it holds - said once: whether loading it boss by
+    -- boss is worth it, told by the game, not by LuaJIT offline (77 ms, 19 MB there), 2026-10-28)
+    local c0, m0 = os.clock(), collectgarbage("count")
+    local was_loaded = package.loaded["true_range/moves_sim"] ~= nil
     local data = require("true_range/moves_sim")
     -- (REDESIGN.md's tables were run with the game's code alone: a move the mod lays anew has none -
     -- the game's table drawn for the mod's move was the game's blow, not the mod's: UM Treeguard's
@@ -92,6 +96,9 @@ function ModData.Apply(enabled)
             end
         end
     end
+    print(string.format("[true_range] moves data loaded in %.0f ms, %.1f MB of Lua memory (moves_sim %s), Lua memory now %.1f MB",
+        (os.clock() - c0) * 1000, (collectgarbage("count") - m0) / 1024, was_loaded and "loaded before" or "loaded here",
+        collectgarbage("count") / 1024))
     return applied
 end
 
