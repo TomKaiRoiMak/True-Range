@@ -16,7 +16,8 @@ function SgOf($boss) {
     foreach ($f in Get-ChildItem $pfDir -Filter '*.lua') {
         $t = [IO.File]::ReadAllText($f.FullName)
         if ($t -match ('Prefab\(\s*"' + [regex]::Escape($boss) + '"')) {
-            foreach ($m in [regex]::Matches($t, 'SetStateGraph\("([^"]+)"\)')) { $sgs += $m.Groups[1].Value }
+            # (any "SG..." named in the call - the spiders' SetStateGraph((extra_data and extra_data.sg) or "SGspider"), 2026-10-28)
+            foreach ($m in [regex]::Matches($t, 'SetStateGraph\([^\n]*?"(SG[^"]+)"')) { $sgs += $m.Groups[1].Value }
         }
     }
     $sgOf[$boss] = @($sgs | Select-Object -Unique)
