@@ -4566,7 +4566,8 @@ return {
         ["swirl_pst"] = 0.366666666666667,
         ["shock_loop"] = 0.2,
         ["shock_pst"] = 0.233333333333333,
-        _banks = { ["open"] = 3237420654, ["idle_loop_open"] = 3237420654, ["closed"] = 3237420654, ["idle_loop"] = 3237420654, ["walk_pre"] = 3237420654, ["walk_loop"] = 3237420654, ["walk_pst"] = 3237420654, ["jump_pre"] = 3237420654, ["jump"] = 3237420654, ["jump_loop"] = 3237420654, ["jump_pst"] = 3237420654, ["hit"] = 3237420654, ["chomp"] = 3237420654, ["lick"] = 3237420654, ["sleep_pre"] = 3237420654, ["sleep_loop"] = 3237420654, ["sleep_pst"] = 3237420654, ["death"] = 3237420654, ["corpse"] = 3237420654, ["corpse_hit"] = 3237420654, ["transition"] = 3237420654, ["swirl_pre"] = 3237420654, ["swirl_loop"] = 3237420654, ["swirl_pst"] = 3237420654, ["shock_loop"] = 3237420654, ["shock_pst"] = 3237420654 },
+        ["knockback"] = 1.3,
+        _banks = { ["open"] = 3237420654, ["idle_loop_open"] = 3237420654, ["closed"] = 3237420654, ["idle_loop"] = 3237420654, ["walk_pre"] = 3237420654, ["walk_loop"] = 3237420654, ["walk_pst"] = 3237420654, ["jump_pre"] = 3237420654, ["jump"] = 3237420654, ["jump_loop"] = 3237420654, ["jump_pst"] = 3237420654, ["hit"] = 3237420654, ["chomp"] = 3237420654, ["lick"] = 3237420654, ["sleep_pre"] = 3237420654, ["sleep_loop"] = 3237420654, ["sleep_pst"] = 3237420654, ["death"] = 3237420654, ["corpse"] = 3237420654, ["corpse_hit"] = 3237420654, ["transition"] = 3237420654, ["swirl_pre"] = 3237420654, ["swirl_loop"] = 3237420654, ["swirl_pst"] = 3237420654, ["shock_loop"] = 3237420654, ["shock_pst"] = 3237420654, ["knockback"] = 3237420654 },
     },
     ["chester_build"] = {
     },
@@ -6502,8 +6503,9 @@ return {
         ["mutate_pst"] = 0.833333333333333,
         ["shock_loop"] = 0.2,
         ["shock_pst"] = 0.3,
-        ["mutated_spider_reviving"] = 7.43333333333333,
-        _banks = { ["idle"] = 4003434207, ["walk_pre"] = 4003434207, ["walk_loop"] = 4003434207, ["walk_pst"] = 4003434207, ["evade"] = 4003434207, ["enter_loop"] = 4003434207, ["land"] = 4003434207, ["taunt"] = 4003434207, ["atk"] = 4003434207, ["death"] = 4003434207, ["corpse"] = 4003434207, ["corpse_hit"] = 4003434207, ["cower"] = 4003434207, ["cower_loop"] = 4003434207, ["cower_pst"] = 4003434207, ["hit"] = 4003434207, ["eat"] = 4003434207, ["eat_loop"] = 4003434207, ["eat_pst"] = 4003434207, ["sleep_pre"] = 4003434207, ["sleep_loop"] = 4003434207, ["sleep_pst"] = 4003434207, ["frozen"] = 4003434207, ["frozen_loop_pst"] = 4003434207, ["crap"] = 4003434207, ["spit"] = 4003434207, ["mutate_pre"] = 4003434207, ["mutate_pst"] = 4003434207, ["shock_loop"] = 4003434207, ["shock_pst"] = 4003434207, ["mutated_spider_reviving"] = 4003434207 },
+        ["mutated_spider_reviving"] = 6.16666666666667,
+        ["knockback"] = 1.3,
+        _banks = { ["idle"] = 4003434207, ["walk_pre"] = 4003434207, ["walk_loop"] = 4003434207, ["walk_pst"] = 4003434207, ["evade"] = 4003434207, ["enter_loop"] = 4003434207, ["land"] = 4003434207, ["taunt"] = 4003434207, ["atk"] = 4003434207, ["death"] = 4003434207, ["corpse"] = 4003434207, ["corpse_hit"] = 4003434207, ["cower"] = 4003434207, ["cower_loop"] = 4003434207, ["cower_pst"] = 4003434207, ["hit"] = 4003434207, ["eat"] = 4003434207, ["eat_loop"] = 4003434207, ["eat_pst"] = 4003434207, ["sleep_pre"] = 4003434207, ["sleep_loop"] = 4003434207, ["sleep_pst"] = 4003434207, ["frozen"] = 4003434207, ["frozen_loop_pst"] = 4003434207, ["crap"] = 4003434207, ["spit"] = 4003434207, ["mutate_pre"] = 4003434207, ["mutate_pst"] = 4003434207, ["shock_loop"] = 4003434207, ["shock_pst"] = 4003434207, ["mutated_spider_reviving"] = 4003434207, ["knockback"] = 4003434207 },
     },
     ["ds_spider2_caves_boat_jump"] = {
         ["boat_jump_pre"] = 0.466666666666667,
@@ -8886,7 +8888,8 @@ return {
         ["frozen_loop_pst"] = 0.233333333333333,
         ["shock_loop"] = 0.2,
         ["shock_pst"] = 0.3,
-        _banks = { ["idle"] = 1221622875, ["idle2"] = 1221622875, ["tired_pre"] = 1221622875, ["tired_loop"] = 1221622875, ["tired_pst"] = 1221622875, ["run_pre"] = 1221622875, ["run_loop"] = 1221622875, ["run_pst"] = 1221622875, ["scare"] = 1221622875, ["hit"] = 1221622875, ["death"] = 1221622875, ["crawl_loop"] = 1221622875, ["crawl_death"] = 1221622875, ["sleep_pre"] = 1221622875, ["sleep_loop"] = 1221622875, ["sleep_pst"] = 1221622875, ["frozen"] = 1221622875, ["frozen_loop_pst"] = 1221622875, ["shock_loop"] = 1221622875, ["shock_pst"] = 1221622875 },
+        ["knockback"] = 1.3,
+        _banks = { ["idle"] = 1221622875, ["idle2"] = 1221622875, ["tired_pre"] = 1221622875, ["tired_loop"] = 1221622875, ["tired_pst"] = 1221622875, ["run_pre"] = 1221622875, ["run_loop"] = 1221622875, ["run_pst"] = 1221622875, ["scare"] = 1221622875, ["hit"] = 1221622875, ["death"] = 1221622875, ["crawl_loop"] = 1221622875, ["crawl_death"] = 1221622875, ["sleep_pre"] = 1221622875, ["sleep_loop"] = 1221622875, ["sleep_pst"] = 1221622875, ["frozen"] = 1221622875, ["frozen_loop_pst"] = 1221622875, ["shock_loop"] = 1221622875, ["shock_pst"] = 1221622875, ["knockback"] = 1221622875 },
     },
     ["glassaxe"] = {
         ["idle"] = 1.5,
@@ -10429,7 +10432,8 @@ return {
         ["shock_pst"] = 0.2,
         ["corpse"] = 0.0666666666666667,
         ["corpse_hit"] = 0.366666666666667,
-        _banks = { ["hutch"] = 354819820, ["open"] = 354819820, ["idle_loop_open"] = 354819820, ["closed"] = 354819820, ["idle_loop"] = 354819820, ["hit"] = 354819820, ["chomp"] = 354819820, ["lick"] = 354819820, ["sleep_pre"] = 354819820, ["sleep_loop"] = 354819820, ["sleep_pst"] = 354819820, ["death"] = 354819820, ["transition"] = 354819820, ["walk_pre"] = 354819820, ["walk_loop"] = 354819820, ["walk_pst"] = 354819820, ["shock_loop"] = 354819820, ["shock_pst"] = 354819820, ["corpse"] = 354819820, ["corpse_hit"] = 354819820 },
+        ["knockback"] = 1.3,
+        _banks = { ["hutch"] = 354819820, ["open"] = 354819820, ["idle_loop_open"] = 354819820, ["closed"] = 354819820, ["idle_loop"] = 354819820, ["hit"] = 354819820, ["chomp"] = 354819820, ["lick"] = 354819820, ["sleep_pre"] = 354819820, ["sleep_loop"] = 354819820, ["sleep_pst"] = 354819820, ["death"] = 354819820, ["transition"] = 354819820, ["walk_pre"] = 354819820, ["walk_loop"] = 354819820, ["walk_pst"] = 354819820, ["shock_loop"] = 354819820, ["shock_pst"] = 354819820, ["corpse"] = 354819820, ["corpse_hit"] = 354819820, ["knockback"] = 354819820 },
     },
     ["hutch_build"] = {
     },
@@ -11704,6 +11708,24 @@ return {
         ["bubble_lava"] = 3.33333333333333,
         _banks = { ["idle_lava"] = 1964611821, ["splash_lava"] = 1964611821, ["bubble_lava"] = 1964611821 },
     },
+    ["leafpile"] = {
+        ["spawn_to_small"] = 0.5,
+        ["idle_small"] = 0.0666666666666667,
+        ["small_to_medium"] = 0.5,
+        ["idle_medium"] = 0.0666666666666667,
+        ["medium_to_large"] = 0.5,
+        ["idle_large"] = 0.0666666666666667,
+        ["decay_large"] = 1.13333333333333,
+        ["decay_medium"] = 1.13333333333333,
+        ["decay_small"] = 1.13333333333333,
+        ["leaves_fall"] = 2.96666666666667,
+        ["leaves_shatter"] = 1.23333333333333,
+        _banks = { ["spawn_to_small"] = 1350669104, ["idle_small"] = 1350669104, ["small_to_medium"] = 1350669104, ["idle_medium"] = 1350669104, ["medium_to_large"] = 1350669104, ["idle_large"] = 1350669104, ["decay_large"] = 1350669104, ["decay_medium"] = 1350669104, ["decay_small"] = 1350669104, ["leaves_fall"] = 1350669104, ["leaves_shatter"] = 1350669104 },
+    },
+    ["leafpile_red_build"] = {
+    },
+    ["leafpile_yellow_build"] = {
+    },
     ["leaves_canopy"] = {
         ["idle1"] = 2.73333333333333,
         ["idle2"] = 2.73333333333333,
@@ -12418,7 +12440,8 @@ return {
         ["frozen_loop_pst"] = 0.2,
         ["shock_loop"] = 0.2,
         ["shock_pst"] = 0.166666666666667,
-        _banks = { ["ground"] = 2355880531, ["picked"] = 2355880531, ["idle_loop"] = 2355880531, ["walk_pre"] = 2355880531, ["walk_loop"] = 2355880531, ["walk_pst"] = 2355880531, ["plant"] = 2355880531, ["hit"] = 2355880531, ["death"] = 2355880531, ["object"] = 2355880531, ["cooked"] = 2355880531, ["frozen"] = 2355880531, ["frozen_loop_pst"] = 2355880531, ["shock_loop"] = 2355880531, ["shock_pst"] = 2355880531 },
+        ["knockback"] = 1.3,
+        _banks = { ["ground"] = 2355880531, ["picked"] = 2355880531, ["idle_loop"] = 2355880531, ["walk_pre"] = 2355880531, ["walk_loop"] = 2355880531, ["walk_pst"] = 2355880531, ["plant"] = 2355880531, ["hit"] = 2355880531, ["death"] = 2355880531, ["object"] = 2355880531, ["cooked"] = 2355880531, ["frozen"] = 2355880531, ["frozen_loop_pst"] = 2355880531, ["shock_loop"] = 2355880531, ["shock_pst"] = 2355880531, ["knockback"] = 2355880531 },
     },
     ["manrabbit_actions"] = {
         ["pig_pickup"] = 0.866666666666667,
@@ -15874,10 +15897,9 @@ return {
     ["player_gallop_run"] = {
         ["run_gallop_pre"] = 0.133333333333333,
         ["run_gallop_loop"] = 0.533333333333333,
-        ["run_pst_side"] = 0.0333333333333333,
         ["run_gallop_pst"] = 0.233333333333333,
         ["gallop_slip_pre"] = 0.7,
-        _banks = { ["run_gallop_pre"] = 75779832, ["run_gallop_loop"] = 75779832, ["run_pst_side"] = 75779832, ["run_gallop_pst"] = 75779832, ["gallop_slip_pre"] = 75779832 },
+        _banks = { ["run_gallop_pre"] = 75779832, ["run_gallop_loop"] = 75779832, ["run_gallop_pst"] = 75779832, ["gallop_slip_pre"] = 75779832 },
     },
     ["player_ghost_withhat"] = {
         ["idle"] = 2.13333333333333,
@@ -17028,6 +17050,12 @@ return {
         ["wendy_commune_pst"] = 1.6,
         _banks = { ["wendy_commune_pre"] = 1105375400, ["wendy_commune_lag"] = 1105375400, ["wendy_commune_pst"] = 1105375400 },
     },
+    ["player_witchbroom_run"] = {
+        ["run_witchbroom_pre"] = 0.133333333333333,
+        ["run_witchbroom_loop"] = 1.06666666666667,
+        ["run_witchbroom_pst"] = 0.233333333333333,
+        _banks = { ["run_witchbroom_pre"] = 75779832, ["run_witchbroom_loop"] = 75779832, ["run_witchbroom_pst"] = 75779832 },
+    },
     ["player_wolfgang"] = {
         ["powerup"] = 1.2,
         ["powerdown"] = 1.23333333333333,
@@ -17563,6 +17591,19 @@ return {
         ["carver3"] = 0.133333333333333,
         _banks = { ["carver1"] = 618977527, ["carver2"] = 618977527, ["carver3"] = 618977527 },
     },
+    ["pumpkin_bomb"] = {
+        ["idle"] = 0.133333333333333,
+        ["spin_loop"] = 1.03333333333333,
+        ["used"] = 0.766666666666667,
+        ["debris_01"] = 0.933333333333333,
+        ["debris_02"] = 0.933333333333333,
+        ["debris_03"] = 0.933333333333333,
+        ["debris_04"] = 0.933333333333333,
+        ["debris_05"] = 0.933333333333333,
+        ["debris_06"] = 0.933333333333333,
+        ["scrapbook"] = 0.0333333333333333,
+        _banks = { ["idle"] = 1066785337, ["spin_loop"] = 1066785337, ["used"] = 1066785337, ["debris_01"] = 1066785337, ["debris_02"] = 1066785337, ["debris_03"] = 1066785337, ["debris_04"] = 1066785337, ["debris_05"] = 1066785337, ["debris_06"] = 1066785337, ["scrapbook"] = 1066785337 },
+    },
     ["pumpkin_lantern"] = {
         ["idle_day"] = 0.133333333333333,
         ["idle_night_pre"] = 0.233333333333333,
@@ -17625,7 +17666,8 @@ return {
         ["frozen_loop_pst"] = 0.2,
         ["shock_loop"] = 0.2,
         ["shock_pst"] = 0.3,
-        _banks = { ["idle_loop"] = 3467807100, ["idle_loop_nodir"] = 3467807100, ["walk_pre"] = 3467807100, ["walk_loop"] = 3467807100, ["walk_pst"] = 3467807100, ["hit"] = 3467807100, ["sleep_pre"] = 3467807100, ["sleep_loop"] = 3467807100, ["sleep_pst"] = 3467807100, ["death"] = 3467807100, ["eat_pre"] = 3467807100, ["eat_loop"] = 3467807100, ["eat_pst"] = 3467807100, ["distress"] = 3467807100, ["frozen"] = 3467807100, ["frozen_loop_pst"] = 3467807100, ["shock_loop"] = 3467807100, ["shock_pst"] = 3467807100 },
+        ["knockback"] = 1.3,
+        _banks = { ["idle_loop"] = 3467807100, ["idle_loop_nodir"] = 3467807100, ["walk_pre"] = 3467807100, ["walk_loop"] = 3467807100, ["walk_pst"] = 3467807100, ["hit"] = 3467807100, ["sleep_pre"] = 3467807100, ["sleep_loop"] = 3467807100, ["sleep_pst"] = 3467807100, ["death"] = 3467807100, ["eat_pre"] = 3467807100, ["eat_loop"] = 3467807100, ["eat_pst"] = 3467807100, ["distress"] = 3467807100, ["frozen"] = 3467807100, ["frozen_loop_pst"] = 3467807100, ["shock_loop"] = 3467807100, ["shock_pst"] = 3467807100, ["knockback"] = 3467807100 },
     },
     ["pupington_basic_water"] = {
         ["idle_loop"] = 0.566666666666667,
@@ -26697,6 +26739,18 @@ return {
         ["boss_warbot"] = 0.0333333333333333,
         ["boss_celestialrevenant"] = 0.0333333333333333,
         _banks = { ["symbols_hanging"] = 1408630374, ["boss_celestialscion"] = 1408630374, ["boss_warbot"] = 1408630374, ["boss_celestialrevenant"] = 1408630374 },
+    },
+    ["witchbroom"] = {
+        ["idle"] = 0.2,
+        _banks = { ["idle"] = 2904992214 },
+    },
+    ["witchbroom_living_build"] = {
+    },
+    ["witchbroom_trail"] = {
+        ["witchbroom_trail1"] = 1,
+        ["witchbroom_trail2"] = 1,
+        ["witchbroom_trail3"] = 1,
+        _banks = { ["witchbroom_trail1"] = 3712326365, ["witchbroom_trail2"] = 3712326365, ["witchbroom_trail3"] = 3712326365 },
     },
     ["withered_flowers"] = {
         ["wf1"] = 0.0333333333333333,
