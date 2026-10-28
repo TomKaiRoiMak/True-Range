@@ -5,9 +5,11 @@
 # 2. client_only.txt there: modmain then asks nothing of the server (CLIENT_ONLY)
 # 3. its modinfo.lua made from True Range's: its own name and description, a client mod - the
 #    settings, version and the rest kept the same as the main mod's
+# (-Src <a true_range folder>: that one - a git worktree's, as install.ps1 -Src)
+param([string]$Src = "")
 $ErrorActionPreference = 'Continue'
 $root = Split-Path -Parent $PSScriptRoot
-$src = Join-Path (Split-Path -Parent $root) 'true_range'
+$src = if ($Src -ne "") { (Resolve-Path $Src).Path } else { Join-Path (Split-Path -Parent $root) 'true_range' }
 $dst = 'D:\Games Manager\Games\steamapps\common\Don''t Starve Together\mods\true_range_client'
 $noBom = New-Object System.Text.UTF8Encoding $false
 

@@ -4,9 +4,11 @@
 #    "[true_range] data <id>" in client_log.txt - which data a game ran on, told from its log)
 # 2. robocopy /MIR into the game's folder
 # 3. every file there compared by hash with the source; any not the same: said, and exit 1
+# (-Src <a true_range folder>: install that one - a git worktree's, for an A/B in the game; -SkipTests: as $args before)
+param([switch]$SkipTests, [string]$Src = "")
 $ErrorActionPreference = 'Continue'
 $root = Split-Path -Parent $PSScriptRoot
-$src = Join-Path (Split-Path -Parent $root) 'true_range'
+$src = if ($Src -ne "") { (Resolve-Path $Src).Path } else { Join-Path (Split-Path -Parent $root) 'true_range' }
 $dst = 'D:\Games Manager\Games\steamapps\common\Don''t Starve Together\mods\true_range'
 # (0. not one that fails as it loads: modmain reading a Lua builtin the mod's environment hasn't got (setmetatable, tonumber
 #    ...) - tools\modenv_check.lua; and every Lua file compiling - a bare setmetatable went to the game once, 2026-10-21)
@@ -40,7 +42,7 @@ foreach ($lf in Get-ChildItem $src -Recurse -Filter '*.lua') {
 }
 # (and the unit tests, every one (tests/last_summary.txt's "unit" list): none failing - tests/pool_hide.lua said for 3 days
 #    that Lines.Tri drew nothing (a line lost), only test_sim was looked at, 2026-10-25. -SkipTests not given: required)
-if ($args -notcontains '-SkipTests') {
+if (-not $SkipTests) {
     $tests = Join-Path $root 'tests'
     $units = @(Select-String -Path (Join-Path $tests 'last_summary.txt') -Pattern '^unit (\S+)' | ForEach-Object { $_.Matches[0].Groups[1].Value })
     Push-Location $tests
