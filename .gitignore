@@ -24,3 +24,8 @@ _trash_*/
 # scratch output
 *.ppm
 *.err
+
+# Claude Code: personal settings, the keep-going switch
+.claude/settings.local.json
+.claude/keep_going
+.claude/keep_going.ps1
