@@ -47,3 +47,5 @@
 - The Umbral Abomination's optic blast: as it winds up, drawn round you (it comes up on you) - it was drawn out ahead of it as if it ran there; its beam drawn round the beam itself as it chases you, where it is by now - it was drawn round the Abomination
 - The Great Depths Worm: no ring drawn round each new dirt mound as it comes up - that pound does no damage
 - Enraged Klaus' leaping bite: drawn where it really comes down - after you, it leaps about half as far as its full leap (its walk slowing it), and the bite was drawn 3-4 further on, "it says I'm hit, I'm not". Learned from its first few bites each fight
+- Bearger's butt slam: drawn whichever way it turns - turning right (butt_pre_R, half its slams) it wasn't drawn at all
+- The Shadow Runner's long pounce at you from afar: drawn - only its short one was
