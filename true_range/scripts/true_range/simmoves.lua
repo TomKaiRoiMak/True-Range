@@ -3235,7 +3235,7 @@ SimMoves._land = { shrouden = { teleport_pre = {
     { anim = "teleport_loop", r = 2.9, eta = .4, till = 1e6 },
     -- (till its last blow at 26, not all its 2 s: kept to its end, then a frame of idle, then the punch - drawn, gone, drawn, a blink
     -- between, [tr_lagframe] lag_ink3 2026-10-28. till_old: TR_OLD_LANDTILL)
-    { anim = "teleport_pst", r = 3.0, at = 6, till = 26, till_old = 1e6, r2 = 3.85, r2_at = 26 },
+    { anim = "teleport_pst", r = 3.0, at = 6, till = 26, till_old = 1e6, r2 = 3.85, r2_at = 26, r2_from = 0 },
 }, optic_blast_pre1 = {
     { anim = "optic_blast_pst", r = 4.1, at = 17, till = 18 },
     { anim = "optic_blast_loop", r = 2.5, wide_anim = "optic_blast_pre3", wide_r = 5.5, at = 0, till = 1e6, at_thing = "shrouden_optic_blast_fx" },

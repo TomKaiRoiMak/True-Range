@@ -2812,7 +2812,11 @@ function Predict.Draw(ents, ranges, my_radius, me, skip)
                         local lw = Predict._land_wide[ent]
                         local r = (ld.wide_anim ~= nil and lw ~= nil and now - lw < 4) and ld.wide_r or ld.r
                         -- (wider from a frame on - the teleport's strike 3.25 round from its frame 26)
-                        if ld.r2 ~= nil and into >= ld.r2_at * FRAMES then r = ld.r2 end
+                        -- (from r2_from on: it stands still from frame 6, so the whole wider ring is coming - drawn wide only as it
+                        -- widened, a player's game showed it 3 frames after the blow, 3 struck undrawn 3.6 off, client replay
+                        -- 2026-10-29. TR_OLD_R2FROM)
+                        local r2_at = (ld.r2_from ~= nil and not rawget(_G, "TR_OLD_R2FROM")) and ld.r2_from or ld.r2_at
+                        if ld.r2 ~= nil and into >= r2_at * FRAMES then r = ld.r2 end
                         -- (round where it really strikes from: whom it's after (ld.on_target - its optic blast teleports onto them,
                         -- SGshrouden optic_blast_appear), the thing itself once made (ld.at_thing - the beam, made there, chasing you
                         -- 1.6 s on); not its offline chase laid out ahead of it, "the laser's hitbox out in front of the boss", the

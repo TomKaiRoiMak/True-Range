@@ -52,3 +52,4 @@
 - Moonmaw's lava pups: their stab drawn steady as they glide to a stop - it jumped about a unit past them and back as they braked (in a player's game, not the host's)
 - Spat's phlegm and other low, quick throws: drawn round them as they fly in a player's game - hidden until they landed, so never seen before they struck
 - In a player's game (not the host's): a move done twice running (the Shadow Rocky's dashes, Oculets' and mini eyes' bites) drawn from where the second one really began - it was drawn from where the first began, up to 17 off
+- The Umbral Abomination coming up from a teleport: its whole ring drawn as it comes up - it widens as it strikes, and in a player's game the wider ring came up a moment after the blow
