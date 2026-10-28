@@ -54,3 +54,7 @@
 - In a player's game (not the host's): a move done twice running (the Shadow Rocky's dashes, Oculets' and mini eyes' bites) drawn from where the second one really began - it was drawn from where the first began, up to 17 off
 - The Umbral Abomination coming up from a teleport: its whole ring drawn as it comes up - it widens as it strikes, and in a player's game the wider ring came up a moment after the blow
 - The W.A.R.B.O.T.'s missiles in a player's game: drawn where they are by now as they skim in low - drawn where they were a moment ago, they struck before reaching you on screen
+- The Umbral Abomination's optic blast: no big shape flashed for a frame as it begins - drawn its own way from the start
+- The Umbral Abomination's wide beam: drawn wide by the beam itself - in a player's game it was sometimes drawn narrow, striking outside it
+- The Umbral Abomination going under the ground: drawn as a ring round it - it was drawn as a long shape across the ground, and the dig itself does no harm
+- Thrown things lobbed high (the Moon Tentacle's shots): no ring blinking at the thrower as they set off

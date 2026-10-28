@@ -2115,6 +2115,7 @@ local function LandSpot(ent, ld, x, z, target, now)
             -- (its lead at once, not eased in - it chases you on steady: eased, 5 blows struck just past it, lag_ease1)
             dx, dz = SimMoves._LeadMovingRaw(best, ox, oz, now)
         end
+        return dx, dz, best
     end
     return dx, dz
 end
@@ -2821,12 +2822,24 @@ function Predict.Draw(ents, ranges, my_radius, me, skip)
                         -- SGshrouden optic_blast_appear), the thing itself once made (ld.at_thing - the beam, made there, chasing you
                         -- 1.6 s on); not its offline chase laid out ahead of it, "the laser's hitbox out in front of the boss", the
                         -- player 2026-10-28. TR_OLD_LANDAT: round itself)
-                        local dx, dz = LandSpot(ent, ld, x, z, target, now)
+                        local dx, dz, thing = LandSpot(ent, ld, x, z, target, now)
+                        -- (wide by the thing's own word (its net "wide") - the boss's short optic_blast_pre3 missed in a player's
+                        -- game, the wide beam (5) drawn 2.5: struck 3.7 off undrawn twice, lag 0549 2026-10-29. TR_OLD_WIDENET)
+                        if ld.wide_r ~= nil and thing ~= nil and type(thing.wide) == "table" and thing.wide.value ~= nil
+                            and thing.wide:value() and not rawget(_G, "TR_OLD_WIDENET") then r = ld.wide_r end
                         a.land_drawn = now
                         Note(ent, "round itself, where it is", a.move, t)
                         danger = SimMoves.DrawDisc(dx, dz, r, ld.eta or (ld.at * FRAMES - into), px, pz) or danger
                         require("true_range/telegraph").Circle(dx, dz, r, "edge")
                     end
+                -- (one drawn its own way all through (SimMoves._land has its own first animation), that animation not yet
+                -- playing - a player's game knows the move a frame before its animation comes: nothing, not its offline run
+                -- laid out 7-20 long for that frame - the Umbral Abomination's optic blast, a big shape flashed on each
+                -- one, the player 2026-10-29 ([tr_lagframe] lag 0549, 5 of 5). TR_OLD_LANDFIRST: drawn so)
+                elseif sim ~= nil and a.move.name ~= nil and SimMoves._land[ent.prefab] ~= nil and SimMoves._land[ent.prefab][a.move.name] ~= nil
+                    and Predict._LandOwn(SimMoves._land[ent.prefab][a.move.name], a.move.name, sim) and not rawget(_G, "TR_OLD_LANDFIRST")
+                    and not rawget(_G, "TR_OLD_LAND2") then
+                    Note(ent, "its own way, not yet", a.move, t)
                 elseif sim ~= nil then
                     -- run offline from the game's code (where its target stood straight ahead):
                     -- laid out towards its target - not the way it faces; once it stops aiming
@@ -3560,6 +3573,14 @@ Predict.SimHazards = SimMoves.Hazards
 -- (which of its SimMoves._land parts it is in now, by the animation playing - nil: none; and when it last played a part's
 -- wide_anim (Predict._land_wide, by monster - that animation not its move's own, the move begun again after it))
 Predict._land_wide = setmetatable({}, { __mode = "k" })
+-- (whether a move's _land list has its own first animation - drawn its own way from the start)
+function Predict._LandOwn(list, name, sim)
+    local first = sim ~= nil and sim.anims ~= nil and sim.anims[1] or nil
+    for _, ld in ipairs(list) do
+        if ld.anim == name or (first ~= nil and ld.anim == first) then return true end
+    end
+    return false
+end
 function Predict._LandNow(ent, a, list)
     local found = nil
     for _, ld in ipairs(list) do

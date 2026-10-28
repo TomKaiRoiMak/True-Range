@@ -3236,6 +3236,9 @@ SimMoves._land = { shrouden = { teleport_pre = {
     -- (till its last blow at 26, not all its 2 s: kept to its end, then a frame of idle, then the punch - drawn, gone, drawn, a blink
     -- between, [tr_lagframe] lag_ink3 2026-10-28. till_old: TR_OLD_LANDTILL)
     { anim = "teleport_pst", r = 3.0, at = 6, till = 26, till_old = 1e6, r2 = 3.85, r2_at = 26, r2_from = 0 },
+    -- (going down: no blow (SGshrouden teleport_pre has none) - drawn as it will be under the ground, round itself, not its
+    -- offline run 7.8 across for half a second: "what does the dig warn of?", the player 2026-10-29. TR_OLD_TPPRE; last - nil ends the list)
+    not rawget(_G, "TR_OLD_TPPRE") and { anim = "teleport_pre", r = 2.9, eta = .9, till = 1e6 } or nil,
 }, optic_blast_pre1 = {
     { anim = "optic_blast_pst", r = 4.1, at = 17, till = 18 },
     { anim = "optic_blast_loop", r = 2.5, wide_anim = "optic_blast_pre3", wide_r = 5.5, at = 0, till = 1e6, at_thing = "shrouden_optic_blast_fx" },
@@ -3647,12 +3650,26 @@ local function DrawHazardInner(ent, x, z, rot, px, pz, now, in_moves, sfx)
             -- (up in the air and not yet moved at all since made - hanging where it's made a few frames: not drawn
             -- till it's off, which way not yet known - drawn round itself there, then gone, then where it lands
             -- (the Moon Tentacle's spines, GAP 0.3 s each); a mini eye's ring 2 frames later. TR_OLD_EARLY: as before)
-            if hist[#hist] == nil or hist[#hist][1] < now then
+            -- (nor a frame that brought nothing new - a player's game hears the server 15 times a second, every other frame
+            -- the same height and place: fitted as standing a frame, the Moon Tentacle's shots up high taken to land at once
+            -- where they set off, drawn there and gone, 656 gaps (replay CLIENT 2026-10-29). TR_OLD_AIRDUP: kept)
+            local last = hist[#hist]
+            local dup = last ~= nil and last[3] == (y or 0) and last[2] == x and last[4] == z and (y or 0) > .3
+                and not rawget(_G, "TR_OLD_AIRDUP")
+            if not dup and (last == nil or last[1] < now) then
                 -- (going up, and higher than a hop - Bearger's boulders bound along 0.5-0.8 up, striking as they go:
                 -- taken for thrown, hidden up there, 5 -> 217 missed; a throw goes far higher. TR_OLD_HOP: as before)
                 if hist[#hist] ~= nil and (y or 0) > hist[#hist][3] + .01 and ((y or 0) > 1.2 or rawget(_G, "TR_OLD_HOP")) then s.rose = true end
                 if (y or 0) > .3 then s.high = true end
+                -- (climbing higher than it has yet been seen - not back up to where it was: a player's game's heights for
+                -- Spat's phlegm, only falling, went 1.89, 1.51, 1.89 (replay CLIENT); nor from 0, its first word before its
+                -- height came. The Moon Tentacle's shots .9 -> 1.7 in a frame; LOWAIRROSE)
+                if (y or 0) > .05 then
+                    if s.ytop ~= nil and (y or 0) > s.ytop + .2 then s.climbed = true end
+                    s.ytop = math.max(s.ytop or 0, y or 0)
+                end
                 hist[#hist + 1] = { now, x, y or 0, z }
+                SimMoves._Trace(ent, now, "air", y, s)
                 while #hist > keep_n do table.remove(hist, 1) end
             end
             -- (its heights kept meanwhile: going up as it sets off is seen at once, its first frame off)
@@ -3784,7 +3801,10 @@ local function DrawHazardInner(ent, x, z, rot, px, pz, now, in_moves, sfx)
                     -- (but not one low down, a shoulder's height - flung, not lobbed: round it as it flies - Spat's phlegm, 2 up
                     -- at most and down 6 frames on, its fall not yet seen in a player's game: hidden all its way, 23 struck undrawn
                     -- (replay CLIENT 2026-10-28). TR_OLD_LOWAIR: hidden)
-                    elseif y ~= nil and y < 2.1 and not rawget(_G, "TR_OLD_LOWAIR") then SimMoves._Trace(ent, now, "low in the air: round it", y, s)
+                    -- (nor one seen going up - lobbed high, just off: the Moon Tentacle's shots drawn round the tentacle 3 frames,
+                    -- then hidden till their landing was known - a blink each shot, 782 gaps on the host, 2026-10-29. Spat's
+                    -- phlegm never rises. TR_OLD_LOWAIRROSE: so)
+                    elseif y ~= nil and y < 2.1 and not rawget(_G, "TR_OLD_LOWAIR") and not (s.climbed and not rawget(_G, "TR_OLD_LOWAIRROSE")) then SimMoves._Trace(ent, now, "low in the air: round it", y, s)
                     else s.memo = nil SimMoves._Trace(ent, now, "hide: in the air, no landing", y, s) return false end
                 end
             -- (its last moments of fall, too low to fit: where it was seen to come down, kept - drawn
