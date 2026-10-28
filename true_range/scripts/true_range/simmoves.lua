@@ -4269,7 +4269,9 @@ end
 
 -- its moves: { anims, frames (none: on while its animations play), sim = the entry }
 -- (a move's first animation -> its other side's, played instead by the same state: SimMoves.Moves)
-SimMoves._anim_twin = { butt_pre_L = "butt_pre_R" }
+-- (the Shadow Runner's pounce: "attack" when you're far (its leap 16 frames), "attack_quick" near - run offline at every
+-- distance, both ways, the far ones too, but named by the near one's animation: its far pounce never drawn, 2026-10-28)
+SimMoves._anim_twin = { butt_pre_L = "butt_pre_R", attack_quick = "attack" }
 function SimMoves.Moves(prefab)
     local list = moves[prefab]
     if list == nil then
