@@ -4388,6 +4388,33 @@ local function PathAt(map, fi)
     return p[math.min(fi + 1, #p)]
 end
 SimMoves._PathAt = PathAt
+-- (whether a move, run offline, stays where it began - every run's path within .3 of where it set off; a move told no path:
+-- not known, false)
+function SimMoves._StaysPut(entry)
+    if entry._stays ~= nil then return entry._stays end
+    local any, stays = false, true
+    for _, src in ipairs({ entry.maps or {}, entry.free or {} }) do
+        for _, map in ipairs(Decode(entry, src)) do
+            local p = PathAt(map, 0)
+            if p ~= nil then
+                any = true
+                local lo, hi, k = p, p, 0
+                while true do
+                    k = k + 1
+                    local v = PathAt(map, k)
+                    if v == nil or k > 400 then break end
+                    if v < lo then lo = v end
+                    if v > hi then hi = v end
+                    if k + 1 > #map.path then break end
+                end
+                if hi - lo > .3 then stays = false break end
+            end
+        end
+        if not stays then break end
+    end
+    entry._stays = any and stays
+    return entry._stays
+end
 
 -- The boss's pose as the server has it, tick by tick through a move (true_range modmain sends
 -- it): key - the move's first animation; go - which time round it began that; ft - seconds into

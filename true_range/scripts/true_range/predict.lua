@@ -2234,7 +2234,22 @@ function Predict.Draw(ents, ranges, my_radius, me, skip)
                 -- Eye of Terror's mini eyes and Oculets biting at 4 a second, 2.1 off and undrawn, as a player's game would see it
                 -- (tests/replay.lua CLIENT), 2026-10-27. On by how fast it goes, as a thing moving (SimMoves.LeadMoving - the host's
                 -- game: none). TR_OLD_BODYLEAD)
-                if not rawget(_G, "TR_OLD_BODYLEAD") then x, z = SimMoves.LeadMoving(ent, x, z, now) end
+                if not rawget(_G, "TR_OLD_BODYLEAD") then
+                    local lx, lz = SimMoves.LeadMoving(ent, x, z, now)
+                    -- (one whose move, run offline, stays where it began - coming to a stop, sliding on what it had: led on, but
+                    -- never back - Moonmaw's lavae gliding 10 -> 0 a second into their stab, drawn 1 on past them and back as they
+                    -- slowed, 10 a run (tools/lag_jumps.ps1, lag 2026-10-28_1849); not led at all, 2 -> 12 stabs undrawn (1856) -
+                    -- they stab where they stop, on past where your game shows them. The furthest on it has been drawn, this go.
+                    -- TR_OLD_STAYLEAD: led on and back, as before)
+                    if a.move.sim ~= nil and not rawget(_G, "TR_OLD_STAYLEAD") and SimMoves._StaysPut(a.move.sim) then
+                        local r0 = ent.Transform:GetRotation() * DEGREES
+                        if a.stay_x == nil or (lx - a.stay_x) * math.cos(r0) - (lz - a.stay_z) * math.sin(r0) > 0 then
+                            a.stay_x, a.stay_z = lx, lz
+                        end
+                        lx, lz = a.stay_x, a.stay_z
+                    end
+                    x, z = lx, lz
+                end
                 local rot = ent.Transform:GetRotation() * DEGREES
                 if a.heading and (a.move.sim == nil or a.move.sim.tell == nil) then rot = a.heading * DEGREES end
                 -- (who it's after: a leap at its target lands on them)
