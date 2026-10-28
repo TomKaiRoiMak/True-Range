@@ -13,6 +13,7 @@
 | `tools\hand_check.ps1` | ท่าเขียนมือยังชี้ของที่มีในเกม |
 | `tools\modenv_check.lua` | modmain ไม่ใช้ของที่ mod env ไม่มี |
 | `tools\nomove_check.lua` | ท่าที่เกมมีแต่ข้อมูลไม่มี |
+| `tools\make_catalog.ps1` | สร้าง [สารบัญมอนและท่า](catalog/README.md) จากไฟล์ข้อมูล |
 
 ### ทดสอบ
 

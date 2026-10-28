@@ -28,6 +28,7 @@
 - [ ] `luajit -bl <ไฟล์ที่แก้>` ผ่าน (โดยเฉพาะ `simmoves.lua` — เพดาน 200 local)
 - [ ] ไม่มี global ใหม่ที่ไม่ได้ประกาศ (สวิตช์: `rawget(_G, "...")` ใน scripts, `GLOBAL.rawget(GLOBAL, "...")` ใน modmain)
 - [ ] `true_range\scripts\true_range\data_id.lua` เปลี่ยนทุกครั้งที่ install — ไม่ต้อง commit ถ้าไม่ได้เปลี่ยนข้อมูล
+- [ ] แก้ไฟล์ข้อมูล (`moves_*.lua`) → รัน `tools\make_catalog.ps1` ให้ [สารบัญมอน](catalog/README.md) ตรงกับข้อมูล
 - [ ] สวิตช์อยู่ในรายการของ replay ทั้งสองไฟล์
 - [ ] A/B มีตัวเลข
 - [ ] `install.ps1` แสดง `installed:`
