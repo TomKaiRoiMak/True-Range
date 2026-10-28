@@ -2823,6 +2823,11 @@ function Predict.Draw(ents, ranges, my_radius, me, skip)
                         -- 1.6 s on); not its offline chase laid out ahead of it, "the laser's hitbox out in front of the boss", the
                         -- player 2026-10-28. TR_OLD_LANDAT: round itself)
                         local dx, dz, thing = LandSpot(ent, ld, x, z, target, now)
+                        -- (aimed till lock_at, then kept where it was aimed - Spat's phlegm, shot at where you were)
+                        if ld.lock_at ~= nil and into >= ld.lock_at * FRAMES then
+                            if a.land_lock == nil then a.land_lock = { dx, dz } end
+                            dx, dz = a.land_lock[1], a.land_lock[2]
+                        end
                         -- (wide by the thing's own word (its net "wide") - the boss's short optic_blast_pre3 missed in a player's
                         -- game, the wide beam (5) drawn 2.5: struck 3.7 off undrawn twice, lag 0549 2026-10-29. TR_OLD_WIDENET)
                         if ld.wide_r ~= nil and thing ~= nil and type(thing.wide) == "table" and thing.wide.value ~= nil

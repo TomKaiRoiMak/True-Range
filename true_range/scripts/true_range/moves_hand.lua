@@ -41,6 +41,11 @@ return {
     penguin = { slide = Slide() },
     mutated_penguin = { slide = Slide() },
     smallbird = { chase = Chase() },
+    -- (Spat's phlegm: shot at its target at frame 27 (SGspat launchprojectile DoAttack), 30 a second, sticking whoever is
+    -- within 4 of where it lands (TUNING.SPAT_PHLEGM_RADIUS) - in flight 0.2 s, a player's game saw it 3 frames late: 8 of
+    -- 10 struck undrawn on the lag bench 2026-10-29_0623. Drawn by its move instead, round its target, as SimMoves._land)
+    spat = { snot_pre = { anims = { "snot_pre", "snot", "snot_pst" }, first = 27, frame = "target", lock = 27, maps = {},
+        nothing = true, random = false, single = true, still = true } },
     -- (the Shadow Thrall mouth's last bite straight from landing - one it has bitten before (SGshadowthrall_mouth.lua
     -- :550-556 lasttargets): no bite_pre, no move known - 22 of its blows undrawn, 1.17 off, 2026-10-19
     -- (tools/midchain_check.lua). Its own move in the run's spec cut bite_final out of bite_pre's (22 -> 102 undrawn):

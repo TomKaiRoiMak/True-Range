@@ -58,3 +58,4 @@
 - The Umbral Abomination's wide beam: drawn wide by the beam itself - in a player's game it was sometimes drawn narrow, striking outside it
 - The Umbral Abomination going under the ground: drawn as a ring round it - it was drawn as a long shape across the ground, and the dig itself does no harm
 - Thrown things lobbed high (the Moon Tentacle's shots): no ring blinking at the thrower as they set off
+- Spat's phlegm: drawn round you as Spat winds up to spit, kept where it was aimed - in a player's game it struck before it was drawn

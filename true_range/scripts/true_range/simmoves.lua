@@ -3247,6 +3247,15 @@ SimMoves._land = { shrouden = { teleport_pre = {
     { anim = "optic_blast_pre2", r = 2.5, eta = .4, till = 1e6, at_thing = "shrouden_optic_blast_fx" },
     { anim = "optic_blast_pre1", r = 2.5, eta = 1, till = 1e6, on_target = true },
 } } }
+-- (Spat's phlegm (moves_hand.lua spat.snot_pre): round its target, 4 (SPAT_PHLEGM_RADIUS, from the phlegm's middle) - aimed
+-- till it's shot (snot frame 21 = the move's 27), kept there till it lands (some 6 frames on). lock_at: in frames of that
+-- animation, where its target was then kept. TR_OLD_SPATSNOT: none)
+if not rawget(_G, "TR_OLD_SPATSNOT") then
+    SimMoves._land.spat = { snot_pre = {
+        { anim = "snot", r = 4, at = 21, till = 29, on_target = true, lock_at = 21 },
+        { anim = "snot_pre", r = 4, eta = .9, till = 1e6, on_target = true },
+    } }
+end
 -- (one that strikes round itself as it goes, going fast: your game shows it where it was a moment ago - the network's
 -- tick, the in-between it draws - the server strikes from where it is now. The Shrouded Queen's vines (9 to 6 a
 -- second) struck you 1.2 off on the server, 1.5-1.9 off on your screen - never under you before they came up; 0.10 s
