@@ -4268,12 +4268,23 @@ function SimMoves.DrawHazard(ent, x, z, rot, px, pz, now, in_moves, data_only)
 end
 
 -- its moves: { anims, frames (none: on while its animations play), sim = the entry }
+-- (a move's first animation -> its other side's, played instead by the same state: SimMoves.Moves)
+SimMoves._anim_twin = { butt_pre_L = "butt_pre_R" }
 function SimMoves.Moves(prefab)
     local list = moves[prefab]
     if list == nil then
         list = {}
         for name, entry in pairs(Of(prefab) or {}) do
             table.insert(list, { anims = entry.anims, frames = {}, sim = entry, name = name })
+            -- (and the same move begun with its other side's animation - a state picking one at random or by where you
+            -- are, run offline down one way only: Bearger's butt slam, butt_pre_L or _R, the R half (65 of 98 ticks on the
+            -- bench) never drawn, struck 1.57 off, 2026-10-28. TR_OLD_TWIN: that one alone, as before)
+            local twin = entry.anims ~= nil and SimMoves._anim_twin[entry.anims[1]] or nil
+            if twin ~= nil and not rawget(_G, "TR_OLD_TWIN") then
+                local anims = { twin }
+                for i = 2, #entry.anims do anims[i] = entry.anims[i] end
+                table.insert(list, { anims = anims, frames = {}, sim = entry, name = name })
+            end
         end
         moves[prefab] = list
     end
