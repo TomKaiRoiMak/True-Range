@@ -3701,6 +3701,22 @@ function Predict.DrawHazards(ents, my_radius, me)
                 -- it - and strike nothing where they're seen: drawn as the Ancient Robots' (whose do strike), past its ring, the
                 -- player 2026-10-21. Not one that lies there a while (lasting - a mine, its boss gone off). TR_OLD_BYONLY: as before)
                 -- (looked for once, as it's first seen - anything of those names within 40, seen moving or not)
+                -- (a pound that strikes for nothing where it's set off by these (SimMoves._harmless_from): the Great Depths Worm's
+                -- dirt pounds as it comes up, its combat's damage never set (worm_boss.lua: SetDefaultDamage commented out) - 0
+                -- damage, the biggest ring round every new mound, "it never hurts", the player 2026-10-28. TR_OLD_WORMPOUND)
+                local harmless = false
+                local hf = SimMoves._harmless_from[ent.prefab]
+                if hf ~= nil and not rawget(_G, "TR_OLD_WORMPOUND") then
+                    local ho = boss_xs.harmless_of
+                    if ho == nil then ho = setmetatable({}, { __mode = "k" }) boss_xs.harmless_of = ho end
+                    if ho[ent] == nil then
+                        ho[ent] = false
+                        local near = Predict.EntsNear ~= nil and Predict.EntsNear(x, z, .5)
+                            or (TheSim ~= nil and TheSim:FindEntities(x, 0, z, .5)) or {}
+                        for _, o in ipairs(near) do if hf[o.prefab] then ho[ent] = true break end end
+                    end
+                    harmless = ho[ent]
+                end
                 local foreign = false
                 if not rawget(_G, "TR_OLD_BYONLY") and not hz_def.in_move and not hz_def.lasting and hz_def.by ~= nil and #hz_def.by > 0 then
                     local fo = boss_xs.foreign_of
@@ -3767,7 +3783,7 @@ function Predict.DrawHazards(ents, my_radius, me)
                 Predict.haz_n = Predict.haz_n + 1
                 local f0 = os.clock()
                 ST.full_pre = ST.full_pre + f0 - d0
-                if not foreign then danger = SimMoves.DrawHazard(ent, x, z, rot, px, pz, clock, in_moves) or danger end
+                if not foreign and not harmless then danger = SimMoves.DrawHazard(ent, x, z, rot, px, pz, clock, in_moves) or danger end
                 local f1 = os.clock()
                 Predict.haz_draw_t = Predict.haz_draw_t + f1 - d0
                 ST.full, ST.n_full = ST.full + f1 - f0, ST.n_full + 1

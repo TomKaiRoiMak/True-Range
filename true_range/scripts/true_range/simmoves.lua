@@ -3225,6 +3225,9 @@ SimMoves._chain_last = { rocky_boss_shadow = { atk_dash = { prefab = "rocky_boss
 -- (a thrown thing's landing: not drawn till this many guesses (LANDWAIT), then moved only once their average is this far off
 -- (LANDHOLD) - tests/replay_haz.lua LAND_WAIT / LAND_HOLD try others on what a player's game saw (tools/lagthing_to_haz.ps1))
 SimMoves._land_wait, SimMoves._land_hold, SimMoves._land_soon = 7, .4, .5
+-- (things that strike for nothing when set off by these, right where they stand - not drawn then: true_range/predict DrawHazards.
+-- The Great Depths Worm's dirt pounds (groundpounder) with no damage of its own: 0, worm_boss.lua 1382-1385. TR_OLD_WORMPOUND)
+SimMoves._harmless_from = { groundpoundring_fx = { worm_boss_dirt = true, worm_boss_shadow_dirt = true } }
 -- (and its teleport: under the ground after you as long as it takes (SGshrouden teleport_loop, till within 1 of you), up where it
 -- is (teleport_pst, AOE 2.4 and your body) - drawn on to 22 where the offline run went, 13 its real way: "the hitbox in the wrong
 -- place as it goes under", the player 2026-10-28. eta: drawn coming, not by its frame)
