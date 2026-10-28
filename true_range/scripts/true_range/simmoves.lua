@@ -4598,9 +4598,11 @@ function SimMoves._WentFor(list, bw)
 end
 -- (sorted: its middle half over 1 apart - not the same go after go, nothing to go by: the Shadow Rocky's dash, 14.1 to 16.9 for
 -- the same run as you stood; Klaus' bite after you 8.47-8.64)
+-- (two thirds of them within 1 of their middle, at least - one go of three off (Klaus 8.3, 8.3, 9.7) still the same)
 function SimMoves._WentSpread(s)
-    local q1, q3 = s[math.floor(#s / 4) + 1], s[math.max(1, math.ceil(#s * 3 / 4))]
-    return q3 - q1 > 1
+    local mid, n = s[math.floor((#s + 1) / 2)], 0
+    for _, v in ipairs(s) do if math.abs(v - mid) <= 1 then n = n + 1 end end
+    return n * 3 < #s * 2
 end
 -- (how much further on (or back) to draw it: as far as it really goes, less its run's - off by a tenth at least; 0 else.
 -- The run itself kept, the one for where you are: a shorter run's bite reached 4.75 past its landing, the real one 5.35 -
@@ -4634,11 +4636,19 @@ function SimMoves._WentOff(entry, src, dist, ent, log, t, target)
     if #MapSteps(base) ~= 1 then return 0 end
     local e = ent ~= nil and SimMoves.went[ent] ~= nil and SimMoves.went[ent][entry] or nil
     local want = SimMoves._WentFor(e ~= nil and e[tgt and "t" or "n"] or nil, bw)
-    if want == nil or math.abs(want - bw) < .1 * bw then return 0 end
+    -- (none seen yet: from where it began as far as its run has it as it strikes - not from where it stopped aiming, seen a
+    -- frame later on its way than run (Klaus' full leap, the first ones of a fight). TR_OLD_WENTSTART: from there, as before)
+    if want == nil then
+        if rawget(_G, "TR_OLD_WENTSTART") then return 0 end
+        log.went_want = math.huge
+        return 1e-9
+    end
     -- (and a little on: go after go it went .2 more or less (8.47-8.64) - set at its middle, a bite at the edge of its
     -- reach, 5.35 off, went undrawn by .12)
-    want = want + .3
-    log.went_want = want
+    -- (as far as its run goes too, set from where it began: not only one going less far - Klaus' full leap, after no one,
+    -- a frame later setting off than run (1.3 on as it stopped aiming, not 2.8), drawn from there 1 short, struck 4.44 off)
+    log.went_want = want + .3
+    if math.abs(want - bw) < .1 * bw then return 1e-9 end
     return want - bw
 end
 -- (its usual so far: the middle one of those seen - one stopped by you in its way, or shoved, not
@@ -5199,14 +5209,19 @@ function SimMoves.Draw(entry, x, z, rot, target, my_radius, px, pz, t, log, ent,
         local ps, c, s = log.went_start, math.cos(rot), math.sin(rot)
         -- (where its run has it as it strikes, set there - not where its run ends: a frame on at full pace, 1.5 further, the
         -- bite drawn that short of a real one; it strikes no further on than where it stops)
-        local pend = PathAt(best, entry.first or 1e6)
+        -- (its path's value at a frame is where it is once that frame has gone: struck at frame 35 from where frame 34 left it -
+        -- the bite's cells round 10.58, its path 12.10 at 35; set from 35 the bite was drawn 1.5 short)
+        local pend = PathAt(best, entry.first ~= nil and entry.first - 1 or 1e6)
         if pend ~= nil then
-            local want = log.went_want
+            -- (where it is as it strikes: no further than its run has it then - a full leap goes on 1.7 after its bite)
+            local want = math.min(log.went_want, pend - (PathAt(best, 0) or 0))
+            -- (none seen yet, and seen stopping short already (the shift for it, back): left as that has it)
+            local unseen = log.went_want == math.huge and log.shift ~= nil and (log.lead_short or log.shift[1] < -.3)
             if ent ~= nil then
                 local ex, _, ez = ent.Transform:GetWorldPosition()
                 want = math.max(want, (ex - ps[1]) * c - (ez - ps[2]) * s)
             end
-            x, z = World(x, z, rot, want - ((x - ps[1]) * c - (z - ps[2]) * s + pend), 0)
+            if not unseen then x, z = World(x, z, rot, want - ((x - ps[1]) * c - (z - ps[2]) * s + pend), 0) end
         end
     end
     -- (set, told by the server where it stood: where it was thought to be as it still aimed a
