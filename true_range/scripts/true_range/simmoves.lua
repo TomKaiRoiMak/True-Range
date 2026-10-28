@@ -4510,9 +4510,14 @@ function SimMoves.PoseTargetPos(ent)
 end
 -- (the server's pose for this go of the move at ft into it - within half a tick, its own ticks
 -- being a frame apart; nil: not told (yet) - one go of it only, bound in log the first time)
-local function PoseAt(ent, entry, log, ft)
+local function PoseAt(ent, entry, log, ft, t_now)
     local p = ent ~= nil and SimMoves.poses[ent] or nil
     if p == nil or entry.anims == nil or p.key ~= entry.anims[1] then return nil end
+    -- (nor one whose poses run on past where this go is (t_now, its time in) - the go before, this one's not told yet: the
+    -- Shadow Rocky dashing twice running, in a player's game its second drawn from where its first began, 17 off, 11
+    -- struck undrawn (replay CLIENT 2026-10-28). TR_OLD_POSEGO: bound all the same)
+    local last = p.list[#p.list]
+    if log.pose_go == nil and t_now ~= nil and last ~= nil and last[1] > t_now + 3 * FRAMES and not rawget(_G, "TR_OLD_POSEGO") then return nil end
     -- (bound to a go only one being told now - not one told before, its last word ten frames back:
     -- the same move's go before this, its poses left over)
     if log.pose_go == nil and (GetTime or GetStaticTime)() - (p.at or -1e9) > 10 * FRAMES then return nil end

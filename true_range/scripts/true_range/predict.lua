@@ -3097,7 +3097,7 @@ function Predict.Draw(ents, ranges, my_radius, me, skip)
                         -- simmoves then takes it as it is, log.lock_exact)
                         if not a.locked.exact then
                             a.log = a.log or {}
-                            local s = SimMoves._PoseAt(ent, sim, a.log, lock_f * FRAMES)
+                            local s = SimMoves._PoseAt(ent, sim, a.log, lock_f * FRAMES, now - a.t0)
                             if s ~= nil then
                                 a.locked.x, a.locked.z, a.locked.exact = s[2], s[3], true
                                 a.log.lock_exact = true
