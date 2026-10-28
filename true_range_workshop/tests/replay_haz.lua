@@ -106,7 +106,7 @@ local HAZ_LEAD = 5
 local function InPiece(t) return t >= HAZ_FROM and t < HAZ_TO end
 -- (TR_MODS=<folder names>: those mods on - their monsters' moves over the game's, as the game lays them: true_range/moddata)
 -- (the drawer's own switches back to before, from the shell: TR_OLD_LAND=1 ... - as the game reads them, globals)
-for _, n in ipairs({ "TR_OLD_BYONLY", "TR_OLD_ENDLINGER", "TR_OLD_LANEROW", "TR_OLD_AROUNDONCE", "TR_OLD_AROUNDFACE", "TR_OLD_SHADOWSIZE", "TR_OLD_LAND", "TR_OLD_FALL", "TR_OLD_AGAIN", "TR_OLD_LANE", "TR_OLD_PENGUIN", "TR_OLD_LOB", "TR_OLD_LEAD", "TR_OLD_STILL", "TR_OLD_EARLY", "TR_OLD_HOP", "TR_OLD_LANDS", "TR_OLD_MOVEDDELAY", "TR_OLD_LEADAVG", "TR_OLD_HAZLEAD", "TR_OLD_HAZSTEADY", "TR_OLD_AIMLEAD", "TR_OLD_MIDLEFT", "TR_OLD_RELOCK", "TR_OLD_BODYLEAD", "TR_OLD_LIVERADIUS", "TR_OLD_DISCKEY", "TR_OLD_TAIL", "TR_OLD_LAND2", "TR_OLD_PREVLEG", "TR_OLD_SNAPPOS", "TR_OLD_CHAINLAST", "TR_OLD_WORMDIRT", "TR_OLD_LEADSTOP", "TR_OLD_LEADTP", "TR_OLD_LANDHOLD", "TR_OLD_LANDKEEP", "TR_OLD_GLOWPULSE", "TR_OLD_GLOWGRACE", "TR_OLD_AIRSTILL", "TR_OLD_GLOWOVERLAP", "TR_OLD_LEADTPSTEP", "TR_OLD_LANDSTOP", "TR_OLD_GLOWHOLD", "TR_OLD_LANDTILL", "TR_OLD_LANDAT", "TR_OLD_HUNTSTICK", "TR_OLD_LANDLOOSE", "TR_OLD_GLOWAFTERMOVE", "TR_OLD_WORMPOUND", "TR_OLD_WENT", "TR_OLD_WENTSTART", "TR_OLD_TWIN", "TR_OLD_STAYLEAD", "TR_OLD_LANDNOW", "TR_OLD_LOWAIR", "TR_OLD_POSEGO", "TR_OLD_R2FROM", "TR_OLD_JUMPLED", "TR_OLD_LANDWAIT", "TR_OLD_PICKEPIC", "TR_OLD_AIMFACING", "TR_OLD_LANDAVG", "TR_OLD_HAZLEADMOVED", "TR_OLD_FALLBACKANY", "TR_OLD_KEEPHEADING", "TR_OLD_HAZFAST" }) do if os.getenv(n) then rawset(_G, n, true) end end
+for _, n in ipairs({ "TR_OLD_BYONLY", "TR_OLD_ENDLINGER", "TR_OLD_LANEROW", "TR_OLD_AROUNDONCE", "TR_OLD_AROUNDFACE", "TR_OLD_SHADOWSIZE", "TR_OLD_LAND", "TR_OLD_FALL", "TR_OLD_AGAIN", "TR_OLD_LANE", "TR_OLD_PENGUIN", "TR_OLD_LOB", "TR_OLD_LEAD", "TR_OLD_STILL", "TR_OLD_EARLY", "TR_OLD_HOP", "TR_OLD_LANDS", "TR_OLD_MOVEDDELAY", "TR_OLD_LEADAVG", "TR_OLD_HAZLEAD", "TR_OLD_HAZSTEADY", "TR_OLD_AIMLEAD", "TR_OLD_MIDLEFT", "TR_OLD_RELOCK", "TR_OLD_BODYLEAD", "TR_OLD_LIVERADIUS", "TR_OLD_DISCKEY", "TR_OLD_TAIL", "TR_OLD_LAND2", "TR_OLD_PREVLEG", "TR_OLD_SNAPPOS", "TR_OLD_CHAINLAST", "TR_OLD_WORMDIRT", "TR_OLD_LEADSTOP", "TR_OLD_LEADTP", "TR_OLD_LANDHOLD", "TR_OLD_LANDKEEP", "TR_OLD_GLOWPULSE", "TR_OLD_GLOWGRACE", "TR_OLD_AIRSTILL", "TR_OLD_GLOWOVERLAP", "TR_OLD_LEADTPSTEP", "TR_OLD_LANDSTOP", "TR_OLD_GLOWHOLD", "TR_OLD_LANDTILL", "TR_OLD_LANDAT", "TR_OLD_HUNTSTICK", "TR_OLD_LANDLOOSE", "TR_OLD_GLOWAFTERMOVE", "TR_OLD_WORMPOUND", "TR_OLD_WENT", "TR_OLD_WENTSTART", "TR_OLD_TWIN", "TR_OLD_STAYLEAD", "TR_OLD_LANDNOW", "TR_OLD_LOWAIR", "TR_OLD_POSEGO", "TR_OLD_R2FROM", "TR_OLD_JUMPLED", "TR_OLD_LOWAIRROSE", "TR_OLD_AIRDUP", "TR_OLD_LANDFIRST", "TR_OLD_WIDENET", "TR_OLD_TPPRE", "TR_OLD_LANDWAIT", "TR_OLD_PICKEPIC", "TR_OLD_AIMFACING", "TR_OLD_LANDAVG", "TR_OLD_HAZLEADMOVED", "TR_OLD_FALLBACKANY", "TR_OLD_KEEPHEADING", "TR_OLD_HAZFAST" }) do if os.getenv(n) then rawset(_G, n, true) end end
 rawset(_G, "TR_JUMP", {}) if os.getenv("JUMP_V") then rawset(_G, "TR_JUMP_EV", {}) end
 -- (where each thrown thing is drawn coming down, how far it moved frame to frame - simmoves TR_LANDWOB)
 rawset(_G, "TR_LANDWOB", {}) if os.getenv("LANDWOB_V") then rawset(_G, "TR_LANDWOB_EV", {}) end
@@ -422,13 +422,22 @@ while true do
         if c.t <= t + 1e-6 and (t - c.t < 2 * FRAMES or held) and not (h ~= nil and h.in_move and BossNear(t, c.x, c.z)) then
             you = you or { c.yx, c.yz }
             -- (CLIENT: it as a player's game has it, ENT_LAG back - you as the server has you now)
+            local young = false
             if HZ_ENT_LAG > 0 then
                 local k = e.i
                 while k > 1 and tk[k].t > t - HZ_ENT_LAG + 1e-6 do k = k - 1 end
-                if tk[k].t <= t - HZ_ENT_LAG + 1e-6 then c = tk[k] end
+                if tk[k].t <= t - HZ_ENT_LAG + 1e-6 then c = tk[k]
+                -- (made less than ENT_LAG ago: not in a player's game yet - not shown where the server has it now, then
+                -- jumped back ENT_LAG once it had a past: the Shadow Thralls' shots' heights went 4.21, 4.50, 4.21, their
+                -- landing fitted at their start, 584 gaps, 2026-10-29. OLD_CLIENT_YOUNG=1: as before)
+                elseif not os.getenv("OLD_CLIENT_YOUNG") then young = true end
             end
-            e.cur = c
-            list[#list + 1] = e
+            if young then
+                e.cur = nil
+            else
+                e.cur = c
+                list[#list + 1] = e
+            end
         else
             e.cur = nil
         end
