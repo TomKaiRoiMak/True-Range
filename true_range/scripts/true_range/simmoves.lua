@@ -3742,8 +3742,12 @@ local function DrawHazardInner(ent, x, z, rot, px, pz, now, in_moves, sfx)
             -- the same height and place: fitted as standing a frame, the Moon Tentacle's shots up high taken to land at once
             -- where they set off, drawn there and gone, 656 gaps (replay CLIENT 2026-10-29). TR_OLD_AIRDUP: kept)
             local last = hist[#hist]
+            -- (a player's game only - the host sees it every frame, a height the same twice there is real: Moon Tentacle shots
+            -- fitted short, 27 -> 36 drawn-in with no strike on the forced-state bench 1637. TR_OLD_AIRDUPHOST: everywhere)
             local dup = last ~= nil and last[3] == (y or 0) and last[2] == x and last[4] == z and (y or 0) > .3
                 and not rawget(_G, "TR_OLD_AIRDUP")
+                and (rawget(_G, "TR_OLD_AIRDUPHOST") or ((SimMoves.hazard_lead or 0) > 0
+                    and not (rawget(_G, "TheWorld") ~= nil and TheWorld.ismastersim)))
             if not dup and (last == nil or last[1] < now) then
                 -- (going up, and higher than a hop - Bearger's boulders bound along 0.5-0.8 up, striking as they go:
                 -- taken for thrown, hidden up there, 5 -> 217 missed; a throw goes far higher. TR_OLD_HOP: as before)
