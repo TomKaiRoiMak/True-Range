@@ -3280,7 +3280,14 @@ function SimMoves._LeadMovingRaw(ent, x, z, now)
         s = {}
         SimMoves._hz_hist[ent] = s
     end
-    if #s == 0 or s[#s][1] < now then
+    -- (not a frame that brought nothing new - a thing the server moves 15 times a second, every other frame where it was:
+    -- its speed read 0 then double, drawn on and back each frame, the Umbral Abomination's beam to and fro .4 (frame_check
+    -- REVERSE, lag 0549 2026-10-29). Kept as it was, and on by the time since it was last told. TR_OLD_LEADDUP: each frame)
+    local age = 0
+    local old_dup = rawget(_G, "TR_OLD_LEADDUP")
+    if #s > 0 and s[#s][2] == x and s[#s][3] == z and not old_dup then
+        age = math.min(now - s[#s][1], .1)
+    elseif #s == 0 or s[#s][1] < now then
         s[#s + 1] = { now, x, z }
         if #s > 30 then table.remove(s, 1) end
     end
@@ -3298,7 +3305,7 @@ function SimMoves._LeadMovingRaw(ent, x, z, now)
             end
         end
     end
-    local vx, vz = V(now)
+    local vx, vz = V(age > 0 and s[#s][1] or now)
     if vx == nil or vx * vx + vz * vz < 1.5 * 1.5 then return x, z end
     -- (one shot straight on fast, over 12 a second - Uncompromising Mode's bee stingers at 25: no waiting the second tenth to
     -- see it steady, gone 5 by then, struck undrawn; lag bench 2026-10-27_1229. TR_OLD_HAZFAST: waited)
@@ -3338,7 +3345,7 @@ function SimMoves._LeadMovingRaw(ent, x, z, now)
         local dt = b[1] - a[1]
         if dt > 0 and ((b[2] - a[2]) ^ 2 + (b[3] - a[3]) ^ 2) / (dt * dt) < .25 * (vx * vx + vz * vz) then return x, z end
     end
-    local rx, rz = x + vx * lead, z + vz * lead
+    local rx, rz = x + vx * (lead + age), z + vz * (lead + age)
     -- (not a number - "table index is NaN" in UnionDraw, Uncompromising Mode's warning shadows, lag bench 2026-10-27_1259:
     -- where it is, as it's shown; told once)
     if rx ~= rx or rz ~= rz or rx == math.huge or rx == -math.huge or rz == math.huge or rz == -math.huge then
