@@ -23,6 +23,8 @@ local notes = {}
 -- lavae, 2026-10-29_1230: 8 of 15 at 3.6 on, 6 at 1.2 - against 0 of 78 the same code at 0945)
 local AHEAD_D = tonumber(os.getenv("AHEAD_D") or "") or 2
 local last_lead = nil
+local last_between = false
+local between_n = 0
 for line in io.lines(cpath) do
     local n, p, b = line:match("%[tr_lag%] [%d.]+ scene n=(%d+) .- pred=(%d) boss=(%S+)")
     if n ~= nil then
@@ -44,6 +46,10 @@ for line in io.lines(cpath) do
             t.leads[#t.leads + 1] = tonumber(lead)
         end
         if lead ~= nil then last_lead = tonumber(lead) end
+        -- (struck between scenes - the bench moving on, its boss gone, what it left behind still striking: "scene=-"; Charlie's arena
+        -- spikes, the Ruins Nightmare 10-20 off, lag 1948 / 2218. Counted apart. OLD_BETWEEN=1: counted)
+        local sc = line:match("%[tr_lag%] [%d.]+ struck by .- scene=(%S+)")
+        if sc ~= nil then last_between = (sc == "-") and not os.getenv("OLD_BETWEEN") end
         local drawn = line:match("%[true_range%] you were struck.- drawn: (%a+)")
         -- (struck from its own middle: worn on you - the Hound Batilisk as a hat biting every 0.6 s, as replay.lua's WORN;
         -- 832 of bat_boss's 1107 "struck" on 2026-10-26. Worn, your game keeps it where it was put on - the same "from it"
@@ -67,6 +73,9 @@ for line in io.lines(cpath) do
         if worn and not os.getenv("OLD_WORN") then
             outside.worn = (outside.worn or 0) + 1
             drawn = nil
+        elseif drawn ~= nil and last_between then
+            between_n = between_n + 1
+            last_between = false
         elseif drawn ~= nil then
             if scene == nil then
                 outside.struck = outside.struck + 1
@@ -137,6 +146,7 @@ for _, k in ipairs({ 1, 0 }) do
     end
 end
 print(string.format("before the first scene: struck %d, false %d", outside.struck, outside.false_))
+if between_n > 0 then print(string.format("between scenes (bench moving on; not counted): struck %d", between_n)) end
 if (outside.worn or 0) > 0 then print(string.format("worn on you (not counted): %d", outside.worn)) end
 -- (moving only, over 1 a second: screen vs server, as each of the server's words comes)
 for _, k in ipairs({ 1, 0 }) do
