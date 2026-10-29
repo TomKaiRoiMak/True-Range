@@ -5383,7 +5383,9 @@ function SimMoves.Draw(entry, x, z, rot, target, my_radius, px, pz, t, log, ent,
                     -- (only a run that walked further before it stopped aiming than you are from here - not this go's: kept
                     -- to its own run otherwise, not moved with you each frame - Klaus' wobbles 0 -> 4 when every one was)
                     local p0 = PathAt(best, 0)
-                    if p0 ~= nil and plock - p0 > to_you + 1 then want = math.min(want, to_you + past) end
+                    -- (and you ahead of it, within 45 - one off to its side goes the way it faces: the Werepig's slam, test_sim)
+                    local aside = math.abs((target.x - ps[1]) * s + (target.z - ps[2]) * c)
+                    if p0 ~= nil and plock - p0 > to_you + 1 and aside <= to_you then want = math.min(want, to_you + past) end
                 end
             end
             if ent ~= nil then
