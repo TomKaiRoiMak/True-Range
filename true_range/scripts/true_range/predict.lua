@@ -2114,8 +2114,15 @@ local function LandSpot(ent, ld, x, z, target, now)
         local near = Predict.EntsNear ~= nil and Predict.EntsNear(x, z, 30)
             or (TheSim ~= nil and TheSim:FindEntities(x, 0, z, 30)) or {}
         local best, bd = nil, 1e9
+        -- (not one first seen under 2 frames ago - its first word in a player's game not yet where it's put: the beam's first
+        -- frame 4 off, drawn there and back (frame_check POP, lag 0836). TR_OLD_THINGNEW: at once)
+        -- (by its GUID - what stands for it may be made anew each frame)
+        Predict._thing_seen = Predict._thing_seen or {}
         for _, o in ipairs(near) do
-            if o.prefab == ld.at_thing and o.Transform ~= nil then
+            local id = o.prefab == ld.at_thing and (o.GUID or o.guid) or nil
+            if id ~= nil and Predict._thing_seen[id] == nil then Predict._thing_seen[id] = now end
+            if o.prefab == ld.at_thing and o.Transform ~= nil
+                and (id == nil or now - Predict._thing_seen[id] >= 1.5 * FRAMES or rawget(_G, "TR_OLD_THINGNEW")) then
                 local ox, _, oz = o.Transform:GetWorldPosition()
                 local d = (ox - x) ^ 2 + (oz - z) ^ 2
                 if d < bd then best, bd = o, d end
@@ -2246,7 +2253,13 @@ function Predict.Draw(ents, ranges, my_radius, me, skip)
                 -- Eye of Terror's mini eyes and Oculets biting at 4 a second, 2.1 off and undrawn, as a player's game would see it
                 -- (tests/replay.lua CLIENT), 2026-10-27. On by how fast it goes, as a thing moving (SimMoves.LeadMoving - the host's
                 -- game: none). TR_OLD_BODYLEAD)
-                if not rawget(_G, "TR_OLD_BODYLEAD") then
+                -- (nor its move's first frames, one that begins standing (its run's first frames still) - it has just stopped to
+                -- wind up, the trip to us still saying it runs: drawn 1.3-2.5 on for a frame and back, the Ancient Guardian's
+                -- every quick leap (frame_check AIM, lag 0646, 21 of them). TR_OLD_STARTLEAD: led on)
+                -- (all the while it stands, not 3 frames only: led on again at its 4th, 1.2-2.2 on - frame_check, lag 0836)
+                local start_still = a.move.sim ~= nil and now - (a.t0 or now) < Predict._StillFrames(a.move.sim) * FRAMES
+                    and not rawget(_G, "TR_OLD_STARTLEAD")
+                if not rawget(_G, "TR_OLD_BODYLEAD") and not start_still then
                     local lx, lz = SimMoves.LeadMoving(ent, x, z, now)
                     -- (one whose move, run offline, stays where it began - coming to a stop, sliding on what it had: led on, but
                     -- never back - Moonmaw's lavae gliding 10 -> 0 a second into their stab, drawn 1 on past them and back as they
@@ -2834,6 +2847,17 @@ function Predict.Draw(ents, ranges, my_radius, me, skip)
                         -- 1.6 s on); not its offline chase laid out ahead of it, "the laser's hitbox out in front of the boss", the
                         -- player 2026-10-28. TR_OLD_LANDAT: round itself)
                         local dx, dz, thing = LandSpot(ent, ld, x, z, target, now)
+                        -- (round a thing not there yet - the beam a frame before it's made, as pre1 gives way to pre2: where it was
+                        -- drawn the frame before, not round the boss 16 off for that frame and back (frame_check POP, [tr_lagnote]
+                        -- lag 0822, 2026-10-29). TR_OLD_THINGWAIT: round itself)
+                        -- (from a spot really found, a moment ago - not from itself kept on: no beam ever, held there for good,
+                        -- 25 struck undrawn in a replay)
+                        if ld.at_thing ~= nil and thing == nil and a.land_xy ~= nil and now - a.land_xy[3] < .2
+                            and not rawget(_G, "TR_OLD_THINGWAIT") then
+                            dx, dz = a.land_xy[1], a.land_xy[2]
+                        elseif ld.at_thing == nil or thing ~= nil then
+                            a.land_xy = { dx, dz, now }
+                        end
                         -- (aimed till lock_at, then kept where it was aimed - Spat's phlegm, shot at where you were)
                         if ld.lock_at ~= nil and into >= ld.lock_at * FRAMES then
                             if a.land_lock == nil then a.land_lock = { dx, dz } end
@@ -3589,6 +3613,25 @@ Predict.SimHazards = SimMoves.Hazards
 -- (which of its SimMoves._land parts it is in now, by the animation playing - nil: none; and when it last played a part's
 -- wide_anim (Predict._land_wide, by monster - that animation not its move's own, the move begun again after it))
 Predict._land_wide = setmetatable({}, { __mode = "k" })
+-- (how many frames a move's run offline stands before it sets off - its first map's path the same as at 0 till then; 0: off
+-- at once. Cached)
+local starts_still = setmetatable({}, { __mode = "k" })
+function Predict._StillFrames(sim)
+    local c = starts_still[sim]
+    if c == nil then
+        c = 0
+        local m = (sim.maps ~= nil and sim.maps[1]) or (sim.free ~= nil and sim.free[1]) or nil
+        local p = m ~= nil and m.path or nil
+        local vals = {}
+        if type(p) == "table" then for i = 1, #p do vals[i] = tonumber(p[i]) or 0 end
+        elseif type(p) == "string" then for v in p:gmatch("[^,]+") do vals[#vals + 1] = tonumber(v) or 0 end end
+        -- (one that never sets off - a bite, a stab, struck where it is as it flies or glides on: 0, led all along - the mini
+        -- eyes biting at 4 a second, the lavae's stab)
+        for i = 2, #vals do if math.abs(vals[i] - vals[1]) > .05 then c = i - 2 break end end
+        starts_still[sim] = c
+    end
+    return c
+end
 -- (whether a move's _land list has its own first animation - drawn its own way from the start)
 function Predict._LandOwn(list, name, sim)
     local first = sim ~= nil and sim.anims ~= nil and sim.anims[1] or nil
