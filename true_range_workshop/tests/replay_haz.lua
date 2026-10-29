@@ -393,6 +393,10 @@ for guid, tr in pairs(tracks) do
     e.tr = tr
     ents[#ents + 1] = e
 end
+-- (in a set order, by GUID: pairs over string keys goes in another order each run (LuaJIT's string hash is seeded) - a lot
+-- of Toadstool's bombs found in another order drawn otherwise, the same log 343 / 345 / 346 lines run to run, 2026-10-29.
+-- OLD_HAZ_ORDER=1: as pairs gives)
+if not os.getenv("OLD_HAZ_ORDER") then table.sort(ents, function(p, q) return (p.GUID or 0) < (q.GUID or 0) end) end
 local drawn = {}
 local f = 0
 -- (a piece: on the whole log's frames - from its first thing's first line, as a whole run steps -

@@ -4404,7 +4404,14 @@ function SimMoves.Moves(prefab)
     local list = moves[prefab]
     if list == nil then
         list = {}
-        for name, entry in pairs(Of(prefab) or {}) do
+        -- (by name, in a set order - pairs goes over its names in another order each run (the string hash seeded): ties
+        -- between two begun alike broken one way one run, the other the next - the Twins' charge as a shot one replay, a
+        -- charge the next, 2026-10-29. The plain one first, then its forms (name~...). TR_OLD_MOVEORDER: as pairs gives)
+        local src, names = Of(prefab) or {}, {}
+        for name in pairs(src) do names[#names + 1] = name end
+        if not rawget(_G, "TR_OLD_MOVEORDER") then table.sort(names, function(p, q) return tostring(p) < tostring(q) end) end
+        for _, name in ipairs(names) do
+            local entry = src[name]
             table.insert(list, { anims = entry.anims, frames = {}, sim = entry, name = name })
             -- (and the same move begun with its other side's animation - a state picking one at random or by where you
             -- are, run offline down one way only: Bearger's butt slam, butt_pre_L or _R, the R half (65 of 98 ticks on the
