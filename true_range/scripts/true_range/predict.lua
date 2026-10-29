@@ -3343,6 +3343,12 @@ function Predict.Draw(ents, ranges, my_radius, me, skip)
                         -- its reach, kept by SimMoves (entry.gore) - not this clock set that far back: 6
                         -- frames behind it, its lane's end went yellow and never red, the move over first)
                         tt = (sim.first or sim.lock or 0) * FRAMES + math.max(0, along) / (sim.speed or 6)
+                        -- (never back within one go: where it is as your game shows it steps back a hair now and then, its
+                        -- clock with it - the Nightmare Rook's charge 8 parts left, 13, 8 a frame apart, lag 2220. TR_OLD_TTMONO)
+                        if not rawget(_G, "TR_OLD_TTMONO") then
+                            if a.tt_mono ~= nil and tt < a.tt_mono then tt = a.tt_mono end
+                            a.tt_mono = tt
+                        end
                         -- (a shot - MacTusk's dart: what flies is the dart, not it - by the clock, not by how far
                         -- on it is)
                         if sim.straight and #(sim.anims or {}) == 1 then tt = t end
