@@ -265,6 +265,7 @@ AddPlayerPostInit(function(p)
                                 local ox, _, oz = o.Transform:GetWorldPosition()
                                 own = string.format(" own=%.2f,%.2f,%.1f", ox, oz, o.Transform:GetRotation())
                             end
+                            if r[12] ~= nil then own = own .. string.format(" gs=%d", r[12]) end
                             print(string.format("[tr_lagframe] %.3f %s %d tri=%d area=%.2f at=%.2f,%.2f seg=%d at=%.2f,%.2f grp=%d at=%.2f,%.2f pred=%d ext=%.2f%s",
                                 t, name, guid, r[1], r[2], r[2] > 0 and r[3] / r[2] or 0, r[2] > 0 and r[4] / r[2] or 0,
                                 r[5], r[5] > 0 and r[6] / r[5] or 0, r[5] > 0 and r[7] / r[5] or 0,
@@ -361,6 +362,11 @@ AddPlayerPostInit(function(p)
                             wx, wz = x + ax * c + az * s, z - ax * s + az * c
                         end
                         r[8], r[9], r[10] = r[8] + 1, r[9] + wx, r[10] + wz
+                        -- (which groups: one thing's drawing taking in others' far off (the Stalker's spike rows, 31 apart) -
+                        -- their mean leapt as one row went and another came, nothing on screen moved, lag 1705. " gs=" a sum of
+                        -- their ids: the same groups, the same sum)
+                        local id = G.tonumber(G.tostring(g):match("0x(%x+)") or G.tostring(g):match("(%x+)$") or "0", 16) or 0
+                        r[12] = ((r[12] or 0) + id % 1000003) % 1000003
                     end
                     return groupAt(g, x, z, deg)
                 end

@@ -49,6 +49,9 @@ for line in io.lines(path) do
             -- (and how many parts of its map: one struck and gone (the Werepig's atk3, parts 2 -> 1) shrinks it, its middle on
             -- 1.5 - not a leap, lag 1304)
             if not os.getenv("OLD_FC_PARTS") then goes = goes .. "|" .. (parts_of[pf] or "") end
+            -- (and which groups it drew: one thing's drawing taking in other rows far off, one gone and another come - its
+            -- mean leapt 31, nothing moved (the Stalker's fossil spikes, lag 1705). tr_lagjoin " gs=". OLD_FC_GS=1: not told)
+            if not os.getenv("OLD_FC_GS") then goes = goes .. "|" .. (rest:match(" gs=(%d+)") or "") end
             table.insert(tracks[key], { t = t, r = r, cx = cx, cz = cz, bx = b and b[1], bz = b and b[2], brot = b and b[3], move = (move_of[key] or "-") .. (goes ~= "" and "" or ""), goes = goes,
                 pcs = tonumber(tri) * 1000 + tonumber(grp) })
         end
