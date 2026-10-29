@@ -301,7 +301,7 @@ $asbossTaken = 0
 foreach ($f in Get-ChildItem $out -Filter '*.txt' | Where-Object { $_.Name -notlike '*.err' }) {
     $b = ($f.BaseName -split '__', 2)[1]
     $share = ($f.BaseName -split '__', 2)[0]
-    if (-not $rows[$b]) { $rows[$b] = [pscustomobject]@{ boss = $b; shares = ''; strikes = 0; drawn = 0; missed = 0; false = 0; bything = 0; aimjump = 0; yellow = 0; err = 0; false_fr = 0; both = 0; flip = 0; jump = 0; gap = 0; glitch = 0; wobble = 0 } }
+    if (-not $rows[$b]) { $rows[$b] = [pscustomobject]@{ boss = $b; shares = ''; strikes = 0; drawn = 0; missed = 0; false = 0; bything = 0; aimjump = 0; yellow = 0; err = 0; false_fr = 0; both = 0; flip = 0; jump = 0; gap = 0; glitch = 0; wobble = 0; bjump = 0 } }
     $r = $rows[$b]
     $r.shares = ($r.shares + ' ' + $share).Trim()
     $drawnBy = if ($b -eq '_haz') { $asbossDrawn[$share -replace '#p\d+$', ''] } else { $null }
@@ -322,7 +322,9 @@ foreach ($f in Get-ChildItem $out -Filter '*.txt' | Where-Object { $_.Name -notl
         } elseif ($line -match '^_hazards: (\d+) frame\(s\) drawn-in with no strike') { $r.false_fr += [int]$Matches[1]
         } elseif ($line -like 'BYTHING*') { $r.bything++
         # (a shape going back and forth (replay.lua WOBBLE) - said by the replays, never counted here: 441 in a client replay, 2026-10-29)
-        } elseif ($line -like 'WOBBLE *') { $r.wobble++ }
+        } elseif ($line -like 'WOBBLE *') { $r.wobble++
+        # (a boss's shape's middle leaping in a frame, the boss not (replay.lua JUMP) - said, never counted: 404 host / 1,402 client, Blighted Rock Master's dash among them, 2026-10-29)
+        } elseif ($line -like 'JUMP  *') { $r.bjump++ }
     }
     if ((Get-Item "$($f.FullName).err").Length -gt 0 -and (Select-String "$($f.FullName).err" -Pattern '\b[Ee]rror|traceback' -Quiet)) { $r.err++ }
 }
@@ -332,5 +334,5 @@ $table | Export-Csv (Join-Path $out '_table.csv') -NoTypeInformation -Encoding u
 $script:jobtimes | Sort-Object secs -Descending | Export-Csv (Join-Path $out '_times.csv') -NoTypeInformation -Encoding utf8
 "longest jobs: " + (($script:jobtimes | Sort-Object secs -Descending | Select-Object -First 5 | ForEach-Object { "$($_.job) $($_.secs)s" }) -join ', ')
 "job time in all: {0:N0}s on {1} cores" -f ($script:jobtimes | Measure-Object secs -Sum).Sum, $max
-$table | Format-Table boss, strikes, drawn, missed, aimjump, yellow, false, bything, err, false_fr, both, flip, jump, gap, glitch, wobble, shares -AutoSize | Out-String -Width 220
-"TOTAL strikes {0}  missed {1}  drawn-in-no-strike {2}  errors {3}  things' drawn-in frames {4}  two-shapes frames {5}  flipped goes {6}  jumped frames {7}  gaps {8}  glitches {9}  wobbles {10}" -f ($table | Measure-Object strikes -Sum).Sum, ($table | Measure-Object missed -Sum).Sum, ($table | Measure-Object false -Sum).Sum, ($table | Measure-Object err -Sum).Sum, ($table | Measure-Object false_fr -Sum).Sum, ($table | Measure-Object both -Sum).Sum, ($table | Measure-Object flip -Sum).Sum, ($table | Measure-Object jump -Sum).Sum, ($table | Measure-Object gap -Sum).Sum, ($table | Measure-Object glitch -Sum).Sum, ($table | Measure-Object wobble -Sum).Sum
+$table | Format-Table boss, strikes, drawn, missed, aimjump, yellow, false, bything, err, false_fr, both, flip, jump, gap, glitch, wobble, bjump, shares -AutoSize | Out-String -Width 220
+"TOTAL strikes {0}  missed {1}  drawn-in-no-strike {2}  errors {3}  things' drawn-in frames {4}  two-shapes frames {5}  flipped goes {6}  jumped frames {7}  gaps {8}  glitches {9}  wobbles {10}  boss jumps {11}" -f ($table | Measure-Object strikes -Sum).Sum, ($table | Measure-Object missed -Sum).Sum, ($table | Measure-Object false -Sum).Sum, ($table | Measure-Object err -Sum).Sum, ($table | Measure-Object false_fr -Sum).Sum, ($table | Measure-Object both -Sum).Sum, ($table | Measure-Object flip -Sum).Sum, ($table | Measure-Object jump -Sum).Sum, ($table | Measure-Object gap -Sum).Sum, ($table | Measure-Object glitch -Sum).Sum, ($table | Measure-Object wobble -Sum).Sum, ($table | Measure-Object bjump -Sum).Sum
