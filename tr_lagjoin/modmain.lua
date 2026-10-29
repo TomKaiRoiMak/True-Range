@@ -182,7 +182,32 @@ AddPlayerPostInit(function(p)
                     for e, t in G.pairs(was_in) do
                         if not inl[e] and now - t < 1 then print(string.format("[tr_lagdl] %.3f %s %d OUT", now, tostring(e.prefab), e.GUID or 0)) end
                     end
-                    return pdraw(ents, ranges, ...)
+                    local a1, a2, a3 = pdraw(ents, ranges, ...)
+                    -- (how each was drawn this frame (its notes - Predict.Report), said as it changes: "[tr_lagnote] t line" - which way of
+                    -- drawing a shape that flickers frame by frame went to and fro between, the Eye of Terror's charge_pst, lag 0646,
+                    -- 2026-10-29: not seen in the replays)
+                    if P.Report ~= nil then
+                        local okR, rep = G.pcall(P.Report, nil, nil)
+                        if okR and type(rep) == "table" then
+                            local seen = {}
+                            for _, line in G.ipairs(rep) do
+                                local who = line:match("^(%S+)") or "?"
+                                local key = line:gsub(" %(%d+%.%d off%)", ""):gsub(" frame %d+", ""):gsub(" @%d+", ""):gsub("[%-%d]+%.%d+", "#")
+                                seen[who] = (seen[who] or "") .. "|" .. key
+                            end
+                            P._tr_lagnote = P._tr_lagnote or {}
+                            for who, k in G.pairs(seen) do
+                                if P._tr_lagnote[who] ~= k then
+                                    P._tr_lagnote[who] = k
+                                    print(string.format("[tr_lagnote] %.3f %s", now, k:sub(1, 400)))
+                                end
+                            end
+                            for who in G.pairs(P._tr_lagnote) do
+                                if seen[who] == nil then P._tr_lagnote[who] = nil print(string.format("[tr_lagnote] %.3f %s -", now, who)) end
+                            end
+                        end
+                    end
+                    return a1, a2, a3
                 end
             end
             -- (EVERY piece True Range lays, every frame, by whose it is - "[tr_lagframe] t prefab guid": its fill triangles (count,
