@@ -90,6 +90,14 @@ function ModData.Apply(enabled)
                     if k == "_hazards" or k == "_alias" then
                         data[k] = data[k] or {}
                         for hk, hv in pairs(v) do
+                            -- (copy_hazard: another thing's shape and steps, these fields over them - UM's Moon Tentacle mine as
+                            -- Toadstool's bomb, smaller: 2026-10-30)
+                            if k == "_hazards" and type(hv) == "table" and hv.copy_hazard ~= nil and type(data._hazards[hv.copy_hazard]) == "table" then
+                                local function Deep(t) local c = {} for f, x in pairs(t) do c[f] = type(x) == "table" and Deep(x) or x end return c end
+                                local nv = Deep(data._hazards[hv.copy_hazard])
+                                for f, x in pairs(hv) do if f ~= "copy_hazard" then nv[f] = x end end
+                                hv = nv
+                            end
                             -- (a thing set off by the game's bosses and the mod's: whose it is, both - its
                             -- own boss near is what lets it be drawn alone (true_range/predict): the
                             -- Mutated Deerclops' laser, the mod's Deerclops' too)
@@ -128,6 +136,13 @@ function ModData.Apply(enabled)
                         if k == "_hazards" and type(v) == "table" then
                             data[k] = data[k] or {}
                             for hk, hv in pairs(v) do
+                                -- (copy_hazard, as above: a hand file's thing made from another's shape)
+                                if type(hv) == "table" and hv.copy_hazard ~= nil and type(data[k][hv.copy_hazard]) == "table" then
+                                    local function Deep(t) local c = {} for f, x in pairs(t) do c[f] = type(x) == "table" and Deep(x) or x end return c end
+                                    local nv = Deep(data[k][hv.copy_hazard])
+                                    for f, x in pairs(hv) do if f ~= "copy_hazard" then nv[f] = x end end
+                                    hv = nv
+                                end
                                 if data[k][hk] == nil then data[k][hk] = hv end
                             end
                         elseif type(k) == "string" and k:sub(1, 1) ~= "_" and type(v) == "table" then

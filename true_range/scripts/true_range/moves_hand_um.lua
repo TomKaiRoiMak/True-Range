@@ -51,6 +51,11 @@ return {
     -- stategraphs/SGmerm.lua :65-95); no move begun by atk_combo, tools/um_postinit_gaps.lua 2026-10-29. TR_OLD_KARATE: none)
     merm = not rawget(_G, "TR_OLD_KARATE") and { atk_combo = { copy = { "merm", "atk" }, anims = { "atk_combo" }, at_each = { 12, 18, 31 } } } or nil,
     _hazards = {
+        -- (the Moon Tentacle's mine (um_tentacle_moon_projectile.lua lobbedminefn): lands and waits, goes off 2-6 s on or as you come
+        -- within 0.5 - striking all within 3 (OnExplode FindEntities 3); never drawn: 3 struck undrawn on the lag bench 2026-10-30_0045.
+        -- As Toadstool's bomb (3.5) made 3. TR_OLD_MOONMINE: none)
+        um_tentacle_moon_mine = not rawget(_G, "TR_OLD_MOONMINE") and { copy_hazard = "mushroombomb", by = { "um_tentacle_moon" }, delay = 60,
+            delay_max = 180, lasting = true, moved = false, scale = 3 / 3.5 } or nil,
         lavaeslime = { by = { "lavae2" }, delay = 90, effects = "fire", lasting = true, moved = false, steps = { { at = 0, cells = "X21m2011h2A11f2E11d2I11c2K11b2M11a2O11Z2Q11Z2Q11Y2S11Y2S11X2U11X2U11X2U11X2U11X2U11W2W111X2U11X2U11X2U11X2U11X2U11Y2S11Y2S11Z2Q11Z2Q11a2O11b2M11c2K11d2I11f2E11h2A11m20" } } },
     },
 }
