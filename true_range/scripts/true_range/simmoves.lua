@@ -5371,6 +5371,21 @@ function SimMoves.Draw(entry, x, z, rot, target, my_radius, px, pz, t, log, ent,
             local want = math.min(log.went_want, pend - (PathAt(best, 0) or 0))
             -- (none seen yet, and seen stopping short already (the shift for it, back): left as that has it)
             local unseen = log.went_want == math.huge and log.shift ~= nil and (log.lead_short or log.shift[1] < -.3)
+            -- (no further from where it began than you are, and as far past you as its run went past its target - its maps
+            -- are kept by how far you were as it stopped aiming, their paths from where the run began: the W.A.R.B.O.T.,
+            -- walking onto you before its leap, took the run at 0.1 - one that walked 13.9 first - drawn 13.9 on from where it
+            -- began, 3.5 from you: 10.5 ahead a frame, lag 1342 and replay CLIENT 2026-10-29. TR_OLD_WENTCAP)
+            if target ~= nil and entry.lock ~= nil and not rawget(_G, "TR_OLD_WENTCAP") then
+                local plock = PathAt(best, entry.lock)
+                if plock ~= nil then
+                    local past = math.max(0, (pend - plock) - (best.dist or 0))
+                    local to_you = math.max(0, (target.x - ps[1]) * c - (target.z - ps[2]) * s)
+                    -- (only a run that walked further before it stopped aiming than you are from here - not this go's: kept
+                    -- to its own run otherwise, not moved with you each frame - Klaus' wobbles 0 -> 4 when every one was)
+                    local p0 = PathAt(best, 0)
+                    if p0 ~= nil and plock - p0 > to_you + 1 then want = math.min(want, to_you + past) end
+                end
+            end
             if ent ~= nil then
                 local ex, _, ez = ent.Transform:GetWorldPosition()
                 want = math.max(want, (ex - ps[1]) * c - (ez - ps[2]) * s)

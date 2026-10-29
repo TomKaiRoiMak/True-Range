@@ -235,7 +235,7 @@ do
 end
 -- (TR_MODS=<folder names>: those mods on - their monsters' moves over the game's, as the game lays them: true_range/moddata)
 -- (the drawer's own switches back to before, from the shell: TR_OLD_LAND=1 ... - as the game reads them, globals)
-for _, n in ipairs({ "TR_OLD_LAND", "TR_OLD_FALL", "TR_OLD_AGAIN", "TR_OLD_LANE", "TR_OLD_PENGUIN", "TR_OLD_TURNTELL", "TR_OLD_SAMEALT", "TR_OLD_SAMEFOOT", "TR_OLD_STRAIGHT", "TR_OLD_TELL", "TR_OLD_TELLWAIT", "TR_OLD_SLOW", "TR_OLD_LOB", "TR_OLD_LEAD", "TR_OLD_STILL", "TR_OLD_EARLY", "TR_OLD_HOP", "TR_OLD_LEAPAIM", "TR_OLD_ALTLOCK", "TR_OLD_LEAPTURN", "TR_OLD_FROMTELL", "TR_OLD_TELLSTILL", "TR_OLD_CHAINLOCK", "TR_OLD_TPKEEP", "TR_OLD_TELLWAITALL", "TR_OLD_AGAINLINGER", "TR_OLD_PREGO", "TR_OLD_AHEADLEG", "TR_OLD_FAR", "TR_OLD_FARTELL", "TR_OLD_BYONLY", "TR_OLD_ENDLINGER", "TR_OLD_LANEROW", "TR_OLD_AROUNDONCE", "TR_OLD_AROUNDFACE", "TR_OLD_SHADOWSIZE", "TR_OLD_LEAPSHORT", "TR_OLD_CHAINPOS", "TR_OLD_SELFGAP", "TR_OLD_AHEADOFF", "TR_OLD_SERVERAIM", "TR_OLD_SIMLANE", "TR_OLD_SERVERAIMLOCK", "TR_OLD_SERVERAIMFOLLOW", "TR_OLD_SLIDEFIT", "TR_OLD_ROUND", "TR_OLD_RESTART", "TR_OLD_OFFNET", "TR_OLD_ANIMSYNC", "TR_OLD_SNAP45", "TR_OLD_DONEAFTER", "TR_OLD_HAZLEAD", "TR_OLD_HAZSTEADY", "TR_OLD_AIMLEAD", "TR_OLD_MIDLEFT", "TR_OLD_RELOCK", "TR_OLD_BODYLEAD", "TR_OLD_LIVERADIUS", "TR_OLD_DISCKEY", "TR_OLD_TAIL", "TR_OLD_LAND2", "TR_OLD_PREVLEG", "TR_OLD_SNAPPOS", "TR_OLD_CHAINLAST", "TR_OLD_WORMDIRT", "TR_OLD_LEADSTOP", "TR_OLD_LEADTP", "TR_OLD_LANDHOLD", "TR_OLD_LANDKEEP", "TR_OLD_GLOWPULSE", "TR_OLD_GLOWGRACE", "TR_OLD_AIRSTILL", "TR_OLD_GLOWOVERLAP", "TR_OLD_LEADTPSTEP", "TR_OLD_LANDSTOP", "TR_OLD_GLOWHOLD", "TR_OLD_LANDTILL", "TR_OLD_LANDAT", "TR_OLD_HUNTSTICK", "TR_OLD_LANDLOOSE", "TR_OLD_GLOWAFTERMOVE", "TR_OLD_WORMPOUND", "TR_OLD_WENT", "TR_OLD_WENTSTART", "TR_OLD_TWIN", "TR_OLD_STAYLEAD", "TR_OLD_LANDNOW", "TR_OLD_LOWAIR", "TR_OLD_POSEGO", "TR_OLD_R2FROM", "TR_OLD_JUMPLED", "TR_OLD_LOWAIRROSE", "TR_OLD_AIRDUP", "TR_OLD_LANDFIRST", "TR_OLD_WIDENET", "TR_OLD_TPPRE", "TR_OLD_SPATSNOT", "TR_OLD_NEAR", "TR_OLD_BEARSHOOT", "TR_OLD_LEADDUP", "TR_OLD_LEAPWARP", "TR_OLD_STARTLEAD", "TR_OLD_THINGWAIT", "TR_OLD_THINGNEW", "TR_OLD_LEADSTOP2", "TR_OLD_CHASELEAD", "TR_OLD_LANDWAIT", "TR_OLD_PICKEPIC", "TR_OLD_AIMFACING", "TR_OLD_LANDAVG", "TR_OLD_HAZLEADMOVED", "TR_OLD_FALLBACKANY", "TR_OLD_KEEPHEADING", "TR_OLD_HAZFAST", "TR_OLD_FROMEDGE", "TR_OLD_KARATE", "TR_OLD_MIRROR" }) do if os.getenv(n) then rawset(_G, n, true) end end
+for _, n in ipairs({ "TR_OLD_LAND", "TR_OLD_FALL", "TR_OLD_AGAIN", "TR_OLD_LANE", "TR_OLD_PENGUIN", "TR_OLD_TURNTELL", "TR_OLD_SAMEALT", "TR_OLD_SAMEFOOT", "TR_OLD_STRAIGHT", "TR_OLD_TELL", "TR_OLD_TELLWAIT", "TR_OLD_SLOW", "TR_OLD_LOB", "TR_OLD_LEAD", "TR_OLD_STILL", "TR_OLD_EARLY", "TR_OLD_HOP", "TR_OLD_LEAPAIM", "TR_OLD_ALTLOCK", "TR_OLD_LEAPTURN", "TR_OLD_FROMTELL", "TR_OLD_TELLSTILL", "TR_OLD_CHAINLOCK", "TR_OLD_TPKEEP", "TR_OLD_TELLWAITALL", "TR_OLD_AGAINLINGER", "TR_OLD_PREGO", "TR_OLD_AHEADLEG", "TR_OLD_FAR", "TR_OLD_FARTELL", "TR_OLD_BYONLY", "TR_OLD_ENDLINGER", "TR_OLD_LANEROW", "TR_OLD_AROUNDONCE", "TR_OLD_AROUNDFACE", "TR_OLD_SHADOWSIZE", "TR_OLD_LEAPSHORT", "TR_OLD_CHAINPOS", "TR_OLD_SELFGAP", "TR_OLD_AHEADOFF", "TR_OLD_SERVERAIM", "TR_OLD_SIMLANE", "TR_OLD_SERVERAIMLOCK", "TR_OLD_SERVERAIMFOLLOW", "TR_OLD_SLIDEFIT", "TR_OLD_ROUND", "TR_OLD_RESTART", "TR_OLD_OFFNET", "TR_OLD_ANIMSYNC", "TR_OLD_SNAP45", "TR_OLD_DONEAFTER", "TR_OLD_HAZLEAD", "TR_OLD_HAZSTEADY", "TR_OLD_AIMLEAD", "TR_OLD_MIDLEFT", "TR_OLD_RELOCK", "TR_OLD_BODYLEAD", "TR_OLD_LIVERADIUS", "TR_OLD_DISCKEY", "TR_OLD_TAIL", "TR_OLD_LAND2", "TR_OLD_PREVLEG", "TR_OLD_SNAPPOS", "TR_OLD_CHAINLAST", "TR_OLD_WORMDIRT", "TR_OLD_LEADSTOP", "TR_OLD_LEADTP", "TR_OLD_LANDHOLD", "TR_OLD_LANDKEEP", "TR_OLD_GLOWPULSE", "TR_OLD_GLOWGRACE", "TR_OLD_AIRSTILL", "TR_OLD_GLOWOVERLAP", "TR_OLD_LEADTPSTEP", "TR_OLD_LANDSTOP", "TR_OLD_GLOWHOLD", "TR_OLD_LANDTILL", "TR_OLD_LANDAT", "TR_OLD_HUNTSTICK", "TR_OLD_LANDLOOSE", "TR_OLD_GLOWAFTERMOVE", "TR_OLD_WORMPOUND", "TR_OLD_WENT", "TR_OLD_WENTSTART", "TR_OLD_TWIN", "TR_OLD_STAYLEAD", "TR_OLD_LANDNOW", "TR_OLD_LOWAIR", "TR_OLD_POSEGO", "TR_OLD_R2FROM", "TR_OLD_JUMPLED", "TR_OLD_LOWAIRROSE", "TR_OLD_AIRDUP", "TR_OLD_LANDFIRST", "TR_OLD_WIDENET", "TR_OLD_TPPRE", "TR_OLD_SPATSNOT", "TR_OLD_NEAR", "TR_OLD_BEARSHOOT", "TR_OLD_LEADDUP", "TR_OLD_LEAPWARP", "TR_OLD_STARTLEAD", "TR_OLD_THINGWAIT", "TR_OLD_THINGNEW", "TR_OLD_LEADSTOP2", "TR_OLD_CHASELEAD", "TR_OLD_LANDWAIT", "TR_OLD_PICKEPIC", "TR_OLD_AIMFACING", "TR_OLD_LANDAVG", "TR_OLD_HAZLEADMOVED", "TR_OLD_FALLBACKANY", "TR_OLD_KEEPHEADING", "TR_OLD_HAZFAST", "TR_OLD_FROMEDGE", "TR_OLD_KARATE", "TR_OLD_MIRROR", "TR_OLD_WENTCAP" }) do if os.getenv(n) then rawset(_G, n, true) end end
 if os.getenv("TR_MODS") then require("true_range/moddata").Apply(function(n) return os.getenv("TR_MODS"):find(n, 1, true) ~= nil end) end
 local Predict = require("true_range/predict")
 local SimMoves = require("true_range/simmoves")
@@ -2145,6 +2145,21 @@ local function AimJumped(s)
     end
     return false
 end
+-- (or put elsewhere by the bench itself (its "side" step: over 1 in a tick) in the half second before the blow - after the move
+-- had aimed where you were: the Twins' charge and the skeleton's bite, you set 2.4 aside 0.3 s before, struck where you were put -
+-- no player goes 1 in a tick. Said as BENCHMOVED, apart from missed. OLD_BENCHMOVED=1: missed)
+local function BenchMoved(s)
+    if os.getenv("OLD_BENCHMOVED") then return false end
+    local prev = nil
+    for _, k in ipairs(ticks) do
+        if k.t > s.t + 1e-6 then break end
+        if (s.guid == nil or k.guid == s.guid) and k.yx ~= nil then
+            if prev ~= nil and k.t >= s.t - .5 and k.t - prev.t < 1.5 * FRAMES and (k.yx - prev.yx) ^ 2 + (k.yz - prev.yz) ^ 2 > 1 then return true end
+            prev = k
+        end
+    end
+    return false
+end
 -- (modmain's AGGRO_WHILE: a faint ring of r round it - or round you (at_you) - while it plays one of anims, and linger s
 -- after, drawn by its own code: Tropical Experience's twister's vacuum, its thunderbird's lightning - judged here as
 -- modmain draws it, from the trace's animation. OLD_AGGRO=1: not judged, as before)
@@ -2276,6 +2291,10 @@ for _, s in ipairs(strikes) do
             aimjump = aimjump + 1
             AIMJUMP_T[#AIMJUMP_T + 1] = s.t
             real_print(string.format("AIMJUMP %.3f %s %s: struck, not drawn - you went over 1 in a tick as it took where you were", s.t, PREFAB, s.state))
+        elseif BenchMoved(s) then
+            aimjump = aimjump + 1
+            AIMJUMP_T[#AIMJUMP_T + 1] = s.t
+            real_print(string.format("BENCHMOVED %.3f %s %s: struck, not drawn - the bench put you over 1 aside in a tick within .5 s before", s.t, PREFAB, s.state))
         -- (struck from your own middle: worn on you, nothing to warn of - the Hound Batilisk on your head as a hat, biting
         -- every 0.6 s (SGbat TryHat), 165 "missed" so on the bench, its leap on drawn; 2026-10-23 update. OLD_WORN=1: missed)
         elseif (s.x - s.bx) ^ 2 + (s.z - s.bz) ^ 2 < .01 and not os.getenv("OLD_WORN") then
