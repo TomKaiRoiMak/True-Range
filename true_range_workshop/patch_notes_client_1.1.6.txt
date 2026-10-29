@@ -73,3 +73,4 @@
 - The Shadow Bishop's lane: no longer turned the wrong way round for a moment as it sets off (in a player's game)
 - The Nightmare Rook's charge: parts already struck no longer come back for a frame as it runs (in a player's game)
 - Spitter spiders' web spit and walruses' blow darts: drawn as they aim - in a player's game they used to strike before anything was drawn
+- Uncompromising Mode's Moon Tentacle mines: drawn where they lie, 3 around, until they go off
