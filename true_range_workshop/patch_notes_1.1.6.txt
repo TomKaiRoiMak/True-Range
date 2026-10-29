@@ -71,3 +71,4 @@
 - Hosting your own game: Uncompromising Mode's Moon Tentacle shots no longer drawn landing short of where they fall
 - Moves that begin with the same animation (the Twins' charge and shot, and others) are now told apart the same way every game - which one was guessed first could change from one game to the next
 - The Shadow Bishop's lane: no longer turned the wrong way round for a moment as it sets off (in a player's game)
+- The Nightmare Rook's charge: parts already struck no longer come back for a frame as it runs (in a player's game)
