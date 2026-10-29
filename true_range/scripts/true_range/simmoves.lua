@@ -5388,7 +5388,9 @@ function SimMoves.Draw(entry, x, z, rot, target, my_radius, px, pz, t, log, ent,
                     -- (or right by where it began, whichever way - turning round onto you under it, the W.A.R.B.O.T. 20 ahead 2
                     -- frames, lag 1447)
                     if p0 ~= nil and plock - p0 > to_you + 1 and (aside <= to_you or to_you * to_you + aside * aside < 4) then
-                        want = math.min(want, to_you + past)
+                        -- (on to you, no further: that run's own way past its target is no measure either - it leapt 8.4 on
+                        -- from 0.24, the ring still 8.5 ahead a frame, lag 1515. TR_OLD_WENTPAST: and its way past)
+                        want = math.min(want, to_you + (rawget(_G, "TR_OLD_WENTPAST") and past or 0))
                     end
                 end
             end
@@ -5518,13 +5520,16 @@ function SimMoves.Draw(entry, x, z, rot, target, my_radius, px, pz, t, log, ent,
         local fi_now = t / FRAMES
         local last_at = 0
         for _, st in ipairs(MapSteps(best)) do last_at = math.max(last_at, st.at) end
-        if fi_now >= lf - 10 and fi_now <= math.max(lf + 15, (entry.first or 0) + 8, last_at + 3) then
+        -- (from its start: the W.A.R.B.O.T.'s ring 17 ahead a frame at its frame 62, before this began at 68 - lag 1506)
+        if fi_now >= 0 and fi_now <= math.max(lf + 15, (entry.first or 0) + 8, last_at + 3) then
             local far = SimMoves._FarOf(best)
             local sh = log.shift
-            print(string.format("[tr_draw] %.3f %s %s f=%.1f at=%.2f,%.2f rot=%.1f run=%.2f far=%s shift=%s exact=%s",
+            local pl, pz0 = PathAt(best, lf), PathAt(best, 0)
+            print(string.format("[tr_draw] %.3f %s %s f=%.1f at=%.2f,%.2f rot=%.1f run=%.2f far=%s shift=%s exact=%s in=%.2f,%.2f dist=%.2f pre=%s went=%s",
                 (GetTime or GetStaticTime)(), ent ~= nil and tostring(ent.prefab) or "?", tostring(entry.name or (entry.anims and entry.anims[1])), fi_now,
                 x, z, rot / DEGREES, best.dist or -1, far ~= nil and string.format("%.2f", far) or "-",
-                sh ~= nil and string.format("%.2f,%.2f", sh[1], sh[2]) or "-", tostring(log.lock_exact)))
+                sh ~= nil and string.format("%.2f,%.2f", sh[1], sh[2]) or "-", tostring(log.lock_exact), x_in, z_in, dist,
+                (pl ~= nil and pz0 ~= nil) and string.format("%.2f", pl - pz0) or "-", tostring(log.went_off)))
         end
     end
     t = t or 0
