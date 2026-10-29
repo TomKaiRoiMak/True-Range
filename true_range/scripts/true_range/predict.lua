@@ -2530,7 +2530,14 @@ function Predict.Draw(ents, ranges, my_radius, me, skip)
                         -- (once off, the way it's gone: turned to you the very tick it set off, the Shadow Bishop's
                         -- lane kept its facing from before - 25 off, its blows on you outside it; and it comes on
                         -- after you all along. TR_OLD_LANE: as before)
-                        elseif not rawget(_G, "TR_OLD_LANE") then lw.rot = math.atan2(-(z - lw.z), x - lw.x) end
+                        elseif not rawget(_G, "TR_OLD_LANE") then
+                            -- (not the other way round from the way it faces - its place as drawn a hair back from where it set
+                            -- off (a player's game, led on and back): the Shadow Bishop's lane turned about for a frame or two,
+                            -- its middle 18-22 off and back, lag 1925. TR_OLD_LANEFLIP)
+                            local nr = math.atan2(-(z - lw.z), x - lw.x)
+                            local d = math.abs(((nr - rot) + math.pi) % (2 * math.pi) - math.pi)
+                            if d < math.pi / 2 or rawget(_G, "TR_OLD_LANEFLIP") then lw.rot = nr end
+                        end
                         Note(ent, "its lane, from where it set off", a.move, t)
                         danger = SimMoves.DrawCapsule(lw.x, lw.z, lw.rot, sim.leg_len, sim.leg_r or 2, off and "strike" or "fill", px, pz) or danger
                     elseif a.lw ~= nil then
