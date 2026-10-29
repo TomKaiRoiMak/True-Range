@@ -258,10 +258,17 @@ AddPlayerPostInit(function(p)
                         for o, r in pairs(fr) do
                             local name, guid = "?", 0
                             if type(o) == "table" and o.prefab ~= nil then name, guid = o.prefab, o.GUID or 0 elseif type(o) == "string" then name = o end
-                            print(string.format("[tr_lagframe] %.3f %s %d tri=%d area=%.2f at=%.2f,%.2f seg=%d at=%.2f,%.2f grp=%d at=%.2f,%.2f pred=%d ext=%.2f",
+                            -- (and where its owner is shown, the way it faces: a shape that slid back then leapt on (the Twins' next
+                            -- leg, lag 1139) - with its boss, or turned? nothing said where the boss was. " own=x,z,rot")
+                            local own = ""
+                            if type(o) == "table" and o.Transform ~= nil and o.IsValid ~= nil and o:IsValid() then
+                                local ox, _, oz = o.Transform:GetWorldPosition()
+                                own = string.format(" own=%.2f,%.2f,%.1f", ox, oz, o.Transform:GetRotation())
+                            end
+                            print(string.format("[tr_lagframe] %.3f %s %d tri=%d area=%.2f at=%.2f,%.2f seg=%d at=%.2f,%.2f grp=%d at=%.2f,%.2f pred=%d ext=%.2f%s",
                                 t, name, guid, r[1], r[2], r[2] > 0 and r[3] / r[2] or 0, r[2] > 0 and r[4] / r[2] or 0,
                                 r[5], r[5] > 0 and r[6] / r[5] or 0, r[5] > 0 and r[7] / r[5] or 0,
-                                r[8], r[8] > 0 and r[9] / r[8] or 0, r[8] > 0 and r[10] / r[8] or 0, cur_pred and 1 or 0, r[11] or 0))
+                                r[8], r[8] > 0 and r[9] / r[8] or 0, r[8] > 0 and r[10] / r[8] or 0, cur_pred and 1 or 0, r[11] or 0, own))
                         end
                     end
                     fr = nil
@@ -320,9 +327,14 @@ AddPlayerPostInit(function(p)
                 local groupAt = L.GroupAt
                 L.GroupAt = function(g, x, z, deg)
                     local r = Rec()
-                    if r ~= nil and x ~= nil then r[8], r[9], r[10] = r[8] + 1, r[9] + x, r[10] + z end
                     -- (how far its pieces reach from where it's put - "ext": a group's size, not only where it is; the Moonmaw's
                     -- spin drawn as one group, its reach not told, 2026-10-28)
+                    -- (and its middle where its pieces are, not where it's put: a lane laid on from where the boss is, put there
+                    -- each frame, its pieces laid again as it changes - the Twins' charge, put 2.5 on and back as its lane stayed?
+                    -- the put point said nothing of what was seen, lag 1139, 2026-10-29. OLD_LAG_GRPAT=1: the put point)
+                    -- (the middle of the box round them: their mean moved 1.2 each time the Twins' lane's colour wave laid a
+                    -- different count of pieces, its shape the same, lag 1257)
+                    local x0, x1, z0, z1, mn = G.math.huge, -G.math.huge, G.math.huge, -G.math.huge, 0
                     if r ~= nil and g ~= nil and g.pieces ~= nil then
                         local e2 = 0
                         for k, list in G.pairs(g.pieces) do
@@ -332,10 +344,23 @@ AddPlayerPostInit(function(p)
                                 if p ~= nil and p.Transform ~= nil and p.Transform.GetLocalPosition ~= nil then
                                     local lx, _, lz = p.Transform:GetLocalPosition()
                                     if lx ~= nil and lx * lx + lz * lz > e2 then e2 = lx * lx + lz * lz end
+                                    if lx ~= nil then
+                                        x0, x1, z0, z1, mn = G.math.min(x0, lx), G.math.max(x1, lx), G.math.min(z0, lz), G.math.max(z1, lz), mn + 1
+                                    end
                                 end
                             end
                         end
                         r[11] = G.math.max(r[11] or 0, G.math.sqrt(e2))
+                    end
+                    if r ~= nil and x ~= nil then
+                        local wx, wz = x, z
+                        if mn > 0 and not G.rawget(G, "OLD_LAG_GRPAT") then
+                            local ax, az = (x0 + x1) / 2, (z0 + z1) / 2
+                            local rr = (L.turns and deg or 0) * G.DEGREES
+                            local c, s = G.math.cos(rr), G.math.sin(rr)
+                            wx, wz = x + ax * c + az * s, z - ax * s + az * c
+                        end
+                        r[8], r[9], r[10] = r[8] + 1, r[9] + wx, r[10] + wz
                     end
                     return groupAt(g, x, z, deg)
                 end

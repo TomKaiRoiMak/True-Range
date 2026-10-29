@@ -22,6 +22,8 @@ local move_of = {}  -- prefab..guid -> its move now (tr_lagdraw)
 local boss_at = {}  -- prefab..guid -> { x, z } (tr_lagdraw boss, or its body ring's middle)
 local pulses = {}   -- style -> list of { t, a }
 local gos = {}      -- prefab#guid|go -> { key, move, list of { t, x, z, rot, bx, bz } }
+local go_set = {}   -- prefab#guid -> { t, ids } - the goes drawn this frame ([tr_lagdraw] ids)
+local parts_of = {} -- prefab -> its offline map's parts drawn now ([tr_lagnote] "parts N")
 for line in io.lines(path) do
     local t, pf, guid, rest = line:match("%[tr_lagframe%] ([%d%.]+) ([%w_%?]+) (%d+) (.*)")
     if t ~= nil and (only == nil or pf == only) then
@@ -35,9 +37,19 @@ for line in io.lines(path) do
             elseif tonumber(tri) > 0 then r, cx, cz = math.sqrt(tonumber(area) / math.pi), tonumber(ax), tonumber(az) end
             -- (its body ring's middle: where the boss is shown)
             if tonumber(seg) > 0 and pf ~= "?" then boss_at[key] = { tonumber(sx), tonumber(sz) } end
+            -- (where its owner is shown, as tr_lagjoin says it from 2026-10-29: " own=x,z,rot" - over all the rest)
+            local ox, oz, orot = rest:match(" own=([%d%.%-]+),([%d%.%-]+),([%d%.%-]+)")
+            if ox ~= nil then boss_at[key] = { tonumber(ox), tonumber(oz), tonumber(orot) } end
             tracks[key] = tracks[key] or {}
             local b = boss_at[key]
-            table.insert(tracks[key], { t = t, r = r, cx = cx, cz = cz, bx = b and b[1], bz = b and b[2], move = move_of[key] or "-",
+            -- (which goes of its move are drawn: a new one begun (a laser shot again each time its loop starts over, the Twins'
+            -- mouth, SimMoves._relock) is a new shape, not the old one leapt - 51 "JUMP"s, lag 1304. OLD_FC_GOES=1: not told)
+            local gs = go_set[key]
+            local goes = (gs ~= nil and math.abs(gs.t - t) < .001 and not os.getenv("OLD_FC_GOES")) and gs.ids or ""
+            -- (and how many parts of its map: one struck and gone (the Werepig's atk3, parts 2 -> 1) shrinks it, its middle on
+            -- 1.5 - not a leap, lag 1304)
+            if not os.getenv("OLD_FC_PARTS") then goes = goes .. "|" .. (parts_of[pf] or "") end
+            table.insert(tracks[key], { t = t, r = r, cx = cx, cz = cz, bx = b and b[1], bz = b and b[2], brot = b and b[3], move = (move_of[key] or "-") .. (goes ~= "" and "" or ""), goes = goes,
                 pcs = tonumber(tri) * 1000 + tonumber(grp) })
         end
     end
@@ -47,11 +59,27 @@ for line in io.lines(path) do
         boss_at[dpf .. "#" .. dguid] = { tonumber(bx), tonumber(bz) }
         -- (each go of a move (its log's id) on its own: where it's laid from and which way)
         local go, ax, az, rot = line:match("%[tr_lagdraw%] [%d%.]+ [%w_]+ %d+ (%S+) ([%d%.%-]+) ([%d%.%-]+) ([%d%.%-]+) boss")
+        local gk0 = dpf .. "#" .. dguid
+        local gs = go_set[gk0]
+        if gs == nil or math.abs(gs.t - tonumber(dt)) > .001 then gs = { t = tonumber(dt), ids = "" } go_set[gk0] = gs end
+        if go ~= nil then
+            local ids = {}
+            for id in gs.ids:gmatch("[^,]+") do ids[#ids + 1] = id end
+            ids[#ids + 1] = go
+            table.sort(ids)
+            gs.ids = table.concat(ids, ",")
+        end
         if go ~= nil and (only == nil or dpf == only) then
             local gk = dpf .. "#" .. dguid .. "|" .. go
             gos[gk] = gos[gk] or { key = dpf .. "#" .. dguid, move = mv, list = {} }
             table.insert(gos[gk].list, { t = tonumber(dt), x = tonumber(ax), z = tonumber(az), rot = tonumber(rot), bx = tonumber(bx), bz = tonumber(bz) })
         end
+    end
+    local npf, rest_n = line:match("%[tr_lagnote%] [%d%.]+ |([%w_]+) (.*)$")
+    if npf ~= nil then
+        local ps = {}
+        for n in rest_n:gmatch("parts (%d+)") do ps[#ps + 1] = n end
+        parts_of[npf] = table.concat(ps, ",")
     end
     local pt, style, a = line:match("%[tr_lagpulse%] ([%d%.]+) (%S+) ([%d%.]+)")
     if pt ~= nil then
@@ -69,6 +97,12 @@ local function Flag(key, kind, f, what)
     end
 end
 local function D(a, b) return math.sqrt((a.cx - b.cx) ^ 2 + (a.cz - b.cz) ^ 2) end
+-- (its owner's step and turn from a to b, where told: ", boss went 0.83 turned 180")
+local function Own(a, b)
+    if not (a.bx and b.bx) then return "" end
+    local tr = (a.brot and b.brot) and math.abs((b.brot - a.brot + 180) % 360 - 180) or nil
+    return string.format(", boss went %.2f%s", math.sqrt((b.bx - a.bx) ^ 2 + (b.bz - a.bz) ^ 2), tr and string.format(" turned %.0f", tr) or "")
+end
 
 for key, L in pairs(tracks) do
     for i = 2, #L do
@@ -77,7 +111,7 @@ for key, L in pairs(tracks) do
         local steady = c.t - p.t < 1.5 * FR
         -- (the same pieces: one more shape come up beside it (the next leap begun as the last one's landing is still drawn)
         -- moves the middle of them all - no anomaly of either)
-        local same_move = p.move == c.move and p.pcs == c.pcs
+        local same_move = p.move == c.move and p.pcs == c.pcs and p.goes == c.goes
         -- POP: off from both sides, both sides alike
         for len = 1, 3 do
             local q = L[i + len]
@@ -115,7 +149,7 @@ for key, L in pairs(tracks) do
             local pp = L[i - 2]
             local was = (pp ~= nil and pp.cx and p.t - pp.t < 1.5 * FR and pp.move == p.move) and D(pp, p) or 0
             if d - math.max(bd, was) > JUMP_D and math.abs(c.r - p.r) < 1 then
-                Flag(key, "JUMP", c, string.format("middle %.2f in a frame, boss %.2f", d, bd))
+                Flag(key, "JUMP", c, string.format("middle %.2f in a frame, boss %.2f%s", d, bd, Own(p, c)))
             end
         end
         -- REVERSE: there and straight back
@@ -123,8 +157,16 @@ for key, L in pairs(tracks) do
             and math.abs(c.r - p.r) < .3 and math.abs(n.r - c.r) < .3 then
             local d1x, d1z, d2x, d2z = c.cx - p.cx, c.cz - p.cz, n.cx - c.cx, n.cz - c.cz
             local l1, l2 = math.sqrt(d1x * d1x + d1z * d1z), math.sqrt(d2x * d2x + d2z * d2z)
-            if l1 > REV_D and l2 > REV_D and (d1x * d2x + d1z * d2z) / (l1 * l2) < -.7 then
-                Flag(key, "REVERSE", c, string.format("%.2f there, %.2f back", l1, l2))
+            -- (its boss went just so, each step - the shape on it as it's shown: the Twins' mouth charging, your game going
+            -- on its old way a frame or two as it stopped, then put where the server has it, 3.16 in a frame, lag 1139;
+            -- the boss as seen did that, not the drawing. OLD_FC_WITHBOSS=1: flagged)
+            local function With(a, b, dx, dz)
+                if not (a.bx and b.bx) then return false end
+                return math.sqrt((b.bx - a.bx - dx) ^ 2 + (b.bz - a.bz - dz) ^ 2) < .35 * math.sqrt(dx * dx + dz * dz) + .1
+            end
+            local withboss = not os.getenv("OLD_FC_WITHBOSS") and With(p, c, d1x, d1z) and With(c, n, d2x, d2z)
+            if l1 > REV_D and l2 > REV_D and (d1x * d2x + d1z * d2z) / (l1 * l2) < -.7 and not withboss then
+                Flag(key, "REVERSE", c, string.format("%.2f there, %.2f back%s; then%s", l1, l2, Own(p, c), Own(c, n)))
             end
         end
     end
