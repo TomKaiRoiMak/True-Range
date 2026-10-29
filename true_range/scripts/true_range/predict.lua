@@ -485,7 +485,11 @@ function Predict.PickAlike(ent, a, m1, m2, seen)
             local hit = false
             for _, an in ipairs(s.from) do
                 local w = math.max(seen[an] or -math.huge, seen["^" .. an] or -math.huge)
-                if w >= a.t0 - 4 * FRAMES and w <= a.t0 + FRAMES then hit = true end
+                -- (seen up to a frame and a half in: its own animation's clock puts its start a frame before the frame it's seen
+                -- in - the Glacial Hound's scared_pst last seen 1.01 frames after its howl's start, the howl taken for a bite, its
+                -- three spike lines undrawn, 2026-10-29. TR_OLD_FROMEDGE: a frame)
+                local edge = rawget(_G, "TR_OLD_FROMEDGE") and FRAMES or 1.5 * FRAMES
+                if w >= a.t0 - 4 * FRAMES and w <= a.t0 + edge then hit = true end
             end
             if hit then return true, "from" end
             -- (not come from there - known only once it was seen doing something before)
