@@ -5398,6 +5398,7 @@ function SimMoves.Draw(entry, x, z, rot, target, my_radius, px, pz, t, log, ent,
                 local ex, _, ez = ent.Transform:GetWorldPosition()
                 want = math.max(want, (ex - ps[1]) * c - (ez - ps[2]) * s)
             end
+            if rawget(_G, "TR_DRAWLOG") then log.dbg_went = string.format("ps=%.2f,%.2f want=%.2f pend=%.2f", ps[1], ps[2], want, pend) end
             if not unseen then x, z = World(x, z, rot, want - ((x - ps[1]) * c - (z - ps[2]) * s + pend), 0) end
         end
     end
@@ -5529,7 +5530,7 @@ function SimMoves.Draw(entry, x, z, rot, target, my_radius, px, pz, t, log, ent,
                 (GetTime or GetStaticTime)(), ent ~= nil and tostring(ent.prefab) or "?", tostring(entry.name or (entry.anims and entry.anims[1])), fi_now,
                 x, z, rot / DEGREES, best.dist or -1, far ~= nil and string.format("%.2f", far) or "-",
                 sh ~= nil and string.format("%.2f,%.2f", sh[1], sh[2]) or "-", tostring(log.lock_exact), x_in, z_in, dist,
-                (pl ~= nil and pz0 ~= nil) and string.format("%.2f", pl - pz0) or "-", tostring(log.went_off)))
+                (pl ~= nil and pz0 ~= nil) and string.format("%.2f", pl - pz0) or "-", tostring(log.went_off) .. " " .. tostring(log.dbg_went)))
         end
     end
     t = t or 0
