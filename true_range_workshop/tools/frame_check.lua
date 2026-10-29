@@ -8,7 +8,7 @@
 --   BLINK   drawn, gone 1-3 frames, drawn again within the same move
 --   JUMP    middle moved over JUMP_D in a frame, against where its boss went, not as its move changed
 --   REVERSE middle went one way, then straight back the other, each step over REV_D (a to-and-fro, its edge a blur)
---   AIM     one go of a move laid from elsewhere, or turned over 15 degrees, in a frame ([tr_lagdraw])
+--   AIM     one go of a move laid from elsewhere, or turned over 45 degrees, in a frame ([tr_lagdraw])
 --   PULSE   the glow's brightness up and down again within 3 frames ([tr_lagpulse])
 -- Counts per owner and flag; -v lists each with its time and move.
 local path, only, verbose = arg[1], nil, false
@@ -139,7 +139,8 @@ for _, g in pairs(gos) do
             local dr = math.abs(((c.rot - p.rot) + 180) % 360 - 180)
             local da = math.sqrt((c.x - p.x) ^ 2 + (c.z - p.z) ^ 2)
             local db = math.sqrt((c.bx - p.bx) ^ 2 + (c.bz - p.bz) ^ 2)
-            if dr > 15 or da - db > JUMP_D then
+            -- (a turn over 45 in a frame - a boss turning as it winds up goes 15-25 a frame, its shape with it)
+            if dr > 45 or da - db > JUMP_D then
                 Flag(g.key, "AIM", { t = c.t, move = g.move }, string.format("turned %.0f, laid from %.2f on (boss %.2f), frame %d of the go", dr, da, db, i))
             end
         end

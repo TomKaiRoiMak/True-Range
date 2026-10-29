@@ -3285,7 +3285,9 @@ function SimMoves._LeadMovingRaw(ent, x, z, now)
     -- REVERSE, lag 0549 2026-10-29). Kept as it was, and on by the time since it was last told. TR_OLD_LEADDUP: each frame)
     local age = 0
     local old_dup = rawget(_G, "TR_OLD_LEADDUP")
-    if #s > 0 and s[#s][2] == x and s[#s][3] == z and not old_dup then
+    -- (only within a tick of the last told - the same place longer than that, it has stopped: kept as it is, its speed
+    -- 0 - not drawn on as it went for good, the Eye of Terror 0 -> 6 struck undrawn so, replay CLIENT)
+    if #s > 0 and s[#s][2] == x and s[#s][3] == z and not old_dup and now - s[#s][1] < 2.5 * FRAMES then
         age = math.min(now - s[#s][1], .1)
     elseif #s == 0 or s[#s][1] < now then
         s[#s + 1] = { now, x, z }
@@ -5189,7 +5191,10 @@ function SimMoves.Draw(entry, x, z, rot, target, my_radius, px, pz, t, log, ent,
                     local s, e, peak = nil, nil, 0
                     for k = 0, n - 2 do
                         local step = PathAt(best, k + 1) - PathAt(best, k)
-                        if step > .05 then s, e, peak = s or k, k + 1, math.max(peak, step) end
+                        -- (not a step over 3 a frame - a warp, not its pace: the Blighted Rock Master's dash 9.73 in a frame,
+                        -- taken for its pace, "stopped short" each go, its shape thrown 9.73 on for a frame and back - the
+                        -- player's "flickering frame" (frame_check, lag 0723, 8 of 8 dashes) 2026-10-29. TR_OLD_LEAPWARP)
+                        if step > .05 and (step <= 3 or rawget(_G, "TR_OLD_LEAPWARP")) then s, e, peak = s or k, k + 1, math.max(peak, step) end
                     end
                     log.lead_s, log.lead_e, log.lead_peak = s or -1, e or -1, peak
                 end
