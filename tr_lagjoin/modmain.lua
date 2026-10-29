@@ -225,6 +225,20 @@ AddPlayerPostInit(function(p)
                     if r == nil then r = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } fr[o] = r end
                     return r
                 end
+                -- (and the glow's brightness each frame (Lines.Pulse: one style, every boss's glow shares it) - "[tr_lagpulse] t
+                -- style alpha calls", said as it changes by .15 or more: a glow that blinks is in its brightness, not its pieces -
+                -- the Blighted Rock Master "flickering", the player 2026-10-29, none of it in [tr_lagframe])
+                local pulse_now, pulse_last = {}, {}
+                if L.Pulse ~= nil and not L._tr_lag_pulse then
+                    L._tr_lag_pulse = true
+                    local pulse = L.Pulse
+                    L.Pulse = function(style, alpha, ...)
+                        local p = pulse_now[style] or { a = alpha, n = 0 }
+                        p.a, p.n = alpha, p.n + 1
+                        pulse_now[style] = p
+                        return pulse(style, alpha, ...)
+                    end
+                end
                 local begin, finish = L.Begin, L.End
                 L.Begin = function(...) fr = {} return begin(...) end
                 L.End = function(...)
@@ -240,6 +254,18 @@ AddPlayerPostInit(function(p)
                         end
                     end
                     fr = nil
+                    do
+                        local t = G.GetTime()
+                        for style, p in pairs(pulse_now) do
+                            local was = pulse_last[style] or 0
+                            if math.abs(p.a - was) >= .15 then print(string.format("[tr_lagpulse] %.3f %s %.2f calls=%d", t, style, p.a, p.n)) end
+                            pulse_last[style] = p.a
+                        end
+                        for style, a in pairs(pulse_last) do
+                            if pulse_now[style] == nil and a > 0 then print(string.format("[tr_lagpulse] %.3f %s none", t, style)) pulse_last[style] = 0 end
+                        end
+                        pulse_now = {}
+                    end
                     return finish(...)
                 end
                 local tri = L.Tri
