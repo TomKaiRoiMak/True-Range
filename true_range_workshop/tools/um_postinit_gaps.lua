@@ -63,6 +63,11 @@ for f in p:lines() do
     local sg = f:match("^SG(.-)%.lua$"):lower()
     local src = io.open(um .. "\\postinit\\stategraphs\\" .. f, "rb"):read("*a")
     local owners = Owners(sg)
+    -- (and the stategraphs it really lays into: SGpigbunny.lua is the pigs' ("pig"), pigman's charge drawn already - 2026-10-29)
+    for name in src:gmatch("AddStategraphPostInit%(\"([%w_]+)\"") do
+        for q in pairs(Owners(name:lower())) do owners[q] = true end
+    end
+    if sg == "pigbunny" then for _, q in ipairs({ "pigman", "pigguard", "bunnyman", "moonpig" }) do owners[q] = true end end
     -- (each state: from its name to the next)
     local starts = {}
     for pos, name in src:gmatch("()name%s*=%s*\"([%w_]+)\"") do starts[#starts + 1] = { pos = pos, name = name } end
