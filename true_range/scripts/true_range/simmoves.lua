@@ -5385,7 +5385,11 @@ function SimMoves.Draw(entry, x, z, rot, target, my_radius, px, pz, t, log, ent,
                     local p0 = PathAt(best, 0)
                     -- (and you ahead of it, within 45 - one off to its side goes the way it faces: the Werepig's slam, test_sim)
                     local aside = math.abs((target.x - ps[1]) * s + (target.z - ps[2]) * c)
-                    if p0 ~= nil and plock - p0 > to_you + 1 and aside <= to_you then want = math.min(want, to_you + past) end
+                    -- (or right by where it began, whichever way - turning round onto you under it, the W.A.R.B.O.T. 20 ahead 2
+                    -- frames, lag 1447)
+                    if p0 ~= nil and plock - p0 > to_you + 1 and (aside <= to_you or to_you * to_you + aside * aside < 4) then
+                        want = math.min(want, to_you + past)
+                    end
                 end
             end
             if ent ~= nil then
