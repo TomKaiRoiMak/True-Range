@@ -155,7 +155,10 @@ for key, L in pairs(tracks) do
             -- (and against how fast it went the frame before - a missile at 19 a second goes .6 a frame, no boss beside it)
             local pp = L[i - 2]
             local was = (pp ~= nil and pp.cx and p.t - pp.t < 1.5 * FR and pp.move == p.move) and D(pp, p) or 0
-            if d - math.max(bd, was) > JUMP_D and math.abs(c.r - p.r) < 1 then
+            -- (nor its boss turning that frame - a long shape swept round with it: the Celestial Champion's beam at phase 4, 5-6
+            -- a step, its middle 1.1 on, lag 2218. OLD_FC_TURN=1: counted)
+            local turned = (p.brot and c.brot) and math.abs((c.brot - p.brot + 180) % 360 - 180) or 0
+            if d - math.max(bd, was) > JUMP_D and math.abs(c.r - p.r) < 1 and (turned < 3 or os.getenv("OLD_FC_TURN")) then
                 Flag(key, "JUMP", c, string.format("middle %.2f in a frame, boss %.2f%s", d, bd, Own(p, c)))
             end
         end
