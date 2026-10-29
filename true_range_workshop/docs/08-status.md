@@ -8,7 +8,9 @@
 
 | วัด | ค่า |
 |---|---|
-| replay baseline 0805 (โค้ดปัจจุบัน) | missed **25** / 59,086 (บอส 6, ของที่ปล่อย 19) · false 2,019 |
+| replay 1610 (2026-10-29 ค่ำ, deterministic แล้ว `4e0ea67`) | host missed **14** / 56,815 (บอส 4, ของ 8 - sporecloud 7 = ขอบวง/bench), false 1,901 · client missed 23 / 56,851, false 2,900 |
+| lag 1636 กวาด 22 บอส 70 นาที | NOT drawn 11 / 1,462 (0.75%), ไม่มีวงกะพริบไป-กลับไกล |
+| replay baseline 0805 (เดิม) | missed **25** / 59,086 (บอส 6, ของที่ปล่อย 19) · false 2,019 |
 | bench เต็มล่าสุด 1503 | missed 35 / 59,697 — A/B ยืนยันว่าไม่ใช่ถดถอย |
 | lag bench (shrouden + wings) | NOT drawn 0–2 ต่อรอบ, วงเตือนกระพริบ 0 |
 | Ink Blight จุดตกขยับ | 0.01 ครั้งต่อลูก (เดิม 0.84 → LANDSTOP 0.13 → + รอ 7 ค่า/hold .4 = 0.01) |
