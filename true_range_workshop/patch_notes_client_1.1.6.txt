@@ -63,3 +63,5 @@
 - Uncompromising Mode's ice hounds: their spike line from afar drawn as they wind up - it was drawn as a bite, the spikes only as they came up
 - In a player's game: things moving on (beams, shots) no longer drawn to and fro each frame - the server tells where they are 15 times a second, every other frame looked like a stop
 - The Blighted Rock Master: its dash no longer thrown far ahead for a frame each time
+- Uncompromising Mode's merms: their counter combo (three blows after being hit four times) drawn - it wasn't drawn at all
+- Uncompromising Mode's Glacial Hounds: all three of their ice howls in a row drawn as howls - the first sometimes taken for a bite, then all three, their spikes struck undrawn in a player's game

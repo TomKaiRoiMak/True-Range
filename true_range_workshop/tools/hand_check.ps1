@@ -18,6 +18,8 @@ foreach ($d in $dirs) {
     if (-not (Test-Path $d)) { continue }
     foreach ($f in Get-ChildItem $d -Recurse -Filter '*.lua') {
         foreach ($m in [regex]::Matches([IO.File]::ReadAllText($f.FullName), 'Prefab\(\s*"([^"]+)"')) { [void]$prefabs.Add($m.Groups[1].Value) }
+        # (and made by a maker of its file's own: return MakeMerm("merm", ...) - merm "GONE", 2026-10-29)
+        foreach ($m in [regex]::Matches([IO.File]::ReadAllText($f.FullName), 'Make[A-Z]\w*\(\s*"([^"]+)"')) { [void]$prefabs.Add($m.Groups[1].Value) }
     }
 }
 # (what the hand files name: "file prefab move anim" lines)
