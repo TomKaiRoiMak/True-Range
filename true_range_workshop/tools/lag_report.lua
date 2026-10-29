@@ -18,6 +18,11 @@ local per_boss = {}
 local effects = nil
 local boss = nil
 local notes = {}
+-- (ahead: struck NOT drawn while your game had you over AHEAD_D on from where the server had you - a lag spike, you
+-- run on in your own game while the server strikes you where you were; the ring is where it is, you aren't. Moonmaw's
+-- lavae, 2026-10-29_1230: 8 of 15 at 3.6 on, 6 at 1.2 - against 0 of 78 the same code at 0945)
+local AHEAD_D = tonumber(os.getenv("AHEAD_D") or "") or 2
+local last_lead = nil
 for line in io.lines(cpath) do
     local n, p, b = line:match("%[tr_lag%] [%d.]+ scene n=(%d+) .- pred=(%d) boss=(%S+)")
     if n ~= nil then
@@ -38,6 +43,7 @@ for line in io.lines(cpath) do
             local t = by[pred]
             t.leads[#t.leads + 1] = tonumber(lead)
         end
+        if lead ~= nil then last_lead = tonumber(lead) end
         local drawn = line:match("%[true_range%] you were struck.- drawn: (%a+)")
         -- (struck from its own middle: worn on you - the Hound Batilisk as a hat biting every 0.6 s, as replay.lua's WORN;
         -- 832 of bat_boss's 1107 "struck" on 2026-10-26. Worn, your game keeps it where it was put on - the same "from it"
@@ -77,7 +83,10 @@ for line in io.lines(cpath) do
                 local k = boss .. " pred=" .. pred
                 per_boss[k] = per_boss[k] or { struck = 0, notd = 0, false_ = 0 }
                 per_boss[k].struck = per_boss[k].struck + 1
-                if drawn ~= "in" then per_boss[k].notd = per_boss[k].notd + 1 end
+                if drawn ~= "in" then
+                    per_boss[k].notd = per_boss[k].notd + 1
+                    if last_lead ~= nil and last_lead > AHEAD_D then per_boss[k].ahead = (per_boss[k].ahead or 0) + 1 end
+                end
             end
         elseif line:match("%[true_range%] drawn IN but NOT struck") then
             if scene == nil then
@@ -143,7 +152,8 @@ for k in pairs(per_boss) do keys[#keys + 1] = k end
 table.sort(keys)
 for _, k in ipairs(keys) do
     local t = per_boss[k]
-    print(string.format("  %-34s struck %4d  NOT drawn %4d  false %4d", k, t.struck, t.notd, t.false_))
+    print(string.format("  %-34s struck %4d  NOT drawn %4d  false %4d%s", k, t.struck, t.notd, t.false_,
+        (t.ahead or 0) > 0 and string.format("  (ahead %d)", t.ahead) or ""))
 end
 for _, l in ipairs(notes) do print("  note: " .. l) end
 if spath ~= nil then
