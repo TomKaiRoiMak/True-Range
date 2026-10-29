@@ -1498,7 +1498,15 @@ local function Start(player)
             end
             if ex ~= nil then
                 local left = (ex - dx) * wx + (ez - dz) * wz
-                if left > 0 then Telegraph.Lane(ex - wx * left, ez - wz * left, ex, ez, d.width) end
+                if left > 0 then
+                    Telegraph.Lane(ex - wx * left, ez - wz * left, ex, ez, d.width)
+                    -- (testing: you in it - "drawn: in" when struck; drawn here, not by Predict: the queen's guards' stingers,
+                    -- struck 1.4 inside their lanes, said "drawn: NOT" x4, lag 0521)
+                    local ax, az = ex - wx * left, ez - wz * left
+                    local along = math.max(0, math.min(left, (sx - ax) * wx + (sz - az) * wz))
+                    local qx, qz = ax + wx * along, az + wz * along
+                    if (sx - qx) ^ 2 + (sz - qz) ^ 2 <= d.width * d.width then last_inside_at = now end
+                end
             end
         end
         -- (lines off: the bosses' bodies all the same - true_range/render: bodies)
