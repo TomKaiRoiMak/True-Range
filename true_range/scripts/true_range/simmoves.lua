@@ -3345,9 +3345,10 @@ function SimMoves._LeadMovingRaw(ent, x, z, now)
     if #s >= 2 and not rawget(_G, "TR_OLD_LEADSTOP") then
         -- (over its last two steps, not one: a player's game has it going on unevenly, a long step then a short one (.8, .35)
         -- - the short one taken for stopping, led on and not, the Umbral Abomination's beam to and fro each frame (frame_check
-        -- REVERSE, lag 0901). TR_OLD_LEADSTOP2: the last step alone)
+        -- REVERSE, lag 0901). Tried and left off: Moonmaw's lavae stopping a frame later drawn, 1 -> 12 struck undrawn (lag
+        -- A/B 0945 / 0952, 2026-10-29), the beam no steadier - on only with TR_LEADSTOP2)
         local a, b = s[#s - 1], s[#s]
-        if #s >= 3 and not rawget(_G, "TR_OLD_LEADSTOP2") then a = s[#s - 2] end
+        if #s >= 3 and rawget(_G, "TR_LEADSTOP2") then a = s[#s - 2] end
         local dt = b[1] - a[1]
         if dt > 0 and ((b[2] - a[2]) ^ 2 + (b[3] - a[3]) ^ 2) / (dt * dt) < .25 * (vx * vx + vz * vz) then return x, z end
     end
