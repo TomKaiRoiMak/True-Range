@@ -118,7 +118,14 @@ for key, L in pairs(tracks) do
         -- POP: off from both sides, both sides alike
         for len = 1, 3 do
             local q = L[i + len]
-            if q ~= nil and steady and q.t - L[i + len - 1].t < 1.5 * FR and p.move == q.move then
+            -- (not another set of groups between - another thing's piece in its drawing 2 frames: Spat's bomb, gs 24873 / 979286 /
+            -- 24873, lag 0415. OLD_FC_POPGS=1: counted)
+            local same_set = os.getenv("OLD_FC_POPGS") ~= nil
+            if not same_set then
+                same_set = true
+                for k = i, i + len - 1 do if L[k] == nil or L[k].pcs ~= p.pcs or L[k].goes ~= p.goes then same_set = false end end
+            end
+            if q ~= nil and steady and q.t - L[i + len - 1].t < 1.5 * FR and p.move == q.move and same_set then
                 local up = true
                 for k = i, i + len - 1 do
                     local s = L[k]
