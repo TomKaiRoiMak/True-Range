@@ -3254,8 +3254,9 @@ if not rawget(_G, "TR_OLD_HOMES") then
     end
 end
 -- (the Celestial Champion's spike trail: runs 0.5-1 s at random, then its wall comes up (alterguardian_phase2spike.lua spiketrailfn
--- emerge: DoTaskInTime(0.50 + 0.50 * math.random())) - run offline once, at 16; drawn gone before a late one came up, you on it,
--- struck undrawn 2 on the lag bench 1636 and the replays. Its strikes any moment from 15 to 30 frames on. TR_OLD_TRAILWAIT)
+-- emerge: DoTaskInTime(0.50 + 0.50 * math.random())), or stops first against what's in its way and comes up when that's due - run
+-- offline once, its wall 16 after it stopped; drawn gone before a late one came up, you on it, struck undrawn 2 on the lag bench
+-- 1636 and the replays. Its strikes any moment from 15 to 30 frames after it stops (0-30 tried: more drawn-in). TR_OLD_TRAILWAIT)
 if not rawget(_G, "TR_OLD_TRAILWAIT") and type(Data._hazards) == "table" and type(Data._hazards.alterguardian_phase2spiketrail) == "table" then
     Data._hazards.alterguardian_phase2spiketrail.delay = 15
     Data._hazards.alterguardian_phase2spiketrail.delay_max = 30

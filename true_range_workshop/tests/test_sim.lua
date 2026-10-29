@@ -278,7 +278,8 @@ now = 300.2 -- (stopped)
 W(0, 0)
 -- (the middle's spikes up - those beside it too; the ends still to come: 12 frames after its first, which comes 16 after
 -- it stops (its data's delay, run offline since 2026-10-19) - at 12 from the stop none had risen, all of it still to come)
-now = 300.2 + (16 + 12) * FRAMES
+-- (its strikes any time 15-30 frames from the stop since 2026-10-29 (SimMoves TRAILWAIT): 12 frames past the latest)
+now = 300.2 + ((rawget(_G, "TR_OLD_TRAILWAIT") and 16 or 30) + 12) * FRAMES
 check(W(52, 50) == false and W(50, 50 + 7) == true, "after the middle rose: only the rest still to come")
 now = 300.2 + 60 * FRAMES
 check(W(52, 50 + 7) == false, "all risen: nothing left")
