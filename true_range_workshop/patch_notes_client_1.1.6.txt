@@ -65,3 +65,4 @@
 - The Blighted Rock Master: its dash no longer thrown far ahead for a frame each time
 - Uncompromising Mode's merms: their counter combo (three blows after being hit four times) drawn - it wasn't drawn at all
 - Uncompromising Mode's Glacial Hounds: all three of their ice howls in a row drawn as howls - the first sometimes taken for a bite, then all three, their spikes struck undrawn in a player's game
+- Charlie's shadow hands: drawn on both sides as she casts - they come up on one side at random, and only one side was drawn
