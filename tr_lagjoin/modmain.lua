@@ -158,6 +158,17 @@ AddPlayerPostInit(function(p)
                 return draw(entry, x, z, rot, target, my_radius, px, pz, t, log, ent, ...)
             end
             print("[tr_lag] watching True Range's drawing")
+            -- (and the cooldown glow's shape (SimMoves.Flash) - "[tr_lagflash] t n" its calls a frame, said as they change: a move's shape drawn
+            -- twice every other frame, the Twins' next charge 136 / 272 pieces by turns (lag 1056, 2026-10-29))
+            if SM.Flash ~= nil and not SM._tr_lag_flash then
+                SM._tr_lag_flash = true
+                local flash = SM.Flash
+                SM._tr_flash_n = 0
+                SM.Flash = function(...)
+                    SM._tr_flash_n = SM._tr_flash_n + 1
+                    return flash(...)
+                end
+            end
             -- (each boss (epic) given to Predict.Draw or not, and the server's word on it - "[tr_lagdl] t prefab guid in|OUT word=": what
             -- the frames its glow went out had - lag_beam2 2026-10-28)
             local okP, P = G.pcall(G.require, "true_range/predict")
@@ -256,6 +267,9 @@ AddPlayerPostInit(function(p)
                     fr = nil
                     do
                         local t = G.GetTime()
+                        local fn = SM._tr_flash_n or 0
+                        if fn ~= (SM._tr_flash_last or 0) then print(string.format("[tr_lagflash] %.3f %d", t, fn)) end
+                        SM._tr_flash_last, SM._tr_flash_n = fn, 0
                         for style, p in pairs(pulse_now) do
                             local was = pulse_last[style] or 0
                             if math.abs(p.a - was) >= .15 then print(string.format("[tr_lagpulse] %.3f %s %.2f calls=%d", t, style, p.a, p.n)) end
@@ -280,8 +294,14 @@ AddPlayerPostInit(function(p)
                 local putTri = L.PutTri
                 L.PutTri = function(rr, style, dx, dz)
                     local r = Rec()
+                    -- (a triangle laid from its two worked-out pieces (Lines.MakeTri): half a triangle each, its area from its
+                    -- size - counted as a whole one of area 1, the same shape read 136 / 272 pieces, 60 / 272 area by turns as
+                    -- it was laid fresh or from the worked-out ones: frame_check POP on the Eye's charge that wasn't, 2026-10-29)
                     if r ~= nil and rr ~= nil then
-                        r[1], r[2], r[3], r[4] = r[1] + 1, r[2] + 1, r[3] + rr[1] + (dx or 0), r[4] + rr[2] + (dz or 0)
+                        -- (its picture's scale to world units: 2.91 - the same 136 triangles laid fresh 60.88, from these 20.90, lag 1117)
+                        local a = math.abs((rr[4] or 0) * (rr[5] or 0)) / 2 * 2.913
+                        local cx, cz = rr[1] + (dx or 0), rr[2] + (dz or 0)
+                        r[1], r[2], r[3], r[4] = r[1] + .5, r[2] + a, r[3] + a * cx, r[4] + a * cz
                     end
                     return putTri(rr, style, dx, dz)
                 end
