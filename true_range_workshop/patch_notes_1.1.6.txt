@@ -74,3 +74,4 @@
 - The Nightmare Rook's charge: parts already struck no longer come back for a frame as it runs (in a player's game)
 - Spitter spiders' web spit and walruses' blow darts: drawn as they aim - in a player's game they used to strike before anything was drawn
 - Uncompromising Mode's Moon Tentacle mines: drawn where they lie, 3 around, until they go off
+- The Eye of Terror (and the Twins) between charges: the next charge no longer drawn a little ahead for a frame as it stops (in a player's game)
