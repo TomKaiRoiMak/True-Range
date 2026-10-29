@@ -2784,7 +2784,11 @@ do
     local turns, said_until = {}, -1
     for i = 3, #drawn_at do
         local a, b, c = drawn_at[i - 2], drawn_at[i - 1], drawn_at[i]
-        if a.cx ~= nil and b.cx ~= nil and c.cx ~= nil then
+        -- (the same shape moved - not its parts struck and gone, its middle jumping as they went: the Nightmare Werepig's
+        -- atk3, 5 parts then 3, "wobbling" 0.6 so; OLD_WOBBLE_AREA=1: any)
+        local same = os.getenv("OLD_WOBBLE_AREA") ~= nil or (a.area ~= nil and b.area ~= nil and c.area ~= nil and a.area > 0
+            and math.abs(b.area - a.area) <= .05 * a.area and math.abs(c.area - b.area) <= .05 * b.area)
+        if same and a.cx ~= nil and b.cx ~= nil and c.cx ~= nil then
             local d1x, d1z = b.cx - a.cx, b.cz - a.cz
             local d2x, d2z = c.cx - b.cx, c.cz - b.cz
             if d1x * d2x + d1z * d2z < 0 and d1x * d1x + d1z * d1z > .01 and d2x * d2x + d2z * d2z > .01 then
@@ -2792,7 +2796,22 @@ do
                 local n = 0
                 for _, j in ipairs(turns) do if i - j < 10 then n = n + 1 end end
                 if n >= 3 and i > said_until then
-                    Said("WOBBLE", c, "its shape went back and forth 3 times in 10 frames")
+                    -- (and by how much - its biggest step of those frames: a hair's shimmer or a jump to and fro)
+                    local most = 0
+                    for k = math.max(2, i - 9), i do
+                        local p, q = drawn_at[k - 1], drawn_at[k]
+                        if p.cx ~= nil and q.cx ~= nil then most = math.max(most, math.sqrt((q.cx - p.cx) ^ 2 + (q.cz - p.cz) ^ 2)) end
+                    end
+                    Said("WOBBLE", c, string.format("its shape went back and forth 3 times in 10 frames, steps up to %.2f", most))
+                    -- (WOBBLE_V=1: those frames, where its middle was and the boss)
+                    if os.getenv("WOBBLE_V") then
+                        for k = math.max(1, i - 9), i do
+                            local q = drawn_at[k]
+                            real_print(string.format("  WV %.3f mid %s,%s boss %s,%s t=%s", q.t, tostring(q.cx and string.format("%.2f", q.cx)),
+                                tostring(q.cz and string.format("%.2f", q.cz)), tostring(q.bx and string.format("%.2f", q.bx)),
+                                tostring(q.bz and string.format("%.2f", q.bz)), tostring(q.mt and string.format("%.3f", q.mt))))
+                        end
+                    end
                     said_until = i + 30
                 end
             end
