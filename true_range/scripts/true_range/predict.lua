@@ -2131,7 +2131,7 @@ local function LandSpot(ent, ld, x, z, target, now)
         if best ~= nil then
             local ox, _, oz = best.Transform:GetWorldPosition()
             -- (its lead at once, not eased in - it chases you on steady: eased, 5 blows struck just past it, lag_ease1)
-            dx, dz = SimMoves._LeadMovingRaw(best, ox, oz, now)
+            dx, dz = SimMoves._LeadMovingRaw(best, ox, oz, now, true)
         end
         return dx, dz, best
     end

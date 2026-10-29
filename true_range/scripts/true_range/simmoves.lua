@@ -3268,7 +3268,7 @@ end
 -- TR_OLD_HAZLEAD: where your game shows it)
 SimMoves.hazard_lead = .1
 SimMoves._hz_hist = setmetatable({}, { __mode = "k" })
-function SimMoves._LeadMovingRaw(ent, x, z, now)
+function SimMoves._LeadMovingRaw(ent, x, z, now, chasing)
     local lead = SimMoves.hazard_lead
     if lead <= 0 or rawget(_G, "TR_OLD_HAZLEAD") then return x, z end
     -- (your game the server itself - hosting, no caves: shown where it is, nothing behind. All 127 of your games' logs
@@ -3321,7 +3321,10 @@ function SimMoves._LeadMovingRaw(ent, x, z, now)
         local dt = b[1] - a[1]
         if dt > 0 and (b[2] - a[2]) ^ 2 + (b[3] - a[3]) ^ 2 > (40 * dt) ^ 2 then return x, z end
     end
-    local fast = vx * vx + vz * vz > 12 * 12 and not rawget(_G, "TR_OLD_HAZFAST")
+    -- (chasing: one that goes after you all its life, turning as it goes - the Umbral Abomination's beam: not "steady" one frame
+    -- and not the next as it turns, drawn led and not each frame, to and fro (frame_check REVERSE 6-15 a run): led on as it
+    -- goes, no steadiness asked. Its stop still told. TR_OLD_CHASELEAD)
+    local fast = (vx * vx + vz * vz > 12 * 12 and not rawget(_G, "TR_OLD_HAZFAST")) or (chasing and not rawget(_G, "TR_OLD_CHASELEAD"))
     if not fast and not rawget(_G, "TR_OLD_HAZSTEADY") then
         local t1 = nil
         for i = #s, 1, -1 do
