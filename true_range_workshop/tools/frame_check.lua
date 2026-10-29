@@ -145,7 +145,11 @@ for key, L in pairs(tracks) do
             end
         end
         -- JUMP: its middle leapt, its boss didn't, same move
-        if steady and same_move and p.cx and c.cx and p.r > 0 and c.r > 0 and not key:find("^%?") then
+        -- (not one drawing several groups (a thing's draw taking in a row of others): one of them put elsewhere and staying moves
+        -- their mean - Charlie's arena spikes, cursed fire, snip fx 6-30 "off", nothing leapt; one gone and back is a POP.
+        -- OLD_FC_MULTI=1: counted)
+        local multi = (p.pcs % 1000) > 1 and not os.getenv("OLD_FC_MULTI")
+        if steady and same_move and p.cx and c.cx and p.r > 0 and c.r > 0 and not key:find("^%?") and not multi then
             local d = D(p, c)
             local bd = (p.bx and c.bx) and math.sqrt((c.bx - p.bx) ^ 2 + (c.bz - p.bz) ^ 2) or 0
             -- (and against how fast it went the frame before - a missile at 19 a second goes .6 a frame, no boss beside it)
