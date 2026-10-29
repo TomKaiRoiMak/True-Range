@@ -3243,6 +3243,16 @@ if not rawget(_G, "TR_OLD_MIRROR") then
         end
     end
 end
+-- (leaps that home onto their target as they go, wherever it is (SGwagboss_robot OnUpdateLeap: turned to it, slowed to stop on
+-- it): a run that walked off before aiming lands on you, not on the way it faces. TR_OLD_HOMES)
+SimMoves._homes = { wagboss_robot = { atk_leap_pre = true } }
+if not rawget(_G, "TR_OLD_HOMES") then
+    for p, ms in pairs(SimMoves._homes) do
+        for m in pairs(ms) do
+            if type(Data[p]) == "table" and type(Data[p][m]) == "table" then Data[p][m].homes = true end
+        end
+    end
+end
 SimMoves._relock = {
     twinofterror1 = { ["charge_pre~shoot_pre"] = { anim = "charge_loop", at = 33 }, ["charge_pre~shoot_pre~2"] = { anim = "charge_loop", at = 33 } },
 }
@@ -5366,6 +5376,7 @@ function SimMoves.Draw(entry, x, z, rot, target, my_radius, px, pz, t, log, ent,
         -- (its path's value at a frame is where it is once that frame has gone: struck at frame 35 from where frame 34 left it -
         -- the bite's cells round 10.58, its path 12.10 at 35; set from 35 the bite was drawn 1.5 short)
         local pend = PathAt(best, entry.first ~= nil and entry.first - 1 or 1e6)
+        local homes_you = false
         if pend ~= nil then
             -- (where it is as it strikes: no further than its run has it then - a full leap goes on 1.7 after its bite)
             local want = math.min(log.went_want, pend - (PathAt(best, 0) or 0))
@@ -5387,7 +5398,11 @@ function SimMoves.Draw(entry, x, z, rot, target, my_radius, px, pz, t, log, ent,
                     local aside = math.abs((target.x - ps[1]) * s + (target.z - ps[2]) * c)
                     -- (or right by where it began, whichever way - turning round onto you under it, the W.A.R.B.O.T. 20 ahead 2
                     -- frames, lag 1447)
-                    if p0 ~= nil and plock - p0 > to_you + 1 and (aside <= to_you or to_you * to_you + aside * aside < 4) then
+                    local wrong_run = p0 ~= nil and plock - p0 > to_you + 1
+                    -- (one that leaps onto its target wherever it is (entry.homes - SimMoves._homes): onto you, whichever way
+                    -- it faces - turned away as it walked, you 4.7 aside, its ring 15.8 on the way it faced, lag 1549)
+                    if wrong_run and entry.homes then homes_you = true end
+                    if wrong_run and (aside <= to_you or to_you * to_you + aside * aside < 4) then
                         -- (on to you, no further: that run's own way past its target is no measure either - it leapt 8.4 on
                         -- from 0.24, the ring still 8.5 ahead a frame, lag 1515. TR_OLD_WENTPAST: and its way past)
                         want = math.min(want, to_you + (rawget(_G, "TR_OLD_WENTPAST") and past or 0))
@@ -5400,6 +5415,7 @@ function SimMoves.Draw(entry, x, z, rot, target, my_radius, px, pz, t, log, ent,
             end
             if rawget(_G, "TR_DRAWLOG") then log.dbg_went = string.format("ps=%.2f,%.2f want=%.2f pend=%.2f", ps[1], ps[2], want, pend) end
             if not unseen then x, z = World(x, z, rot, want - ((x - ps[1]) * c - (z - ps[2]) * s + pend), 0) end
+            if homes_you and not unseen then x, z = World(target.x, target.z, rot, -pend, 0) end
         end
     end
     -- (set, told by the server where it stood: where it was thought to be as it still aimed a
