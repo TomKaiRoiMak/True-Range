@@ -2596,6 +2596,13 @@ function Predict.Draw(ents, ranges, my_radius, me, skip)
                             wr = math.atan2(-(target.z - z), target.x - x)
                         end
                         a.x, a.z, a.rot, a.leg_t = x, z, wr, nil
+                        -- (between legs, stopped: where it's shown, not led on - its last word of going at 20 a second still in
+                        -- hand a frame after it stopped (a repeat taken as "nothing new"), its next leg drawn 2 on for a frame and
+                        -- back: the Eye of Terror, 3 in 70 minutes, lag 0314. TR_OLD_LEGRAW)
+                        if a.legs_begun and not rawget(_G, "TR_OLD_LEGRAW") then
+                            local rx, _, rz = ent.Transform:GetWorldPosition()
+                            a.x, a.z = rx, rz
+                        end
                         -- (before its first leg: from where it stood (till it starts to move, sim.moves_at),
                         -- on by as far as it was seen to go before its leg the last time - the
                         -- Scion slides 1.65 into its dash: the shape slid that much on at you with it)
