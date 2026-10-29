@@ -47,6 +47,9 @@ return {
         anims = { "atk_pre" }, far = 3, lock = 24 },
         -- (and its bite only from within 3 - the hound's own, as it was)
         atk_pre = { copy = { "hound", "atk_pre" }, near = 3.2, replace = true } },
+    -- (a merm struck four times strikes back: karate, atk_combo, its blow at 12, 18 and 31 - each as its atk's (postinit
+    -- stategraphs/SGmerm.lua :65-95); no move begun by atk_combo, tools/um_postinit_gaps.lua 2026-10-29. TR_OLD_KARATE: none)
+    merm = not rawget(_G, "TR_OLD_KARATE") and { atk_combo = { copy = { "merm", "atk" }, anims = { "atk_combo" }, at_each = { 12, 18, 31 } } } or nil,
     _hazards = {
         lavaeslime = { by = { "lavae2" }, delay = 90, effects = "fire", lasting = true, moved = false, steps = { { at = 0, cells = "X21m2011h2A11f2E11d2I11c2K11b2M11a2O11Z2Q11Z2Q11Y2S11Y2S11X2U11X2U11X2U11X2U11X2U11W2W111X2U11X2U11X2U11X2U11X2U11Y2S11Y2S11Z2Q11Z2Q11a2O11b2M11c2K11d2I11f2E11h2A11m20" } } },
     },

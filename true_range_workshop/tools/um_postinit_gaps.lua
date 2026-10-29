@@ -17,6 +17,12 @@ local function Owners(sg)
     if sg == "hound" then for _, p in ipairs({ "firehound", "icehound", "glacialhound", "lightninghound", "magmahound", "sporehound" }) do o[p] = true end end
     if sg == "bearger" then o.mutatedbearger = true end
     if sg == "deerclops" then o.mutateddeerclops = true end
+    if sg == "shadowcreature" then for _, p in ipairs({ "crawlinghorror", "terrorbeak", "crawlingnightmare", "nightmarebeak", "oceanhorror", "ruinsnightmare" }) do o[p] = true end end
+    -- (and its kinds by name: SGkoalefant for koalefant_summer and _winter, SGbeeguard for UM's um_beeguard_seeker... - their
+    -- moves were there, flagged missing, 2026-10-29)
+    for q in pairs(data) do
+        if type(q) == "string" and (q:sub(1, #sg + 1) == sg .. "_" or q:sub(1, #sg + 4) == "um_" .. sg .. "_") then o[q] = true end
+    end
     return o
 end
 local function HasAnim(owners, anim)
@@ -31,10 +37,30 @@ local function HasAnim(owners, anim)
 end
 local STRIKES = { "DoAttack", "LaunchProjectile", "DoAreaAttack", "AOEUtil", "FindEntities", "SpawnPrefab%(\"[%w_]*projectile",
     "SpawnPrefab%(\"[%w_]*spike", "IceSpike", "ShootFire", "ShootProjectile", "Shoot%(", "GetAttacked" }
+-- (a state nothing goes to - UM's Deerclops icespiketoss, its spikes never written; the guards' charge, its one way in
+-- commented out: "never entered", not a gap)
+local all_src = {}
+do
+    local q = io.popen('dir /s /b "' .. um .. '\\*.lua"')
+    for f in q:lines() do
+        local h = io.open(f, "rb")
+        if h ~= nil then all_src[#all_src + 1] = h:read("*a") h:close() end
+    end
+    q:close()
+end
+local function Entered(name)
+    local pat = "GoToState%(%s*[\"']" .. name .. "[\"']"
+    for _, src in ipairs(all_src) do
+        for line in src:gmatch("[^\n]+") do
+            if line:find(pat) and not line:match("^%s*%-%-") then return true end
+        end
+    end
+    return false
+end
 local p = io.popen('dir /b "' .. um .. '\\postinit\\stategraphs\\SG*.lua"')
 local found = 0
 for f in p:lines() do
-    local sg = f:match("^SG(.-)%.lua$")
+    local sg = f:match("^SG(.-)%.lua$"):lower()
     local src = io.open(um .. "\\postinit\\stategraphs\\" .. f, "rb"):read("*a")
     local owners = Owners(sg)
     -- (each state: from its name to the next)
@@ -47,7 +73,9 @@ for f in p:lines() do
         for _, pat in ipairs(STRIKES) do if body:find(pat) then hits[#hits + 1] = (pat:gsub("%%", "")) end end
         if anim ~= nil and #hits > 0 then
             local who = HasAnim(owners, anim)
-            if who == nil then
+            if who == nil and not Entered(s.name) then
+                print(string.format("SG%-18s %-24s anim %-20s strikes by %s  -- never entered", sg, s.name, anim, table.concat(hits, ",")))
+            elseif who == nil then
                 found = found + 1
                 print(string.format("SG%-18s %-24s anim %-20s strikes by %s  -- no move", sg, s.name, anim, table.concat(hits, ",")))
             end

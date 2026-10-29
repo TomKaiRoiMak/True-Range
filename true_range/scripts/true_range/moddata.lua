@@ -38,9 +38,27 @@ function ModData.Copy(data, e)
     for _, f in ipairs({ "first", "set_until", "lock" }) do
         if type(n[f]) == "number" then n[f] = n[f] + shift end
     end
+    -- (at_each: its one strike made several, at these frames - UM's merm karate, atk_combo striking at 12, 18 and 31 as its
+    -- atk does once, postinit/stategraphs/SGmerm.lua :65-95)
+    if e.at_each ~= nil then
+        for _, list in ipairs({ n.maps or {}, n.free or {} }) do
+            for _, m in ipairs(list) do
+                local one = m.steps ~= nil and m.steps[1] or nil
+                if one ~= nil then
+                    m.steps = {}
+                    for i, at in ipairs(e.at_each) do
+                        local s = Deep(one)
+                        s.at = at
+                        m.steps[i] = s
+                    end
+                end
+            end
+        end
+        n.first = e.at_each[1]
+    end
     for _, f in ipairs(e.drop or {}) do n[f] = nil end
     for f, x in pairs(e) do
-        if f ~= "copy" and f ~= "shift" and f ~= "drop" then n[f] = x end
+        if f ~= "copy" and f ~= "shift" and f ~= "drop" and f ~= "at_each" then n[f] = x end
     end
     return n
 end
