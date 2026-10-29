@@ -3029,7 +3029,13 @@ function Predict.Draw(ents, ranges, my_radius, me, skip)
                             local sx, sz = (x1 + x2) / 2, (z1 + z2) / 2
                             if (sx - target.x) ^ 2 + (sz - target.z) ^ 2 < 8 * 8 then a.srv_aim = { x = sx, z = sz, me = true } end
                         end
-                        if a.srv_aim ~= nil then aim = a.srv_aim end
+                        if a.srv_aim ~= nil then aim = a.srv_aim a.srv_aim_t = now end
+                    -- (a frame or two the server's aim not on hand (its pose not told yet) before it locks: the last kept, not
+                    -- your screen's place for those frames - the Moose's hop lane 1.7 short two frames, from 5.6 to 1.8 off and
+                    -- back, lag 1636. TR_OLD_AIMHOLD)
+                    elseif a.locked == nil and a.srv_aim ~= nil and a.srv_aim_t ~= nil and now - a.srv_aim_t <= 4 * FRAMES
+                        and target ~= nil and target.me and aim == target and not rawget(_G, "TR_OLD_AIMHOLD") then
+                        aim = a.srv_aim
                     end
                     -- (or locked anew as it went again: SimMoves._relock, above)
                     if (lock_f ~= nil and t >= lock_f * FRAMES) or (a.relock_began ~= nil and a.locked ~= nil) then
