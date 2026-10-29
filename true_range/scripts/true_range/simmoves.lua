@@ -151,7 +151,7 @@ local function Decode(entry, src)
             -- (the same as the distance before: that one again)
             table.insert(list, { dist = m.dist, of = list[#list].of, i = i, kind = kind, path = m.path })
         else
-            table.insert(list, { dist = m.dist, of = { raw = m }, i = i, kind = kind, path = m.path })
+            table.insert(list, { dist = m.dist, of = { raw = m, mirror = entry.mirror }, i = i, kind = kind, path = m.path })
         end
     end
     maps[src] = list
@@ -185,6 +185,36 @@ local function MapSteps(map)
         of.steps = {}
         for _, s in ipairs(of.raw.steps or {}) do
             local cells = Unpack(s.cells or "")
+            -- (one whose side is chosen at random (entry.mirror): its other side too - the grid's middle column 160 / 2 (side
+            -- -20 + col * .25), each cell laid again across it, the runs made anew from them. Charlie's castlift: a hand
+            -- either side at random at frame 37 (SGcharlie_boss sideoffs +-4), run offline on one side; the other struck
+            -- with nothing drawn, 6 in a player's game, 2026-10-29)
+            if of.mirror then
+                local add = {}
+                for k in pairs(cells.cells) do
+                    local col = k % 1000
+                    local row = (k - col) / 1000
+                    add[row * 1000 + (160 - col)] = true
+                end
+                for k in pairs(add) do cells.cells[k] = true end
+                local rows = {}
+                for k in pairs(cells.cells) do
+                    local col = k % 1000
+                    local row = (k - col) / 1000
+                    rows[row] = rows[row] or {}
+                    table.insert(rows[row], col)
+                end
+                cells.runs = {}
+                for row, cols in pairs(rows) do
+                    table.sort(cols)
+                    local from, to = cols[1], cols[1]
+                    for i = 2, #cols + 1 do
+                        local c = cols[i]
+                        if c ~= nil and c == to + 1 then to = c
+                        else table.insert(cells.runs, { row, from, to }) from, to = c, c end
+                    end
+                end
+            end
             table.insert(of.steps, { at = s.at or 0, cells = cells.cells, runs = cells.runs,
                 again_anim = s.again_anim, again_at = s.again_at, again_until = s.again_until })
         end
@@ -3203,6 +3233,16 @@ SimMoves._keeps_heading = { eyeofterror = "charge_pre", twinofterror1 = "charge_
 -- all the while (postinit SGeyeofterror mouthshoot_loop: ForceFacePoint each update, SpawnLaser at TimeEvent 0) - the run
 -- has the first alone, locked once; the later ones drawn that way as you went round it, 2-4 undrawn a round on the lag
 -- bench 2026-10-27. true_range/predict, TR_OLD_RELOCK)
+-- (moves whose side is chosen at random as they go, run offline one way: drawn both ways, mirrored across the way it faces -
+-- Charlie's castlift, a hand at 4 to one side at frame 37, the other side at 40 (SGcharlie_boss sideoffs). TR_OLD_MIRROR)
+SimMoves._mirror = { charlie_boss = { castlift = true } }
+if not rawget(_G, "TR_OLD_MIRROR") then
+    for p, ms in pairs(SimMoves._mirror) do
+        for m in pairs(ms) do
+            if type(Data[p]) == "table" and type(Data[p][m]) == "table" then Data[p][m].mirror = true end
+        end
+    end
+end
 SimMoves._relock = {
     twinofterror1 = { ["charge_pre~shoot_pre"] = { anim = "charge_loop", at = 33 }, ["charge_pre~shoot_pre~2"] = { anim = "charge_loop", at = 33 } },
 }
