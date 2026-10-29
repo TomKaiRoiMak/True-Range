@@ -69,3 +69,4 @@
 - The W.A.R.B.O.T.'s leap: its landing no longer thrown far ahead for a moment as it walks right up to you before leaping
 - The Celestial Champion's spike trails: their wall of spikes stays drawn until it comes up - it comes up at a random moment, and a late one could strike after its warning was gone
 - Hosting your own game: Uncompromising Mode's Moon Tentacle shots no longer drawn landing short of where they fall
+- Moves that begin with the same animation (the Twins' charge and shot, and others) are now told apart the same way every game - which one was guessed first could change from one game to the next
