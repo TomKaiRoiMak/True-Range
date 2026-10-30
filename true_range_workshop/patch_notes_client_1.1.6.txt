@@ -82,3 +82,4 @@
 - Uncompromising Mode's fire and magma hounds: their fireballs no longer flash big as they appear, and their circle no longer jitters back and forth as they slow (in a player's game)
 - Spitter spiders, walruses and Uncompromising Mode's bullet bees: their aiming lane turns smoothly as it follows you, not in jumps
 - Uncompromising Mode's snapper turtles: their attack no longer jumps ahead as they speed up into a spin (in a player's game)
+- Celestial Champion, W.A.R.B.O.T., the knook and the Umbral Abomination's mouth: their attack no longer jumps ahead as they set off (in a player's game)
