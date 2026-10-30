@@ -144,7 +144,10 @@ for key, L in pairs(tracks) do
         if p.r > 0 and c.r == 0 and steady then
             for len = 1, 3 do
                 local q = L[i + len]
-                if q ~= nil and q.r > 0 and q.t - p.t < (len + 1.5) * FR and q.move == p.move then
+                -- (and back as big as it was: another shape after a gap is the next move, not this one blinking - the Umbral
+                -- Abomination's punch over, its laser 2 frames on, drawn by a path that says no move: "punch_pre" still. OLD_FC_BLINKR=1)
+                if q ~= nil and q.r > 0 and q.t - p.t < (len + 1.5) * FR and q.move == p.move
+                    and (os.getenv("OLD_FC_BLINKR") or math.abs(q.r - p.r) < .5) then
                     local all_off = true
                     for k = i, i + len - 1 do if L[k].r > 0 then all_off = false end end
                     if all_off then Flag(key, "BLINK", c, string.format("gone %d frame(s), r %.1f", len, p.r)) break end
