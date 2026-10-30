@@ -370,6 +370,32 @@ AddPlayerPostInit(function(p)
                     end
                     return groupAt(g, x, z, deg)
                 end
+                -- (nor what's drawn after the things (modmain's own rings, lanes): simmoves' _draw_owner left as the last thing looked
+                -- at - a ring round the player put down to a bullet bee, then to a warning shadow never drawn, 2026-10-30. "?" now)
+                local okP, P = G.pcall(G.require, "true_range/predict")
+                if okP and type(P) == "table" and P.DrawHazards ~= nil and not P._tr_lag_owner then
+                    P._tr_lag_owner = true
+                    local dh = P.DrawHazards
+                    P.DrawHazards = function(...)
+                        local r = dh(...)
+                        SM._draw_owner = nil
+                        return r
+                    end
+                end
+                -- (bodies' rings (Telegraph.Circle with whose it is - modmain's monster_body): "body:<prefab>" - a ring by the Bee
+                -- Queen blinking on and off was "?", 2026-10-30)
+                local okT, T = G.pcall(G.require, "true_range/telegraph")
+                if okT and type(T) == "table" and T.Circle ~= nil and not T._tr_lag_owner then
+                    T._tr_lag_owner = true
+                    local circ = T.Circle
+                    T.Circle = function(x, z, r, style, ent, ...)
+                        local was = cur
+                        if type(ent) == "table" and ent.prefab ~= nil then cur = "body:" .. ent.prefab end
+                        local a1, a2 = circ(x, z, r, style, ent, ...)
+                        cur = was
+                        return a1, a2
+                    end
+                end
                 -- (round things drawn together, lanes of a lot: their own owner - not whichever thing was drawn last, the beam
                 -- "drawing" 17 discs 25 away, 2026-10-28)
                 for _, fn in G.ipairs({ "UnionDraw", "LaneDraw" }) do
