@@ -82,7 +82,7 @@ return {
         uncompromising_shadow_projectile1_fx_fast = { as_boss = true, by = { "creepingfear" }, delay = 18, moved = false, steps = { { at = 0, cells = "i21j2611i2811h2A11h2B11h2B11h2B11h2B11h2B11h2A11i2911j2711k24" } }, strikes_until = 18 },
         warningshadow = { by = { "beeguard", "beequeen", "um_beeguard_seeker" }, delay = 0, lasting = true, moved = true, steps = { { at = 0, cells = "g21j2711h2A11g2C11g2D11f2E11f2F11f2F11f2F11f2F11f2F11f2F11f2E11g2C11h2B11i2811k25" } } },
         web_mortar = { by = { "hoodedwidow" }, delay = 0, effects = "pinned", moved = true, steps = { { at = 0, cells = "i21j2611i2811h2A11h2B11h2B11h2B11h2B11h2B11h2A11i2911j2711k24" } } },
-        wixie_shadow_shot = { as_boss = true, by = { "shadow_wixie" }, delay = 0, lasting = true, moved = true, steps = { { at = 0, cells = "i21j2611i2811h2911h2A11h2A11h2A11h2A11h2A11h2911i2711k24" } }, strikes_until = 60 },
+        wixie_shadow_shot = { as_boss = true, by = { "shadow_wixie", "shadow_wixie_helper" }, delay = 0, lasting = true, moved = true, steps = { { at = 0, cells = "i21j2611i2811h2911h2A11h2A11h2A11h2A11h2A11h2911i2711k24" } }, strikes_until = 60 },
         wixie_stinkcloud = { delay = 0, lasting = true, moved = false, steps = { { at = 0, cells = "Y21h2A11f2F11d2I11c2K11b2M11a2O11Z2Q11Z2R11Y2S11Y2T11X2U11X2U11X2V11X2V11X2V11X2V11X2V11X2V11X2V11X2V11X2U11Y2T11Y2T11Y2S11Z2Q11a2P11b2N11c2L11d2J11e2G11g2D11j27" } } },
     },
     _replace = { deerclops = true, shadow_bishop = true },

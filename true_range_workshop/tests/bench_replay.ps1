@@ -236,7 +236,10 @@ try {
     # results: slipstor's new move "missed" still, 2026-10-21)
     $dataFiles = @((Join-Path $Mod 'scripts\true_range\moves_sim.lua'), (Join-Path $Mod 'scripts\true_range\moves_sim_um.lua'))
     if ($TE) { $dataFiles += (Join-Path $Mod 'scripts\true_range\moves_sim_te.lua') }
-    foreach ($l in @(& luajit tools\data_keys.lua @dataFiles)) { $w = $l -split ' '; $dataK[$w[0]] = $w[1] }
+    # (and the hand files: a monster there only as another (moves_hand_um _alias - Shadow Wixie's clone as her) had no key at
+    # all, its row kept from the cache when her shot's "by" changed - 63 missed that were 0, 2026-10-30)
+    $keyFiles = $dataFiles + @(Get-ChildItem (Join-Path $Mod 'scripts\true_range') -Filter 'moves_hand*.lua' -ErrorAction SilentlyContinue | ForEach-Object { $_.FullName })
+    foreach ($l in @(& luajit tools\data_keys.lua @keyFiles)) { $w = $l -split ' '; $dataK[$w[0]] = $w[1] }
     # (the things' replays go by every boss's data - near which boss a thing is, drawn with its move or not:
     # the whole of it, any change running them all again)
     $dataK['_haz'] = FilesHash @($dataFiles | ForEach-Object { Get-Item $_ })

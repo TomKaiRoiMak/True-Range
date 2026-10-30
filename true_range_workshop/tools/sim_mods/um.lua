@@ -205,7 +205,7 @@ return {
     -- shadow_wixie.lua) - a ring round it as it flies, as the bullet bees' stinger. Run from her, it came out a way
     -- 60 parts long (a part a frame): her taunt's ring of 48 laid 18,250 pieces in one frame and the game crashed,
     -- lag 2026-10-30_2054)
-    { striker = { prefab = "wixie_shadow_shot", radius = 0.9, delay = 0, moved = true, lasting = true, as_boss = true, strikes_until = 60, by = { "shadow_wixie" } } },
+    { striker = { prefab = "wixie_shadow_shot", radius = 0.9, delay = 0, moved = true, lasting = true, as_boss = true, strikes_until = 60, by = { "shadow_wixie", "shadow_wixie_helper" } } },
     -- (its lightning strike (hound_lightning): 3.5 round it, health taken straight off (DoDelta), a second after it's put down
     -- (Delay, 1 if unset; the tornadoes' 1.25+) - put down by the lightning hounds, the alpha goat, the tornadoes, the night's
     -- events (UMCommonFns.SpawnHoundLightning). In no data at all: the run never noted DoDelta till 649f4a2. lasting: drawn
