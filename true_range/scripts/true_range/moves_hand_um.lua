@@ -76,6 +76,11 @@ return {
         -- (the haunt's hand (um_haunt.lua handfn): the Stage Usher's hand over again - test_for_damage_targets the same code, its
         -- STAGEUSHER_ATTACK_DAMAGERADIUS, its step time; never drawn, not a prefab the scan had (2026-10-30). TR_OLD_HAUNTHAND: none)
         um_haunt_attackhand = not rawget(_G, "TR_OLD_HAUNTHAND") and { copy_hazard = "stageusher_attackhand", by = { "um_haunt" } } or nil,
+        -- (the acid mushrooms' toadling spawner (toadlingspawner.lua, acidmushrooms SpawnAt): Toadstool's mushroom bomb over again -
+        -- the same Grow, land then grow1, grow2, explode_pre, bursting 40 on all within TOADSTOOL_MUSHROOMBOMB_RADIUS as its toadling
+        -- comes out; never drawn (tools/gap_scan.lua, 2026-10-30). Its own "by": not Toadstool's - no Toadstool near, drawn as
+        -- another's and left out. TR_OLD_TOADLINGBOMB: none)
+        toadlingspawner = not rawget(_G, "TR_OLD_TOADLINGBOMB") and { copy_hazard = "mushroombomb", by = { "toadlingspawner" } } or nil,
         lavaeslime = { by = { "lavae2" }, delay = 90, effects = "fire", lasting = true, moved = false, steps = { { at = 0, cells = "X21m2011h2A11f2E11d2I11c2K11b2M11a2O11Z2Q11Z2Q11Y2S11Y2S11X2U11X2U11X2U11X2U11X2U11W2W111X2U11X2U11X2U11X2U11X2U11Y2S11Y2S11Z2Q11Z2Q11a2O11b2M11c2K11d2I11f2E11h2A11m20" } } },
     },
 }
