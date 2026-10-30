@@ -3436,7 +3436,9 @@ end
 -- whole unit on in one frame, then back as it stopped - "jump 1.0 then back" on the lag bench, 6 a run, 2026-10-28. Gone at
 -- once for a teleport (its step over 40 a second). TR_OLD_LEADEASE: at a stroke)
 SimMoves._lead_ease = setmetatable({}, { __mode = "k" })
-SimMoves._lead_ease_of = { um_fire_projectile = true }
+-- (and Uncompromising Mode's snapper turtles, sliding up to 33 a second as they strike: the steadiness test failing as they speed
+-- up, the lead held off and then on 3.9 at once - frame_check JUMP 25 + 17 a run, lag 1820)
+SimMoves._lead_ease_of = { um_fire_projectile = true, snapperturtle = true, snapperturtlebaby = true }
 function SimMoves.LeadMoving(ent, x, z, now)
     local rx, rz = SimMoves._LeadMovingRaw(ent, x, z, now)
     -- (tried and left off - eased in, it came late: 2+0 -> 1+11 struck undrawn on the Moonmaw, 0-2 -> 2+4 on the Umbral Abomination,
