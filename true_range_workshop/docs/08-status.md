@@ -35,7 +35,7 @@
 |---|---|---|
 | 2 | ของที่ client replay ยังพลาด (14, `tools\haz_missed.ps1` 11:35) | sporecloud_toad 5 (ยืนขอบ 3.50 พอดี), stageusher_attackhand 3 (anim `sleep` ซ้ำกับ sitdown), charlie_boss_minion1 2 (วิ่งหนีหลังล็อก), spiketrail 1, eyeofterror_laser 1, glacialhound_icespike 1, um_bear_trap 1 |
 | 3 | บอสพลาดทีละ 1 ครั้ง (replay 1610, 11:35) | mutatedbearger combo1 (ขอบครึ่งวง - ไม่แก้) + combo1a (พุ่งชนตัว 1.65); rocky_boss_shadow = bench สั่ง side + trace ขาด (artifact); twinofterror1 ไม่พลาดแล้ว |
-| 7 | ข้อมูล Tropical Experience (moves_sim_te) สร้างบนเกมเก่า: wildbore, wildbore_minion, q_swampig, wanawanatiki ใช้ SGwerepig ของเกม (760944 เปลี่ยนเป็นกระโดดตี) - TE ไม่มี SGwerepig ของตัวเอง | ต้องดูว่าข้อมูล `atk` ของ wildbore/wanawanatiki มาจาก state ไหน แล้ว `build_te.ps1` เฉพาะตัว (splice) |
+| 7 | Tropical Experience: wildbore / wanawanatiki ร่าง were (คืนจันทร์เต็มดวง, SGwerepig ของเกม) ไม่มีท่าในข้อมูล TE เลย (ปกติใช้ SGwildbore / SGpig ซึ่งไม่เปลี่ยนใน 760944 - ข้อมูลไม่ได้เก่า) | ช่องโหว่เดิม: เพิ่ม state werepig ใน tools\sim_mods	e.lua แล้ว build_te เฉพาะตัว |
 | 4 | กะพริบเล็กที่เหลือ (frame_check, lag 1042) | Eye REVERSE เล็ก, Klaus POP 1, AG1 2, lunarrift roll JUMP 2; bearger_boulder JUMP 27 = lead เปิดทันทีตอนเริ่มกลิ้ง (ข้อแลกเดิม); gestalt projectile JUMP 20 = โซนข้างหน้าวางใหม่ 1.4 ครั้งเดียวก่อนหมด; AG2 spin_pst JUMP ~1.04 ครั้งเดียวตอนจบสปิน (replay client 67 - ตรงเกณฑ์ 1 พอดี, วาดทาง legs ไม่ใช่ Draw/DrawTable); web_mortar JUMP 11 (lag 1334) = ย้ายจากรอบตัวไปจุดตกครั้งเดียวตอนเริ่มตก; bigshadowtentacle AIM 14 |
 
 ## ตัดสินแล้วว่าไม่แก้
