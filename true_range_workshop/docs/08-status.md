@@ -16,6 +16,8 @@
 | bench ไม่มีหน้าจอ ทุกมอน (271, 3 รอบ) + replay | host missed 19 / 59,790 · false 2,020; client missed 55 / 59,807 · false 3,380 (ลูก Wixie 25 - ลองให้วงหนังสติ๊กตีต่อถึงเฟรม 27: missed เท่าเดิม false 10→35 ไม่เอา) | bench 2026-10-31_0007, ทุกอย่างคืนนี้ติดตั้งแล้ว |
 | lag บอสหลัก 15 ตัว 40 นาที หลังงานคืนนี้ | NOT 10 / 1,008 (on 3/401, off 7/607) · frame_check 243 (1621: 275) - ไม่ถอย | lag 0407 |
 | lag มอนทั่วไป 20 ตัว หลังงานคืนนี้ | NOT 4 / 529 (on 4/263, off 0/266) - icehound 3 on (หนามจากท่าก่อน 3.0-3.4 = แบบ Glacial ปลายเลน), rook 1; frame_check 80 (1240: 71) | lag 0448 |
+| bench TE (มอนของ TE 174 ตัว, 3 รอบ) + replay -TE | host missed 45 / 25,306 · client 57 / 25,329 (ก่อนแก้ scorpion / rookwater) | bench 2026-10-31_0611 |
+| bench TE (ทุกมอนเกม+UM ในโลก TE) | host missed 16 / 57,919 · client 39 / 57,959 | bench 2026-10-31_0526 |
 | เกม / ข้อมูล | 760944 / data `0ADD43380DDD` | ติดตั้งแล้ว |
 
 ## กำลังทำ
@@ -37,6 +39,7 @@
 | # | งาน | ข้อมูลที่มี |
 |---|---|---|
 | 2 | ของที่ client replay ยังพลาด (14, `tools\haz_missed.ps1` 11:35) | sporecloud_toad 5 (ยืนขอบ 3.50 พอดี), stageusher_attackhand 3 (anim `sleep` ซ้ำกับ sitdown), charlie_boss_minion1 2 (วิ่งหนีหลังล็อก), spiketrail 1, eyeofterror_laser 1, glacialhound_icespike 1, um_bear_trap 1 |
+| 10 | TE (bench 0611): bossboar / bossboarte flipped 115 / 102; water rook client false 589 · boss jumps 92 (rook ของเกม 1 / 0); things missed 33 | ยังไม่ได้ดู |
 | 4 | กะพริบเล็กที่เหลือ (frame_check, lag 1042) | Eye REVERSE เล็ก, Klaus POP 1, AG1 2, lunarrift roll JUMP 2; bearger_boulder JUMP 27 = lead เปิดทันทีตอนเริ่มกลิ้ง (ข้อแลกเดิม); gestalt projectile JUMP 20 = โซนข้างหน้าวางใหม่ 1.4 ครั้งเดียวก่อนหมด; AG2 spin_pst JUMP ~1.04 ครั้งเดียวตอนจบสปิน (replay client 67 - ตรงเกณฑ์ 1 พอดี, วาดทาง legs ไม่ใช่ Draw/DrawTable); web_mortar JUMP 11 (lag 1334) = ย้ายจากรอบตัวไปจุดตกครั้งเดียวตอนเริ่มตก; bigshadowtentacle AIM 14 |
 
 ## ตัดสินแล้วว่าไม่แก้
