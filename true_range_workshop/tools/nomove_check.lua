@@ -11,7 +11,16 @@ local function Load(name)
     local ok, t = pcall(dofile, ROOT .. "/scripts/true_range/" .. name .. ".lua")
     return ok and type(t) == "table" and t or {}
 end
-local data = { Load("moves_sim"), Load("moves_sim_um"), Load("moves_hand"), Load("moves_hand_um") }
+-- (Uncompromising Mode's laid over the game's as the game lays them (true_range/moddata) - its hand file's copies get their
+-- animations only so: read raw, the ice hound's 55 blows "no move" though drawn every time, 2026-10-30. OLD_NOMOVE_RAW=1: raw)
+local data
+if os.getenv("OLD_NOMOVE_RAW") then
+    data = { Load("moves_sim"), Load("moves_sim_um"), Load("moves_hand"), Load("moves_hand_um") }
+else
+    package.path = ROOT .. "/scripts/?.lua;" .. package.path
+    require("true_range/moddata").Apply(function(n) return n == "workshop-3193922031" end)
+    data = { require("true_range/moves_sim"), Load("moves_hand") }
+end
 -- (NOMOVE_TE=1: Tropical Experience's too - for its bench's logs, not the others': its changes aren't theirs)
 if os.getenv("NOMOVE_TE") then data[#data + 1] = Load("moves_sim_te") end
 local alias = {}
