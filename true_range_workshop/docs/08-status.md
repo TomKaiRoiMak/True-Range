@@ -33,7 +33,6 @@
 |---|---|---|
 | 2 | ของที่ client replay ยังพลาด | stageusher_attackhand 3 (anim `sleep` ซ้ำกับ sitdown), spiketrail 3, um_bear_trap 1, eyeofterror_laser 1 |
 | 3 | บอสพลาดทีละ 1 ครั้ง (replay 1610) | rocky_boss_shadow dash_attack, twinofterror1 mouthcharge_loop, mutatedbearger combo1 |
-| 5 | beeguard atk วาดเยื้องหน้า 0.1-0.9 หมุนตามเป้าที่บินวน (frame_check AIM ~12 / run) - เล็ก, NOT 0 | ข้อมูลเป็น frame target ทั้งที่เกมตีรอบตัว |
 | 4 | กะพริบเล็กที่เหลือ (frame_check) | Eye REVERSE เล็ก, Klaus chomp POP 1, AG1 2, lunarrift roll JUMP 2, rook lead ตอนเริ่ม |
 
 ## ตัดสินแล้วว่าไม่แก้
@@ -42,6 +41,7 @@
 - หนอน: ท่อนโผล่+ตีเฟรมเดียวกัน — เจ้าของไม่ให้แสดงวงรอบกองดิน (2026-10-29)
 - shadowthrall_mouth JUMP — lead เปิดทันที, ease แล้วพลาดเพิ่ม
 - mutatedbearger combo1 ขอบครึ่งวง 87°/90°
+- beeguard atk หมุนตามเป้าที่บินวน (frame_check AIM ~12 / run) - กัดเป้าตัวเดียว (single, frame target): วาดฝั่งที่เป้าอยู่ ตามเกม (lag 1042: กลางรูปห่างผึ้ง 0-2.75), NOT 0
 - Bee Queen วงตีโผล่ 2 เฟรมแล้วหาย เมื่อ UM สั่งสตั้น (ตัวจับเวลา 3.5 วิ) ตอนเพิ่งเริ่มตี — เจ้าของ: ปล่อยไว้ (2026-10-30)
 
 ## หลังปล่อย 1.1.6 (ตกลงกันแล้ว)
