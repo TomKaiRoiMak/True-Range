@@ -132,8 +132,13 @@ function ModData.Apply(enabled)
                 local hok, hand = pcall(require, m.hand)
                 if hok and type(hand) == "table" then
                     for k, v in pairs(hand) do
+                        -- (and who's drawn as whom, by hand - each where the run's data says nothing: Uncompromising Mode's
+                        -- shadow hound (rnehound) a hound in all but its looks, never found by the run)
+                        if k == "_alias" and type(v) == "table" then
+                            data._alias = data._alias or {}
+                            for ak, av in pairs(v) do if data._alias[ak] == nil and data[ak] == nil then data._alias[ak] = av end end
                         -- (and things written by hand - each where the run's data has none)
-                        if k == "_hazards" and type(v) == "table" then
+                        elseif k == "_hazards" and type(v) == "table" then
                             data[k] = data[k] or {}
                             for hk, hv in pairs(v) do
                                 -- (copy_hazard, as above: a hand file's thing made from another's shape)
