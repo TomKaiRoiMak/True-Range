@@ -170,7 +170,9 @@ for line in io.lines(arg[2]) do
     -- the burner's prefab, a second after it first catches - fire_timestart): the testbench's [tr_hurt];
     -- a blow's own hurt is told apart below, by the HIT with it. OLD_HURT=1: as before, not counted)
     local hu_t, hu_by, hu_c = line:match("%[tr_hurt%] ([%d%.]+) (%S+) .-cause=(%S+)")
-    if hu_t ~= nil and not os.getenv("OLD_HURT") and (hu_c == "fire" or hu_c == hu_by) then hurts[#hurts + 1] = { t = tonumber(hu_t), by = hu_by, cause = hu_c } end
+    -- (and health taken straight off by a thing, no one's blow - "?" its attacker: UM's lightning, cursed fire, TE's jellyfish
+    -- (health:DoDelta) - counted nowhere till 2026-10-30, 884 of a bench's 952 inside a cursed fire. OLD_NOATTACKER=1: not)
+    if hu_t ~= nil and not os.getenv("OLD_HURT") and (hu_c == "fire" or hu_c == hu_by or (hu_by == "?" and not os.getenv("OLD_NOATTACKER"))) then hurts[#hurts + 1] = { t = tonumber(hu_t), by = hu_by, cause = hu_c } end
     local by, d = line:match("you were struck by ([%w_]+), ([%d%.]+) from it")
     if by ~= nil and last_t ~= nil then
         any_hit[#any_hit + 1] = last_t
@@ -966,6 +968,22 @@ do
         if not (k <= #any_hit and any_hit[k] <= hu.t + .1) then fire_hurt[#fire_hurt + 1] = hu.t + (tonumber(os.getenv("HURT_SHIFT") or "") or 0) end
         ::next_hurt::
     end
+end
+-- (the hits with no attacker: how many, and how many with you inside something drawn as they came - drawn or not, as
+-- "missed" counts a blow; said apart, not in the table's missed. Inside a thing only - a boss's own move isn't drawn here: the
+-- Scion's supernova burning, drawn as its move, is "out" here every time)
+if not os.getenv("OLD_NOATTACKER") then
+    local na, na_in, q = 0, 0, 1
+    for _, hu in ipairs(hurts) do
+        if hu.by == "?" and InPiece(hu.t) then
+            na = na + 1
+            while q < #drawn and drawn[q + 1].t <= hu.t do q = q + 1 end
+            local d = drawn[q]
+            if d ~= nil and math.abs(d.t - hu.t) <= FRAMES * 1.5 and d.inside then na_in = na_in + 1
+            else real_print(string.format("NOATTACKER_OUT %.3f cause=%s", hu.t, tostring(hu.cause))) end
+        end
+    end
+    real_print(string.format("NOATTACKER %d hits with no attacker, %d with you inside something drawn", na, na_in))
 end
 local FIRE_LATE = 1.3
 local old_in, old_frames = 0, 0

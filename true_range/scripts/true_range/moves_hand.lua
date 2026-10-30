@@ -82,6 +82,12 @@ return {
     -- (src = { the segment, how near, how long hot, how long a new hole is drawn, its boss }: true_range/simmoves
     -- hole branch, 2026-10-18) - here, not in moves_sim, so a rebuild keeps it)
     _hazards = {
+        -- (the Scion's lunar fissures (alterguardian_lunar_fissures, wagboss_util SpawnFissureAtXZ): a tile each, burning whoever's body
+        -- touches its square (CircleTouchesSquare, TILE_SIZE / 2 - 2 out, your body .5) every 0.5 s from its tileN_loop on (after its
+        -- _pre, 17 frames). Never drawn: 800 of replay 1610's hits with no attacker (lunar burning, tests/replay_haz.lua NOATTACKER),
+        -- you on none of ours. A square, not a ring - side by side they make the burnt ground. TR_OLD_FISSURE: none)
+        alterguardian_lunar_fissures = not rawget(_G, "TR_OLD_FISSURE") and { by = { "alterguardian_phase4_lunarrift" }, delay = 17,
+            lasting = true, moved = false, steps = { { at = 0, cells = "d21e2G11d2I11c2K11c2K11c2K11c2K11c2K11c2K11c2K11c2K11c2K11c2K11c2K11c2K11c2K11c2K11c2K11c2K11c2K11d2I11e2G" } } } or nil,
         -- (meteor showers - and Tropical Experience's Maxwell's the same: each its warning shadow 1 s (warntime), crashing, striking at
         -- 0.33 s on within its size x 3.5 (METEOR_RADIUS; sizes .7/1/1.3 at random) - the largest's, 4.55 (4.05 and your body), drawn
         -- whole: none of it in our data, found looking for Maxwell's, 2026-10-20. Cells from tools/sim_moves.lua's striker of that radius)
