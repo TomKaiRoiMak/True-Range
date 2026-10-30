@@ -6,7 +6,7 @@
 # testing lines (debug.txt). Then tools/lag_report.lua on your game's log: struck / drawn, on and off.
 # Your game is started and closed by this - not run while you play. -NoClient: the server only (join by hand).
 param([string]$Bosses = "deerclops,moose,bearger,mock_dragonfly,moonmaw_dragonfly", [int]$Rounds = 2, [int]$TickRate = 15,
-    [int]$Minutes = 60, [int]$Port = 11010, [switch]$NoClient, [int]$Speed = 1, [string]$Old = "")
+    [int]$Minutes = 60, [int]$Port = 11010, [switch]$NoClient, [int]$Speed = 1, [string]$Old = "", [string]$Event = "")
 # (-Old "TR_OLD_A,TR_OLD_B": True Range's switches back to how it was, set in your game (tr_lagjoin) - to tell which change did it)
 # (-Speed n: the server and your game both n times as fast (TheSim:SetTimeScale - the testbench's own speed, tr_lagjoin from
 # join.txt), the tick rate n times too unless given - the network's tick as often in the game's time as at 1x, its lag the same
@@ -70,6 +70,9 @@ $token = Join-Path $klei '900782082\Cluster_17\cluster_token.txt'
 if (Test-Path $token) { Copy-Item $token (Join-Path $conf "$name\cluster_token.txt") -Force }
 $lvl = Join-Path $userCluster 'Master\leveldataoverride.lua'
 if (Test-Path $lvl) { Copy-Item $lvl (Join-Path $master 'leveldataoverride.lua') -Force }
+# (-Event hallowed_nights: that event on in the bench's world - its copy only, your world's file as it is: the Hallowed Nights
+# monsters (franken pig, mummy merm, vampire bunny: 30% of pigs, merms, bunnymen while it's on), 2026-10-30)
+if ($Event) { $lo = Join-Path $master 'leveldataoverride.lua'; (Get-Content $lo -Raw) -replace "$Event=`"default`"", "$Event=`"enabled`"" | ForEach-Object { [IO.File]::WriteAllText($lo, $_, (New-Object Text.UTF8Encoding($false))) } }
 luajit (Join-Path $here 'bench_overrides.lua') (Join-Path $userCluster 'Master\modoverrides.lua') (Join-Path $master 'modoverrides.lua') $Rounds $Speed tr | Out-Null
 $seed = Join-Path $conf 'Bench\Master\save'
 if (Test-Path $seed) {

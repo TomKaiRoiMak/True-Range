@@ -463,6 +463,17 @@ local function NextBoss()
         if map:IsPassableAtPoint(tx, 0, tz) then bx, bz = tx, tz break end
     end
     boss.Transform:SetPosition(bx, 0, bz)
+    -- (Hallowed Nights on (run_lag -Event hallowed_nights): each pig, merm and bunnyman made its event monster - the game makes
+    -- 30% of pigs franken, bunnymen vampires only in caves, mummy merms never at random: none came on the bench, 2026-10-30)
+    if G.IsSpecialEventActive ~= nil and G.IsSpecialEventActive(G.SPECIAL_EVENTS.HALLOWED_NIGHTS) then
+        for _, f in ipairs({ "MakeFrankenPig", "MakeMummyMerm", "MakeVampireBunny" }) do
+            if type(boss[f]) == "function" then
+                boss._frankeninitialized, boss._vampireinitialized = true, true
+                local ok, err = G.pcall(boss[f], boss)
+                print(string.format("[tr_bench] %.3f %s made by %s %s", G.GetTime(), prefab, f, ok and "" or tostring(err)))
+            end
+        end
+    end
     -- (one that fights only once its world is set up - each made ready the game's own way, the same tick it's
     -- made (the Antlion leaves the next): 6 never fought on the 2026-10-18 bench - the reviewer, VERIFY_PLAN 6.16)
     local setup = SETUP[prefab]
