@@ -336,6 +336,12 @@ local function LastStrike(sim, first_go)
                 f = math.max(f, s.at or 0)
             end
         end
+        -- (and its first strike, steps or none - a move that only shoots (maps {}, sim.shoots) struck at nothing so: Uncompromising
+        -- Mode's bee shooter, its shoot_pre looping every .2 s till it shoots at 1 s, taken for a new go each loop and its lane
+        -- never drawn, lag 0748. The others' first is never past their last step. TR_OLD_LASTFIRST: as before)
+        if not rawget(_G, "TR_OLD_LASTFIRST") then
+            v, f = math.max(v, sim.first or 0), math.max(f, sim.first or 0)
+        end
         c = { v, f }
         last_strike[sim] = c
     end
@@ -2267,7 +2273,11 @@ function Predict.Draw(ents, ranges, my_radius, me, skip)
                 -- (all the while it stands, not 3 frames only: led on again at its 4th, 1.2-2.2 on - frame_check, lag 0836)
                 local start_still = a.move.sim ~= nil and now - (a.t0 or now) < Predict._StillFrames(a.move.sim) * FRAMES
                     and not rawget(_G, "TR_OLD_STARTLEAD")
-                if not rawget(_G, "TR_OLD_BODYLEAD") and not start_still then
+                -- (nor one that only shoots (sim.shoots): its lane from it as it's shown - Uncompromising Mode's bee shooters fly
+                -- round their queen sideways as they aim, the lead's "furthest on" held then caught up: the lane 1.4 back and on
+                -- again, 7 a minute (frame_check JUMP, lag 0801). TR_OLD_SHOTRAW: led on)
+                local shot_raw = a.move.sim ~= nil and a.move.sim.shoots ~= nil and not rawget(_G, "TR_OLD_SHOTRAW")
+                if not rawget(_G, "TR_OLD_BODYLEAD") and not start_still and not shot_raw then
                     local lx, lz = SimMoves.LeadMoving(ent, x, z, now)
                     -- (one whose move, run offline, stays where it began - coming to a stop, sliding on what it had: led on, but
                     -- never back - Moonmaw's lavae gliding 10 -> 0 a second into their stab, drawn 1 on past them and back as they
