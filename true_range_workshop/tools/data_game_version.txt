@@ -1,4 +1,4 @@
-760944
+761239
 # The game's version.txt the moves data is good for (first line). Set it when game_scripts is unpacked again and the data
 # rebuilt - or checked still right; tools\install.ps1 warns while it differs from the game's own.
 # 760178 (2026-10-27 Halloween): data of 2026-10-26 checked, not rebuilt - of 106 changed stategraphs none changes an attack's
@@ -7,3 +7,7 @@
 # 760944 (2026-10-30 Hallowed Nights): pigs, merms, bunnymen and moon pigs now strike only ahead (SetHitArc 180), the werepig
 # leaps forward as it strikes, new franken pig / mummy merm / vampire bunny (hn_attack) - those rebuilt (sim -only, splice);
 # a full sim on the old and new scripts differs in those alone.
+# 761239 (2026-10-31): 11 script files changed - moon pigs' attack now lunges (SGmoonpig attack: were_atk_pre / were_atk /
+# were_atk_pst, motor 3 -> 8 at 15, its blow at 16), the Grim Harrier's runner fades out at the arena's edge, the lunar bird turns
+# to the target it's handed; the rest targeting / Hallowed Nights. moonpig, charlie_boss_runner rebuilt (sim -only, splice); pigman,
+# bird_mutant(_spitter) run again - the same.
