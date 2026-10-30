@@ -1463,12 +1463,23 @@ local function Start(player)
                     if d < best then other, best = j, d end
                 end
             end
+            local ax, az, bx, bz = nil, nil, nil, nil
             if other == nil then
                 local rot = h.Transform:GetRotation() * GLOBAL.DEGREES
-                Telegraph.Lane(hx, hz, hx + 10 * math.cos(rot), hz - 10 * math.sin(rot), 1.75)
+                ax, az, bx, bz = hx, hz, hx + 10 * math.cos(rot), hz - 10 * math.sin(rot)
             elseif other > i then
                 local ox, _, oz = horns[other].Transform:GetWorldPosition()
-                Telegraph.Lane(hx, hz, ox, oz, 1.75)
+                ax, az, bx, bz = hx, hz, ox, oz
+            end
+            if ax ~= nil then
+                Telegraph.Lane(ax, az, bx, bz, 1.75)
+                -- (testing: you in it - "drawn: in" when struck, as the darts' lanes: all 18 horn blows "drawn: NOT" on lag 2218
+                -- though drawn - modmain's lanes never told the test where they were)
+                local lx, lz = bx - ax, bz - az
+                local ll = lx * lx + lz * lz
+                local u = ll > 0 and math.max(0, math.min(1, ((sx - ax) * lx + (sz - az) * lz) / ll)) or 0
+                local qx, qz = ax + lx * u, az + lz * u
+                if (sx - qx) ^ 2 + (sz - qz) ^ 2 <= 1.75 * 1.75 then last_inside_at = now end
             end
         end
         for i = #darts, 1, -1 do
