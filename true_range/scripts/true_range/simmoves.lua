@@ -4319,8 +4319,11 @@ end
 -- (not taken up for the fireballs: on the bench 2026-10-27_1809 their size as told, drawn so, missed 61 against the one size's 54 -
 -- the size told a tick off what it burns with, they flying 10 a second; kept as the run offline drew them)
 -- (also_data: its reach as told and as run offline both - the fireballs: the one size alone 54 undrawn, as told alone 61)
+-- (unset: the scale it's made at before its own code sets it (scale 1) - not its reach: the fireballs are 1 for their first
+-- tick only, then 1/6 and growing (um_fire_projectile.lua BeginScaleUp) - drawn 2 round for 2 frames, then .55: a flash at
+-- every one, frame_check POP 450 a run of fire hounds (lag 1445). TR_OLD_UNSETSCALE: drawn)
 SimMoves._live_radius = { deer_ice_circle = { field = "_rad", grows_to = 3, armed_by = "deer_ice_fx" },
-    um_fire_projectile = { scale_r = 2, moving = true, also_data = true } }
+    um_fire_projectile = { scale_r = 2, moving = true, also_data = true, unset = 1 } }
 function SimMoves.DrawHazard(ent, x, z, rot, px, pz, now, in_moves, data_only)
     local lr = not data_only and SimMoves._live_radius[ent.prefab] or nil
     local x0, z0 = x, z
@@ -4331,6 +4334,10 @@ function SimMoves.DrawHazard(ent, x, z, rot, px, pz, now, in_moves, data_only)
         if nv ~= nil then ok, r = pcall(function() return nv:value() end) end
         if lr.scale_r ~= nil and ent.Transform ~= nil and ent.Transform.GetScale ~= nil then
             ok, r = pcall(function() return ent.Transform:GetScale() * lr.scale_r end)
+            if ok and lr.unset ~= nil and type(r) == "number" and math.abs(r - lr.unset * lr.scale_r) < 1e-3
+                and not rawget(_G, "TR_OLD_UNSETSCALE") then
+                return false
+            end
         end
         if ok and lr.moving and type(r) == "number" and r > 0 then x, z = SimMoves.LeadMoving(ent, x, z, now) end
         if ok and type(r) == "number" then
