@@ -19,6 +19,9 @@ list[#list + 1] = { prefab = "wanawanatiki", sg = "SGpig", states = { "attack", 
 list[#list + 1] = { prefab = "q_swampig", sg = "SGpig", also = { "quagmire_swampig" }, states = { "attack", { name = "attack", sg = "SGwerepig" } } }
 list[#list + 1] = { prefab = "pigman_minion", sg = "SGpigminion", states = { "attack", { name = "attack", sg = "SGwerepig" } } }
 list[#list + 1] = { prefab = "pigguard_minion", sg = "SGpig", states = { "attack", { name = "attack", sg = "SGwerepig" } } }
+-- (the trap slug: the game's slurtle's stategraph (trapslug.lua :140 SGslurtle), its bite (SLURTLE_DAMAGE) - not found by the run,
+-- never drawn, 2026-10-30)
+list[#list + 1] = { prefab = "trapslug", sg = "SGslurtle", states = { "attack" } }
 -- (the sea Rook: the game's Rook's charge on water (SGrookwater: run_start pawing, run on atk, runningattack as it
 -- reaches you) - found on its own, its charge's parts each a "move", nothing struck: run as the Rook's is, its brain
 -- saying how far - no atk_collide of its own)
