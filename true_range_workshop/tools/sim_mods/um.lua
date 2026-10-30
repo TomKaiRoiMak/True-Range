@@ -52,6 +52,9 @@ return {
     -- TENTACLE_ATTACK_DIST) - never found by the scan; drawn as the marsh tentacle's it was 7 frames late, its atk_pre 18
     -- frames to the tentacle's 25)
     { prefab = "ancient_trepidation_arm", sg = "SGtrepidation_arm", add = { "attack_pre", "attack" } },
+    -- (the alpha goat's electric attack: lightning after lightning, inst.count of them (set as it charges) - unset here,
+    -- "attempt to compare": set)
+    { prefab = "alpha_lightninggoat", sg = "SGalpha_lightninggoat", add = { "attack", "stomp_attack_start", { name = "electricalattack", prep = function(boss) boss.count = 2 end } } },
     { prefab = "beequeen", sg = "SGbeequeen", add = { "stomp", "combo_prep", "stomp_combo", "lob", "defensive_spin" } },
     -- (moves Uncompromising Mode gives the game's monsters, gone into by its own code now and then: a
     -- Koalefant's stomp (its stompatk - stomp_pre is commented out). A Beefalo's / Koalefant's charge after its
@@ -203,6 +206,14 @@ return {
     -- 60 parts long (a part a frame): her taunt's ring of 48 laid 18,250 pieces in one frame and the game crashed,
     -- lag 2026-10-30_2054)
     { striker = { prefab = "wixie_shadow_shot", radius = 0.9, delay = 0, moved = true, lasting = true, as_boss = true, strikes_until = 60, by = { "shadow_wixie" } } },
+    -- (its lightning strike (hound_lightning): 3.5 round it, health taken straight off (DoDelta), a second after it's put down
+    -- (Delay, 1 if unset; the tornadoes' 1.25+) - put down by the lightning hounds, the alpha goat, the tornadoes, the night's
+    -- events (UMCommonFns.SpawnHoundLightning). In no data at all: the run never noted DoDelta till 649f4a2. lasting: drawn
+    -- till it's gone - it goes the moment it strikes)
+    { striker = { prefab = "hound_lightning", radius = 3.5, delay = 30, lasting = true, by = { "lightninghound", "alpha_lightninggoat" } } },
+    -- (the alpha goat's lightning run along the ground (goat_lightning): 15 a second to 4 past you, striking all within 2 of it
+    -- every 0.05 s (ShockStream), a hound_lightning where it stops)
+    { striker = { prefab = "goat_lightning", radius = 2, delay = 0, moved = true, lasting = true, by = { "alpha_lightninggoat" } } },
     { striker = { prefab = "warningshadow", radius = 1.5, delay = 0, moved = true, lasting = true, by = { "beequeen", "beeguard", "um_beeguard_seeker" } } },
     -- (the Ancient Guardian's belch: 16 goo thrown at you, each 4 off at random (postinit/prefabs/minotaur.lua
     -- ShootProjectile :49-69), striking within 1.5 of where it comes down (shadow_goo.lua:75, :89-93). No run

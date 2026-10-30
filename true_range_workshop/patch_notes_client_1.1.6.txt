@@ -85,3 +85,4 @@
 - Celestial Champion, W.A.R.B.O.T., the knook and the Umbral Abomination's mouth: their attack no longer jumps ahead as they set off (in a player's game)
 - Uncompromising Mode's Shadow Wixie: drawn - her charges, her slingshot burst and volley, and her marbles had nothing drawn at all
 - Uncompromising Mode's mindweaver and fuelseeker (shadow creatures): their grab and burst drawn
+- Uncompromising Mode's lightning strikes (lightning hounds, the alpha goat, tornadoes): drawn 3.5 round where they come down, and the alpha goat's lightning running along the ground drawn as it runs
