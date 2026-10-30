@@ -94,3 +94,4 @@
 - Uncompromising Mode's Eye of Terror and Spazmatism: the cursed fire their fireballs leave drawn as big as it burns, shrinking as it dies down
 - The Scion's lunar fissures (in Wagstaff's arena): each burning tile drawn as the square it is
 - Uncompromising Mode's Shadow Wixie's clones in her puzzle: drawn as she is
+- Tropical Experience's scorpion: its claw and its leap no longer both drawn at once - the claw till it leaps (it leaps only at you from over 3 away)

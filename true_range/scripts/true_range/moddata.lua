@@ -12,7 +12,8 @@ local MODS = {
         -- (and its moves written by hand - each where the run's data has none: kept through a rebuild)
         hand = "true_range/moves_hand_um" },
     -- (Tropical Experience - Shipwrecked's and Hamlet's monsters: true_range_workshop/tools/build_te.ps1)
-    { names = { "workshop-1505270912" }, file = "true_range/moves_sim_te", label = "Tropical Experience" },
+    { names = { "workshop-1505270912" }, file = "true_range/moves_sim_te", label = "Tropical Experience",
+        hand = "true_range/moves_hand_te" },
 }
 
 -- (a move written by hand as another's run offline, its frames moved on (copy = { prefab, move }, shift = frames, drop = { fields },
