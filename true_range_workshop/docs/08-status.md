@@ -19,7 +19,7 @@
 
 | งาน | สถานะ |
 |---|---|
-| lag ยังไม่ได้วัด: Wixie (ลูกเป็นวงแล้ว c9c59b0), mindweaver, fuelseeker, ancient_trepidation_arm (4b9373c), hound_lightning / goat_lightning (6ad449d), budget ชิ้นใหม่ต่อเฟรม (9a4c93e) - bench 2152 (ไม่มีหน้าจอ): บอสทุกตัว drawn ครบ host/client, ของ host 0 พลาด; client: ลูก Wixie 13 (ยิงจาก 4 ถึงตัวในไม่กี่ tick); mindweaver/fuelseeker ไม่ได้ตี (ต้องคนบ้า) | เกมเปิดไม่ขึ้นหลังล่ม 20:57 - CrashReporter.exe ค้าง (ปิดเองไม่ได้) |
+| lag ยังไม่ได้วัด: Wixie (ลูกเป็นวงแล้ว c9c59b0), mindweaver, fuelseeker, ancient_trepidation_arm (4b9373c), hound_lightning / goat_lightning (6ad449d), budget ชิ้นใหม่ต่อเฟรม (9a4c93e), TE jellyfish วงตอนช็อต (modmain) - bench 2152 (ไม่มีหน้าจอ): บอสทุกตัว drawn ครบ host/client, ของ host 0 พลาด; client: ลูก Wixie 13 (ยิงจาก 4 ถึงตัวในไม่กี่ tick); mindweaver/fuelseeker ไม่ได้ตี (ต้องคนบ้า) | เกมเปิดไม่ขึ้นหลังล่ม 20:57 - CrashReporter.exe ค้าง (ปิดเองไม่ได้) |
 
 ## รอเจ้าของตัดสิน
 
@@ -34,7 +34,6 @@
 | # | งาน | ข้อมูลที่มี |
 |---|---|---|
 | 2 | ของที่ client replay ยังพลาด (14, `tools\haz_missed.ps1` 11:35) | sporecloud_toad 5 (ยืนขอบ 3.50 พอดี), stageusher_attackhand 3 (anim `sleep` ซ้ำกับ sitdown), charlie_boss_minion1 2 (วิ่งหนีหลังล็อก), spiketrail 1, eyeofterror_laser 1, glacialhound_icespike 1, um_bear_trap 1 |
-| 8 | TE jellyfish / kraken_jellyfish: ช็อตคนใกล้สุดใน 3 แบบสุ่ม (DoDelta, ตีที่เฟรม 5) - ไม่มีในข้อมูล | ค่าน้อย (เตือนได้แค่ 5 เฟรม); UM smog / spore / boiling_water = สิ่งแวดล้อม ไม่ใช่มอน |
 | 4 | กะพริบเล็กที่เหลือ (frame_check, lag 1042) | Eye REVERSE เล็ก, Klaus POP 1, AG1 2, lunarrift roll JUMP 2; bearger_boulder JUMP 27 = lead เปิดทันทีตอนเริ่มกลิ้ง (ข้อแลกเดิม); gestalt projectile JUMP 20 = โซนข้างหน้าวางใหม่ 1.4 ครั้งเดียวก่อนหมด; AG2 spin_pst JUMP ~1.04 ครั้งเดียวตอนจบสปิน (replay client 67 - ตรงเกณฑ์ 1 พอดี, วาดทาง legs ไม่ใช่ Draw/DrawTable); web_mortar JUMP 11 (lag 1334) = ย้ายจากรอบตัวไปจุดตกครั้งเดียวตอนเริ่มตก; bigshadowtentacle AIM 14 |
 
 ## ตัดสินแล้วว่าไม่แก้

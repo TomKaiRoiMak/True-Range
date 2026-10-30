@@ -892,6 +892,11 @@ local AGGRO_WHILE = {
     worm_boss_dirt = { r = 2.5, anims = { "dirt_pre_slow", "dirt_pre_fast", "dirt_emerge_loop_pre", "dirt_emerge_loop", "dirt_emerge" }, linger = .3, any_target = true, near = { "worm_boss_segment", 1.6 } },
     worm_boss_shadow_dirt = { r = 2.5, anims = { "dirt_pre_slow", "dirt_shadow_pre_slow", "dirt_pre_fast", "dirt_emerge_loop_pre", "dirt_emerge_loop", "dirt_emerge" }, linger = .3, any_target = true, near = { "worm_boss_shadow_segment", 1.6 } },
     mutated_penguin = { r = 3, anims = { "slide_loop", "slide_bounce" } },
+    -- (Tropical Experience's jellyfish - the kraken's (its ink shot's) and the underwater ones: now and then a shock (idle_shock), the
+    -- nearest whose middle is within 3 at frame 5 (GetClosestInstWithTag("player", inst, 3) - health:DoDelta, electrocuted), whoever
+    -- it is: nothing drawn till now. The planted one's shock is commented out in the mod. TR_OLD_JELLY: none)
+    kraken_jellyfish = { r = 3, anims = { "idle_shock" }, any_target = true },
+    jellyfish_underwater = { r = 3, anims = { "idle_shock" }, any_target = true },
     -- (Tropical Experience's yellow lizardman: its zap (spit_attack, spit) strikes whom it's after at frame 15, anywhere within
     -- 16 + 4 of it (its weapon's SetRange(16, 20)), no shot to dodge - drawn as a dark ring 20 round it, cut square by the data's
     -- grid: "very wide, and not even round", the player 2026-10-22. Now: its reach pale, and a mark on you - yellow as it
@@ -974,6 +979,7 @@ local AGGRO_WHILE = {
     um_pawn = { r = 7, anims = { "idle", "walk_pre", "walk_loop", "hit", "look_pre", "hide_idle", "emerge", "dig" }, any_target = true },
 }
 if GLOBAL.rawget(GLOBAL, "TR_OLD_WORMDIRT") ~= nil then AGGRO_WHILE.worm_boss_dirt, AGGRO_WHILE.worm_boss_shadow_dirt = nil, nil AGGRO.worm_boss_dirt, AGGRO.worm_boss_shadow_dirt = 2.5, 2.5 end
+if GLOBAL.rawget(GLOBAL, "TR_OLD_JELLY") ~= nil then AGGRO_WHILE.kraken_jellyfish, AGGRO_WHILE.jellyfish_underwater = nil, nil end
 for prefab, w in pairs(AGGRO_WHILE) do AGGRO[prefab] = w.r end
 -- (one whose code drops its reach (combat.ignorehitrange = true) - every blow of it then strikes its target wherever that
 -- is: Tropical Experience's Infernal Swineclops, its guard broken (BreakGuard - each belly flop as it lands, SGbeetletaur
