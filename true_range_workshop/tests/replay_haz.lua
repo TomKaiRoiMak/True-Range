@@ -107,6 +107,21 @@ local function InPiece(t) return t >= HAZ_FROM and t < HAZ_TO end
 -- (TR_MODS=<folder names>: those mods on - their monsters' moves over the game's, as the game lays them: true_range/moddata)
 -- (the drawer's own switches back to before, from the shell: TR_OLD_LAND=1 ... - as the game reads them, globals)
 for _, n in ipairs({ "TR_OLD_BYONLY", "TR_OLD_ENDLINGER", "TR_OLD_LANEROW", "TR_OLD_AROUNDONCE", "TR_OLD_AROUNDFACE", "TR_OLD_SHADOWSIZE", "TR_OLD_LAND", "TR_OLD_FALL", "TR_OLD_AGAIN", "TR_OLD_LANE", "TR_OLD_PENGUIN", "TR_OLD_LOB", "TR_OLD_LEAD", "TR_OLD_STILL", "TR_OLD_EARLY", "TR_OLD_HOP", "TR_OLD_LANDS", "TR_OLD_MOVEDDELAY", "TR_OLD_LEADAVG", "TR_OLD_HAZLEAD", "TR_OLD_HAZSTEADY", "TR_OLD_AIMLEAD", "TR_OLD_MIDLEFT", "TR_OLD_RELOCK", "TR_OLD_BODYLEAD", "TR_OLD_LIVERADIUS", "TR_OLD_DISCKEY", "TR_OLD_TAIL", "TR_OLD_LAND2", "TR_OLD_PREVLEG", "TR_OLD_SNAPPOS", "TR_OLD_CHAINLAST", "TR_OLD_WORMDIRT", "TR_OLD_LEADSTOP", "TR_OLD_LEADTP", "TR_OLD_LANDHOLD", "TR_OLD_LANDKEEP", "TR_OLD_GLOWPULSE", "TR_OLD_GLOWGRACE", "TR_OLD_AIRSTILL", "TR_OLD_GLOWOVERLAP", "TR_OLD_LEADTPSTEP", "TR_OLD_LANDSTOP", "TR_OLD_GLOWHOLD", "TR_OLD_LANDTILL", "TR_OLD_LANDAT", "TR_OLD_HUNTSTICK", "TR_OLD_LANDLOOSE", "TR_OLD_GLOWAFTERMOVE", "TR_OLD_WORMPOUND", "TR_OLD_WENT", "TR_OLD_WENTSTART", "TR_OLD_TWIN", "TR_OLD_STAYLEAD", "TR_OLD_LANDNOW", "TR_OLD_LOWAIR", "TR_OLD_POSEGO", "TR_OLD_R2FROM", "TR_OLD_JUMPLED", "TR_OLD_LOWAIRROSE", "TR_OLD_AIRDUP", "TR_OLD_LANDFIRST", "TR_OLD_WIDENET", "TR_OLD_TPPRE", "TR_OLD_SPATSNOT", "TR_OLD_NEAR", "TR_OLD_BEARSHOOT", "TR_OLD_LEADDUP", "TR_OLD_LEAPWARP", "TR_OLD_STARTLEAD", "TR_OLD_THINGWAIT", "TR_OLD_THINGNEW", "TR_OLD_LEADSTOP2", "TR_OLD_CHASELEAD", "TR_OLD_LANDWAIT", "TR_OLD_PICKEPIC", "TR_OLD_AIMFACING", "TR_OLD_LANDAVG", "TR_OLD_HAZLEADMOVED", "TR_OLD_FALLBACKANY", "TR_OLD_KEEPHEADING", "TR_OLD_HAZFAST", "TR_OLD_TRAILWAIT", "TR_OLD_MIRROR", "TR_OLD_HOMES", "TR_OLD_AIRDUP", "TR_OLD_AIRDUPHOST", "TR_OLD_MOONMINE", "TR_OLD_LEGRAW", "TR_OLD_ANIMFROM", "TR_OLD_STINGSHOT", "TR_OLD_LASTFIRST" }) do if os.getenv(n) then rawset(_G, n, true) end end
+
+-- (and every other the mod reads, found in its own code - the list above kept by hand missed new ones (LASTFIRST: an A/B the
+-- same to the digit, 2026-10-30))
+do
+    local files = { arg[1] .. "/modmain.lua" }
+    local p = io.popen('dir /b "' .. (arg[1]:gsub("/", "\\")) .. [[\scripts\true_range\*.lua" 2>nul]])
+    if p ~= nil then for f in p:lines() do files[#files + 1] = arg[1] .. "/scripts/true_range/" .. f end p:close() end
+    for _, f in ipairs(files) do
+        local h = io.open(f, "rb")
+        if h ~= nil then
+            for n in h:read("*a"):gmatch('"(TR_OLD_[%w_]+)"') do if os.getenv(n) then rawset(_G, n, true) end end
+            h:close()
+        end
+    end
+end
 rawset(_G, "TR_JUMP", {}) if os.getenv("JUMP_V") then rawset(_G, "TR_JUMP_EV", {}) end
 -- (where each thrown thing is drawn coming down, how far it moved frame to frame - simmoves TR_LANDWOB)
 rawset(_G, "TR_LANDWOB", {}) if os.getenv("LANDWOB_V") then rawset(_G, "TR_LANDWOB_EV", {}) end
