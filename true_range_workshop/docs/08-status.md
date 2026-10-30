@@ -35,7 +35,6 @@
 |---|---|---|
 | 2 | ของที่ client replay ยังพลาด (14, `tools\haz_missed.ps1` 11:35) | sporecloud_toad 5 (ยืนขอบ 3.50 พอดี), stageusher_attackhand 3 (anim `sleep` ซ้ำกับ sitdown), charlie_boss_minion1 2 (วิ่งหนีหลังล็อก), spiketrail 1, eyeofterror_laser 1, glacialhound_icespike 1, um_bear_trap 1 |
 | 3 | บอสพลาดทีละ 1 ครั้ง (replay 1610, 11:35) | mutatedbearger combo1 (ขอบครึ่งวง - ไม่แก้) + combo1a (พุ่งชนตัว 1.65); rocky_boss_shadow = bench สั่ง side + trace ขาด (artifact); twinofterror1 ไม่พลาดแล้ว |
-| 7 | Tropical Experience ที่ไม่มีในข้อมูล (scan 2026-10-30) - ดูแล้ว: trapslug ✔ เพิ่ม; kraken / knightboat ดาเมจ 0 (ของที่ยิง - inksplat, knightboat_cannonshot อยู่ในข้อมูลแล้ว); grottoqueen ดาเมจถูก comment; grotto_grub = prey | เหลือ: golem, quagmire goats, *_tfc = ของอีเวนต์/arena (Forge/Gorge) ไม่ได้ดู |
 | 8 | TE jellyfish / kraken_jellyfish: ช็อตคนใกล้สุดใน 3 แบบสุ่ม (DoDelta, ตีที่เฟรม 5) - ไม่มีในข้อมูล | ค่าน้อย (เตือนได้แค่ 5 เฟรม); UM smog / spore / boiling_water = สิ่งแวดล้อม ไม่ใช่มอน |
 | 4 | กะพริบเล็กที่เหลือ (frame_check, lag 1042) | Eye REVERSE เล็ก, Klaus POP 1, AG1 2, lunarrift roll JUMP 2; bearger_boulder JUMP 27 = lead เปิดทันทีตอนเริ่มกลิ้ง (ข้อแลกเดิม); gestalt projectile JUMP 20 = โซนข้างหน้าวางใหม่ 1.4 ครั้งเดียวก่อนหมด; AG2 spin_pst JUMP ~1.04 ครั้งเดียวตอนจบสปิน (replay client 67 - ตรงเกณฑ์ 1 พอดี, วาดทาง legs ไม่ใช่ Draw/DrawTable); web_mortar JUMP 11 (lag 1334) = ย้ายจากรอบตัวไปจุดตกครั้งเดียวตอนเริ่มตก; bigshadowtentacle AIM 14 |
 
