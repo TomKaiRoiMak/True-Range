@@ -32,7 +32,7 @@
 | # | งาน | ข้อมูลที่มี |
 |---|---|---|
 | 2 | ของที่ client replay ยังพลาด (14, `tools\haz_missed.ps1` 11:35) | sporecloud_toad 5 (ยืนขอบ 3.50 พอดี), stageusher_attackhand 3 (anim `sleep` ซ้ำกับ sitdown), charlie_boss_minion1 2 (วิ่งหนีหลังล็อก), spiketrail 1, eyeofterror_laser 1, glacialhound_icespike 1, um_bear_trap 1 |
-| 3 | บอสพลาดทีละ 1 ครั้ง (replay 1610) | rocky_boss_shadow dash_attack, twinofterror1 mouthcharge_loop, mutatedbearger combo1 |
+| 3 | บอสพลาดทีละ 1 ครั้ง (replay 1610) | twinofterror1 mouthcharge_loop, mutatedbearger combo1; rocky_boss_shadow dash_attack = bench สั่ง side ก่อน + trace ขาด 1.3 วิ (artifact) |
 | 4 | กะพริบเล็กที่เหลือ (frame_check, lag 1042) | Eye REVERSE เล็ก, Klaus POP 1, AG1 2, lunarrift roll JUMP 2, rook lead ตอนเริ่ม; bearger_boulder JUMP 27 = lead เปิดทันทีตอนเริ่มกลิ้ง (ข้อแลกเดิม); gestalt projectile JUMP 20 = โซนข้างหน้าวางใหม่ 1.4 ครั้งเดียวก่อนหมด |
 
 ## ตัดสินแล้วว่าไม่แก้
