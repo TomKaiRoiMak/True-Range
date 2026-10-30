@@ -3945,6 +3945,14 @@ function Predict.DrawHazards(ents, my_radius, me)
                     end
                     foreign = h.yes
                 end
+                -- (a warning shadow up in the air: nothing comes down on it there - Uncompromising Mode's bullet bees' mortar puts
+                -- theirs 20 up (postinit/stategraphs/SGbeeguard.lua UpdateShadowShooter), drawn as thrown, landing round you: a ring
+                -- round the player in the wrong place, 18-24 frames a run, the player 2026-10-30. Every shadow under a blow lies on the
+                -- ground. TR_OLD_AIRSHADOW: drawn)
+                if not foreign and ent.prefab == "warningshadow" and not rawget(_G, "TR_OLD_AIRSHADOW") then
+                    local _, sy = ent.Transform:GetWorldPosition()
+                    if (sy or 0) > 2 then foreign = true end
+                end
                 local made = Predict.made_hazards ~= nil and Predict.made_hazards[ent] or nil
                 Note(ent, "hazard", nil, nil, type(made) == "number" and clock - made or nil, in_moves)
                 -- (testing: modmain's frame timing - how many things, the time drawing them takes)
