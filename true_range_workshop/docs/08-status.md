@@ -19,7 +19,7 @@
 
 | งาน | สถานะ |
 |---|---|
-| - | - |
+| lag ยังไม่ได้วัด: Wixie (ลูกเป็นวงแล้ว c9c59b0), mindweaver, fuelseeker, ancient_trepidation_arm (4b9373c) | เกมเปิดไม่ขึ้นหลังล่ม 20:57 - CrashReporter.exe ค้าง (ปิดเองไม่ได้) |
 
 ## รอเจ้าของตัดสิน
 
