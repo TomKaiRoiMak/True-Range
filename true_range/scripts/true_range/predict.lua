@@ -1136,7 +1136,11 @@ local function Track(ent, moves, now, learned_all)
     if best ~= nil and seen._slow ~= nil and best.anims[1] == seen._slow then best = nil end
     if best ~= nil then
         local x, _, z = ent.Transform:GetWorldPosition()
-        a = { move = best, t0 = now - ent.AnimState:GetCurrentAnimationTime() - skip_to, x = x, z = z,
+        -- (sim.anim_from: its state begins its animation that far in (SetFrame) - its frames counted from the state, this
+        -- clock from the animation: Hallowed Nights' mummy merm and vampire bunny (hn_attack, SetFrame(4)), game 760944.
+        -- TR_OLD_ANIMFROM: as before)
+        local from = (best.sim ~= nil and not rawget(_G, "TR_OLD_ANIMFROM") and best.sim.anim_from or 0) * FRAMES
+        a = { move = best, t0 = now - ent.AnimState:GetCurrentAnimationTime() - skip_to + from, x = x, z = z,
             rot = ent.Transform:GetRotation() * DEGREES,
             anim0 = skip_to == 0 and ent.AnimState:GetCurrentAnimationTime() or nil, real0 = now }
         a.rot_begin = a.rot

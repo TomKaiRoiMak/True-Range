@@ -26,6 +26,17 @@
 | Ink Blight จุดตกขยับ | 0.01 ครั้งต่อลูก (เดิม 0.84 → LANDSTOP 0.13 → + รอ 7 ค่า/hold .4 = 0.01) |
 | โหลดข้อมูลในเกม | 93 ms, ~30 MB Lua memory |
 
+## เกมอัปเดต 760944 (2026-10-30, Hallowed Nights) — rebuild หมู/merm/กระต่าย
+
+- [x] แตกโค้ดเกมใหม่ (`73CC0D20`), `game_scripts_um`, `anim_lengths.lua` ใหม่ (เพิ่มแค่อนิเมชัน halloween)
+- [x] เกมเปลี่ยนท่าจริง 3 อย่าง: Werepig ตีแบบกระโดดไปหน้า (~1.8 หน่วยก่อนตี, ข้อมูลเดิม "ยืนกับที่"); หมู/merm/กระต่าย/moonpig ได้ `SetHitArc(180)` = กัดแค่ครึ่งวงหน้า (เดิมรอบตัว); มอนใหม่ franken pig / mummy merm / vampire bunny (`hn_attack`, กระโดดตีที่ 12, ระยะตี 3)
+- [x] `hn_attack` เริ่มอนิเมชันที่เฟรม 4 (`SetFrame`) - predict นับเวลาจากอนิเมชัน: ฟิลด์ `anim_from` ใน spec + predict (`TR_OLD_ANIMFROM`)
+- [x] sim pigman/bunnyman/merm/moonpig ใหม่ (sim บนโค้ดเก่าได้ตรงข้อมูลเดิม 100% = ที่เปลี่ยนมาจากเกม)
+- [x] sim ทั้งชุดบนโค้ดเก่า vs ใหม่: ต่างเฉพาะ 6 ท่าตระกูลหมูข้างบน (+ mutatedbuzzard_gestalt atk_flame_pre = สุ่ม/เวลาจำกัด ไม่มีสคริปต์เปลี่ยน)
+- [x] build_um: เอาเฉพาะ pigman/pigking_pigguard/tricktreatpigman/merm/bunnyman (counter_atk, paw, were_atk_pre ใหม่) - ที่เหลือของ build เป็นการแกว่ง ไม่เอา
+- [x] replay 1610: host missed 14 false 1,903 · client 23 / 2,899 = baseline; หมูทุกตัว missed 0 · ติดตั้งแล้ว (data `0ADD43380DDD`)
+- [x] lag 0726 (เกมใหม่, ข้อมูลใหม่): pigman/pigguard/bunnyman/merm 129 โดน NOT 1 (UM counter_atk ที่ 3.09 ตอน Predictive นำ 0.6), false 0. franken/mummy/vampire ไม่โผล่บน bench (สุ่ม 30% ช่วงอีเวนต์) - ยังไม่ได้เห็นในเกมจริง
+
 ## เกมอัปเดต 760178 (2026-10-27) — ✔ ตรวจแล้ว ไม่ต้อง rebuild
 
 - [x] แตกโค้ดเกมใหม่, `game_scripts_um`, `anim_lengths.lua` ใหม่

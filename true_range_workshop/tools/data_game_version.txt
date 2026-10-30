@@ -1,6 +1,9 @@
-760178
+760944
 # The game's version.txt the moves data is good for (first line). Set it when game_scripts is unpacked again and the data
 # rebuilt - or checked still right; tools\install.ps1 warns while it differs from the game's own.
 # 760178 (2026-10-27 Halloween): data of 2026-10-26 checked, not rebuilt - of 106 changed stategraphs none changes an attack's
 # frames, speed or reach (knockback states added; counterattack trigger ranges of shrouden 16->20 and charlie_boss 8->14,
 # when they strike back, not their shapes; horns' spit-out push +3; charlie minions now also break structures).
+# 760944 (2026-10-30 Hallowed Nights): pigs, merms, bunnymen and moon pigs now strike only ahead (SetHitArc 180), the werepig
+# leaps forward as it strikes, new franken pig / mummy merm / vampire bunny (hn_attack) - those rebuilt (sim -only, splice);
+# a full sim on the old and new scripts differs in those alone.

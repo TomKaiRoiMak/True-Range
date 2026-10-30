@@ -278,9 +278,13 @@ local BOSSES = {
     { prefab = "tallbird", sg = "SGtallbird", states = { "attack" } },
     { prefab = "pigman", sg = "SGpig", states = { "attack",
         -- (gone werepig at full moon: its werepig bite - another stategraph, its own animations)
-        { name = "attack", sg = "SGwerepig" } }, also = { "pigguard" } },
-    { prefab = "bunnyman", sg = "SGbunnyman", states = { "attack" } },
-    { prefab = "merm", sg = "SGmerm", states = { "attack" }, also = { "mermguard", "merm_shadow", "mermguard_shadow", "merm_lunar", "mermguard_lunar" } },
+        { name = "attack", sg = "SGwerepig" },
+        -- (Hallowed Nights' monster kinds (game 760944, TUNING.HN_MONSTER_CHANCE): the franken pig, the vampire bunny, the
+        -- mummy merm - a jump forward, struck at 12 (hn_attack, SGpig.lua :539, SGbunnyman.lua :462, SGmerm.lua :1237). Its
+        -- animation begun at its frame 4 (SetFrame(4)): anim_from - true_range times a move by its animation's own clock)
+        { name = "hn_attack", extra = { anim_from = 4 } } }, also = { "pigguard" } },
+    { prefab = "bunnyman", sg = "SGbunnyman", states = { "attack", { name = "hn_attack", extra = { anim_from = 4 } } } },
+    { prefab = "merm", sg = "SGmerm", states = { "attack", { name = "hn_attack", extra = { anim_from = 4 } } }, also = { "mermguard", "merm_shadow", "mermguard_shadow", "merm_lunar", "mermguard_lunar" } },
     -- (the pigs of the moon event, at the Moon Stone)
     { prefab = "moonpig", sg = "SGmoonpig", states = { "attack" } },
     { prefab = "beefalo", sg = "SGBeefalo", states = { "attack" } },

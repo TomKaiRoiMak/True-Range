@@ -5013,22 +5013,15 @@ return {
         ["BUILD_PLAYER"] = 1.03333333333333,
         _banks = { ["BUILD_PLAYER"] = 1549510938 },
     },
-    ["winona_portables"] = {
-        ["catapult"] = 1,
-        ["spotlight"] = 1,
-        ["battery_low"] = 1,
-        ["battery_high"] = 1,
-        _banks = { ["catapult"] = 1766149375, ["spotlight"] = 1766149375, ["battery_low"] = 1766149375, ["battery_high"] = 1766149375 },
-    },
     ["winona_powercell"] = {
         ["idle"] = 1,
         _banks = { ["idle"] = 4182767566 },
     },
     ["winona_toolbox"] = {
+        ["close"] = 0.5,
         ["idle"] = 1,
         ["open"] = 0.5,
-        ["close"] = 0.5,
-        _banks = { ["idle"] = 3705169402, ["open"] = 3705169402, ["close"] = 3705169402 },
+        _banks = { ["close"] = 3705169402, ["idle"] = 3705169402, ["open"] = 3705169402 },
     },
     ["winona_upgradekit_electrical"] = {
         ["idle"] = 1,

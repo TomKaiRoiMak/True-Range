@@ -6422,6 +6422,15 @@ return {
         ["superjump"] = 0.3,
         _banks = { ["TA"] = 2108240396, ["front_lob_pre"] = 2108240396, ["front_lob"] = 2108240396, ["side_lob_pre"] = 2108240396, ["side_lob"] = 2108240396, ["pose1_pre"] = 2108240396, ["idletopose1"] = 2108240396, ["pose1_loop"] = 2108240396, ["pose1_pst"] = 2108240396, ["pose2_pre"] = 2108240396, ["idletopose2"] = 2108240396, ["pose2_loop"] = 2108240396, ["pose2_pst"] = 2108240396, ["pose3_pre"] = 2108240396, ["idletopose3"] = 2108240396, ["pose3_loop"] = 2108240396, ["pose3_pst"] = 2108240396, ["pose4_pre"] = 2108240396, ["idletopose4"] = 2108240396, ["pose4_loop"] = 2108240396, ["pose4_pst"] = 2108240396, ["superjump_pre"] = 2108240396, ["superjump"] = 2108240396 },
     },
+    ["ds_pig_halloween"] = {
+        ["halloween_idle_loop"] = 1.23333333333333,
+        ["halloween_walk_pre"] = 0.233333333333333,
+        ["halloween_walk_loop"] = 1.86666666666667,
+        ["halloween_walk_pst"] = 0.4,
+        ["halloween_run_pre"] = 0.466666666666667,
+        ["halloween_atk_pst"] = 0.333333333333333,
+        _banks = { ["halloween_idle_loop"] = 2108240396, ["halloween_walk_pre"] = 2108240396, ["halloween_walk_loop"] = 2108240396, ["halloween_walk_pst"] = 2108240396, ["halloween_run_pre"] = 2108240396, ["halloween_atk_pst"] = 2108240396 },
+    },
     ["ds_pig_monkey"] = {
         ["dive"] = 1.06666666666667,
         ["dive_pst_water"] = 0.566666666666667,
@@ -9477,7 +9486,11 @@ return {
         ["decor_4"] = 0.0333333333333333,
         ["decor_5"] = 0.0333333333333333,
         ["decor_6"] = 0.0333333333333333,
-        _banks = { ["decor_1"] = 1015564301, ["decor_2"] = 1015564301, ["decor_3"] = 1015564301, ["decor_4"] = 1015564301, ["decor_5"] = 1015564301, ["decor_6"] = 1015564301 },
+        ["decor_7"] = 0.0333333333333333,
+        ["decor_8"] = 0.0333333333333333,
+        ["decor_9"] = 0.0333333333333333,
+        ["decor_10"] = 0.0333333333333333,
+        _banks = { ["decor_1"] = 1015564301, ["decor_2"] = 1015564301, ["decor_3"] = 1015564301, ["decor_4"] = 1015564301, ["decor_5"] = 1015564301, ["decor_6"] = 1015564301, ["decor_7"] = 1015564301, ["decor_8"] = 1015564301, ["decor_9"] = 1015564301, ["decor_10"] = 1015564301 },
     },
     ["halloween_potions"] = {
         ["sanity_large"] = 0.1,
@@ -12531,6 +12544,19 @@ return {
     },
     ["manrabbit_enforcer_build"] = {
     },
+    ["manrabbit_halloween"] = {
+        ["halloween_idle_loop"] = 1.23333333333333,
+        ["halloween_walk_pre"] = 0.233333333333333,
+        ["halloween_walk_loop"] = 1.86666666666667,
+        ["halloween_walk_pst"] = 0.4,
+        ["halloween_run_pre"] = 0.466666666666667,
+        ["halloween_run_loop"] = 0.533333333333333,
+        ["halloween_run_pst"] = 0.2,
+        ["halloween_atk_pre"] = 0.5,
+        ["halloween_atk"] = 0.233333333333333,
+        ["halloween_atk_pst"] = 0.3,
+        _banks = { ["halloween_idle_loop"] = 1320614772, ["halloween_walk_pre"] = 1320614772, ["halloween_walk_loop"] = 1320614772, ["halloween_walk_pst"] = 1320614772, ["halloween_run_pre"] = 1320614772, ["halloween_run_loop"] = 1320614772, ["halloween_run_pst"] = 1320614772, ["halloween_atk_pre"] = 1320614772, ["halloween_atk"] = 1320614772, ["halloween_atk_pst"] = 1320614772 },
+    },
     ["manrabbit_parasite_death"] = {
         ["parasite_death_pst"] = 1.76666666666667,
         _banks = { ["parasite_death_pst"] = 1320614772 },
@@ -12538,6 +12564,8 @@ return {
     ["manrabbit_tail"] = {
         ["idle"] = 0.133333333333333,
         _banks = { ["idle"] = 1580836763 },
+    },
+    ["manrabbit_vampire_build"] = {
     },
     ["mapscroll"] = {
         ["idle"] = 0.0333333333333333,
@@ -12923,6 +12951,8 @@ return {
     ["merm_lunar_spike_fx"] = {
         ["idle"] = 0.4,
         _banks = { ["idle"] = 214050080 },
+    },
+    ["merm_mummy_build"] = {
     },
     ["merm_shadow_build"] = {
     },
@@ -14007,7 +14037,8 @@ return {
         ["shock_loop"] = 0.2,
         ["shock_pst"] = 0.166666666666667,
         ["mutated_bird_spawn"] = 0.466666666666667,
-        _banks = { ["mutated_crow"] = 1213925560, ["idle"] = 1213925560, ["switch"] = 1213925560, ["caw"] = 1213925560, ["hop"] = 1213925560, ["sleep_pre"] = 1213925560, ["sleep_loop"] = 1213925560, ["sleep_pst"] = 1213925560, ["fall_loop"] = 1213925560, ["stunned_loop"] = 1213925560, ["takeoff_vertical_pre"] = 1213925560, ["takeoff_vertical_loop"] = 1213925560, ["takeoff_diagonal_pre"] = 1213925560, ["takeoff_diagonal_loop"] = 1213925560, ["glide"] = 1213925560, ["land"] = 1213925560, ["attack"] = 1213925560, ["hit"] = 1213925560, ["flap_pre"] = 1213925560, ["flap_loop"] = 1213925560, ["flap_post"] = 1213925560, ["death"] = 1213925560, ["frozen"] = 1213925560, ["frozen_loop_pst"] = 1213925560, ["shock_loop"] = 1213925560, ["shock_pst"] = 1213925560, ["mutated_bird_spawn"] = 1213925560 },
+        ["knockback"] = 1.3,
+        _banks = { ["mutated_crow"] = 1213925560, ["idle"] = 1213925560, ["switch"] = 1213925560, ["caw"] = 1213925560, ["hop"] = 1213925560, ["sleep_pre"] = 1213925560, ["sleep_loop"] = 1213925560, ["sleep_pst"] = 1213925560, ["fall_loop"] = 1213925560, ["stunned_loop"] = 1213925560, ["takeoff_vertical_pre"] = 1213925560, ["takeoff_vertical_loop"] = 1213925560, ["takeoff_diagonal_pre"] = 1213925560, ["takeoff_diagonal_loop"] = 1213925560, ["glide"] = 1213925560, ["land"] = 1213925560, ["attack"] = 1213925560, ["hit"] = 1213925560, ["flap_pre"] = 1213925560, ["flap_loop"] = 1213925560, ["flap_post"] = 1213925560, ["death"] = 1213925560, ["frozen"] = 1213925560, ["frozen_loop_pst"] = 1213925560, ["shock_loop"] = 1213925560, ["shock_pst"] = 1213925560, ["mutated_bird_spawn"] = 1213925560, ["knockback"] = 1213925560 },
     },
     ["mutated_robin"] = {
         ["mutated_robin"] = 0.0666666666666667,
@@ -14037,7 +14068,8 @@ return {
         ["shock_loop"] = 0.2,
         ["shock_pst"] = 0.166666666666667,
         ["mutated_bird_spawn"] = 0.466666666666667,
-        _banks = { ["mutated_robin"] = 1072658313, ["idle"] = 1072658313, ["switch"] = 1072658313, ["caw"] = 1072658313, ["hop"] = 1072658313, ["sleep_pre"] = 1072658313, ["sleep_loop"] = 1072658313, ["sleep_pst"] = 1072658313, ["fall_loop"] = 1072658313, ["stunned_loop"] = 1072658313, ["takeoff_vertical_pre"] = 1072658313, ["takeoff_vertical_loop"] = 1072658313, ["takeoff_diagonal_pre"] = 1072658313, ["takeoff_diagonal_loop"] = 1072658313, ["glide"] = 1072658313, ["land"] = 1072658313, ["attack"] = 1072658313, ["hit"] = 1072658313, ["flap_pre"] = 1072658313, ["flap_loop"] = 1072658313, ["flap_post"] = 1072658313, ["death"] = 1072658313, ["frozen"] = 1072658313, ["frozen_loop_pst"] = 1072658313, ["shock_loop"] = 1072658313, ["shock_pst"] = 1072658313, ["mutated_bird_spawn"] = 1072658313 },
+        ["knockback"] = 1.3,
+        _banks = { ["mutated_robin"] = 1072658313, ["idle"] = 1072658313, ["switch"] = 1072658313, ["caw"] = 1072658313, ["hop"] = 1072658313, ["sleep_pre"] = 1072658313, ["sleep_loop"] = 1072658313, ["sleep_pst"] = 1072658313, ["fall_loop"] = 1072658313, ["stunned_loop"] = 1072658313, ["takeoff_vertical_pre"] = 1072658313, ["takeoff_vertical_loop"] = 1072658313, ["takeoff_diagonal_pre"] = 1072658313, ["takeoff_diagonal_loop"] = 1072658313, ["glide"] = 1072658313, ["land"] = 1072658313, ["attack"] = 1072658313, ["hit"] = 1072658313, ["flap_pre"] = 1072658313, ["flap_loop"] = 1072658313, ["flap_post"] = 1072658313, ["death"] = 1072658313, ["frozen"] = 1072658313, ["frozen_loop_pst"] = 1072658313, ["shock_loop"] = 1072658313, ["shock_pst"] = 1072658313, ["mutated_bird_spawn"] = 1072658313, ["knockback"] = 1072658313 },
     },
     ["mutate_fx"] = {
         ["mutate"] = 0.466666666666667,
@@ -14967,6 +14999,8 @@ return {
         _banks = { ["idle"] = 2233500994, ["sparkle"] = 2233500994, ["fall"] = 2233500994, ["toss1"] = 2233500994, ["toss2"] = 2233500994, ["bounce1"] = 2233500994, ["bounce2"] = 2233500994 },
     },
     ["pig_elite_build"] = {
+    },
+    ["pig_frankenswine_build"] = {
     },
     ["pig_guard_build"] = {
     },
