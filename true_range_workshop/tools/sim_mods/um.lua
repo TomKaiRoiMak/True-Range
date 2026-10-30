@@ -48,6 +48,10 @@ return {
     -- of all within 3 as its grab ends (SGmindweaver.lua:41 Grabby); the fuelseeker's burst - 50 to all within 6 at 31)
     { prefab = "mindweaver", sg = "SGmindweaver", dummy_player = true, add = { "grab" } },
     { prefab = "fuelseeker", sg = "SGfuelseeker", dummy_player = true, add = { "burst" } },
+    -- (the Ancient Trepidation's arms: a tentacle's lash (SGtrepidation_arm: atk_pre, then attack's atk_loop, DoAttack at 7,
+    -- TENTACLE_ATTACK_DIST) - never found by the scan; drawn as the marsh tentacle's it was 7 frames late, its atk_pre 18
+    -- frames to the tentacle's 25)
+    { prefab = "ancient_trepidation_arm", sg = "SGtrepidation_arm", add = { "attack_pre", "attack" } },
     { prefab = "beequeen", sg = "SGbeequeen", add = { "stomp", "combo_prep", "stomp_combo", "lob", "defensive_spin" } },
     -- (moves Uncompromising Mode gives the game's monsters, gone into by its own code now and then: a
     -- Koalefant's stomp (its stompatk - stomp_pre is commented out). A Beefalo's / Koalefant's charge after its
