@@ -88,3 +88,4 @@
 - Uncompromising Mode's lightning strikes (lightning hounds, the alpha goat, tornadoes): drawn 3.5 round where they come down, and the alpha goat's lightning running along the ground drawn as it runs
 - A crash guard: when a great many things appear at once (dozens of shots in one go), drawing them is spread over a few frames instead of all in one - Shadow Wixie's ring of 48 shots crashed the game
 - Uncompromising Mode's haunt: the hands it sends drawn, as the Stage Usher's
+- Tropical Experience's big foot (the glommer's bell): its stomp drawn as it comes down

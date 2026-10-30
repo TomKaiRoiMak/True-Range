@@ -124,6 +124,10 @@ list[#list + 1] = { striker = { prefab = "maxwellshadowmeteor", radius = 4.05, d
 -- (the volcano's fire rain and the dragoon eggs coming down: shown by their shadow (firerainshadow), hidden, then a ground
 -- pound where they land - its one damage ring 1 out, striking within ringWidth 3 of each point (groundpounder, middles:
 -- 4 - 3.5 and your body), at VOLCANO_FIRERAIN_WARNING 2 s less 5 frames (fire rain) or 7 (an egg), setting fire)
+-- (the big foot a glommer's bell calls down (bigfooter SummonFoot): put down, its step begun 10 frames on (StartStep), its stomp 2 s
+-- after that less 5 frames and its blow 5 in (SGbigfoot stomp: DoStep - groundpounder, point mode: each point's DoAttack, 2000);
+-- its shadow the game's own warning. Never drawn - not a prefab the scan had (2026-10-30))
+list[#list + 1] = { prefab = "bigfoot", sg = "SGbigfoot", states = { { name = "stomp", fields = { SpawnPrint = function() end } } } }
 list[#list + 1] = { striker = { prefab = "firerain", radius = 3.5, delay = 55, moved = false } }
 list[#list + 1] = { striker = { prefab = "dragoonegg_falling", radius = 3.5, delay = 53, moved = false } }
 -- (the dragoon's spit (LAVASPIT, actions.lua): a puddle of lava 1.7 before it (dragoonspit.lua), burning whoever's middle comes
