@@ -20,7 +20,7 @@
 
 | งาน | สถานะ |
 |---|---|
-| lag ยังไม่ได้วัด: Wixie (ลูกเป็นวงแล้ว c9c59b0), mindweaver, fuelseeker, ancient_trepidation_arm (4b9373c), hound_lightning / goat_lightning (6ad449d), budget ชิ้นใหม่ต่อเฟรม (9a4c93e), TE jellyfish วงตอนช็อต (modmain), toadlingspawner (7d19d55), cursed fire, Scion fissures (เฉพาะใน arena - bench ไม่มี), Wixie clone (bench 2348 host 0 พลาด) - bench 2152 (ไม่มีหน้าจอ): บอสทุกตัว drawn ครบ host/client, ของ host 0 พลาด; client: ลูก Wixie 13 (ยิงจาก 4 ถึงตัวในไม่กี่ tick); mindweaver/fuelseeker ไม่ได้ตี (ต้องคนบ้า) | เกมเปิดไม่ขึ้นหลังล่ม 20:57 - CrashReporter.exe ค้าง (ปิดเองไม่ได้) |
+| lag 0347 (ไม่ล่ม, new pieces สูงสุด 1,210): goat / trepidation / สุนัขสายฟ้า / Spazmatism NOT 0; Wixie NOT 7/47 on, 4/38 off (ลูกระยะใกล้), clone 1/10; union REVERSE 165 = ลูกพัดของ Wixie | ยังไม่ได้วัดในเกม: mindweaver, fuelseeker (ไม่ยอมตี), haunt, toadling, jellyfish, fissure (ต้องมี arena) |
 
 ## รอเจ้าของตัดสิน
 
