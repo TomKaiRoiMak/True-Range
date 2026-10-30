@@ -3438,7 +3438,12 @@ end
 SimMoves._lead_ease = setmetatable({}, { __mode = "k" })
 -- (and Uncompromising Mode's snapper turtles, sliding up to 33 a second as they strike: the steadiness test failing as they speed
 -- up, the lead held off and then on 3.9 at once - frame_check JUMP 25 + 17 a run, lag 1820)
-SimMoves._lead_ease_of = { um_fire_projectile = true, snapperturtle = true, snapperturtlebaby = true }
+-- (and bosses whose lead came on whole as they set off, the steadiness test failing as they sped up - client replay boss jumps
+-- eased / not: the Celestial Champion's lunar roll 3 / 186, its first form 0 / 35, W.A.R.B.O.T. 4 / 60, its second 88 / 128, the
+-- knook 17 / 35, the Umbral mouth 375 / 430, none missed more. Not the rook: false 1 -> 15)
+SimMoves._lead_ease_of = { um_fire_projectile = true, snapperturtle = true, snapperturtlebaby = true,
+    alterguardian_phase1_lunarrift = true, alterguardian_phase1 = true, wagboss_robot = true, alterguardian_phase2 = true,
+    knook = true, shadowthrall_mouth = true }
 function SimMoves.LeadMoving(ent, x, z, now)
     local rx, rz = SimMoves._LeadMovingRaw(ent, x, z, now)
     -- (tried and left off - eased in, it came late: 2+0 -> 1+11 struck undrawn on the Moonmaw, 0-2 -> 2+4 on the Umbral Abomination,
