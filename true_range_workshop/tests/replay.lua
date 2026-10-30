@@ -2787,7 +2787,10 @@ for i = 2, #drawn_at - 1 do
         -- (or put there up to 3 frames before - a player's game aims at you where the server had you a frame and a half
         -- back (true_range/predict TR_OLD_SERVERAIM): after you as you were put there, two frames on. OLD_JUMP_YOU3=1: that frame only)
         if not os.getenv("OLD_JUMP_YOU3") then
-            for k = math.max(2, i - 3), i - 1 do
+            -- (6 frames back, not 3: a shot's lane turned after you half way each frame (true_range/predict a.shot_rot) is still
+            -- coming round 4-6 frames after the bench put you elsewhere - the walrus "jumping" 40 times so, 2026-10-30. OLD_JUMP_YOU6=1: 3)
+            local back = os.getenv("OLD_JUMP_YOU6") and 3 or 6
+            for k = math.max(2, i - back), i - 1 do
                 local p, q = drawn_at[k - 1], drawn_at[k]
                 if p.px ~= nil and q.px ~= nil then you = math.max(you, math.sqrt((q.px - p.px) ^ 2 + (q.pz - p.pz) ^ 2)) end
             end
