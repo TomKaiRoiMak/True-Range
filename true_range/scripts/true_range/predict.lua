@@ -3753,6 +3753,8 @@ local boss_xs, boss_zs = {}, {}  -- (DrawHazards: the bosses near, this frame)
 -- (testing: DrawHazards' time by stage, summed - true_range modmain says them every 10s)
 Predict.stage = { bosses = 0, ask = 0, quick = 0, quick_miss = 0, full_pre = 0, full = 0, loop = 0,
     things = 0, n_quick = 0, n_full = 0, frames = 0 }
+-- (how many pieces the things may make new in a frame - Predict.DrawHazards)
+Predict.NEW_PIECES = 1000
 function Predict.DrawHazards(ents, my_radius, me)
     local danger = false
     local s_t0 = os.clock()
@@ -3808,7 +3810,12 @@ function Predict.DrawHazards(ents, my_radius, me)
     local s_t = os.clock()
     ST.bosses = ST.bosses + s_t - s_t0
     SimMoves._draw_owner = nil
+    local created0 = Lines.created or 0
     for _, ent in ipairs(ents) do
+        -- (pieces made new this frame past Predict.NEW_PIECES: the rest left till the next - the nearest come first. Shadow Wixie's
+        -- taunt, 48 shots at once each drawn its own long way, made 10,244 in one frame and the game crashed (lag 2026-10-30_2054);
+        -- a fight's busiest frame makes some 80. TR_OLD_NEWBUDGET: no end)
+        if (Lines.created or 0) - created0 > Predict.NEW_PIECES and not rawget(_G, "TR_OLD_NEWBUDGET") then break end
         SimMoves._draw_owner = ent
         local valid = ent:IsValid()
         local learned_all = Legacy.on and valid and Predict.learned[ent.prefab] or nil
