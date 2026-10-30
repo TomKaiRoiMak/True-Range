@@ -3,7 +3,7 @@
 -- moves_hand*, their _alias / _hazards), not named anywhere in the mod's own Lua (modmain's AGGRO tables, moves_preload).
 -- The runs only see what their list holds - UM's mindweaver, fuelseeker, the haunt's hands, TE's big foot and jellyfish
 -- none of it, found so 2026-10-30. Commented-out lines skipped (TE's snake_fire, deadsnake: --Prefab(...)).
--- Prints: <file> <prefab> - one line each; read them: a pet, an effect or a drain is no gap.
+-- Prints: <file> <prefab> - one line each; read them: a pet, an effect or a drain is no gap. GAP_THINGS=1: things too.
 local dir, mod = arg[1], arg[2]
 local have = {}
 local files = {}
@@ -43,7 +43,11 @@ for f in list:lines() do
     local h = io.open(dir .. "/prefabs/" .. f, "rb")
     local t = Strip(h:read("*a"))
     h:close()
-    if t:find('AddComponent%(%s*"combat"') and t:find("SetStateGraph") then
+    -- (and things with no combat that strike all the same - a search, then a blow: UM's hound_lightning (DoDelta),
+    -- goat_lightning, found only by hand, 2026-10-30. GAP_THINGS=1)
+    local fights = t:find('AddComponent%(%s*"combat"') and t:find("SetStateGraph")
+    local strikes = os.getenv("GAP_THINGS") and t:find("FindEntities") and (t:find("GetAttacked") or t:find("DoDelta%(%s*%-") or t:find(":DoAttack%("))
+    if fights or strikes then
         local seen = {}
         for name in t:gmatch('%f[%w_]Prefab%(%s*"[%w_/]-([%w_]+)"') do
             if not seen[name] and not have[name] and not named[name] then

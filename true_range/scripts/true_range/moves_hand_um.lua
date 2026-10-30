@@ -81,6 +81,9 @@ return {
         -- comes out; never drawn (tools/gap_scan.lua, 2026-10-30). Its own "by": not Toadstool's - no Toadstool near, drawn as
         -- another's and left out. TR_OLD_TOADLINGBOMB: none)
         toadlingspawner = not rawget(_G, "TR_OLD_TOADLINGBOMB") and { copy_hazard = "mushroombomb", by = { "toadlingspawner" } } or nil,
+        -- (the Eye of Terror's cursed fire: drawn as big as it is now (true_range/simmoves _live_radius, 4 times its size) - this
+        -- only so it's among the things looked for; its shape here never drawn. TR_OLD_CURSEDFIRE: none)
+        cursed_fire = not rawget(_G, "TR_OLD_CURSEDFIRE") and { copy_hazard = "magmafire", by = { "twinofterror2", "eyeofterror" }, lasting = true, effects = nil } or nil,
         lavaeslime = { by = { "lavae2" }, delay = 90, effects = "fire", lasting = true, moved = false, steps = { { at = 0, cells = "X21m2011h2A11f2E11d2I11c2K11b2M11a2O11Z2Q11Z2Q11Y2S11Y2S11X2U11X2U11X2U11X2U11X2U11W2W111X2U11X2U11X2U11X2U11X2U11Y2S11Y2S11Z2Q11Z2Q11a2O11b2M11c2K11d2I11f2E11h2A11m20" } } },
     },
 }

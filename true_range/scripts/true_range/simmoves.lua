@@ -4336,6 +4336,10 @@ end
 -- every one, frame_check POP 450 a run of fire hounds (lag 1445). TR_OLD_UNSETSCALE: drawn)
 SimMoves._live_radius = { deer_ice_circle = { field = "_rad", grows_to = 3, armed_by = "deer_ice_fx" },
     um_fire_projectile = { scale_r = 2, moving = true, also_data = true, unset = 1 } }
+-- (Uncompromising Mode's cursed fire, left half the time where an Eye of Terror's fireball lands (eyeofterror_extras OnHitFire):
+-- 5 off the health of all within 4 times its size every 0.5 s (Burning), shrinking from 1 to 0.05 over 5 s (sizetweener) -
+-- in no data: the run never noted health taken straight off (649f4a2). TR_OLD_CURSEDFIRE: none)
+if not rawget(_G, "TR_OLD_CURSEDFIRE") then SimMoves._live_radius.cursed_fire = { scale_r = 4 } end
 function SimMoves.DrawHazard(ent, x, z, rot, px, pz, now, in_moves, data_only)
     local lr = not data_only and SimMoves._live_radius[ent.prefab] or nil
     local x0, z0 = x, z
