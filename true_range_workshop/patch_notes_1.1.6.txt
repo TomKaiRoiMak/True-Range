@@ -95,3 +95,4 @@
 - The Scion's lunar fissures (in Wagstaff's arena): each burning tile drawn as the square it is
 - Uncompromising Mode's Shadow Wixie's clones in her puzzle: drawn as she is
 - Tropical Experience's scorpion: its claw and its leap no longer both drawn at once - the claw till it leaps (it leaps only at you from over 3 away)
+- Tropical Experience's water rook: its charge drawn all the way as it runs, as the rook's - it struck while running with nothing drawn

@@ -6,6 +6,11 @@ return {
     -- BOTHDRAWN). The leap only when you're over 3 off (evade_pst: JUMP_DISTANCE 3) - the run never found that (not where it
     -- looks for it): far told here, the claw drawn till the leap sets off (true_range/predict's far tell, as the slip's).
     -- TR_OLD_SCORPFAR: both)
+    -- (the water rook (SGrookwater): the rook's charge over again - atk_pre, paw_loop, then atk looping as it runs, its blow as it
+    -- runs into you (runningattack DoAttack); ROOK_RUN_SPEED, its body 1.5 - only its atk_pre in the data: struck running, 9 of 195
+    -- undrawn and 524 drawn-in-unstruck on the bench of TE's monsters (0611). The rook's own running blow (atk, first 0) as
+    -- its. TR_OLD_ROOKWATER: none)
+    rookwater = not rawget(_G, "TR_OLD_ROOKWATER") and { atk = { copy = { "rook", "atk" } } } or nil,
     scorpion = not rawget(_G, "TR_OLD_SCORPFAR") and { ["atk~leap_attack"] = { copy = { "scorpion", "atk~leap_attack" }, far = 3,
         replace = true } } or nil,
 }
