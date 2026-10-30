@@ -18,7 +18,7 @@
 
 | งาน | สถานะ |
 |---|---|
-| UM Bullet Bee (shooter): วงรอบตัวผู้เล่นแว้บ ตอน flydown_shooter (mortar) | ยังไม่ได้ดู - ถัดไป |
+| beeguard (ราชินี) frame_check AIM 12 / REVERSE 4 ต่อ run | ยังไม่ได้ดู |
 
 ## รอเจ้าของตัดสิน
 
