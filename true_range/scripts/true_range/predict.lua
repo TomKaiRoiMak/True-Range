@@ -3488,7 +3488,20 @@ function Predict.Draw(ents, ranges, my_radius, me, skip)
                         SimMoves.maybe = sim.straight and a.locked == nil or nil
                         -- (one that only shoots a dart flying straight: its lane at you till it shoots - SimMoves.DrawShot)
                         if sim.shoots ~= nil then
-                            if aim ~= nil and aim.me then danger = SimMoves.DrawShot(sim, ox, oz, aim_rot, tt, px, pz) or danger end
+                            -- (turned to you half way each frame, not in steps as the server tells where you are (15 a second): a lane
+                            -- 30 long, its middle 1-2 on in a frame and still the next - the spitter's, frame_check JUMP 26 a run (lag
+                            -- 1240). TR_OLD_SHOTEASE: in steps)
+                            local shot_rot = aim_rot
+                            if shot_rot ~= nil and not rawget(_G, "TR_OLD_SHOTEASE") then
+                                if a.shot_rot ~= nil and a.shot_t ~= now then
+                                    local d = (shot_rot - a.shot_rot + math.pi) % (2 * math.pi) - math.pi
+                                    shot_rot = a.shot_rot + d * .5
+                                elseif a.shot_rot ~= nil then
+                                    shot_rot = a.shot_rot
+                                end
+                                a.shot_rot, a.shot_t = shot_rot, now
+                            end
+                            if aim ~= nil and aim.me then danger = SimMoves.DrawShot(sim, ox, oz, shot_rot, tt, px, pz) or danger end
                         else
                             SimMoves.dt_add = a.fall_left
                             danger = SimMoves.Draw(sim, ox, oz, aim_rot, aim, my_radius, px, pz, tt, flee_log or a.log, ent, target, len) or danger
