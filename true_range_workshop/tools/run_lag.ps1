@@ -53,6 +53,9 @@ function Cleanup {
         [IO.File]::WriteAllLines($settings, $lines, $noBom)
     }
 }
+# (and first, before the server starts: a run stopped part way never got to its end - its line left in, the server too
+# loaded tr_lagjoin, its RPCs four more than your game's: "Invalid RPC code: tr_lag 8", no scene ever told, 2026-10-31_0327)
+Cleanup
 
 # 3. its world: one shard, LAN only, your token (a server others can join needs one), the tick rate asked for
 $name = 'Lag'
