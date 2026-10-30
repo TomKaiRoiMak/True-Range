@@ -73,6 +73,9 @@ return {
         -- As Toadstool's bomb (3.5) made 3. TR_OLD_MOONMINE: none)
         um_tentacle_moon_mine = not rawget(_G, "TR_OLD_MOONMINE") and { copy_hazard = "mushroombomb", by = { "um_tentacle_moon" }, delay = 60,
             delay_max = 180, lasting = true, moved = false, scale = 3 / 3.5 } or nil,
+        -- (the haunt's hand (um_haunt.lua handfn): the Stage Usher's hand over again - test_for_damage_targets the same code, its
+        -- STAGEUSHER_ATTACK_DAMAGERADIUS, its step time; never drawn, not a prefab the scan had (2026-10-30). TR_OLD_HAUNTHAND: none)
+        um_haunt_attackhand = not rawget(_G, "TR_OLD_HAUNTHAND") and { copy_hazard = "stageusher_attackhand", by = { "um_haunt" } } or nil,
         lavaeslime = { by = { "lavae2" }, delay = 90, effects = "fire", lasting = true, moved = false, steps = { { at = 0, cells = "X21m2011h2A11f2E11d2I11c2K11b2M11a2O11Z2Q11Z2Q11Y2S11Y2S11X2U11X2U11X2U11X2U11X2U11W2W111X2U11X2U11X2U11X2U11X2U11Y2S11Y2S11Z2Q11Z2Q11a2O11b2M11c2K11d2I11f2E11h2A11m20" } } },
     },
 }
