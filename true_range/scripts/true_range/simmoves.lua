@@ -3436,11 +3436,16 @@ end
 -- whole unit on in one frame, then back as it stopped - "jump 1.0 then back" on the lag bench, 6 a run, 2026-10-28. Gone at
 -- once for a teleport (its step over 40 a second). TR_OLD_LEADEASE: at a stroke)
 SimMoves._lead_ease = setmetatable({}, { __mode = "k" })
+SimMoves._lead_ease_of = { um_fire_projectile = true }
 function SimMoves.LeadMoving(ent, x, z, now)
     local rx, rz = SimMoves._LeadMovingRaw(ent, x, z, now)
     -- (tried and left off - eased in, it came late: 2+0 -> 1+11 struck undrawn on the Moonmaw, 0-2 -> 2+4 on the Umbral Abomination,
     -- lag_ease1/2 2026-10-28; on only with TR_LEADEASE)
-    if not rawget(_G, "TR_LEADEASE") or ent == nil then return rx, rz end
+    -- (or eased for that one alone (SimMoves._lead_ease_of[prefab]): the fire hounds' fireballs slowing as they go, the lead on
+    -- and off each frame by the steadiness test - their disc to and fro, frame_check REVERSE ~20 per 1,000 frames (lag 1500).
+    -- TR_OLD_FIREEASE: as the others)
+    local ease_this = ent ~= nil and SimMoves._lead_ease_of[ent.prefab] and not rawget(_G, "TR_OLD_FIREEASE")
+    if not (rawget(_G, "TR_LEADEASE") or ease_this) or ent == nil then return rx, rz end
     local e = SimMoves._lead_ease[ent]
     if e == nil then e = { ox = 0, oz = 0, t = now } SimMoves._lead_ease[ent] = e end
     local dx, dz = rx - x, rz - z
