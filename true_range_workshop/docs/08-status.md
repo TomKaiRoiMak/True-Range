@@ -2,74 +2,48 @@
 
 [← สารบัญ](README.md)
 
-## สรุปคืน 29→30 ต.ค. (อ่านก่อน)
+> **กติกาของหน้านี้**: มีแค่งานที่ยังเปิด + ตัวเลขล่าสุด, งานละ 1 บรรทัด. ปิดงานแล้ว = ลบบรรทัดออก (รายละเอียดอยู่ใน `git log` ตาม template ปัญหา/สาเหตุ/แก้/วัด/ค้าง). ประวัติก่อนหน้า: [history/29_status-2026-10.md](history/29_status-2026-10.md)
 
-- **ช่องโหว่ใหญ่ที่ปิด**: แมงมุมพ่นใย 53/56 → 2/85, walrus ลูกดอก 11/11 → 0/14 (ไม่มีท่ายิงในข้อมูล), W.A.R.B.O.T. วงกระโดดโผล่ไกล 13-17 หน่วย 6 → 0 ใน 20 นาที, Celestial Champion กำแพงหนาม, Charlie มือสองฝั่ง, กับระเบิด Moon Tentacle
-- **กะพริบที่ปิด**: Shadow Bishop เลนกลับทิศ, Nightmare Rook ส่วนที่ตีแล้วโผล่กลับ, Eye/Twins next leg เลื่อน 2 หน่วย, Moose เลนสั้น 2 เฟรม
-- **เครื่องมือ**: replay deterministic แล้ว (เดิมผลแกว่งทุกรอบ), frame_check/tr_lagjoin วัดชิ้นที่เห็นจริง, lag_report แยก ahead / ระหว่างฉาก
-- **ยืนยัน**: lag กวาด ~90 ตัว; บอสหลัก 16 ตัว 70 นาที NOT 0.66%, replay 1610 host 14 / client 23 missed (baseline ใหม่)
-- **รอคุณตัดสิน**: Glacial Hound ฝั่ง Predictive โดนปลายแนวหนาม 13-23 / ~100 (ผู้เล่นบนจอนำ server) - ยืดปลายเลนตาม lead ได้แต่ false จะเพิ่ม
+## ตัวเลขล่าสุด (baseline)
 
-> หน้านี้คือ "บอร์ดงาน" — อัปเดตเมื่อปิด/เปิดงาน รายละเอียดการแก้แต่ละครั้งอยู่ใน `git log`
-
-## ตัวเลขล่าสุด
-
-| วัด | ค่า |
-|---|---|
-| replay 1610 (2026-10-29 ค่ำ, deterministic แล้ว `4e0ea67`) | host missed **14** / 56,815 (บอส 4, ของ 8 - sporecloud 7 = ขอบวง/bench), false 1,901 · client missed 23 / 56,851, false 2,900 |
-| lag 0314 บอสหลัก 16 ตัว 70 นาที (ตัวแก้ทั้งหมด 29-30 ต.ค. ติดตั้งรวมกัน) | NOT drawn 13 / 1,980 (0.66%), false 103; ไม่มีถดถอย |
-| lag 0521 บอสหลักซ้ำ 70 นาที | NOT 25 / 1,735 (1.44%) - ส่วนใหญ่จาก 2 ฉาก: Eye scene 11 (bench ย้ายผู้เล่น 33 หน่วย, ชนตัว), เหล็กไน guard UM ชุดเดียว 4; Moonmaw 13 (ขอบวงลาวา ข้อ 3) |
-| lag 1636 กวาด 22 บอส 70 นาที | NOT drawn 11 / 1,462 (0.75%), ไม่มีวงกะพริบไป-กลับไกล |
-| replay baseline 0805 (เดิม) | missed **25** / 59,086 (บอส 6, ของที่ปล่อย 19) · false 2,019 |
-| bench เต็มล่าสุด 1503 | missed 35 / 59,697 — A/B ยืนยันว่าไม่ใช่ถดถอย |
-| lag bench (shrouden + wings) | NOT drawn 0–2 ต่อรอบ, วงเตือนกระพริบ 0 |
-| Ink Blight จุดตกขยับ | 0.01 ครั้งต่อลูก (เดิม 0.84 → LANDSTOP 0.13 → + รอ 7 ค่า/hold .4 = 0.01) |
-| โหลดข้อมูลในเกม | 93 ms, ~30 MB Lua memory |
-
-## เกมอัปเดต 760944 (2026-10-30, Hallowed Nights) — rebuild หมู/merm/กระต่าย
-
-- [x] แตกโค้ดเกมใหม่ (`73CC0D20`), `game_scripts_um`, `anim_lengths.lua` ใหม่ (เพิ่มแค่อนิเมชัน halloween)
-- [x] เกมเปลี่ยนท่าจริง 3 อย่าง: Werepig ตีแบบกระโดดไปหน้า (~1.8 หน่วยก่อนตี, ข้อมูลเดิม "ยืนกับที่"); หมู/merm/กระต่าย/moonpig ได้ `SetHitArc(180)` = กัดแค่ครึ่งวงหน้า (เดิมรอบตัว); มอนใหม่ franken pig / mummy merm / vampire bunny (`hn_attack`, กระโดดตีที่ 12, ระยะตี 3)
-- [x] `hn_attack` เริ่มอนิเมชันที่เฟรม 4 (`SetFrame`) - predict นับเวลาจากอนิเมชัน: ฟิลด์ `anim_from` ใน spec + predict (`TR_OLD_ANIMFROM`)
-- [x] sim pigman/bunnyman/merm/moonpig ใหม่ (sim บนโค้ดเก่าได้ตรงข้อมูลเดิม 100% = ที่เปลี่ยนมาจากเกม)
-- [x] sim ทั้งชุดบนโค้ดเก่า vs ใหม่: ต่างเฉพาะ 6 ท่าตระกูลหมูข้างบน (+ mutatedbuzzard_gestalt atk_flame_pre = สุ่ม/เวลาจำกัด ไม่มีสคริปต์เปลี่ยน)
-- [x] build_um: เอาเฉพาะ pigman/pigking_pigguard/tricktreatpigman/merm/bunnyman (counter_atk, paw, were_atk_pre ใหม่) - ที่เหลือของ build เป็นการแกว่ง ไม่เอา
-- [x] replay 1610: host missed 14 false 1,903 · client 23 / 2,899 = baseline; หมูทุกตัว missed 0 · ติดตั้งแล้ว (data `0ADD43380DDD`)
-- [x] lag 0726 (เกมใหม่, ข้อมูลใหม่): pigman/pigguard/bunnyman/merm 129 โดน NOT 1 (UM counter_atk ที่ 3.09 ตอน Predictive นำ 0.6), false 0. franken/mummy/vampire ไม่โผล่บน bench (สุ่ม 30% ช่วงอีเวนต์) - ยังไม่ได้เห็นในเกมจริง
-
-## เกมอัปเดต 760178 (2026-10-27) — ✔ ตรวจแล้ว ไม่ต้อง rebuild
-
-- [x] แตกโค้ดเกมใหม่, `game_scripts_um`, `anim_lengths.lua` ใหม่
-- [x] diff: 106 stategraph เปลี่ยน แต่ไม่มีท่าไหนเปลี่ยนเฟรม/ความเร็ว/ระยะ (เพิ่ม knockback ; ระยะ "สวนกลับ" shrouden 16→20, charlie 8→14 ; horns spitout +3)
-- [x] `tools\data_game_version.txt` = `760178` (เหตุผลอยู่ในไฟล์และ commit `a9efe7b`)
-
-## งานค้าง (เรียงตามความสำคัญ)
-
-| # | งาน | สถานะ / ข้อมูลที่มี |
+| วัด | ค่า | เมื่อ |
 |---|---|---|
-| 1 | ~~bench เต็มบนเกม 760178 + replay~~ ✔ | 2026-10-28: missed **22** / 56,675 (บอส 6, ของ 16), false 1,901 — ดีที่สุดที่เคยวัด ; baseline ใหม่ = run ล่าสุด `_shares` ของ 28 ต.ค. บ่าย |
-| 2 | ~~ลาวา moonmaw "กระโดด 1 แล้วกลับ"~~ ✔ | 2026-10-28: ต้นเหตุ = ลาวาไถลชะลอตอน stab_pre, lead โผล่ตอนเบรกแล้วหาย; แก้: ท่าที่ข้อมูลอยู่กับที่ ล็อกจุดหน้าสุด (ไม่ถอย) `TR_OLD_STAYLEAD`. lag: jumps 13/10 -> 0 (`tools\lag_jumps.ps1`), NOT drawn 7 -> 3; replay client ทั้งชุด missed เท่าเดิม |
-| 3 | ลาวาวง moonmaw NOT drawn 2–6/รอบ (คุณอยู่ขอบนอกของส่วนที่วาด) | 2026-10-28 (lag 1446): 3 / 459 ครั้ง (0.65%) ทุกครั้ง 2.76–3.00 จากลาวา; เกมตี `FindEntities(r=2.2)` ทุก .15 s รอบลาวาที่วิ่งวนเร็ว → ตำแหน่งที่ client เห็นช้า ไม่ใช่รูปผิด. ไม่แก้ (ขยายวงจะได้ false ทุกรอบ) |
-| 4 | ~~หนอน: ท่อนหนามตีตอนโผล่จากกองดิน~~ ✔ เจ้าของตัดสิน 2026-10-29: ไม่แสดงวงรอบกองดิน ("ไม่ทำดาเมจ จะแสดงทำไม") — 2 ครั้งที่ท่อนโผล่+ตีเฟรมเดียวกันยอมรับว่าเตือนไม่ได้ | lag_worm6 (1658): 5 โดน — ground pound ที่ 3.28 วาดคลุม ✔ ; 2 ครั้ง "NOT" = ท่อนโผล่+ตีเฟรมเดียวกัน (ผู้เล่นไม่ได้อยู่ในวงใด 16–32 s ก่อนหน้า). เตือนได้ทางเดียวคือแสดงวงรอบกองดินตลอดที่ลำตัวเลื่อนผ่าน — ซึ่งเจ้าของขอเอาออกเมื่อ 28 ต.ค. ("วงนอกที่ไม่ทำดาเมจ") → **รอเจ้าของตัดสิน** |
-| 4b | ~~ท่าพุ่งที่ระยะจริงต่างจากข้อมูล (นอกจาก Klaus)~~ ✔ ดูแล้ว: daywalker atk3 = ถึงเป้า (กรองแล้ว); rneskeleton/boulder_crab = บอสยืนตี, path ในข้อมูลไม่ใช่การเคลื่อน, replay ไม่เปลี่ยน (crab 399/399) | `tools\went_table.ps1` บน 1610: sporehound jump_atk_loop 4 → 0.24 (74 ครั้ง), rneskeleton atk 7 → 0.06, boulder_crab atk 3 → 0.07, daywalker atk3 5.95 → 4.85 — `TR_OLD_WENT` เรียนให้เองถ้ากัดครั้งเดียวและสม่ำเสมอ; ยังไม่ได้ดูทีละตัวว่าทำไม sim ได้ระยะต่าง. sporehound (IDLEDRAW 104 / false 71): ✔ ไม่ใช่บั๊ก — 74 ครั้งทันทีหลัง testbench ย้ายหมา (`[tr_bench] moved`), 30 ครั้งคือช่วง taunt หลังลงพื้น ซึ่งท่ารวมเมฆสปอร์ที่ปล่อยตอนลง (`again_anim=sporecloud_loop`, ตีซ้ำได้ 705 เฟรม) = คำเตือนเมฆ; "went 0.24" เพราะท่าเริ่มนับตอนกระโดดไปแล้ว. หมายเหตุ: replay_haz ไม่แน่นอน (log เดียวกัน missed 1–2 สลับกัน) |
-| 4c | ~~Klaus พุ่งเต็มไม่มีเป้า พลาดที่ 57.2~~ ✔ | `ebe8428`: path index ผิด 1 เฟรม + Klaus ออกตัวช้ากว่า sim 1 เฟรม → วางจากจุดเริ่ม; log ผู้เล่น missed 0 |
-| 4d | Umbral เลเซอร์ (ผู้เล่นรายงาน 2026-10-29 "หลังใช้ laser มีเฟรม hitbox ขึ้นแถวผู้เล่น") | lag 0549 `[tr_lagframe]`: ทุกครั้งที่เริ่ม optic_blast_pre1 (5/5) รูปจำลองยาว 7-20 ขึ้น 1 เฟรม — client รู้ท่าก่อนอนิเมชันมา, `_land` ไม่จับ จึงตกไปวาดรูปจำลอง → `TR_OLD_LANDFIRST` ไม่วาดจนกว่าอนิเมชันมา. ลำเลเซอร์แบบกว้าง (5) วาด 2.5 เพราะ client พลาด anim pre3 สั้น ๆ: 2 โดน 3.7 → อ่าน net `wide` ของลำเอง `TR_OLD_WIDENET`. รอ lag bench ยืนยัน |
-| 4e | UM icehound / firehound `quickattack` (postinit SGhound.lua 416): atk_pre ช้า .3 นาน 24 เฟรม แล้ว IceSpike (แนวหนาม 15/25 ทุก 2 หน่วย 30/s ไปทางเป้า) / ShootFire — ข้อมูลมีแค่ hound atk_pre (กัดใกล้) | ✔ `9305c47`: icehound `atk_pre~quickattack` = copy ท่า glacialhound (shift 16, far 3, lock 24), กัดเฉพาะ near 3.2 (`TR_OLD_NEAR`) |
-| 4f | ~~ท่าจาก UM postinit ที่ไม่มีในข้อมูล~~ ✔ | 2026-10-29: 16 ที่ฟ้อง ส่วนใหญ่ไม่ใช่ช่องโหว่ - เครื่องมือไม่รู้จักชื่อ prefab (koalefant_summer, um_beeguard_*, SGpigbunny = SG "pig") และนับ state ที่ไม่มีใครเรียก (Deerclops icespiketoss ว่างเปล่า, beeguard charge ถูก comment). แก้เครื่องมือแล้ว (`never entered` แยก). ช่องโหว่จริงข้อเดียว: merm karate (atk_combo ตี 12/18/31) ✔ `c1b61b0` (`at_each`, `TR_OLD_KARATE`). ที่เหลือในรายการ: beeguard shoot (วาดลูกศรเป็นของอยู่แล้ว), beequeen seeker spawn (ไม่ตี), shadowcreature taunttp (แค่วาร์ป) |
-| 4g | ความต่อเนื่องของรูปทุกเฟรม (`tools\frame_check.lua`, ผู้เล่นขอ 2026-10-29) | lag 28-29 ต.ค.: ✔ Blighted Rock Master dash รูปไป 7-9 หน่วย 1 เฟรม 8/8 = LEAPSHORT ใช้ก้าววาร์ป 9.73 เป็นความเร็ว (`TR_OLD_LEAPWARP`, replay bjump 70 -> 0). ✔ Umbral วงลำเลเซอร์ไป-กลับทุกเฟรม = ตำแหน่ง 15 ครั้ง/วิ ซ้ำทุกเฟรมเว้นเฟรม (`TR_OLD_LEADDUP`; รุ่นแรกนำหน้าของที่หยุดจริงต่อ - Eye 0 -> 6 พลาด, แก้แล้ว: ซ้ำนานเกิน 2.5 เฟรม = หยุด). ✔ ยืนยันใน lag 0822: Rock Master เงา 26 dash ไม่มีผิดปกติ, W.A.R.B.O.T. leap 11-15 หน่วยหาย (LEAPWARP เดียวกัน). ✔ minotaur quick leap เฟรมแรก (body lead ตอนเพิ่งหยุด, `TR_OLD_STARTLEAD`): AIM 21 -> 1 (lag 0901). ✔ Umbral วงไปโผล่ 3-16 หน่วยตอน pre1 -> pre2 (`TR_OLD_THINGWAIT`/`THINGNEW`): POP 3 -> 0. Umbral วงลำเลเซอร์ก้าวยาว-สั้นสลับ: LEADSTOP2 (ก้าวเฉลี่ย 2) ลองแล้ว Moonmaw ลาวาพลาด 1 -> 12 (lag A/B, พลาดตอน lead ปกติ .4-.8 = จริง) -> ปิดเป็นค่าเริ่ม; ✔ Moonmaw pred=1 NOT 15 (lag 1230, โค้ดเดียวกับ 0945 ที่ได้ 0/78) = lag กระตุก: 8 ครั้ง client นำ server 3.6 หน่วย, 6 ครั้ง 1.2 -> lag_report มีคอลัมน์ `(ahead N)` (NOT drawn ตอนนำเกิน `AHEAD_D`=2); LEADHOLD ลองแล้ว replay แย่ลง -> ถอด; ✔ `TR_OLD_CHASELEAD` (ของที่ไล่ตามไม่เช็กความสม่ำเสมอ) REVERSE 2 -> 0. ✔ Eye/Twins "POP" ใน charge = ตัวบันทึกนับ PutTri ผิด (ไม่ใช่ภาพกะพริบ) แก้ tr_lagjoin แล้ว. ✔ ตัวบันทึก/ตัวเช็กแก้ (`cefc386`): tr_lagframe มี `own=` (ตำแหน่งบอส), group วัดจากกล่องของชิ้นจริง (เดิมเป็นจุดยึด); frame_check ไม่นับรูปที่ขยับตามบอส / go ใหม่ / parts ลด. ผล: Werepig slam JUMP = จุดยึด ไม่ใช่ภาพ (lag 1304 daywalker JUMP 13 -> 0); Twins mouth charge = ตัวบอสเองบนจอ client ดีด 3.16; Twins mouth laser (UM) = ยิง 4 นัด/loop จริง (relock); Werepig atk3 = parts 2 -> 1. ✔ lag 1342 (ตัวบันทึกใหม่, wagboss/lunarrift/minotaur/klaus 25 นาที): lunarrift roll เหลือ JUMP 2 (เดิม bjump 200 = จุดยึด), Klaus 2, minotaur 2+2; W.A.R.B.O.T. วงกระโดดโผล่ 14 หน่วย 1 เฟรมตอนเดินถึงตัวผู้เล่น = went_off ใช้รันออฟไลน์ที่เดิน 13.9 ก่อนเล็ง -> จำกัดเมื่อเป้าอยู่หน้า (`TR_OLD_WENTCAP`, `9379fdc`/`d3cd65e`) replay CLIENT JUMP 13 -> 1.58; ในเกมยังหลุดตอนผู้เล่นอยู่ข้าง/หลังทิศที่หัน -> ท่าพุ่งเข้าหาเป้า (`SimMoves._homes`, `TR_OLD_HOMES`, `2d8f114`) วางจุดลงที่ผู้เล่น: lag 20 นาที วงกะพริบ 13-16 หน่วย 6 -> 0 (1549 -> 1613), NOT 0. สแกนทุกท่าแล้ว มีแค่ W.A.R.B.O.T. ที่มีรันเดินก่อนเล็งเกินระยะมาก. ✔ lag 1626 Umbral 15 นาที: NOT 0, shrouden JUMP 1 REVERSE 2; shadowthrall_mouth JUMP 124 = lead เปิดทันที 1.0-1.3 (ease เคยลองแล้วพลาดเพิ่ม - ข้อแลก ไม่แก้). ✔ lag 1636 กวาด 22 บอส 70 นาที: NOT drawn 11 / 1,462 (0.75%), ไม่มีวงกะพริบไป-กลับไกล; JUMP ใหญ่ของ fossilspike/phase3trap/rocky_snip_fx = ตัวบันทึกเฉลี่ย group ของหลายแถว (แก้ด้วย gs=, `3f19ca8`); AG3 attk_swipe 3.6 = กวาดจริง ส่วนที่ตีแล้วหาย. ✔ AG2 spiketrail: กำแพงหนามโผล่สุ่ม -> ตีได้ 15-30 เฟรมหลังหยุด (`TR_OLD_TRAILWAIT`, `b718b0f`/`fb276bc`) replay host things 13 -> 9, client 18 -> 16, false ไม่เพิ่ม. ค้าง: AG1 2 (1 ahead), worm segment 3 (ข้อ 4 เจ้าของตัดสินแล้ว), ~~moose hopatk POP ขนาด 6.5 -> 5.6~~ ✔ = ค่าเล็งจาก server หาย 2 เฟรมก่อนล็อก -> คงค่าเดิม ≤4 เฟรม (`TR_OLD_AIMHOLD`, `87c45b9`); moose เดี่ยวบินหนีบน bench ยืนยันซ้ำไม่ได้, A/B บอสอื่น NOT 1 -> 0. ✔ lag 1948 กวาดรอบ 2 (13 บอส 50 นาที): NOT 7 / 742; ✔ Shadow Bishop เลนกลับทิศ 18-22 หน่วย 1-2 เฟรม (`TR_OLD_LANEFLIP`, `a78cc28`, A/B ใหญ่สุด 2.87 / 8.43); Twins หัน 180 ก่อนพุ่ง = ตามเกม; charliearena_spike 4 NOT = ช่วงระหว่างฉากที่ไม่มีบอส (bench); frame_check ไม่นับ JUMP ของ owner หลาย group (`OLD_FC_MULTI`). lag 2332 รอบ 5 (มอนทั่วไป): ✔ spider_spitter พ่นใย 53/56 ไม่ได้วาด + walrus ลูกดอก (anim atk_dart) 11/11 -> ท่ายิงแบบลูกดอก (`TR_OLD_SPITSHOT`, `8bd5000`) A/B 2/85 vs 49/53 และ 0/14 vs 11/12 (nomove_check ฟ้องไว้ก่อนแล้วแต่ผมมองข้าม); lag 0213 รอบ 7 (eyeofterror_mini, gestalt_guard_evolved, leechswarm, lunar_grazer, rabbitking, เงา Wilson/Wigfrid UM, vault_crawler, viperworm; ที่เหลือ bench เสกไม่ขึ้น): NOT 0 / 571. lag 0207 รอบ 6 (16 มอน: นกกลายพันธุ์, squid, eyeplant, แมงมุมดวงจันทร์/ห้อย, ค้างคาว UM, knight_yoth ฯลฯ): NOT 0 / 415, ไม่มีกะพริบ. คลาสอาวุธยิง (SetProjectile) ครบ: monkey/chimp ปาขี้ดาเมจ 0. lag 0122 (nomove ที่เหลือ: magmahound, um_shadow_wes, sporehound, walrus, mock_dragonfly, daywalker2): NOT 2 / 151, sporehound false 16 = เมฆทำดาเมจเป็นจังหวะ. ✔ UM Moon Tentacle กับระเบิด (`TR_OLD_MOONMINE`, `3e1d7fc`). lunarrift roll replay host bjump 200 (กระโดด 4.7 ตอนเริ่มกลิ้ง) - lag (client) รูปนิ่งสนิทที่เริ่มกลิ้ง = เฉพาะ replay host; lag 2218 รอบ 4 (17 บอส 60 นาที): NOT 19 แต่ 18 เป็นช่วงระหว่างฉาก (bench) -> lag_report แยก `between scenes` (`ad57ac5`); ✔ Nightmare Rook POP = นาฬิกาท่าพุ่งถอยหลัง -> ไม่ถอย (`TR_OLD_TTMONO`, `1acc9dc`, A/B POP 3/7 false 1/8); AG4 JUMP = บอสหมุน (frame_check ไม่นับแล้ว). lag 2051 รอบ 3 (UM): glacialhound pred=1 NOT 13-23 / 83-137 (pred=0 0-1) - ทุกครั้งที่ปลายแนวหนาม 14-16.7 (แนวยาวคงที่ 14 + รัศมี 1.8) ขณะ Predictive ให้ผู้เล่นบนจอนำ 0.15-1.2; A/B FROMEDGE / AIMHOLD ได้ 4-14 แกว่งเกินจะตัดสิน (ปิด FROMEDGE ยัง 14) -> ไม่เกี่ยวตัวแก้วันนี้; ทางแก้ที่เป็นไปได้: ยืดปลายเลนตาม lead ของผู้เล่นฝั่ง Predictive (ยังไม่ทำ). ✔ Eye next leg เลื่อน 2 หน่วย 1 เฟรม = lead ค้างตอนหยุด -> จุดยึดระหว่างขาใช้ตำแหน่งจริง (`TR_OLD_LEGRAW`, A/B POP 0/5 JUMP 0/6). ✔ shadow_rook (replay bjump 49-61 ครั้งละ 4): lag 1812 วงย้ายครั้งเดียว 1.6-2.7 ตอนวาร์ปเสร็จ (คาดไว้ 4 ไปได้ 1.3 ติดตัวผู้เล่น) ไม่กลับไปมา, NOT 0 - ปกติ. replay: miss หลัง bench สั่ง side (วาร์ป >1/tick) แยกเป็น BENCHMOVED. ✔ Twins laser เลนยาวขึ้นกลางนัด = เกมจริง (SGeyeofterror SpawnLaser: 20 ก้อน ระเบิดไล่ทีละเฟรม ยาว 16.25, นัดใหม่ทุก 8 เฟรม). ค้าง: ~~Eye charge_pst~~ ✔ lag 1139 ไม่สลับ (AIM 1), lunarrift roll, shadowthrall_mouth bjump - วัดใหม่ด้วยตัวบันทึกใหม่ (lag 2026-10-29 บ่าย). replay: bench_replay นับ wobble + bjump แล้ว |
-| 5b | ✔ ท่าที่ state เริ่มด้วยอนิเมชันคนละตัว (สุ่ม/ตามระยะ) | `3d42a24` Bearger butt_pre_R (ครึ่งหนึ่งของ butt slam ไม่เคยวาด), `8a468d6` Shadow Runner "attack" ไกล; `tools\twin_check.ps1` บน 1610 ไม่เหลือตัวอื่น |
-| 7 | replay โหมด client (CLIENT=1) | ✔ บอส missed 55 -> 16 (`TR_OLD_POSEGO`: ท่าซ้ำติดกัน client ผูก pose ของครั้งก่อน), ของที่ปล่อย 79 -> 56 (`0e34a5b`) -> 36 (icespike ไกลของ Deerclops: ตัวนับ BYTHING ไม่เช็กท่าบอส `9d07941`) -> 27 (wagboss_missile 11 -> 0: `burst` วาดนำหน้าตามความเร็ว `TR_OLD_BURSTLEAD`); ที่เหลือ: sporecloud_toad 5 (host ก็พลาด, ผู้เล่นที่ขอบ 3.50 หลัง testbench ย้าย), spat_bomb 3, spiketrail 3, stageusher hand 3, อื่น ๆ 1-2. mutatedbearger combo1 (host) = ขอบครึ่งวง 87°/90° และผลสลับตามจุดเริ่ม replay (ค่าที่เรียนจากประวัติ) — ไม่แก้. บอส client ที่เหลือ: vault_pillar_guard attack2 = บอสไถลซ้อนตัวผู้เล่น (0.92) แล้วฟิสิกส์ดันกระตุก (artifact), stageusher hand = ขอบวงขณะผู้เล่นเดินออก. false client: sandspike 89 -> 622 ช่วง (981 -> 1615 เฟรม) = ผู้เล่นใน testbench ถูกหนามดันกระตุก ~0.9/เฟรม ช่วงแตกเป็น 1 เฟรม — artifact. `tools\haz_missed.ps1` = รายการของที่พลาดแบบที่ตารางนับ. ที่เหลือ 16: shadowthrall_hands run 3 = เป้าหายตอนเริ่มท่าเพราะ testbench เพิ่งย้ายตัวผู้เล่น (artifact ของฉาก); shrouden teleport_pst 3 -> 0 (`TR_OLD_R2FROM`: วงกว้าง 3.85 วาดตั้งแต่โผล่ ไม่รอเฟรม 26); อื่น ๆ ครั้งเดียว |
-| 4h | ของที่ client ยังพลาด (replay 1610 CLIENT `tools\haz_missed.ps1`) | 2026-10-29: 25 -> 16. ✔ Glacial Hound หอน 3 นัด: from-tell ขอบ 1 เฟรม พลาด 0.0003 วิ -> 1.5 เฟรม (`TR_OLD_FROMEDGE`, `6373463`) icespike 5 -> 1. ✔ Charlie มือสุ่มซ้าย/ขวา: วาดสะท้อน (`SimMoves._mirror`, `TR_OLD_MIRROR`, `fdd141a`) 6 -> 2 (2 ที่เหลือ: วิ่งหนี 4 -> 6.5 หลังล็อก). ไม่ใช่ของจริง: sporecloud host 3 (bench ย้ายผู้เล่นเข้าเมฆเก่า), sporecloud_toad 5 (ยืนที่ขอบ 3.50 พอดี). Klaus VANISH 139 (replay host) = ช่องระหว่างท่างับจบ (ตีที่ 35) กับ doubleclaw ที่เกมเล่นจากกลางท่า, trace ยังติดป้าย attack_chomp - ไม่ใช่รูปหายกลางท่า; ลองล็อกแผนที่หลังตีแรก (MAPFREEZE) ไม่ช่วย Klaus และ bishop/bishop_nightmare bjump +27/+21 -> ถอด. SHRINK ของหอนต่อกัน = เลนนัดก่อนซ้อนนัดใหม่ (แนวเดียวกัน) หมดก่อนนัดใหม่ 2-3 เฟรม พื้นที่นับซ้ำลดครึ่ง ภาพแค่จางลง ไม่แก้. ค้าง: stageusher_attackhand 3 (มือพุ่ง 6/s r2 ตีภายใน .3 วิ - ท่า attack (anim sleep, เฟรม 15) ไม่มีในข้อมูล), alterguardian_phase2spiketrail 3, um_bear_trap 1, eyeofterror_laser 1 |
-| 4i | ~~replay ให้ผลไม่เหมือนเดิมทุกรอบ~~ ✔ | 2026-10-29: LuaJIT สุ่ม hash ของ string -> pairs ลำดับต่างกันทุกรอบ; SimMoves.Moves (การเลือกท่าที่เริ่มเหมือนกัน - ในเกมก็สุ่ม) และรายการของ replay_haz. แก้: เรียงชื่อท่า (`TR_OLD_MOVEORDER`) / เรียง GUID (`OLD_HAZ_ORDER`), `4e0ea67`. รันซ้ำ 3 ครั้งเหมือนกันทุกบรรทัด; replay 1610 host missed 14 false 1901, client missed 23 false 2900 = baseline ใหม่ |
-| 5 | บอสพลาดที่เหลือ 6 / ~56,000 (1610) — ทีละ 1 ครั้ง | ดูแล้ว 2: mutatedbearger combo1a (พุ่งสั้นชนตัวผู้เล่น วงตีครึ่งวงอยู่ไกลเกิน), vault_pillar_guard attack3 (โดนหลังบอสหลังมันพุ่ง 5, ข้อมูลเลือก run 1.5 ทั้งที่เป้า 6). rneskeleton attack = bench ย้ายผู้เล่นไปข้าง/หลังที่เฟรม 6 หลังเล็งล็อก (ไม่ใช่ของจริง). ที่เหลือ: rocky_boss_shadow dash_attack, twinofterror1 mouthcharge_loop, mutatedbearger combo1 — ความสำคัญต่ำ |
-| 6 | ท่า NEVER (bench บังคับ state) | 2026-10-29 replay ซ้ำ (หลังตัวแก้วันนี้ทั้งหมด): missed 3 / 13,937, บรรทัด MISSED 66 -> 57, JUMP 133 -> 112, WOBBLE 54 -> 21, FALSE 365 -> 376 (+9 ลูกปา Moon Tentacle UM = AIRDUP รั่วไปฝั่ง host -> ✔ เฉพาะ client (`TR_OLD_AIRDUPHOST`, `87f74e4`) share015_L4 36 -> 27). bench บังคับ 69 บอส (2026-10-28_1637): NEVER 109 → 73, replay missed 12 / 13,944 — ท่าที่ได้ทดสอบใหม่วาดถูก ; pigman charge_attack 1 พลาด = บังคับเข้า state ท้ายท่าตรง ๆ (ในเกมมาหลัง charge_pre/loop เสมอ) ไม่ใช่บั๊ก. แมงมุม (SetStateGraph ในนิพจน์) หาได้แล้ว: bench บังคับ 9 บอส (1651) missed 2 / 2,505 — ทั้งคู่ `trapdoor_attack` ที่ถูกบังคับตอนหันผิดทาง แล้วหันกลับ 100° กลางพุ่ง (ในเกมออกจากรูโดยหันหาเป้าแล้ว — น่าจะเป็นผลของการบังคับ ยังไม่ยืนยัน). (2026-10-28 เย็น: never_force จับครบ 11 บอส, bench บังคับ 1818: 1,864 ครั้ง missed 2 -> 0 หลังแก้ butt_pre_R; NEVER เหลือ beeguard stab_pre = อนิเมชันตอนบินลง ท่าแทงจริงคือ stab_pst ที่ทดสอบแล้ว, stalker attack1 = กิ่งรองของ attack ที่ทดสอบแล้ว 12 ครั้ง; stalker spike บังคับในร่างถ้ำทำเกม crash - ร่างนี้ไม่มีทางทำท่านี้) เดิม: 11 บอส (knight joust, shadow_knight, stalker spike, beeguard stab_pst ฯลฯ) state เลือกอนิเมชันจากตัวแปร ; การบังคับ state ของ Mutated ใส่ Deerclops ปกติทำ server ล่ม (ตัดออกจากไฟล์บังคับ) |
+| replay 1610 host | missed 14 / 56,739 · false 1,903 | 2026-10-30, เกม 760944 |
+| replay 1610 client (Predictive) | missed 23 / 56,798 · false 2,899 | 2026-10-30 |
+| lag บอสหลัก 16 ตัว 70 นาที | NOT drawn 13 / 1,980 (0.66%) | lag 0314 |
+| lag ตระกูลหมู (เกมใหม่) | NOT 1 / 129, false 0 | lag 0726 |
+| เกม / ข้อมูล | 760944 / data `0ADD43380DDD` | ติดตั้งแล้ว |
+
+## กำลังทำ
+
+| งาน | สถานะ |
+|---|---|
+| UM shooter ยิงเหล็กไน: วาดเลนตอน `shoot_pre` (`TR_OLD_STINGSHOT`) | เขียนแล้ว, replay ไม่ถดถอย, รอ lag A/B |
+
+## รอเจ้าของตัดสิน
+
+| งาน | ทางเลือก |
+|---|---|
+| Glacial Hound ฝั่ง Predictive โดนปลายแนวหนาม 13-23 / ~100 (ผู้เล่นบนจอนำ server) | ยืดปลายเลนตาม lead → false เพิ่ม / ปล่อยไว้ |
+
+## งานเปิด (เรียงตามความสำคัญ)
+
+| # | งาน | ข้อมูลที่มี |
+|---|---|---|
+| 1 | franken pig / mummy merm / vampire bunny ยังไม่เคยเห็นในเกมจริง | รูปจาก sim เท่านั้น (สุ่ม 30% ช่วงอีเวนต์, bench ไม่เสก) |
+| 2 | ของที่ client replay ยังพลาด | stageusher_attackhand 3 (anim `sleep` ซ้ำกับ sitdown), spiketrail 3, um_bear_trap 1, eyeofterror_laser 1 |
+| 3 | บอสพลาดทีละ 1 ครั้ง (replay 1610) | rocky_boss_shadow dash_attack, twinofterror1 mouthcharge_loop, mutatedbearger combo1 |
+| 4 | กะพริบเล็กที่เหลือ (frame_check) | Eye REVERSE เล็ก, Klaus chomp POP 1, AG1 2, lunarrift roll JUMP 2, rook lead ตอนเริ่ม |
+
+## ตัดสินแล้วว่าไม่แก้
+
+- ลาวาวง Moonmaw NOT 0.65% ที่ขอบ 2.76-3.00 — client เห็นตำแหน่งช้า, ขยายวง = false ทุกรอบ
+- หนอน: ท่อนโผล่+ตีเฟรมเดียวกัน — เจ้าของไม่ให้แสดงวงรอบกองดิน (2026-10-29)
+- shadowthrall_mouth JUMP — lead เปิดทันที, ease แล้วพลาดเพิ่ม
+- mutatedbearger combo1 ขอบครึ่งวง 87°/90°
 
 ## หลังปล่อย 1.1.6 (ตกลงกันแล้ว)
 
 - แยก `simmoves.lua` / `predict.lua` เป็นโมดูล (เพดาน 200 local)
 - ลบสวิตช์ `TR_OLD_xxx` ที่ครบอายุ (ดูกติกาใน `VERIFY_PLAN.md`)
 - พิจารณาโหลดข้อมูลตามบอสที่เจอ (lazy) — วัดแล้ว 93 ms / 30 MB ยังไม่เร่ง
-
-## ล่าสุดที่ทำ (28 ต.ค.)
-
-Umbral: วงเตือนไม่กระพริบ, laser วาดที่ beam จริง · Ink Blight: จุดตกนิ่ง · git + .gitignore · install ตรวจ patch notes / เวอร์ชันเกม / ท่าเขียนมือ · เอกสารชุดนี้
