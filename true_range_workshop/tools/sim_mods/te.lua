@@ -9,6 +9,11 @@ local list = {
         { name = "thunder_attack", prep = function(boss, target) rawset(boss, "lightning_target", target) end },
     } },
 }
+-- (the wild boar and the Wana Wana tiki gone were under a full moon: the game's werepig (wildbore.lua :486, wanawanatiki.lua :490
+-- SetStateGraph("SGwerepig")) - a leap now as it bites, game 760944; no move for it in the data, its blows undrawn. Their own
+-- attacks as found, the werepig's bite added - as the game's pigs' (sim_moves.lua pigman), 2026-10-30)
+list[#list + 1] = { prefab = "wildbore", sg = "SGwildbore", states = { "attack", { name = "attack", sg = "SGwerepig" } } }
+list[#list + 1] = { prefab = "wanawanatiki", sg = "SGpig", states = { "attack", { name = "attack", sg = "SGwerepig" } } }
 -- (the sea Rook: the game's Rook's charge on water (SGrookwater: run_start pawing, run on atk, runningattack as it
 -- reaches you) - found on its own, its charge's parts each a "move", nothing struck: run as the Rook's is, its brain
 -- saying how far - no atk_collide of its own)
