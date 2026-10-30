@@ -37,6 +37,13 @@ return {
     -- (states the mod puts in that aren't tagged "attack", or that the scan didn't reach - each struck
     -- in a run of every state (COVERAGE): as well as the game's own listed ones)
     -- (Bee Queen: a stomp; a combo; its guards' mortar and shooters, called)
+    -- (Shadow Wixie (SGshadow_wixie): a puzzle boss, gone into none of its strikes on its own - "nothing" in every state.
+    -- charles_charge: running at you, 75 to all within 2.9 at 1, 8, 18 and 28 (Check_Bowling); slingshot_shoot: 50 to
+    -- all within 4 at 15 (DamageNearbyEnemies) and seven wixie_shadow_shot fanned at you. Its "attack" only knocks back.
+    -- prep: made by the puzzle, tagged puzzlespawn - one made without it removes itself the next frame (prefabs/shadow_wixie.lua:236))
+    { prefab = "shadow_wixie", sg = "SGshadow_wixie", dummy_player = true, strikes_running = { "spearjab" }, add = {
+        { name = "charles_charge", prep = function(boss) boss:AddTag("puzzlespawn") end },
+        { name = "slingshot_shoot", prep = function(boss) boss:AddTag("puzzlespawn") end } } },
     { prefab = "beequeen", sg = "SGbeequeen", add = { "stomp", "combo_prep", "stomp_combo", "lob", "defensive_spin" } },
     -- (moves Uncompromising Mode gives the game's monsters, gone into by its own code now and then: a
     -- Koalefant's stomp (its stompatk - stomp_pre is commented out). A Beefalo's / Koalefant's charge after its

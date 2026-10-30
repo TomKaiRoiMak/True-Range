@@ -83,3 +83,4 @@
 - Spitter spiders, walruses and Uncompromising Mode's bullet bees: their aiming lane turns smoothly as it follows you, not in jumps
 - Uncompromising Mode's snapper turtles: their attack no longer jumps ahead as they speed up into a spin (in a player's game)
 - Celestial Champion, W.A.R.B.O.T., the knook and the Umbral Abomination's mouth: their attack no longer jumps ahead as they set off (in a player's game)
+- Uncompromising Mode's Shadow Wixie: drawn - her charges, her slingshot burst and volley, and her marbles had nothing drawn at all

@@ -549,12 +549,14 @@ if os.getenv("SIM_MOD_SPEC") then
                 if b.prefab == d.prefab then
                     for _, s in ipairs(d.add) do table.insert(b.states, s) end
                     if d.no_auto ~= nil then b.no_auto = b.no_auto or {} for _, s in ipairs(d.no_auto) do table.insert(b.no_auto, s) end end
+                    if d.dummy_player then b.dummy_player = true end
+                    if d.strikes_running then b.strikes_running = d.strikes_running end
                     put = true
                     break
                 end
             end
             -- (no_auto: states the scan would add that aren't its - one the same animations as one it uses)
-            if not put then BOSSES[#BOSSES + 1] = { prefab = d.prefab, sg = d.sg, states = d.add, no_auto = d.no_auto } end
+            if not put then BOSSES[#BOSSES + 1] = { prefab = d.prefab, sg = d.sg, states = d.add, no_auto = d.no_auto, dummy_player = d.dummy_player, strikes_running = d.strikes_running } end
             put = true
         end
         for i, b in ipairs((d.add == nil and d.alias_of == nil) and BOSSES or {}) do
@@ -2502,6 +2504,7 @@ local function Dummies()
         -- after them last run)
         for _, d in ipairs(all_dummies) do
             d.valid = true
+            d.tags.player = spec_dummy_player or nil
         end
         return all_dummies
     end
@@ -2514,7 +2517,10 @@ local function Dummies()
             Body(d)
             d.radius = (d.radius or .5) + PAD
             d.pad = PAD
-            d.tags.player, d.tags.locomotor = nil, nil
+            -- (spec dummy_player: players too, for a boss that strikes only those tagged so - Uncompromising Mode's shadow
+            -- creatures and Shadow Wixie (FindEntities(.., { "_combat", "player" })), its goats' lightning (HasTag("player")):
+            -- "nothing" in every state. Not for every boss: others ask whether a player is near before going somewhere)
+            d.tags.player, d.tags.locomotor = spec_dummy_player or nil, nil
             d.Remove = NOOP -- (stand-ins for players: never taken away)
             table.insert(all_dummies, d)
             local key = BucketKey(math.floor(gx / BUCKET), math.floor(gz / BUCKET))
@@ -4771,6 +4777,9 @@ for _, def in ipairs(BOSSES) do
     if only ~= nil and not only[def.prefab] then goto next_boss end    do
     local sg = LoadSG(def.sg)
     local about = GettingAbout(def.sg)
+    -- (spec strikes_running: animations of a state tagged "moving" / "running" that strike all the same, with no "attack" tag
+    -- - Shadow Wixie's charge, spearjab run at you, 75 to all within 2.9: keyed on the laugh after it instead, first -22)
+    for _, an in ipairs(def.strikes_running or {}) do about[an] = nil end
     table.insert(out, string.format("    [%q] = {", def.prefab))
     -- (def.miss_area: its area struck round itself when a strike misses, as the game's DoAttack does -
     -- in the game's own world too, for this one: the shark's bite, 3 snaps round itself; VERIFY_PLAN 6.0a)
@@ -4794,6 +4803,7 @@ for _, def in ipairs(BOSSES) do
         spec_still = type(spec) == "table" and spec.still or nil
         spec_frames = type(spec) == "table" and spec.frames or nil
         spec_prep = type(spec) == "table" and spec.prep or nil
+        spec_dummy_player = def.dummy_player or nil
         spec_runs = type(spec) == "table" and spec.runs or nil
         sim_anim_held = nil
         spec_abort = type(spec) == "table" and spec.abort_turn or nil
@@ -4828,6 +4838,7 @@ for _, def in ipairs(BOSSES) do
         spec_still = type(spec) == "table" and spec.still or nil
         spec_frames = type(spec) == "table" and spec.frames or nil
         spec_prep = type(spec) == "table" and spec.prep or nil
+        spec_dummy_player = def.dummy_player or nil
         spec_runs = type(spec) == "table" and spec.runs or nil
         sim_anim_held = nil
         spec_abort = type(spec) == "table" and spec.abort_turn or nil
