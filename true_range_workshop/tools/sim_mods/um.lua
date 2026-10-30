@@ -44,6 +44,10 @@ return {
     { prefab = "shadow_wixie", sg = "SGshadow_wixie", dummy_player = true, strikes_running = { "spearjab" }, add = {
         { name = "charles_charge", prep = function(boss) boss:AddTag("puzzlespawn") end },
         { name = "slingshot_shoot", prep = function(boss) boss:AddTag("puzzlespawn") end } } },
+    -- (its shadow creatures that strike only those tagged player (dummy_player): the mindweaver's grab - 40 straight off the health
+    -- of all within 3 as its grab ends (SGmindweaver.lua:41 Grabby); the fuelseeker's burst - 50 to all within 6 at 31)
+    { prefab = "mindweaver", sg = "SGmindweaver", dummy_player = true, add = { "grab" } },
+    { prefab = "fuelseeker", sg = "SGfuelseeker", dummy_player = true, add = { "burst" } },
     { prefab = "beequeen", sg = "SGbeequeen", add = { "stomp", "combo_prep", "stomp_combo", "lob", "defensive_spin" } },
     -- (moves Uncompromising Mode gives the game's monsters, gone into by its own code now and then: a
     -- Koalefant's stomp (its stompatk - stomp_pre is commented out). A Beefalo's / Koalefant's charge after its
@@ -190,6 +194,11 @@ return {
     -- (a shadow on the ground where something comes down: Bee Queen's guards called up as mortars, each
     -- stabbing 2 round where it lands - its shadow sliding after you (4 a second) and the guard on it;
     -- spiders' and the Hooded Widow's web, guano, debris falling the same)
+    -- (Shadow Wixie's shot: 50 to all within 0.9 of it, looked for again and again the whole way (CollisionCheck,
+    -- shadow_wixie.lua) - a ring round it as it flies, as the bullet bees' stinger. Run from her, it came out a way
+    -- 60 parts long (a part a frame): her taunt's ring of 48 laid 18,250 pieces in one frame and the game crashed,
+    -- lag 2026-10-30_2054)
+    { striker = { prefab = "wixie_shadow_shot", radius = 0.9, delay = 0, moved = true, lasting = true, as_boss = true, strikes_until = 60, by = { "shadow_wixie" } } },
     { striker = { prefab = "warningshadow", radius = 1.5, delay = 0, moved = true, lasting = true, by = { "beequeen", "beeguard", "um_beeguard_seeker" } } },
     -- (the Ancient Guardian's belch: 16 goo thrown at you, each 4 off at random (postinit/prefabs/minotaur.lua
     -- ShootProjectile :49-69), striking within 1.5 of where it comes down (shadow_goo.lua:75, :89-93). No run

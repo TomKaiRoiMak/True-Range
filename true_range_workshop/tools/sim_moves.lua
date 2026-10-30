@@ -2455,6 +2455,11 @@ local function Body(e)
         ResolveResistance = function() return 1 end, IsFrozen = function() return false end }, PERMISSIVE)
     e.components.burnable = setmetatable({ Ignite = function() Touched("fire") end, IsBurning = function() return false end }, PERMISSIVE)
     e.components.health = setmetatable({ IsDead = function() return false end, IsInvincible = function() return false end }, PERMISSIVE)
+    -- (its health taken straight off, no combat - Uncompromising Mode's mindweaver grabbing (SGmindweaver.lua:47 DoDelta(-40)),
+    -- its goats' lightning, Tropical Experience's jellyfish: noted as a hit; nothing seen before. SIM_OLD_DODELTA=1: as before)
+    if os.getenv("SIM_OLD_DODELTA") == nil then
+        rawset(e.components.health, "DoDelta", function(_, d) if (tonumber(d) or 0) < 0 then Touched("harm") end end)
+    end
     -- (its own stategraph, doing nothing in particular - asked whether it's asleep, knocked out:
     -- no; a gestalt looks before it touches)
     if rawget(e, "sg") == nil then
