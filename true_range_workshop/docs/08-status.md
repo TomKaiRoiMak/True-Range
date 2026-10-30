@@ -19,7 +19,7 @@
 
 | งาน | สถานะ |
 |---|---|
-| lag ยังไม่ได้วัด: Wixie (ลูกเป็นวงแล้ว c9c59b0), mindweaver, fuelseeker, ancient_trepidation_arm (4b9373c), hound_lightning / goat_lightning (6ad449d) | เกมเปิดไม่ขึ้นหลังล่ม 20:57 - CrashReporter.exe ค้าง (ปิดเองไม่ได้) |
+| lag ยังไม่ได้วัด: Wixie (ลูกเป็นวงแล้ว c9c59b0), mindweaver, fuelseeker, ancient_trepidation_arm (4b9373c), hound_lightning / goat_lightning (6ad449d) - bench 2152 (ไม่มีหน้าจอ): บอสทุกตัว drawn ครบ host/client, ของ host 0 พลาด; client: ลูก Wixie 13 (ยิงจาก 4 ถึงตัวในไม่กี่ tick); mindweaver/fuelseeker ไม่ได้ตี (ต้องคนบ้า) | เกมเปิดไม่ขึ้นหลังล่ม 20:57 - CrashReporter.exe ค้าง (ปิดเองไม่ได้) |
 
 ## รอเจ้าของตัดสิน
 
@@ -37,6 +37,7 @@
 | 3 | บอสพลาดทีละ 1 ครั้ง (replay 1610, 11:35) | mutatedbearger combo1 (ขอบครึ่งวง - ไม่แก้) + combo1a (พุ่งชนตัว 1.65); rocky_boss_shadow = bench สั่ง side + trace ขาด (artifact); twinofterror1 ไม่พลาดแล้ว |
 | 7 | Tropical Experience ที่ไม่มีในข้อมูล (scan 2026-10-30) - ดูแล้ว: trapslug ✔ เพิ่ม; kraken / knightboat ดาเมจ 0 (ของที่ยิง - inksplat, knightboat_cannonshot อยู่ในข้อมูลแล้ว); grottoqueen ดาเมจถูก comment; grotto_grub = prey | เหลือ: golem, quagmire goats, *_tfc = ของอีเวนต์/arena (Forge/Gorge) ไม่ได้ดู |
 | 8 | TE jellyfish / kraken_jellyfish: ช็อตคนใกล้สุดใน 3 แบบสุ่ม (DoDelta, ตีที่เฟรม 5) - ไม่มีในข้อมูล | ค่าน้อย (เตือนได้แค่ 5 เฟรม); UM smog / spore / boiling_water = สิ่งแวดล้อม ไม่ใช่มอน |
+| 10 | Wixie ลูก clone (swap_ammo): ตกที่ไหน clone ยิง 8 ลูกจากตรงนั้นทันที - วาดจุดตก (striker lands 0.9) ลองแล้วยังวัดไม่ได้ (bench ไม่มี swap_ammo) เอาออก | bench นานขึ้นให้เจอ swap_ammo |
 | 9 | เกมล่มเมื่อของบินโผล่พร้อมกันมาก (Wixie taunt 48 ลูก × 60 ท่อน = 18,250 ชิ้นในเฟรมเดียว, lag 2054) - ตัวลูกแก้แล้ว (วงตามลูก 1 ท่อน) | ยังไม่มีเพดานชิ้นต่อเฟรมทั่วไป: ของ mod อื่นที่ยิงทีละมากอาจล่มแบบเดียวกัน |
 | 4 | กะพริบเล็กที่เหลือ (frame_check, lag 1042) | Eye REVERSE เล็ก, Klaus POP 1, AG1 2, lunarrift roll JUMP 2; bearger_boulder JUMP 27 = lead เปิดทันทีตอนเริ่มกลิ้ง (ข้อแลกเดิม); gestalt projectile JUMP 20 = โซนข้างหน้าวางใหม่ 1.4 ครั้งเดียวก่อนหมด; AG2 spin_pst JUMP ~1.04 ครั้งเดียวตอนจบสปิน (replay client 67 - ตรงเกณฑ์ 1 พอดี, วาดทาง legs ไม่ใช่ Draw/DrawTable); web_mortar JUMP 11 (lag 1334) = ย้ายจากรอบตัวไปจุดตกครั้งเดียวตอนเริ่มตก; bigshadowtentacle AIM 14 |
 
