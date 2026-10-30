@@ -18,7 +18,7 @@
 
 | งาน | สถานะ |
 |---|---|
-| beeguard (ราชินี) frame_check AIM 12 / REVERSE 4 ต่อ run | ยังไม่ได้ดู |
+| - | - |
 
 ## รอเจ้าของตัดสิน
 
@@ -33,6 +33,7 @@
 | 1 | franken pig / mummy merm / vampire bunny ยังไม่เคยเห็นในเกมจริง | รูปจาก sim เท่านั้น (สุ่ม 30% ช่วงอีเวนต์, bench ไม่เสก) |
 | 2 | ของที่ client replay ยังพลาด | stageusher_attackhand 3 (anim `sleep` ซ้ำกับ sitdown), spiketrail 3, um_bear_trap 1, eyeofterror_laser 1 |
 | 3 | บอสพลาดทีละ 1 ครั้ง (replay 1610) | rocky_boss_shadow dash_attack, twinofterror1 mouthcharge_loop, mutatedbearger combo1 |
+| 5 | beeguard atk วาดเยื้องหน้า 0.1-0.9 หมุนตามเป้าที่บินวน (frame_check AIM ~12 / run) - เล็ก, NOT 0 | ข้อมูลเป็น frame target ทั้งที่เกมตีรอบตัว |
 | 4 | กะพริบเล็กที่เหลือ (frame_check) | Eye REVERSE เล็ก, Klaus chomp POP 1, AG1 2, lunarrift roll JUMP 2, rook lead ตอนเริ่ม |
 
 ## ตัดสินแล้วว่าไม่แก้
