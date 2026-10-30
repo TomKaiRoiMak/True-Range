@@ -14,10 +14,11 @@ local list = {
 -- attacks as found, the werepig's bite added - as the game's pigs' (sim_moves.lua pigman), 2026-10-30)
 list[#list + 1] = { prefab = "wildbore", sg = "SGwildbore", states = { "attack", { name = "attack", sg = "SGwerepig" } } }
 list[#list + 1] = { prefab = "wanawanatiki", sg = "SGpig", states = { "attack", { name = "attack", sg = "SGwerepig" } } }
--- (and the swamp pig and the wild boar's minion, not found by the run at all - their bites never drawn: the swamp pig on the game's
+-- (and the swamp pig (quagmire_swampig, run by its file q_swampig - the run finds it so - and drawn as that: also) and the wild boar's minions (pigman_minion on TE's SGpigminion, pigguard_minion on the game's SGpig - wildbore_minion.lua), not found by the run at all - their bites never drawn: the swamp pig on the game's
 -- SGpig (q_swampig.lua :227), the minion on TE's SGpigminion (wildbore_minion.lua :184), both werepigs under a full moon)
-list[#list + 1] = { prefab = "q_swampig", sg = "SGpig", states = { "attack", { name = "attack", sg = "SGwerepig" } } }
-list[#list + 1] = { prefab = "wildbore_minion", sg = "SGpigminion", states = { "attack", { name = "attack", sg = "SGwerepig" } } }
+list[#list + 1] = { prefab = "q_swampig", sg = "SGpig", also = { "quagmire_swampig" }, states = { "attack", { name = "attack", sg = "SGwerepig" } } }
+list[#list + 1] = { prefab = "pigman_minion", sg = "SGpigminion", states = { "attack", { name = "attack", sg = "SGwerepig" } } }
+list[#list + 1] = { prefab = "pigguard_minion", sg = "SGpig", states = { "attack", { name = "attack", sg = "SGwerepig" } } }
 -- (the sea Rook: the game's Rook's charge on water (SGrookwater: run_start pawing, run on atk, runningattack as it
 -- reaches you) - found on its own, its charge's parts each a "move", nothing struck: run as the Rook's is, its brain
 -- saying how far - no atk_collide of its own)
