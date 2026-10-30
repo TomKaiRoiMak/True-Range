@@ -76,3 +76,6 @@
 - Uncompromising Mode's Moon Tentacle mines: drawn where they lie, 3 around, until they go off
 - The Eye of Terror (and the Twins) between charges: the next charge no longer drawn a little ahead for a frame as it stops (in a player's game)
 - Game update (Hallowed Nights): pigs, merms and bunnymen now drawn biting only ahead of them, as the game now has it; the werepig's leap forward as it bites drawn; the franken pig, mummy merm and vampire bunny drawn
+- Uncompromising Mode's Bee Queen: the bullet bees' stinger shot drawn as a lane while they aim, steady as they fly round her
+- Uncompromising Mode's bomber bees: their blast drawn round them the whole way down, yellow to red as they come down - it was up for a frame or two at the end
+- Uncompromising Mode's Bee Queen: no ring round you in the wrong place during the bullet bees' mortar (their shadows up in the air strike nothing)
