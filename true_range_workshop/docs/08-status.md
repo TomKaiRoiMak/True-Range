@@ -35,6 +35,7 @@
 |---|---|---|
 | 2 | ของที่ client replay ยังพลาด (14, `tools\haz_missed.ps1` 11:35) | sporecloud_toad 5 (ยืนขอบ 3.50 พอดี), stageusher_attackhand 3 (anim `sleep` ซ้ำกับ sitdown), charlie_boss_minion1 2 (วิ่งหนีหลังล็อก), spiketrail 1, eyeofterror_laser 1, glacialhound_icespike 1, um_bear_trap 1 |
 | 3 | บอสพลาดทีละ 1 ครั้ง (replay 1610, 11:35) | mutatedbearger combo1 (ขอบครึ่งวง - ไม่แก้) + combo1a (พุ่งชนตัว 1.65); rocky_boss_shadow = bench สั่ง side + trace ขาด (artifact); twinofterror1 ไม่พลาดแล้ว |
+| 7 | Tropical Experience: มอนที่มี combat แต่ไม่มีในข้อมูล (scan prefab ของ TE 2026-10-30): kraken, knightboat, grottoqueen, grotto_grub, trapslug, golem, quagmire goats, lizardman_tfc, flame_elemental_tfc ... | ต้องดูทีละตัวว่าตีจริงไหม (บางตัวเป็นของอีเวนต์/arena), ชื่อ prefab จริงอยู่ใน Prefab(...) ไม่ใช่ชื่อไฟล์ |
 | 4 | กะพริบเล็กที่เหลือ (frame_check, lag 1042) | Eye REVERSE เล็ก, Klaus POP 1, AG1 2, lunarrift roll JUMP 2; bearger_boulder JUMP 27 = lead เปิดทันทีตอนเริ่มกลิ้ง (ข้อแลกเดิม); gestalt projectile JUMP 20 = โซนข้างหน้าวางใหม่ 1.4 ครั้งเดียวก่อนหมด; AG2 spin_pst JUMP ~1.04 ครั้งเดียวตอนจบสปิน (replay client 67 - ตรงเกณฑ์ 1 พอดี, วาดทาง legs ไม่ใช่ Draw/DrawTable); web_mortar JUMP 11 (lag 1334) = ย้ายจากรอบตัวไปจุดตกครั้งเดียวตอนเริ่มตก; bigshadowtentacle AIM 14 |
 
 ## ตัดสินแล้วว่าไม่แก้
