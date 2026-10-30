@@ -389,12 +389,18 @@ AddPlayerPostInit(function(p)
                     T._tr_lag_owner = true
                     local circ = T.Circle
                     -- (its name made once a kind - not a new string each ring each frame: 0.3 ms a frame on Klaus, lag 1542/1552)
-                    local body_name = {}
+                    -- (and one each: "body:<prefab> <its GUID>", where it is - one monster's ring blinking told from another's, not
+                    -- all of a kind as one)
+                    local body_of = G.setmetatable({}, { __mode = "k" })
                     T.Circle = function(x, z, r, style, ent, ...)
                         local was = cur
                         if type(ent) == "table" and ent.prefab ~= nil then
-                            local bn = body_name[ent.prefab]
-                            if bn == nil then bn = "body:" .. ent.prefab body_name[ent.prefab] = bn end
+                            local bn = body_of[ent]
+                            if bn == nil then
+                                bn = { prefab = "body:" .. ent.prefab, GUID = ent.GUID, Transform = ent.Transform,
+                                    IsValid = function() return ent:IsValid() end }
+                                body_of[ent] = bn
+                            end
                             cur = bn
                         end
                         local a1, a2 = circ(x, z, r, style, ent, ...)
