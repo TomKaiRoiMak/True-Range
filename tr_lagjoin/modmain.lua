@@ -17,7 +17,7 @@ local function ReadJoin()
     fh:close()
     local ip, port, speed = (line or ""):match("^(%S+)%s+(%d+)%s*(%d*)")
     -- (and switches back to how it was, by name - "TR_OLD_PICKATTACK ...": set as globals for True Range, run_lag -Old)
-    for name in (line or ""):gmatch("TR_OLD_[%w_]+") do G.rawset(G, name, true) print("[tr_lag] switch " .. name) end
+    for name in (line or ""):gmatch("TR_[%w_]+") do G.rawset(G, name, true) print("[tr_lag] switch " .. name) end
     return ip, port ~= nil and G.tonumber(port) or nil, speed ~= nil and G.tonumber(speed) or 1
 end
 local JOIN_IP, JOIN_PORT, JOIN_SPEED = ReadJoin()

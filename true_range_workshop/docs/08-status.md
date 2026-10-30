@@ -18,8 +18,7 @@
 
 | งาน | สถานะ |
 |---|---|
-| UM Bomber Bee (seeker): เงาเตือน (warningshadow) เห็น 2,060 เฟรม วาด 18 - ผู้เล่น: โดนแต่ไม่มี hitbox | กำลังหาสาเหตุ (เงาที่เคลื่อนวาดเมื่อหยุดเท่านั้น?) |
-| UM Bullet Bee (shooter): วงรอบตัวผู้เล่นแว้บ ตอน flydown_shooter (mortar) | ยังไม่ได้ดู |
+| UM Bullet Bee (shooter): วงรอบตัวผู้เล่นแว้บ ตอน flydown_shooter (mortar) | ยังไม่ได้ดู - ถัดไป |
 
 ## รอเจ้าของตัดสิน
 

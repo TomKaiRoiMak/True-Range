@@ -83,6 +83,10 @@ end
 -- a spike trail on its way): prefab -> true
 -- (for the replays only: what was made of one thing, frame by frame - TR_TRACE_GUID its GUID, into TR_TRACE_EV)
 function SimMoves._Trace(ent, now, what, y, s)
+    -- (testing: TR_HAZLOG_<prefab> - every thing of that name traced so in the game itself, to the log: [tr_haztrace])
+    if ent ~= nil and ent.prefab ~= nil and rawget(_G, "TR_HAZLOG_" .. ent.prefab) then
+        print(string.format("[tr_haztrace] %.3f %s %s %s", now, ent.prefab, tostring(ent.GUID), what))
+    end
     local ev = rawget(_G, "TR_TRACE_EV")
     if ev == nil or ent == nil or ent.GUID ~= rawget(_G, "TR_TRACE_GUID") then return end
     ev[#ev + 1] = string.format("%.3f %s%s land=%s lobbed=%s rose=%s", now, what, y ~= nil and string.format(" y=%.2f", y) or "",
@@ -685,6 +689,9 @@ local FLOWN_PAST = .5   -- (how far past a part's middle one that flies is befor
 
 local FILL_IN, LATER_IN = .8, 1.4  -- (seconds before it strikes: ByTime's colours)
 local function ByTime(dt)
+    -- (and time still to come not in its clock - the bomber bee's dive, its clock held while it falls: how long it has yet
+    -- to fall, its colour going yellow to red as it comes down (SimMoves.dt_add, set by true_range/predict for that move))
+    dt = dt + (SimMoves.dt_add or 0)
     -- (striking now - its damage frames, and a moment after: deep red)
     -- (from a frame before: the move's clock here runs a frame behind the game's (counted from
     -- its animation's start, less a frame) - a strike on its very last frame (the Ancient
@@ -4355,7 +4362,7 @@ function SimMoves.DrawHazard(ent, x, z, rot, px, pz, now, in_moves, data_only)
     local sh0 = os.clock()
     local shown = h == nil or Shown(ent, h, x, z, now)
     SimMoves.stage_shown = SimMoves.stage_shown + os.clock() - sh0
-    if not shown then SimMoves.stage_hidden = SimMoves.stage_hidden + 1 return false end
+    if not shown then SimMoves.stage_hidden = SimMoves.stage_hidden + 1 SimMoves._Trace(ent, now, "hide: not shown", nil, seen[ent] or {}) return false end
     -- (testing: modmain's frame timing - how many got past the looks and the holes)
     SimMoves.haz_drawn = SimMoves.haz_drawn + 1
     status_only = h ~= nil and StatusOnly(h) or false
@@ -4392,6 +4399,7 @@ function SimMoves.DrawHazard(ent, x, z, rot, px, pz, now, in_moves, data_only)
     end
     status_only = false
     draw_slot, draw_unturned, build_now = nil, false, false
+    SimMoves._Trace(ent, now, string.format("drawn k=%.2f inside=%s", k, tostring(inside)), nil, seen[ent] or {})
     return inside
 end
 

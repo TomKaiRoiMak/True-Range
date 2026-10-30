@@ -686,7 +686,11 @@ local function Track(ent, moves, now, learned_all)
         -- next of its combo: that one, from its own start - not the end of this one, drawn as over)
         local into = false
         for _, m in ipairs(moves) do
-            if m ~= a.move and m.anims[1] ~= a.move.anims[1] and ent.AnimState:IsCurrentAnimation(m.anims[1]) then
+            if m ~= a.move and m.anims[1] ~= a.move.anims[1] and ent.AnimState:IsCurrentAnimation(m.anims[1])
+                -- (not one that waited its way there (sim.waits) and goes on into it itself - the bomber bee's dive on into
+                -- stab_death, where it strikes: its ring gone 1-2 frames before the blow while the other move was taken up, 5 of
+                -- 16 on lag 0853. TR_OLD_SIMWAITS: into it)
+                and not (a.move.sim ~= nil and a.move.sim.waits ~= nil and not rawget(_G, "TR_OLD_SIMWAITS") and Playing(ent, a.move.anims)) then
                 into = true
                 break
             end
@@ -800,15 +804,28 @@ local function Track(ent, moves, now, learned_all)
         -- its target lost as it winds up, holding its junk (throw_loop) till it has one again: the
         -- same move, its clock held still meanwhile - Tables._waits)
         local waits = Tables._waits ~= nil and Tables._waits[ent.prefab] ~= nil and Tables._waits[ent.prefab][a.move.name] or nil
+        -- (or the move's own (sim.waits, a hand file's): Uncompromising Mode's bomber bee dives from 35 up in stab_pre and stab
+        -- till it's down, then strikes at frame 3 of stab_death - its ring round it drawn the whole way down, not its first
+        -- 3 frames only: struck 13 times with no ring there, lag 0841. Not "no target" after it (the werepig's rule): its
+        -- target isn't its combat's. TR_OLD_SIMWAITS: none)
+        local own_waits = waits == nil and a.move.sim ~= nil and a.move.sim.waits or nil
+        if own_waits ~= nil and not rawget(_G, "TR_OLD_SIMWAITS") then waits = own_waits end
         local waiting = waits ~= nil and not into and Playing(ent, waits)
         if waiting then
             if a.wait_at ~= nil then a.t0 = a.t0 + (now - a.wait_at) end
             a.wait_at = now
+            -- (one falling to strike as it's down (sim.fall: how fast it falls, units a second): the time it has yet to fall,
+            -- for its colour - SimMoves.dt_add. TR_OLD_FALLTIME: none, red the whole way down)
+            if own_waits ~= nil and a.move.sim.fall ~= nil and not rawget(_G, "TR_OLD_FALLTIME") then
+                local _, y = ent.Transform:GetWorldPosition()
+                a.fall_left = math.max(0, (y or 0) - 1) / a.move.sim.fall
+            end
         else
+            a.fall_left = nil
             -- (out of it with still no target - the Scrappy Werepig waited its time out and throws
             -- the way it faces, 12 on: not where you are - not drawn there; what it throws drawn
             -- on its own as it comes)
-            if a.wait_at ~= nil then
+            if a.wait_at ~= nil and own_waits == nil then
                 local combat = ent.replica ~= nil and ent.replica.combat or nil
                 if combat ~= nil and combat:GetTarget() == nil then a.untargeted = true end
             end
@@ -3473,7 +3490,9 @@ function Predict.Draw(ents, ranges, my_radius, me, skip)
                         if sim.shoots ~= nil then
                             if aim ~= nil and aim.me then danger = SimMoves.DrawShot(sim, ox, oz, aim_rot, tt, px, pz) or danger end
                         else
+                            SimMoves.dt_add = a.fall_left
                             danger = SimMoves.Draw(sim, ox, oz, aim_rot, aim, my_radius, px, pz, tt, flee_log or a.log, ent, target, len) or danger
+                            SimMoves.dt_add = nil
                         end
                         SimMoves.maybe = nil
                         -- (one that goes for every player in reach at once (sim.multi, how far) - the
