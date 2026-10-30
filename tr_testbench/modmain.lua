@@ -455,7 +455,8 @@ local function NextBoss()
         return NextBoss()
     end
     -- (Uncompromising Mode's Shadow Wixie: made by its puzzle, tagged so - one made without it removes itself the next frame)
-    if prefab == "shadow_wixie" then boss:AddTag("puzzlespawn") end
+    -- (and her decoy throw (swap_ammo: clone balls) only after 1500 taken (OnDamaged) - the bench's hurt never got there: asked for)
+    if prefab == "shadow_wixie" then boss:AddTag("puzzlespawn") boss.decoy_attack = true end
     -- (on ground, 10 off: straight aside was in the sea once, by the shore - a spider sank the frame it came)
     local map = G.TheWorld.Map
     local bx, bz = x + 10, z
