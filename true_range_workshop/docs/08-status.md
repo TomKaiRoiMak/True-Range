@@ -10,7 +10,7 @@
 |---|---|---|
 | bench ทุกมอน (271, 3 รอบ) เกม 761239 + replay | host missed 14 / 60,480 · false 2,146; client missed 24 / 60,507 · false 3,111 | bench 2026-10-31_0741 (replay หลัง volley) |
 | bench TE (มอนของ TE 174) + replay -TE | host missed 36 / 25,306 · client 36 / 25,329 · two-shapes 0 (เดิม 45 / 57 / 962 ก่อนแก้ scorpion, rookwater) | bench 2026-10-31_0611 |
-| lag บอสหลัก (13 จาก 15 ทันใน 45 นาที - ไม่มี minotaur / stalker) | NOT 7 / 1,411 (on 3/605, off 4/806) · false 60 · AG2 2, moonmaw 2, shrouden 2, daywalker 1 | lag 2026-10-31_1354 (เดิม 0407: 10 / 1,008) |
+| lag บอสหลัก 15 ตัว | NOT 7 / 1,495 (on 3/638, off 4/857) · false 60 · AG2 2, moonmaw 2, shrouden 2, daywalker 1; minotaur / stalker 0 / 84 | lag 2026-10-31_1354 + 1441 (เดิม 0407: 10 / 1,008) |
 | lag มอนทั่วไป 20 ตัว | NOT 4 / 529 (icehound 3 on = ปลายเลนแบบ Glacial) · frame_check 80 | lag 2026-10-31_0448 |
 | lag TE (-TE ปิด UM) | NOT 0 / 90; wildboreking NOT 0 / 102 (on 44, off 58; false 9 / 22) | lag 2026-10-31_0706, 1029 |
 | เกม / ข้อมูล | 761239 / data `83852BF58E33` | ติดตั้งแล้ว |
