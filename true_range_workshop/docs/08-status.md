@@ -8,8 +8,7 @@
 
 | วัด | ค่า | เมื่อ |
 |---|---|---|
-| replay 1610 host / client (Predictive) | host missed 14 / 56,739 · false 1,879; client missed 24 / 56,798 · false 2,858 · boss jumps 748 | 2026-10-31 (นับ hit ไม่มีผู้ตีแล้ว cbae236) |
-| bench ทุกมอน (271, 3 รอบ) เกม 761239 + replay | host missed 15 / 60,408 · false 2,141; client missed 29 / 60,430 · false 3,111 | bench 2026-10-31_0741 |
+| bench ทุกมอน (271, 3 รอบ) เกม 761239 + replay | host missed 15 / 60,480 · false 2,146; client missed 25 / 60,507 · false 3,111 | bench 2026-10-31_0741 (replay หลัง volley) |
 | bench TE (มอนของ TE 174) + replay -TE | host missed 36 / 25,306 · client 36 / 25,329 · two-shapes 0 (เดิม 45 / 57 / 962 ก่อนแก้ scorpion, rookwater) | bench 2026-10-31_0611 |
 | lag บอสหลัก 15 ตัว 40 นาที | NOT 10 / 1,008 (on 3/401, off 7/607) · frame_check 243 | lag 2026-10-31_0407 |
 | lag มอนทั่วไป 20 ตัว | NOT 4 / 529 (icehound 3 on = ปลายเลนแบบ Glacial) · frame_check 80 | lag 2026-10-31_0448 |
@@ -20,7 +19,7 @@
 
 | งาน | สถานะ |
 |---|---|
-| ของที่เพิ่มคืนนี้ วัดในเกมแล้ว | goat / trepidation / สุนัขสายฟ้า / Spazmatism / jellyfish / mindweaver / fuelseeker / haunt / moonpig NOT 0 (lag 0347-1006); เหลือ: Wixie NOT 7/47 on, 4/38 off = ลูกยิงเกิดข้างตัวแล้วโดนในเฟรมแรกที่ client เห็น (ห่าง 1.46, lag 0347), toadling spawner ทำเกมล่ม (Invalid Prefab ของ UM - ห้ามใส่ใน lag), fissure ต้องมี arena |
+| ของที่เพิ่มคืนนี้ วัดในเกมแล้ว | goat / trepidation / สุนัขสายฟ้า / Spazmatism / jellyfish / mindweaver / fuelseeker / haunt / moonpig NOT 0 (lag 0347-1006); Wixie NOT 1/43 on, 1/36 off (lag 1114, ทางลูก volley 7 เส้น - เดิม 7/47, 4/38); เหลือ: toadling spawner ทำเกมล่ม (Invalid Prefab ของ UM - ห้ามใส่ใน lag), fissure ต้องมี arena |
 
 ## รอเจ้าของตัดสิน
 

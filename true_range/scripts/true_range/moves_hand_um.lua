@@ -69,6 +69,12 @@ return {
         atk_pre = { copy = { "hound", "atk_pre" }, near = 3.2, replace = true } },
     -- (a merm struck four times strikes back: karate, atk_combo, its blow at 12, 18 and 31 - each as its atk's (postinit
     -- stategraphs/SGmerm.lua :65-95); no move begun by atk_combo, tools/um_postinit_gaps.lua 2026-10-29. TR_OLD_KARATE: none)
+    -- (Shadow Wixie's slingshot (SGshadow_wixie slingshot_shoot): her burst 4 round her at 15 (DamageNearbyEnemies) - the run's
+    -- move - and 7 shots off from 15, .05 s apart (ShootVolley): each at the point 15 on from you at -66..66 by 22 off the way
+    -- to you, straight on at 20 a second for 2 s, striking whoever's middle comes within .9 (shadow_wixie.lua CollisionCheck,
+    -- your body in it: .4, .5 drawn). TR_OLD_VOLLEY: none)
+    shadow_wixie = { slingshot_pre = { copy = { "shadow_wixie", "slingshot_pre" }, replace = true,
+        volley = { n = 7, step = 22, out = 15, at = 15, every = 1.5, len = 40, r = .5, speed = 20 } } },
     merm = not rawget(_G, "TR_OLD_KARATE") and { atk_combo = { copy = { "merm", "atk" }, anims = { "atk_combo" }, at_each = { 12, 18, 31 } } } or nil,
     _hazards = {
         -- (the Moon Tentacle's mine (um_tentacle_moon_projectile.lua lobbedminefn): lands and waits, goes off 2-6 s on or as you come

@@ -2383,6 +2383,26 @@ function SimMoves.DrawShot(entry, x, z, rot, t, px, pz)
     local d = SimMoves.shots[entry.shoots] or {}
     return SimMoves.DrawCapsule(x, z, rot, d.len or 15, d.width or 1.5, S(ByTime(at - t)), px, pz)
 end
+-- A volley shot off as the move goes (entry.volley): n shots from it at `at` frames, `every` frames apart, each at the point
+-- `out` on from you at its own turn off the way to you (step degrees apart, the middle one at you) - flying straight on `len`,
+-- striking within `r` (and your body). Each one's lane from it, by how soon they're off, till the last has gone past you -
+-- they fly at `speed`; seen in a player's game only as they reach you (UM's Shadow Wixie's slingshot, 7 at 20 a second).
+function SimMoves.DrawVolley(entry, x, z, rot, aim, t, px, pz)
+    local v = entry.volley
+    if v == nil or aim == nil or t == nil then return false end
+    local d = math.sqrt((aim.x - x) ^ 2 + (aim.z - z) ^ 2)
+    local at = (v.at or 0) * FRAMES
+    local last = at + (v.n - 1) * (v.every or 0) * FRAMES
+    if t > last + (d + 3) / (v.speed or 20) then return false end
+    local style = S(ByTime(at - t))
+    local danger = false
+    for i = 1, v.n do
+        local o = (i - (v.n + 1) / 2) * v.step * DEGREES
+        local turn = math.atan2(v.out * math.sin(o), d + v.out * math.cos(o))
+        danger = SimMoves.DrawCapsule(x, z, rot + turn, v.len, v.r, style, px, pz) or danger
+    end
+    return danger
+end
 -- One leg and the n - 1 after it straight on, as one shape (DrawCells takes it as a leg) - the
 -- Scion's dash, twice: two side by side, outlined each, read as two dashes.
 -- (finish: and how its legs end, at the end of the last, in it too - the Celestial Champion's dash and

@@ -3506,6 +3506,14 @@ function Predict.Draw(ents, ranges, my_radius, me, skip)
                             SimMoves.dt_add = a.fall_left
                             danger = SimMoves.Draw(sim, ox, oz, aim_rot, aim, my_radius, px, pz, tt, flee_log or a.log, ent, target, len) or danger
                             SimMoves.dt_add = nil
+                            -- (and the volley it shoots off as it goes (sim.volley) - the Shadow Wixie's 7 slingshot shots, only
+                            -- her burst round her drawn: 11 of 85 struck undrawn 4-5 off her in a player's game, the shots seen as
+                            -- they reached you, lag 2026-10-31_0347. Aimed at you. TR_OLD_VOLLEY: none)
+                            local vat = (target ~= nil and target.x ~= nil) and target or aim
+                            if sim.volley ~= nil and vat ~= nil and not rawget(_G, "TR_OLD_VOLLEY") then
+                                local vrot = math.atan2(-(vat.z - oz), vat.x - ox)
+                                danger = SimMoves.DrawVolley(sim, ox, oz, vrot, vat, tt, px, pz) or danger
+                            end
                         end
                         SimMoves.maybe = nil
                         -- (one that goes for every player in reach at once (sim.multi, how far) - the
