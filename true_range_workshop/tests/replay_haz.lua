@@ -837,6 +837,33 @@ local function HzInScene(t)
     for _, s in ipairs(hz_scenes) do if s.t <= t then p = s.pred else break end end
     return p == HZ_PRED
 end
+-- (or you put there by the bench itself - over 1 in a tick in the half second before: set down on a spore cloud's middle as a
+-- scene began, struck 0.2 s on, "0.00 off" undrawn, 4 so on the bench 2026-11-01_0433 - no player goes 1 in a tick. As
+-- tests/replay.lua BenchMoved: said as BENCHMOVED, apart from missed. OLD_BENCHMOVED=1: missed)
+-- (where the server had you - the traced things' "you", not where a player's game shows you: led on in CLIENT, 244 blows taken
+-- for moved by the bench)
+local you_raw = nil
+local function HzBenchMoved(t)
+    if os.getenv("OLD_BENCHMOVED") then return false end
+    if you_raw == nil then
+        local seen = {}
+        you_raw = {}
+        for _, tr in pairs(tracks) do
+            for _, k in ipairs(tr.ticks) do
+                if k.yx ~= nil and not seen[k.t] then seen[k.t] = true you_raw[#you_raw + 1] = { t = k.t, x = k.yx, z = k.yz } end
+            end
+        end
+        table.sort(you_raw, function(a, b) return a.t < b.t end)
+    end
+    local prev = nil
+    for _, d in ipairs(you_raw) do
+        if d.t > t + 1e-6 then break end
+        if prev ~= nil and d.t >= t - .5 and d.t - prev.t < 1.5 * FRAMES and (d.x - prev.x) ^ 2 + (d.z - prev.z) ^ 2 > 1 then return true end
+        prev = d
+    end
+    return false
+end
+local benchmoved = 0
 for _, h in ipairs(hits) do if HzInScene(h.t) then
     local near = false
     local lo, hi = h.t - FRAMES * 1.5, h.t + FRAMES * 1.5
@@ -849,7 +876,11 @@ for _, h in ipairs(hits) do if HzInScene(h.t) then
     -- (and the horns' lane - modmain's own, as the darts: 13 struck "undrawn" where they met on you, 2026-10-20. OLD_HORNS=1: as before)
     if not near and h.prefab == "ruinsnightmare_horn_attack" and h.x ~= nil and not os.getenv("OLD_HORNS") then near = HornCovers(h.t, h.x, h.z) end
     if not near and h.x ~= nil and h.prefab:find("^worm_boss") and not os.getenv("OLD_AGGRONEAR") then near = WormDirtCovers(h.t, h.x, h.z) end
-    if near then ok = ok + 1 else
+    if near then ok = ok + 1
+    elseif HzBenchMoved(h.t) then
+        benchmoved = benchmoved + 1
+        real_print(string.format("BENCHMOVED %.3f %s: struck just after the bench put you there (you %.2f,%.2f)", h.t, h.prefab, h.x or 0, h.z or 0))
+    else
         missed = missed + 1
         real_print(string.format("MISSED  %.3f %s: struck, not drawn (you %.2f,%.2f; it %.2f,%.2f, %.2f off)", h.t, h.prefab,
             h.x or 0, h.z or 0, h.bx or 0, h.bz or 0, math.sqrt(((h.x or 0) - (h.bx or 0)) ^ 2 + ((h.z or 0) - (h.bz or 0)) ^ 2)))
