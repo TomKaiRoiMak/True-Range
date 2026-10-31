@@ -77,6 +77,12 @@ return {
     -- your body in it: .4, .5 drawn). TR_OLD_VOLLEY: none)
     shadow_wixie = { slingshot_pre = { copy = { "shadow_wixie", "slingshot_pre" }, replace = true,
         volley = { n = 7, step = 22, out = 15, at = 15, every = 1.5, len = 40, r = .5, speed = 20 } } },
+    -- (UM's strong Deerclops' uppercut combo (postinit SGdeerclops uppercutcombo): at 60 turned to you and on at walkspeed 20,
+    -- its blow 6 round where it is at 70 - on a set way, past you, not stopping at you: run offline as moving on with you
+    -- (follow 7.25), its ring laid on from you - 4.32 and 5.49 behind it struck undrawn (bench 2026-11-01_0433). From itself.
+    -- TR_OLD_DEERDASH: as run)
+    deerclops = not rawget(_G, "TR_OLD_DEERDASH") and { ["uppercutcombo@MakeStrong"] = { copy = { "deerclops", "uppercutcombo@MakeStrong" },
+        drop = { "follow" }, replace = true } } or nil,
     merm = not rawget(_G, "TR_OLD_KARATE") and { atk_combo = { copy = { "merm", "atk" }, anims = { "atk_combo" }, at_each = { 12, 18, 31 } } } or nil,
     _hazards = {
         -- (the Moon Tentacle's mine (um_tentacle_moon_projectile.lua lobbedminefn): lands and waits, goes off 2-6 s on or as you come
