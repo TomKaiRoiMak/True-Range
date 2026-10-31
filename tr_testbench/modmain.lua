@@ -342,6 +342,27 @@ AddClientModRPCHandler("tr_lag", "scene", function() end)
 AddClientModRPCHandler("tr_lag", "end", function() end)
 AddClientModRPCHandler("tr_lag", "struck", function() end)
 AddClientModRPCHandler("tr_lag", "you", function() end)
+-- (hurt by health:DoDelta and no blow - each found in the scripts (grep DoDelta(-, afflicter or its name as the cause):
+-- the Mind Weaver's grab (SGmindweaver Grabby), UM's goat lightning (goat_lightning.lua DoDamageStuff), the gator snake's
+-- shock (gatorsnake.lua OnAttackOther, after its bite); only these - a fire's every tick and the Scion beam's lunar burn
+-- name their doer too)
+local DELTA_STRIKERS = { mindweaver = true, goat_lightning = true, gatorsnake = true }
+-- (who it was: its afflicter, else the nearest named as the cause, 8 round)
+local function DeltaStriker(p, cause, afflicter)
+    local who = afflicter
+    if who == nil and type(cause) == "string" and DELTA_STRIKERS[cause] then
+        local px, _, pz = p.Transform:GetWorldPosition()
+        local bd = 64
+        for _, e in ipairs(G.TheSim:FindEntities(px, 0, pz, 8)) do
+            if e.prefab == cause and e ~= p then
+                local d = p:GetDistanceSqToInst(e)
+                if d < bd then who, bd = e, d end
+            end
+        end
+    end
+    if who ~= nil and who ~= p and who.IsValid ~= nil and who:IsValid() and who.Transform ~= nil and DELTA_STRIKERS[who.prefab] then return who end
+    return nil
+end
 local function ToClient(p, name, ...)
     if p ~= nil and p.userid ~= nil and p.userid ~= "" then SendModRPCToClient(GetClientModRPC("tr_lag", name), p.userid, ...) end
 end
@@ -1186,6 +1207,7 @@ MakeStandIn = function(x, z)
     end)
     -- (and every loss of health, whatever the cause - fire burns straight on health, no blow ("attacked")
     -- at all: a magma hound's fire on the ground, never seen striking - tools/bench_things.lua)
+    local OnBlow
     inst:ListenForEvent("healthdelta", function(_, data)
         if data == nil or (data.newpercent or 1) >= (data.oldpercent or 0) then return end
         -- (not the one True Range isn't watching, with a friend about: its blows aren't "you")
@@ -1196,52 +1218,72 @@ MakeStandIn = function(x, z)
         if by ~= nil and by.IsValid ~= nil and by:IsValid() and by.Transform ~= nil then local x, _, z = by.Transform:GetWorldPosition() ax, az = x, z end
         print(string.format("[tr_hurt] %.3f %s %d %.2f %.2f you %.2f %.2f cause=%s", G.GetTime(), by ~= nil and tostring(by.prefab) or "?",
             by ~= nil and by.GUID or 0, ax, az, yx, yz, tostring(data.cause)))
+        -- (and as a blow, one of those that hurt with none (DELTA_STRIKERS): the tick after, unless a blow came that tick - as
+        -- the lag player's. TR_BENCH_OLD_DELTA: not)
+        if not data.overtime and G.rawget(G, "TR_BENCH_OLD_DELTA") == nil then
+            local who = DeltaStriker(inst, data.cause, by)
+            if who ~= nil then
+                local t = G.GetTime()
+                inst:DoTaskInTime(0, function()
+                    if (inst._tr_blow_t ~= nil and inst._tr_blow_t >= t) or not who:IsValid() then return end
+                    -- (its strike on its trace too, as a DoAttack's (true_range modmain "STRIKE at") - the replay counts those:
+                    -- 19 grabs, struck 0, false 19, bench 2026-10-31_1012; one it set off, by OnBlow's own "STRIKE by")
+                    local ln = inst._tr_lane or run
+                    local ok, SM = G.pcall(G.require, "true_range/simmoves")
+                    if ok and SM._trace_line ~= nil and ln ~= nil and ln.boss == who then
+                        G.pcall(SM._trace_line, who, "STRIKE at " .. tostring(inst.prefab))
+                    end
+                    OnBlow("attacked", { attacker = who })
+                end)
+            end
+        end
     end)
+    OnBlow = function(ev, data)
+        inst._tr_blow_t = G.GetTime()
+        if inst._tr_quiet then return end
+        local by = data ~= nil and data.attacker or nil
+        local d = by ~= nil and by:IsValid() and math.sqrt(inst:GetDistanceSqToInst(by)) or -1
+        print(string.format("[true_range] you were struck%s by %s, %.2f from it - drawn: ?", ev == "blocked" and " (blocked)" or "",
+            by ~= nil and tostring(by.prefab) or "?", d))
+        -- (and who, where it and you were - tools/bench_things.lua)
+        local yx, _, yz = inst.Transform:GetWorldPosition()
+        local ax, az = -1e9, -1e9
+        if by ~= nil and by:IsValid() then local x, _, z = by.Transform:GetWorldPosition() ax, az = x, z end
+        print(string.format("[tr_hit] %.3f %s %d %.2f %.2f you %.2f %.2f", G.GetTime(), by ~= nil and tostring(by.prefab) or "?",
+            by ~= nil and by.GUID or 0, ax, az, yx, yz))
+        -- (struck by a thing True Range draws (its _hazards), as its boss's strike by that thing too: judged by what the boss drew
+        -- as well as the thing's own shape (tests/replay.lua ASBOSS_DRAWN) - Retinazer's laser striking the tick it was made, at
+        -- its mouth, its lane drawn by its move, 3 "missed" as a thing, 2026-10-28. TR_BENCH_OLD_THINGSTRIKE: not)
+        if G.rawget(G, "TR_BENCH_OLD_THINGSTRIKE") == nil and by ~= nil and by:IsValid() then
+            local okt, SMt = G.pcall(G.require, "true_range/simmoves")
+            local Ht = okt and SMt.Hazards ~= nil and SMt.Hazards() or {}
+            local lnt = inst._tr_lane or run
+            local bosst = lnt ~= nil and lnt.boss or nil
+            if Ht[by.prefab] ~= nil and SMt._trace_line ~= nil and bosst ~= nil and bosst ~= by and bosst:IsValid()
+                and inst:GetDistanceSqToInst(bosst) < 30 * 30 then
+                G.pcall(SMt._trace_line, bosst, "STRIKE by " .. by.prefab .. " at " .. tostring(inst.prefab))
+            end
+        end
+        -- (struck by the boss or what it brought - born since it: it's at work, even with no scene of its own
+        -- begun (the Great Depths Worm's dirt, the Lunar Thrall Plant's vines) - not cut at FIRST_SECS; one
+        -- of the world's (a deer) is not it)
+        -- (10 of them, not one: a worm stuck by its mound struck once, then nothing the whole hour)
+        -- (its own lane's, with lanes - not whichever ran last)
+        local ln = inst._tr_lane or run
+        if ln ~= nil and ln.guid0 ~= nil and by ~= nil and by.GUID ~= nil and by.GUID >= ln.guid0 then
+            ln.thing_hits = (ln.thing_hits or 0) + 1
+            -- (and by what, to see one the world brought didn't keep a boss that does nothing the full hour)
+            if ln.thing_hits >= 10 and not ln.began then
+                ln.began = true
+                local was = run
+                run = ln
+                Log("began by", " " .. tostring(by.prefab))
+                run = was
+            end
+        end
+    end
     for _, ev in ipairs({ "attacked", "blocked" }) do
-        inst:ListenForEvent(ev, function(_, data)
-            inst._tr_blow_t = G.GetTime()
-            if inst._tr_quiet then return end
-            local by = data ~= nil and data.attacker or nil
-            local d = by ~= nil and by:IsValid() and math.sqrt(inst:GetDistanceSqToInst(by)) or -1
-            print(string.format("[true_range] you were struck%s by %s, %.2f from it - drawn: ?", ev == "blocked" and " (blocked)" or "",
-                by ~= nil and tostring(by.prefab) or "?", d))
-            -- (and who, where it and you were - tools/bench_things.lua)
-            local yx, _, yz = inst.Transform:GetWorldPosition()
-            local ax, az = -1e9, -1e9
-            if by ~= nil and by:IsValid() then local x, _, z = by.Transform:GetWorldPosition() ax, az = x, z end
-            print(string.format("[tr_hit] %.3f %s %d %.2f %.2f you %.2f %.2f", G.GetTime(), by ~= nil and tostring(by.prefab) or "?",
-                by ~= nil and by.GUID or 0, ax, az, yx, yz))
-            -- (struck by a thing True Range draws (its _hazards), as its boss's strike by that thing too: judged by what the boss drew
-            -- as well as the thing's own shape (tests/replay.lua ASBOSS_DRAWN) - Retinazer's laser striking the tick it was made, at
-            -- its mouth, its lane drawn by its move, 3 "missed" as a thing, 2026-10-28. TR_BENCH_OLD_THINGSTRIKE: not)
-            if G.rawget(G, "TR_BENCH_OLD_THINGSTRIKE") == nil and by ~= nil and by:IsValid() then
-                local okt, SMt = G.pcall(G.require, "true_range/simmoves")
-                local Ht = okt and SMt.Hazards ~= nil and SMt.Hazards() or {}
-                local lnt = inst._tr_lane or run
-                local bosst = lnt ~= nil and lnt.boss or nil
-                if Ht[by.prefab] ~= nil and SMt._trace_line ~= nil and bosst ~= nil and bosst ~= by and bosst:IsValid()
-                    and inst:GetDistanceSqToInst(bosst) < 30 * 30 then
-                    G.pcall(SMt._trace_line, bosst, "STRIKE by " .. by.prefab .. " at " .. tostring(inst.prefab))
-                end
-            end
-            -- (struck by the boss or what it brought - born since it: it's at work, even with no scene of its own
-            -- begun (the Great Depths Worm's dirt, the Lunar Thrall Plant's vines) - not cut at FIRST_SECS; one
-            -- of the world's (a deer) is not it)
-            -- (10 of them, not one: a worm stuck by its mound struck once, then nothing the whole hour)
-            -- (its own lane's, with lanes - not whichever ran last)
-            local ln = inst._tr_lane or run
-            if ln ~= nil and ln.guid0 ~= nil and by ~= nil and by.GUID ~= nil and by.GUID >= ln.guid0 then
-                ln.thing_hits = (ln.thing_hits or 0) + 1
-                -- (and by what, to see one the world brought didn't keep a boss that does nothing the full hour)
-                if ln.thing_hits >= 10 and not ln.began then
-                    ln.began = true
-                    local was = run
-                    run = ln
-                    Log("began by", " " .. tostring(by.prefab))
-                    run = was
-                end
-            end
-        end)
+        inst:ListenForEvent(ev, function(_, data) OnBlow(ev, data) end)
     end
     return inst
 end
@@ -1497,20 +1539,9 @@ if HEADLESS then
                 local DoDelta0 = h.DoDelta
                 h.DoDelta = function(self, amount, overtime, cause, ignore_invincible, afflicter, ...)
                     if amount ~= nil and amount < 0 and not overtime then
-                        local who = afflicter
-                        -- (no afflicter, its name as the cause: the Mind Weaver's grab gives itself one place on - DoDelta(-40, false,
-                        -- inst.prefab, false, nil, inst): the nearest of that name, 8 round)
-                        if who == nil and type(cause) == "string" then
-                            local px, _, pz = p.Transform:GetWorldPosition()
-                            local bd = 64
-                            for _, e in ipairs(G.TheSim:FindEntities(px, 0, pz, 8)) do
-                                if e.prefab == cause and e ~= p then
-                                    local d = p:GetDistanceSqToInst(e)
-                                    if d < bd then who, bd = e, d end
-                                end
-                            end
-                        end
-                        if who ~= nil and who ~= p and who.IsValid ~= nil and who:IsValid() and who.Transform ~= nil and not who:HasTag("player") then
+                        -- (the Mind Weaver's grab gives itself one place on - DoDelta(-40, false, inst.prefab, false, nil, inst))
+                        local who = DeltaStriker(p, cause, afflicter)
+                        if who ~= nil then
                             local t = G.GetTime()
                             p:DoTaskInTime(0, function()
                                 if (p._tr_blow_t ~= nil and p._tr_blow_t >= t) or not who:IsValid() then return end
