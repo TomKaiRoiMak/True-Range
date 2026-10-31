@@ -64,9 +64,11 @@ return {
     bearger = { t = { anims = { "t" }, first = 25, frame = "facing", maps = {}, nothing = true, random = false, single = true, still = true } },
     icehound = { ["atk_pre~quickattack"] = { copy = { "glacialhound", "atk_pre~ice_howl_attack" }, shift = 16, drop = { "from", "from_self" },
         -- (on into idle: atk_pre sped back up at 24, over a few frames on, the line still going out 0.5 s)
-        anims = { "atk_pre" }, far = 3, lock = 24 },
+        anims = { "atk_pre" }, far = 3, lock = 24, slowed = true },
         -- (and its bite only from within 3 - the hound's own, as it was)
-        atk_pre = { copy = { "hound", "atk_pre" }, near = 3.2, replace = true } },
+        -- (its bite from past 3 too, its spike not ready: told from the spike by its pace (true_range/predict sim.slowed) - its
+        -- near dropped. TR_OLD_SLOWED: near 3.2)
+        atk_pre = { copy = { "hound", "atk_pre" }, near = rawget(_G, "TR_OLD_SLOWED") and 3.2 or nil, replace = true } },
     -- (a merm struck four times strikes back: karate, atk_combo, its blow at 12, 18 and 31 - each as its atk's (postinit
     -- stategraphs/SGmerm.lua :65-95); no move begun by atk_combo, tools/um_postinit_gaps.lua 2026-10-29. TR_OLD_KARATE: none)
     -- (Shadow Wixie's slingshot (SGshadow_wixie slingshot_shoot): her burst 4 round her at 15 (DamageNearbyEnemies) - the run's

@@ -584,6 +584,29 @@ local function Track(ent, moves, now, learned_all)
             seen._slow_at = at
         end
     end
+    -- (and its slowed form (sim.slowed) played at its own pace: not that one - the Ice Hound's plain bite from past 3, its spike
+    -- not ready (UM SGhound doattack: um_specialattackready), drawn as its spike line: 416 of 3,520 bite frames on the bench
+    -- 2026-10-31_0741, the player 2026-10-31. Till that animation is over or begun again: seen._fast. TR_OLD_SLOWED: by how far)
+    if seen._fast ~= nil then
+        local at = ent.AnimState:GetCurrentAnimationTime()
+        if not ent.AnimState:IsCurrentAnimation(seen._fast) or at < seen._fast_at - .02 then
+            seen._fast = nil
+        else
+            seen._fast_at = at
+        end
+    end
+    if a ~= nil and a.anim0 ~= nil and a.move.sim ~= nil and a.move.sim.slowed and not rawget(_G, "TR_OLD_SLOWED")
+        and ent.AnimState:IsCurrentAnimation(a.move.anims[1]) then
+        local wall = now - a.real0
+        if wall >= 2 * FRAMES - .001 and wall <= 10 * FRAMES then
+            local ran = ent.AnimState:GetCurrentAnimationTime() - a.anim0
+            if ran >= .8 * wall then
+                seen._fast, seen._fast_at = a.move.anims[1], ent.AnimState:GetCurrentAnimationTime()
+                active[ent] = nil
+                a = nil
+            end
+        end
+    end
     -- (only one whose run went on from that animation to another, its strikes not kept to it -
     -- not Wigfrid's twirl (Uncompromising Mode's shadow Wigfrid, lunge_pre at .3 and striking, again
     -- and again with it: GoesAgain) - 17 -> 336 missed when it was dropped too)
@@ -1120,8 +1143,12 @@ local function Track(ent, moves, now, learned_all)
     end
     local best = nil
     for _, move in ipairs(moves) do
+        -- (seen played slow: only its slowed form (sim.slowed); at its own pace: not that one - seen._slow, seen._fast)
+        local slowed = (move.sim ~= nil and move.sim.slowed == true) and not rawget(_G, "TR_OLD_SLOWED")
+        local ruled = (slowed and seen._fast == move.anims[1]) or (slowed == false and seen._slow == move.anims[1]
+            and not rawget(_G, "TR_OLD_SLOWED"))
         -- (as alike: the one that goes somewhere first - see Track)
-        if ent.AnimState:IsCurrentAnimation(move.anims[1]) and (best == nil or Off(move) < Off(best)
+        if not ruled and ent.AnimState:IsCurrentAnimation(move.anims[1]) and (best == nil or Off(move) < Off(best)
             or (Off(move) == Off(best) and best.sim ~= nil and best.sim.still and move.sim ~= nil and not move.sim.still
                 -- (not one taken only from afar, at random (sim.far): the one staying put till it sets off - Track)
                 and (move.sim.far == nil or rawget(_G, "TR_OLD_FARTELL")))
@@ -1156,7 +1183,7 @@ local function Track(ent, moves, now, learned_all)
         end
         if count == 1 then best, skip_to = found, (found.sim.first or 0) * FRAMES end
     end
-    if best ~= nil and seen._slow ~= nil and best.anims[1] == seen._slow then best = nil end
+    if best ~= nil and seen._slow ~= nil and best.anims[1] == seen._slow and not (best.sim ~= nil and best.sim.slowed and not rawget(_G, "TR_OLD_SLOWED")) then best = nil end
     if best ~= nil then
         local x, _, z = ent.Transform:GetWorldPosition()
         -- (sim.anim_from: its state begins its animation that far in (SetFrame) - its frames counted from the state, this
