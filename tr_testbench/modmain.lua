@@ -147,6 +147,14 @@ local SETUP = {
     -- (it leaves unless a sandstorm's on (antlion.lua:218 OnInit -> Despawn); StartCombat (:284, :495): its
     -- combat, its angry stategraph and brain, after the one in reach)
     antlion = function(boss, p) boss:StartCombat(p) end,
+    -- (Tropical Experience's gem deer: its follower set to the goddess fountain the tick after it's made (goddess_deer1.lua
+    -- leader: FindFirstEntityWithTag("goddess_fountain_gem"), no nil check) - none on the bench, a Lua error and the
+    -- server down each run (TE benches 0611, 2026-11-01_0556). Its fountain 25 off, taken away after it)
+    goddess_deer_gem = function(boss, p, bx, bz)
+        if G.TheSim:FindFirstEntityWithTag("goddess_fountain_gem") ~= nil then return end
+        local lake = G.SpawnPrefab("goddess_lake")
+        if lake ~= nil then lake.Transform:SetPosition(bx + 25, 0, bz) boss._tr_fire = lake end
+    end,
     -- (Tropical Experience's wild boar king: lying there as the Pig King does, up and fighting only once struck lying or
     -- asleep (SGwildboreking "attacked": standup, MakePigsAttack) - 0 strikes, "no scene begun" both runs, TE bench 0611.
     -- Struck once by you)
