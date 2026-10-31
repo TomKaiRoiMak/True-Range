@@ -39,7 +39,7 @@
 | # | งาน | ข้อมูลที่มี |
 |---|---|---|
 | 2 | ของที่ client replay ยังพลาด (14, `tools\haz_missed.ps1` 11:35) | sporecloud_toad 5 (ยืนขอบ 3.50 พอดี), stageusher_attackhand 3 (anim `sleep` ซ้ำกับ sitdown), charlie_boss_minion1 2 (วิ่งหนีหลังล็อก), spiketrail 1, eyeofterror_laser 1, glacialhound_icespike 1, um_bear_trap 1 |
-| 10 | TE (bench 0611): bossboar / bossboarte flipped 115 / 102 = attack1 กับ combofirsthit เริ่มเหมือนกัน รูปตีแรกเดียวกัน สลับแค่ชื่อที่เฟรม 2 (ไม่เห็นบนจอ); water rook client false 589 (run_start 334: วิ่งชาร์จหาตัวยืนบนบกแต่ไปไม่ถึงจากน้ำ = ภูมิประเทศของ bench) · boss jumps 92 (run_stop: lead ตอนหยุด ต้อง lag A/B ก่อนแตะ) | things missed 30 ดูแล้ว: groundpoundring 20 = สปินเลเซอร์ hulk (วาดใน modmain AGGRO_WHILE 7 - replay ไม่เห็น modmain), hulk mine 8 = ไฟที่ระเบิดจุดไว้ (setfires) นอก 3.5 |
+| 10 | TE: lag 0706 (-TE, ปิด UM) scorpion / rookwater / bossboar / slip NOT 0 / 90; เหลือ rookwater false (ชาร์จหาตัวบนบกจากน้ำ) | things missed 30 ดูแล้ว (hulk spin = modmain, mine = ไฟ); UM+TE พร้อมกันล่มเมื่อมีผู้เล่น (moisture IsInBathingPool) |
 | 4 | กะพริบเล็กที่เหลือ (frame_check, lag 1042) | Eye REVERSE เล็ก, Klaus POP 1, AG1 2, lunarrift roll JUMP 2; bearger_boulder JUMP 27 = lead เปิดทันทีตอนเริ่มกลิ้ง (ข้อแลกเดิม); gestalt projectile JUMP 20 = โซนข้างหน้าวางใหม่ 1.4 ครั้งเดียวก่อนหมด; AG2 spin_pst JUMP ~1.04 ครั้งเดียวตอนจบสปิน (replay client 67 - ตรงเกณฑ์ 1 พอดี, วาดทาง legs ไม่ใช่ Draw/DrawTable); web_mortar JUMP 11 (lag 1334) = ย้ายจากรอบตัวไปจุดตกครั้งเดียวตอนเริ่มตก; bigshadowtentacle AIM 14 |
 
 ## ตัดสินแล้วว่าไม่แก้
