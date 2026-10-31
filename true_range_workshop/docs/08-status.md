@@ -8,18 +8,13 @@
 
 | วัด | ค่า | เมื่อ |
 |---|---|---|
-| replay 1610 host | missed 14 / 56,739 · false 1,879 (เดิม 1,903 ก่อนนับ hit ไม่มีผู้ตี, cbae236) | 2026-10-30 17:30; วัดซ้ำ 23:30 หลังงานคืนนี้ - เท่าเดิม |
-| replay 1610 client (Predictive) | missed 24 / 56,798 · false 2,858 (2,896 ก่อน cbae236) · boss jumps 748 (เดิม 1,204) | 2026-10-30 19:25; วัดซ้ำ 23:30 - เท่าเดิม |
-| lag บอสหลัก 16 ตัว 70 นาที | NOT drawn 12 / 2,165 (0.55%) - เดิม 13 / 1,980 (0.66%, lag 0314) | lag 1042, เกม 760944 + ตัวแก้ 30 ต.ค. |
-| lag มอนทั่วไป 20 ตัว 50 นาที (เกมใหม่) | NOT 1 / 853 (0.12%), false 4 | lag 1240 |
-| lag บอสหลัก 15 ตัว 40 นาที (ตัวบันทึกรายตัว) | NOT 8 / 970 - AG2 spin 4 ตอน client ตามหลัง server 3-6.5 (lag spike); วงตัว (body) กะพริบ 0 | lag 1621 |
-| bench ไม่มีหน้าจอ ทุกมอน (271, 3 รอบ) + replay | host missed 19 / 59,790 · false 2,020; client missed 55 / 59,807 · false 3,380 (ลูก Wixie 25 - ลองให้วงหนังสติ๊กตีต่อถึงเฟรม 27: missed เท่าเดิม false 10→35 ไม่เอา) | bench 2026-10-31_0007, ทุกอย่างคืนนี้ติดตั้งแล้ว |
-| lag บอสหลัก 15 ตัว 40 นาที หลังงานคืนนี้ | NOT 10 / 1,008 (on 3/401, off 7/607) · frame_check 243 (1621: 275) - ไม่ถอย | lag 0407 |
-| lag มอนทั่วไป 20 ตัว หลังงานคืนนี้ | NOT 4 / 529 (on 4/263, off 0/266) - icehound 3 on (หนามจากท่าก่อน 3.0-3.4 = แบบ Glacial ปลายเลน), rook 1; frame_check 80 (1240: 71) | lag 0448 |
-| bench TE (มอนของ TE 174 ตัว, 3 รอบ) + replay -TE | host missed 45 / 25,306 · client 57 / 25,329 (ก่อนแก้ scorpion / rookwater) | bench 2026-10-31_0611 |
-| bench TE (ทุกมอนเกม+UM ในโลก TE) | host missed 16 / 57,919 · client 39 / 57,959 | bench 2026-10-31_0526 |
-| bench ไม่มีหน้าจอ ทุกมอน บนเกม 761239 + replay | host missed 15 / 60,408 · false 2,141; client missed 29 / 60,430 · false 3,111 | bench 2026-10-31_0741_shares |
-| เกม / ข้อมูล | 761239 / data `83852BF58E33` | ติดตั้งแล้ว (อัปเดตเกม 2026-10-31 06:48) |
+| replay 1610 host / client (Predictive) | host missed 14 / 56,739 · false 1,879; client missed 24 / 56,798 · false 2,858 · boss jumps 748 | 2026-10-31 (นับ hit ไม่มีผู้ตีแล้ว cbae236) |
+| bench ทุกมอน (271, 3 รอบ) เกม 761239 + replay | host missed 15 / 60,408 · false 2,141; client missed 29 / 60,430 · false 3,111 | bench 2026-10-31_0741 |
+| bench TE (มอนของ TE 174) + replay -TE | host missed 45 / 25,306 · client 57 / 25,329 (ก่อนแก้ scorpion / rookwater) | bench 2026-10-31_0611 |
+| lag บอสหลัก 15 ตัว 40 นาที | NOT 10 / 1,008 (on 3/401, off 7/607) · frame_check 243 | lag 2026-10-31_0407 |
+| lag มอนทั่วไป 20 ตัว | NOT 4 / 529 (icehound 3 on = ปลายเลนแบบ Glacial) · frame_check 80 | lag 2026-10-31_0448 |
+| lag TE (-TE ปิด UM) | NOT 0 / 90 | lag 2026-10-31_0706 |
+| เกม / ข้อมูล | 761239 / data `83852BF58E33` | ติดตั้งแล้ว |
 
 ## กำลังทำ
 
