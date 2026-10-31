@@ -18,6 +18,7 @@
 - Uncompromising Mode's Retinazer (the laser twin), its mouth's lasers 3 to 5 in a row: each drawn the way it faces as it fires - only the first was aimed, the rest drawn that same way as you went round it
 - Uncompromising Mode's Eye of Terror's mini eye shot: drawn in front of it as it shoots (the mini eye strikes only there, 2 to 4.5 ahead) - standing close, you were struck before it was ever seen; and on a server, the mini eyes in flight are drawn where they really are
 - Shadow Thrall mouths and horns called up by the Umbral Abomination: the mouth's first bite out of its portal is drawn; the horns' leap is drawn the way they face as they leap (they turn to you only so far), not always at you
+- Shadow Thrall wings called up by the Umbral Abomination: each of the shots it throws one by one drawn as its own - after one struck you, the next ones' rings went faint as if spent
 - More monsters than "Most monsters drawn": those striking right now are kept first - in a swarm of the Eye of Terror's mini eyes, one biting you could be left out for the nearest 16; and a boss before its own swarm - Moonmaw, further off than its lavae, was left out and its spinning ring of lavae struck undrawn
 - Klaus' blue deer: its ice circle drawn as big as it really is right now, growing to its full size (outlined) - it was drawn smaller, shrinking, while the real one froze you
 - On a server: the deer's spells drawn where the server has you as it casts, not where your screen shows you
