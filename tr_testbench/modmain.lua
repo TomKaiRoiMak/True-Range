@@ -102,6 +102,47 @@ local OLD_SETPERCENT = false
 local OLD_REVIVE = false
 local OLD_SCENE_CHARGE = false
 local OLD_ONEHIT = false
+-- (somewhere at sea for one that lives there: open water 6 round it and round a boat 12 off it, out to 600; you
+-- put on the boat, both left there for every scene (_tr_stay). old: the first open water out to 40, no boat)
+local function AtSea(boss, p, old)
+    local map = G.TheWorld.Map
+    local x, _, z = p.Transform:GetWorldPosition()
+    local function Open(tx, tz)
+        if not map:IsOceanAtPoint(tx, 0, tz) then return false end
+        if old then return true end
+        for k = 0, 7 do
+            local a = k / 8 * 2 * math.pi
+            if not map:IsOceanAtPoint(tx + 6 * math.cos(a), 0, tz + 6 * math.sin(a)) then return false end
+        end
+        return true
+    end
+    local found = nil
+    for r = 8, old and 40 or 600, old and 4 or 8 do
+        local n = old and 16 or math.max(16, math.floor(r))
+        for k = 0, n - 1 do
+            local a = k / n * 2 * math.pi
+            local tx, tz = x + r * math.cos(a), z + r * math.sin(a)
+            -- (and the boat's spot beside it open water too)
+            if Open(tx, tz) and (old or Open(tx + 12, tz)) then found = { tx, tz } break end
+        end
+        if found then break end
+    end
+    if found ~= nil then
+        boss.Transform:SetPosition(found[1], 0, found[2])
+        if not old then
+            local boat = G.SpawnPrefab("boat")
+            if boat ~= nil then
+                boat.Transform:SetPosition(found[1] + 12, 0, found[2])
+                boss._tr_boat = boat
+                boss._tr_stay = true
+                -- (you on it - Put takes a boat's deck as ground (GetPlatformAtPoint))
+                if p.Physics ~= nil then p.Physics:Teleport(found[1] + 12, 0, found[2]) else p.Transform:SetPosition(found[1] + 12, 0, found[2]) end
+                boss._tr_hold = { x = found[1] + 12, z = found[2] }
+            end
+        end
+    end
+    return found
+end
 local SETUP = {
     -- (it leaves unless a sandstorm's on (antlion.lua:218 OnInit -> Despawn); StartCombat (:284, :495): its
     -- combat, its angry stategraph and brain, after the one in reach)
@@ -114,6 +155,19 @@ local SETUP = {
         if boss.components.entitytracker ~= nil then boss.components.entitytracker:TrackEntity("stargate", g) end
         if g.TrackStalker ~= nil then g:TrackStalker(boss) end
         boss._tr_gate = g
+    end,
+    -- (Uncompromising Mode's Mind Weaver: gone at any change of isday (mindweaver.lua:200-209 - dusk too) and at
+    -- each end of its idle by day (SGmindweaver.lua idle animover), before its grab (5 s, then 5 s growing its
+    -- shadow, :71-101): 10 s in on the 2026-10-31_0922 and _0929 lag runs - kept, and night (NIGHT))
+    mindweaver = function(boss) boss:StopAllWatchingWorldStates() end,
+    -- (its Fuel Seeker strikes only by a lit fire: 15 times drunk from it (SGfuelseeker.lua ConsumeLight, level 3)
+    -- then the burst (:263-283, 6 round): none on the bench - a fire pit by you, full, taken away after it)
+    fuelseeker = function(boss, p)
+        local x, _, z = p.Transform:GetWorldPosition()
+        local f = G.SpawnPrefab("firepit")
+        f.Transform:SetPosition(x + 3, 0, z)
+        if f.components.fueled ~= nil then f.components.fueled:SetPercent(1) end
+        boss._tr_fire = f
     end,
     -- (no weapon without junk to dig in (daywalker2.lua:252-293; brain :160-163, :213-222): a pile beside it)
     daywalker2 = function(boss, p, bx, bz)
@@ -159,45 +213,17 @@ local SETUP = {
     -- for out to 600, deep enough for it and a boat (open water all round 6); you put on a boat 12 off it, both
     -- left there for every scene (_tr_stay - moved 30 on, it'd be on land or you in the sea). TR_OLD_CRAB: as before)
     crabking = function(boss, p, bx, bz)
-        local map = G.TheWorld.Map
-        local x, _, z = p.Transform:GetWorldPosition()
-        local old = G.rawget(G, "TR_OLD_CRAB") ~= nil
-        local function Open(tx, tz)
-            if not map:IsOceanAtPoint(tx, 0, tz) then return false end
-            if old then return true end
-            for k = 0, 7 do
-                local a = k / 8 * 2 * math.pi
-                if not map:IsOceanAtPoint(tx + 6 * math.cos(a), 0, tz + 6 * math.sin(a)) then return false end
-            end
-            return true
-        end
-        local found = nil
-        for r = 8, old and 40 or 600, old and 4 or 8 do
-            local n = old and 16 or math.max(16, math.floor(r))
-            for k = 0, n - 1 do
-                local a = k / n * 2 * math.pi
-                local tx, tz = x + r * math.cos(a), z + r * math.sin(a)
-                -- (and the boat's spot beside it open water too)
-                if Open(tx, tz) and (old or Open(tx + 12, tz)) then found = { tx, tz } break end
-            end
-            if found then break end
-        end
-        if found ~= nil then
-            boss.Transform:SetPosition(found[1], 0, found[2])
-            if not old then
-                local boat = G.SpawnPrefab("boat")
-                if boat ~= nil then
-                    boat.Transform:SetPosition(found[1] + 12, 0, found[2])
-                    boss._tr_boat = boat
-                    boss._tr_stay = true
-                    -- (you on it - Put takes a boat's deck as ground (GetPlatformAtPoint))
-                    if p.Physics ~= nil then p.Physics:Teleport(found[1] + 12, 0, found[2]) else p.Transform:SetPosition(found[1] + 12, 0, found[2]) end
-                    boss._tr_hold = { x = found[1] + 12, z = found[2] }
-                end
-            end
-        end
+        local found = AtSea(boss, p, G.rawget(G, "TR_OLD_CRAB") ~= nil)
         print(string.format("[tr_bench] %.3f crabking at sea%s", G.GetTime(), found ~= nil and string.format(" %.1f,%.1f", found[1], found[2]) or " - none found"))
         for _ = 1, 9 do if boss.SocketItem ~= nil then boss:SocketItem(G.SpawnPrefab("redgem")) end end
+    end,
+    -- (Tropical Experience's rook of the sea: made 10 off you on land like the rest, it stood there 2 off you
+    -- striking at nothing - 447 drawn-in with no strike to 195 struck, bench 2026-10-31_0611; at sea as the
+    -- Crab King, you on a boat 12 off it. TR_OLD_ROOKSEA: as before)
+    rookwater = function(boss, p)
+        if G.rawget(G, "TR_OLD_ROOKSEA") ~= nil then return end
+        local found = AtSea(boss, p, false)
+        print(string.format("[tr_bench] %.3f rookwater at sea%s", G.GetTime(), found ~= nil and string.format(" %.1f,%.1f", found[1], found[2]) or " - none found"))
     end,
 }
 -- (and kept so each tick: the stalker killed by its brain when no one's struck it a while (stalkerbrain.lua:242-245))
@@ -354,7 +380,7 @@ local function Put(player, x, z)
 end
 
 -- (those out only at night - by day they go: the night made to last while one is tested)
-local NIGHT = { eyeofterror = true, twinofterror1 = true, twinofterror2 = true, eyeofterror_mini = true }
+local NIGHT = { eyeofterror = true, twinofterror1 = true, twinofterror2 = true, eyeofterror_mini = true, mindweaver = true }
 
 local function NextBoss()
     if run == nil then return end
@@ -400,6 +426,10 @@ local function NextBoss()
             for _, e in ipairs(far) do e:Remove() n = n + 1 end
         end
         if n > 0 then Log("cleared", " " .. n) end
+    end
+    if run.fire ~= nil then
+        if run.fire:IsValid() then run.fire:Remove() end
+        run.fire = nil
     end
     run.boss, run.cur = nil, nil
     -- (the next on the list - with lanes, the next any lane hasn't taken; one to be made again first)
@@ -489,6 +519,7 @@ local function NextBoss()
         Log("setup", ok and "" or (" failed: " .. tostring(err)))
         -- (where the setup put you - the Crab King's boat: held there between its attacks)
         if ok and boss._tr_hold ~= nil then run.hold = boss._tr_hold end
+        run.fire = boss._tr_fire
     end
     -- (one out only at night - the Eye of Terror and the Twins leave by day: night all along while it's on;
     -- else the days as usual)
