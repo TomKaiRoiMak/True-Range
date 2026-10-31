@@ -1200,7 +1200,9 @@ MakeStandIn = function(x, z)
     -- (a stategraph of sorts: what reaches into yours - Moonmaw's lavae knocking you about (v.sg:...) - finds
     -- one that never changes state and has no tags; with none at all, an error every tick brought the server down)
     local noop = function() end
-    inst.sg = G.setmetatable({ currentstate = { name = "idle" }, statemem = {}, mem = {}, tags = {}, timeinstate = 0,
+    -- (and its stategraph's own states, none: TE's rhinodrills look for yours' knockback (lavaarena_rhinodrill.lua KnockbackOnHit,
+    -- target.sg.sg.states) - a Lua error and the server down each run, TE benches 0611 and 2026-11-01_0556)
+    inst.sg = G.setmetatable({ currentstate = { name = "idle" }, statemem = {}, mem = {}, tags = {}, timeinstate = 0, sg = { states = {} },
         HasStateTag = function() return false end, HasAnyStateTag = function() return false end,
         GoToState = noop, AddStateTag = noop, RemoveStateTag = noop, GetTimeInState = function() return 0 end },
         { __index = function() return noop end })
