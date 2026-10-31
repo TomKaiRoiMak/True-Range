@@ -18,6 +18,7 @@
 | lag มอนทั่วไป 20 ตัว หลังงานคืนนี้ | NOT 4 / 529 (on 4/263, off 0/266) - icehound 3 on (หนามจากท่าก่อน 3.0-3.4 = แบบ Glacial ปลายเลน), rook 1; frame_check 80 (1240: 71) | lag 0448 |
 | bench TE (มอนของ TE 174 ตัว, 3 รอบ) + replay -TE | host missed 45 / 25,306 · client 57 / 25,329 (ก่อนแก้ scorpion / rookwater) | bench 2026-10-31_0611 |
 | bench TE (ทุกมอนเกม+UM ในโลก TE) | host missed 16 / 57,919 · client 39 / 57,959 | bench 2026-10-31_0526 |
+| bench ไม่มีหน้าจอ ทุกมอน บนเกม 761239 + replay | host missed 15 / 60,408 · false 2,141; client missed 29 / 60,430 · false 3,111 | bench 2026-10-31_0741_shares |
 | เกม / ข้อมูล | 761239 / data `83852BF58E33` | ติดตั้งแล้ว (อัปเดตเกม 2026-10-31 06:48) |
 
 ## กำลังทำ
