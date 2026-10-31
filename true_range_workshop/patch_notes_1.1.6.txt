@@ -64,6 +64,7 @@
 - Uncompromising Mode's Bearger throwing boulders: drawn round it as it winds up - beside it, a boulder strikes the moment it's thrown, unseen in a player's game
 - Uncompromising Mode's ice hounds: their spike line from afar drawn as they wind up - it was drawn as a bite, the spikes only as they came up
 - Uncompromising Mode's ice hounds: a plain bite from over 3 away no longer drawn as the spike line - told apart by the wind-up's pace (the spike's plays slow)
+- Uncompromising Mode's spore hounds: their leap no longer drawn each time they're hit
 - In a player's game: things moving on (beams, shots) no longer drawn to and fro each frame - the server tells where they are 15 times a second, every other frame looked like a stop
 - The Blighted Rock Master: its dash no longer thrown far ahead for a frame each time
 - Uncompromising Mode's merms: their counter combo (three blows after being hit four times) drawn - it wasn't drawn at all

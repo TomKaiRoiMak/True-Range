@@ -83,6 +83,11 @@ return {
     -- TR_OLD_DEERDASH: as run)
     deerclops = not rawget(_G, "TR_OLD_DEERDASH") and { ["uppercutcombo@MakeStrong"] = { copy = { "deerclops", "uppercutcombo@MakeStrong" },
         drop = { "follow" }, replace = true } } or nil,
+    -- (the spore hound's leap (postinit SGhound: jump_atk_loop, its blow at 15) run on into hit and taunt, them in its list - any
+    -- hit of it taken for gone straight into its leap's later part, its leap drawn through its stagger: 74 of its 77 drawn-in
+    -- unstruck on the bench 2026-11-01_0433 (979 frames in "hit"). Its own animation alone. TR_OLD_SPORELEAP: as run)
+    sporehound = not rawget(_G, "TR_OLD_SPORELEAP") and { jump_atk_loop = { copy = { "sporehound", "jump_atk_loop" }, anims = { "jump_atk_loop" },
+        replace = true } } or nil,
     merm = not rawget(_G, "TR_OLD_KARATE") and { atk_combo = { copy = { "merm", "atk" }, anims = { "atk_combo" }, at_each = { 12, 18, 31 } } } or nil,
     _hazards = {
         -- (the Moon Tentacle's mine (um_tentacle_moon_projectile.lua lobbedminefn): lands and waits, goes off 2-6 s on or as you come
