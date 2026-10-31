@@ -451,11 +451,26 @@ AddPlayerPostInit(function(p)
                 print(string.format("[tr_lagdisc] %.3f %.2f %.2f r=%.2f eta=%.2f", G.GetTime(), cx, cz, r, eta or -1))
                 return draw_disc(cx, cz, r, eta, px, pz)
             end
+            -- (and modmain's filled areas round a monster while it plays a move (AGGRO_WHILE: AggroFill -> DrawCapsule, no owner
+            -- told) - "[tr_lagcap] t x z r style": TE's jellyfish shock ring in no line at all, 2026-10-31. Whose: by where, against
+            -- the server's traces)
+            local draw_cap = SM.DrawCapsule
+            if draw_cap ~= nil and not G.rawget(G, "TR_LAGREC_OLD") then
+                SM.DrawCapsule = function(x, z, dx, dz, r, style, ...)
+                    print(string.format("[tr_lagcap] %.3f %.2f %.2f r=%.2f %s", G.GetTime(), x, z, r or -1, tostring(style)))
+                    return draw_cap(x, z, dx, dz, r, style, ...)
+                end
+            end
             local okT, Tg = G.pcall(G.require, "true_range/telegraph")
             if okT and Tg ~= nil and Tg.Circle ~= nil then
                 local circle = Tg.Circle
                 Tg.Circle = function(x, z, r, style, slot)
-                    if slot == nil then print(string.format("[tr_lagring] %.3f %.2f %.2f r=%.2f %s", G.GetTime(), x, z, r, tostring(style))) end
+                    if slot == nil then print(string.format("[tr_lagring] %.3f %.2f %.2f r=%.2f %s", G.GetTime(), x, z, r, tostring(style)))
+                    -- (and modmain's rings round a monster (AGGRO / AGGRO_WHILE: its owner the 5th) - none of them was in any line: TE's
+                    -- jellyfish shock rings unreadable, 2026-10-31. Not its body's ring (monster_body: every monster, every frame))
+                    elseif type(slot) == "table" and slot.prefab ~= nil and style ~= "monster_body" and not G.rawget(G, "TR_LAGREC_OLD") then
+                        print(string.format("[tr_lagring] %.3f %.2f %.2f r=%.2f %s owner=%s", G.GetTime(), x, z, r, tostring(style), slot.prefab))
+                    end
                     return circle(x, z, r, style, slot)
                 end
             end

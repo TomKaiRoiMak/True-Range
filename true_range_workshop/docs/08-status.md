@@ -20,7 +20,7 @@
 
 | งาน | สถานะ |
 |---|---|
-| lag 0347 (ไม่ล่ม, new pieces สูงสุด 1,210): goat / trepidation / สุนัขสายฟ้า / Spazmatism NOT 0; Wixie NOT 7/47 on, 4/38 off (ลูกระยะใกล้), clone 1/10; union REVERSE 165 = ลูกพัดของ Wixie | ยังไม่ได้วัดในเกม (lag 0837-0844 ลองแล้ว): mindweaver / fuelseeker ไม่ตี, haunt ไม่เริ่ม, toadling spawner ทำเกมล่ม (Invalid Prefab ของ UM - ห้ามใส่ใน lag), moonpig ไม่ตี, jellyfish ช็อตแต่ผู้เล่นอยู่ห่าง 10 และวง AGGRO ไม่ถูกบันทึก, fissure ต้องมี arena |
+| lag 0347 (ไม่ล่ม, new pieces สูงสุด 1,210): goat / trepidation / สุนัขสายฟ้า / Spazmatism NOT 0; Wixie NOT 7/47 on, 4/38 off (ลูกระยะใกล้), clone 1/10; union REVERSE 165 = ลูกพัดของ Wixie | ยังไม่ได้วัดในเกม (lag 0837-0844 ลองแล้ว): mindweaver / fuelseeker ไม่ตี, haunt ไม่เริ่ม, toadling spawner ทำเกมล่ม (Invalid Prefab ของ UM - ห้ามใส่ใน lag), moonpig ไม่ตี, jellyfish ✔ วง 3 ขึ้นทุกเฟรมที่ช็อต (lag 0855: 539 / 540), fissure ต้องมี arena |
 
 ## รอเจ้าของตัดสิน
 
