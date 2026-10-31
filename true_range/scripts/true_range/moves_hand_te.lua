@@ -14,7 +14,9 @@ return {
     -- (rook.lua :192) - its own atk_pre run so (gore 3.76 to 2.76); struck 3.07 and 3.29 off out of the Rook's, at sea, bench
     -- 2026-10-31_0933. Its atk_pre's shape from the frame it runs (30), as its blow. TR_OLD_ROOKRANGE: the Rook's)
     rookwater = not rawget(_G, "TR_OLD_ROOKWATER") and { atk = rawget(_G, "TR_OLD_ROOKRANGE") and { copy = { "rook", "atk" } }
-        or { copy = { "rookwater", "atk_pre" }, shift = -30, anims = { "atk" }, lock = 0 } } or nil,
+        or { copy = { "rookwater", "atk_pre" }, shift = -30, anims = { "atk" }, lock = 0,
+        -- (and the way it faces as it runs on, as the Rook's - true_range/simmoves; TR_OLD_ROOKFACE: at its target)
+        frame = not rawget(_G, "TR_OLD_ROOKFACE") and "facing" or nil } } or nil,
     -- (the wild boar king's pound (SGwildboreking pound: jump, GroundPound at 30 round itself - groundpounder rings from 1, each
     -- point striking 3 round, it doesn't move): run on into its walk (walk_loop, a leg of 6.5 twice), drawn 3.4 on ahead of it -
     -- struck 1.99-2.56 behind it, 8 of 39 undrawn, TE bench 2026-10-31_1020. Its pound alone, where it stands. TR_OLD_BOARPOUND:
