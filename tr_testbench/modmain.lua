@@ -160,6 +160,13 @@ local SETUP = {
     -- each end of its idle by day (SGmindweaver.lua idle animover), before its grab (5 s, then 5 s growing its
     -- shadow, :71-101): 10 s in on the 2026-10-31_0922 and _0929 lag runs - kept, and night (NIGHT))
     mindweaver = function(boss) boss:StopAllWatchingWorldStates() end,
+    -- (Uncompromising Mode's haunt: its hand sent at you every 10 s (SGum_haunt StartHaunting, from its appear), but it
+    -- fades out once you're within 4.5 (um_haunt.lua ChangeVisibility, 1 - d^2/100 >= .8) and comes back with the 10 s
+    -- begun again - 4 times, then gone: never struck in lag 0837. Its fading taken off (the updatelooper), seen as it is)
+    um_haunt = function(boss)
+        if boss.components.updatelooper ~= nil then boss.components.updatelooper.onupdatefns = {} end
+        boss.AnimState:SetMultColour(0, 0, 0, 1)
+    end,
     -- (its Fuel Seeker strikes only by a lit fire: 15 times drunk from it (SGfuelseeker.lua ConsumeLight, level 3)
     -- then the burst (:263-283, 6 round): none on the bench - a fire pit by you, full, taken away after it)
     fuelseeker = function(boss, p)
@@ -357,6 +364,20 @@ local function Attacking(boss)
         boss._tr_starts = boss._tr_starts or starts(boss.prefab)
         for an in pairs(boss._tr_starts) do
             if boss.AnimState:IsCurrentAnimation(an) then return true end
+        end
+    end
+    -- (one with no move of its own, only things it sets off: one of those out, 20 round it - Uncompromising Mode's haunt,
+    -- its hands sent at you from its "haunt" state, no tag: 12 sent, 44 blows, no scene, lag 2026-10-31_0954.
+    -- TR_BENCH_OLD_THINGSCENE: never)
+    if (boss._tr_starts == nil or G.next(boss._tr_starts) == nil) and boss.Transform ~= nil and not G.rawget(G, "TR_BENCH_OLD_THINGSCENE") then
+        local ok, SM = G.pcall(G.require, "true_range/simmoves")
+        local H = ok and SM.Hazards ~= nil and SM.Hazards() or {}
+        local x, _, z = boss.Transform:GetWorldPosition()
+        for _, e in ipairs(G.TheSim:FindEntities(x, 0, z, 20)) do
+            local h = e ~= boss and H[e.prefab] or nil
+            if h ~= nil and h.by ~= nil then
+                for _, b in ipairs(h.by) do if b == boss.prefab then return true end end
+            end
         end
     end
     return false
