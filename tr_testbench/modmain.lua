@@ -524,7 +524,8 @@ local function NextBoss()
     -- (one out only at night - the Eye of Terror and the Twins leave by day: night all along while it's on;
     -- else the days as usual)
     if NIGHT[prefab] then G.TheWorld:PushEvent("ms_setclocksegs", { day = 0, dusk = 0, night = 16 })
-    elseif run.night then G.TheWorld:PushEvent("ms_setclocksegs", { day = 10, dusk = 4, night = 2 }) end
+    -- (back as the run had it: lag mode's day all along - a real player in the dark struck by the dark itself)
+    elseif run.night then G.TheWorld:PushEvent("ms_setclocksegs", run.lag and { day = 16, dusk = 0, night = 0 } or { day = 10, dusk = 4, night = 2 }) end
     run.night = NIGHT[prefab] or nil
     run.boss, run.scen, run.si, run.quiet, run.idle = boss, Scenarios(), 1, 0, 0
     run.hurt, run.killed, run.kill_t, run.kill_guid, run.gone_t,run.revived, run.force_n = nil, nil, nil, nil, nil, nil, nil
@@ -1457,8 +1458,45 @@ if HEADLESS then
         p:DoTaskInTime(3, function()
             if not LAG_MODE or LAG_START == nil or run ~= nil or not p:IsValid() then return end
             Put(p, LAG_START.x, LAG_START.z)
+            -- (and hurt with no blow by one that's after you - the Mind Weaver's grab, health:DoDelta(-40, ..., inst) and no
+            -- "attacked" (SGmindweaver Grabby): told as struck, none counted, "false 1", lag 2026-10-31_0936. Looked at the
+            -- tick after - a blow's own DoDelta comes before its "attacked". Taken even while you can't be hurt (DoDelta wrapped,
+            -- before its invincible check). TR_BENCH_OLD_DELTA: not)
+            local h = p.components.health
+            if h ~= nil and G.rawget(G, "TR_BENCH_OLD_DELTA") == nil then
+                local DoDelta0 = h.DoDelta
+                h.DoDelta = function(self, amount, overtime, cause, ignore_invincible, afflicter, ...)
+                    if amount ~= nil and amount < 0 and not overtime then
+                        local who = afflicter
+                        -- (no afflicter, its name as the cause: the Mind Weaver's grab gives itself one place on - DoDelta(-40, false,
+                        -- inst.prefab, false, nil, inst): the nearest of that name, 8 round)
+                        if who == nil and type(cause) == "string" then
+                            local px, _, pz = p.Transform:GetWorldPosition()
+                            local bd = 64
+                            for _, e in ipairs(G.TheSim:FindEntities(px, 0, pz, 8)) do
+                                if e.prefab == cause and e ~= p then
+                                    local d = p:GetDistanceSqToInst(e)
+                                    if d < bd then who, bd = e, d end
+                                end
+                            end
+                        end
+                        if who ~= nil and who ~= p and who.IsValid ~= nil and who:IsValid() and who.Transform ~= nil and not who:HasTag("player") then
+                            local t = G.GetTime()
+                            p:DoTaskInTime(0, function()
+                                if (p._tr_blow_t ~= nil and p._tr_blow_t >= t) or not who:IsValid() then return end
+                                local ax, _, az = who.Transform:GetWorldPosition()
+                                local yx, _, yz = p.Transform:GetWorldPosition()
+                                print(string.format("[tr_lag] %.3f srv struck by %s %.2f %.2f you %.2f %.2f with health %s", t, tostring(who.prefab), ax, az, yx, yz, tostring(cause)))
+                                ToClient(p, "struck", tostring(who.prefab), ax, az, yx, yz, t, 0)
+                            end)
+                        end
+                    end
+                    return DoDelta0(self, amount, overtime, cause, ignore_invincible, afflicter, ...)
+                end
+            end
             for _, ev in ipairs({ "attacked", "blocked" }) do
                 p:ListenForEvent(ev, function(_, data)
+                    p._tr_blow_t = G.GetTime()
                     local by = data ~= nil and data.attacker or nil
                     local ax, az = -1e9, -1e9
                     if by ~= nil and by:IsValid() and by.Transform ~= nil then local bx, _, bz = by.Transform:GetWorldPosition() ax, az = bx, bz end

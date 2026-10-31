@@ -20,7 +20,7 @@
 
 | งาน | สถานะ |
 |---|---|
-| lag 0347 (ไม่ล่ม, new pieces สูงสุด 1,210): goat / trepidation / สุนัขสายฟ้า / Spazmatism NOT 0; Wixie NOT 7/47 on, 4/38 off (ลูกระยะใกล้), clone 1/10; union REVERSE 165 = ลูกพัดของ Wixie | mindweaver ✔ จับตอนตัวเราห่าง 2.84 ในวง 3 (lag 0936 - จับด้วย DoDelta ตัวนับเลยนับเป็น false 1), fuelseeker ✔ NOT 0 / 4 (lag 0929, กองไฟให้ดูด); ยังไม่ได้วัดในเกม: haunt ไม่เริ่ม, toadling spawner ทำเกมล่ม (Invalid Prefab ของ UM - ห้ามใส่ใน lag), moonpig ไม่ตี, jellyfish ✔ วง 3 ขึ้นทุกเฟรมที่ช็อต (lag 0855: 539 / 540), fissure ต้องมี arena |
+| lag 0347 (ไม่ล่ม, new pieces สูงสุด 1,210): goat / trepidation / สุนัขสายฟ้า / Spazmatism NOT 0; Wixie NOT 7/47 on, 4/38 off (ลูกระยะใกล้), clone 1/10; union REVERSE 165 = ลูกพัดของ Wixie | mindweaver ✔ NOT 0 / 2 (on 1, off 1; lag 0948 - ตัวนับรับการจับแบบ DoDelta แล้ว), fuelseeker ✔ NOT 0 / 4 (lag 0929, กองไฟให้ดูด); ยังไม่ได้วัดในเกม: haunt ไม่เริ่ม, toadling spawner ทำเกมล่ม (Invalid Prefab ของ UM - ห้ามใส่ใน lag), moonpig ไม่ตี, jellyfish ✔ วง 3 ขึ้นทุกเฟรมที่ช็อต (lag 0855: 539 / 540), fissure ต้องมี arena |
 
 ## รอเจ้าของตัดสิน
 
