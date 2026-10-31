@@ -149,7 +149,8 @@ function ModData.Apply(enabled)
                                     for f, x in pairs(hv) do if f ~= "copy_hazard" then nv[f] = x end end
                                     hv = nv
                                 end
-                                if data[k][hk] == nil then data[k][hk] = hv end
+                                -- (or over the run's own, said so (replace) - a ring run offline a little short)
+                                if data[k][hk] == nil or (type(hv) == "table" and hv.replace) then data[k][hk] = hv end
                             end
                         elseif type(k) == "string" and k:sub(1, 1) ~= "_" and type(v) == "table" then
                             -- (one drawn as another (_alias - an ice hound as a hound) given a move of its own: the other's moves

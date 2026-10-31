@@ -23,6 +23,10 @@ return {
     -- as run)
     wildboreking = not rawget(_G, "TR_OLD_BOARPOUND") and { jump = { copy = { "wildboreking", "jump" }, drop = { "leg" },
         anims = { "jump" }, replace = true } } or nil,
+    -- (the gem deer's tornadoes: striking all within 3 of their middle (SGgreentornado1 destroystuff, FindEntities 3), run offline
+    -- reaching ~2.85 - struck 2.85-3.00 off undrawn, 6 of 6 missed on the bench 2026-11-01. Drawn 1.05 as big (h.scale .95).
+    -- TR_OLD_TORNADO2: as run)
+    _hazards = { greentornado2 = not rawget(_G, "TR_OLD_TORNADO2") and { copy_hazard = "greentornado2", scale = .95, replace = true } or nil },
     scorpion = not rawget(_G, "TR_OLD_SCORPFAR") and { ["atk~leap_attack"] = { copy = { "scorpion", "atk~leap_attack" }, far = 3,
         replace = true } } or nil,
 }
