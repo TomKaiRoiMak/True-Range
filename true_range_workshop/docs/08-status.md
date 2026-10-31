@@ -13,7 +13,7 @@
 | bench TE (มอนของ TE 174) + replay -TE | host missed 36 / 25,306 · client 36 / 25,329 · two-shapes 0 (เดิม 45 / 57 / 962 ก่อนแก้ scorpion, rookwater) | bench 2026-10-31_0611 |
 | lag บอสหลัก 15 ตัว 40 นาที | NOT 10 / 1,008 (on 3/401, off 7/607) · frame_check 243 | lag 2026-10-31_0407 |
 | lag มอนทั่วไป 20 ตัว | NOT 4 / 529 (icehound 3 on = ปลายเลนแบบ Glacial) · frame_check 80 | lag 2026-10-31_0448 |
-| lag TE (-TE ปิด UM) | NOT 0 / 90 | lag 2026-10-31_0706 |
+| lag TE (-TE ปิด UM) | NOT 0 / 90; wildboreking NOT 0 / 102 (on 44, off 58; false 9 / 22) | lag 2026-10-31_0706, 1029 |
 | เกม / ข้อมูล | 761239 / data `83852BF58E33` | ติดตั้งแล้ว |
 
 ## กำลังทำ
