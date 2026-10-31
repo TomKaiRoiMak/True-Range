@@ -147,6 +147,12 @@ local SETUP = {
     -- (it leaves unless a sandstorm's on (antlion.lua:218 OnInit -> Despawn); StartCombat (:284, :495): its
     -- combat, its angry stategraph and brain, after the one in reach)
     antlion = function(boss, p) boss:StartCombat(p) end,
+    -- (Tropical Experience's wild boar king: lying there as the Pig King does, up and fighting only once struck lying or
+    -- asleep (SGwildboreking "attacked": standup, MakePigsAttack) - 0 strikes, "no scene begun" both runs, TE bench 0611.
+    -- Struck once by you)
+    wildboreking = function(boss, p)
+        if boss.components.combat ~= nil then boss.components.combat:GetAttacked(p, 1) end
+    end,
     -- (the moon pig: its brain kills it 5 s with no moon base within 60, petrifies it once the base's mooncharge is over
     -- (moonbeastbrain.lua LostMoonBase, LostMoonCharge): gone 5.1 s in, lag 2026-10-31_0842. Its own base itself - always
     -- near, never workable - charged all along)

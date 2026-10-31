@@ -34,6 +34,7 @@
 |---|---|---|
 | 2 | ของที่ client replay ยังพลาด (14, `tools\haz_missed.ps1` 11:35) | sporecloud_toad 5 (ยืนขอบ 3.50 พอดี), stageusher_attackhand 3 (anim `sleep` ซ้ำกับ sitdown), charlie_boss_minion1 2 (วิ่งหนีหลังล็อก), spiketrail 1, eyeofterror_laser 1, glacialhound_icespike 1, um_bear_trap 1 |
 | 10 | TE: lag 0706 (-TE, ปิด UM) scorpion / rookwater / bossboar / slip NOT 0 / 90; rookwater ระยะ 3 ของตัวเอง (bench ในทะเล 0933: missed 2 → 0, false 22 → 40); false บนบก 544 = bench เดิมวางมันบนบก (ตอนนี้วางในทะเลแล้ว) | things missed 30 ดูแล้ว (hulk spin = modmain ✔ วง 7 ขึ้น 1,974 / 2,009 เฟรมของสปิน lag 0901; mine = ไฟ); UM+TE พร้อมกันล่มเมื่อมีผู้เล่น (moisture IsInBathingPool); Hulk ตายแล้ว server ค้างใน bench = dropparts ของ TE วนหาพื้น Hamlet ใน 80 ไม่เจอ (โลก bench ไม่มี) ไม่ใช่ของเรา |
+| 11 | TE wildboreking (bench เพิ่งตีมันให้ลุก 1020): pound พลาด 8 / 39 host, 9 / 40 client ที่ห่าง 1.99-2.56 ตอนเฟรม 30 (ข้อมูล jump ก็ตีที่ 30) | ดูรูปที่วาดช่วง 2-2.6 ของ jump (free / maps ที่ dist 2.25-2.75) |
 | 4 | กะพริบเล็กที่เหลือ (frame_check, lag 1042) | Eye REVERSE เล็ก, Klaus POP 1, AG1 2, lunarrift roll JUMP 2; bearger_boulder JUMP 27 = lead เปิดทันทีตอนเริ่มกลิ้ง (ข้อแลกเดิม); gestalt projectile JUMP 20 = โซนข้างหน้าวางใหม่ 1.4 ครั้งเดียวก่อนหมด; AG2 spin_pst JUMP ~1.04 ครั้งเดียวตอนจบสปิน (replay client 67 - ตรงเกณฑ์ 1 พอดี, วาดทาง legs ไม่ใช่ Draw/DrawTable); web_mortar JUMP 11 (lag 1334) = ย้ายจากรอบตัวไปจุดตกครั้งเดียวตอนเริ่มตก; bigshadowtentacle AIM 14 |
 
 ## ตัดสินแล้วว่าไม่แก้
