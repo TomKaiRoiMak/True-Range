@@ -15,6 +15,7 @@
 - On a server (caves, or joining a friend): fast things that strike round themselves as they go (the Shrouded Queen's vines and shadow missiles, ghosts) are drawn where they really are - your game shows them a moment behind (about 0.1 s): her vines struck you before ever being drawn under you
 - Thrown things (the Ink Blights' balls, fireballs, goo, the Sea Weed's seeds, ink and more): where they'll come down no longer slides to and fro as they fly - drawn where all its guesses average, not the newest one
 - Eye of Terror and the Twins (Uncompromising Mode): a charge begun while walking goes the way it was walking - it was drawn at you for its first third of a second, then flipped round the other way
+- The Twins' and the Eye of Terror's charge from a short walk: drawn the way it then charges off, not at you - a walk of a few frames was missed half the time
 - Uncompromising Mode's Retinazer (the laser twin), its mouth's lasers 3 to 5 in a row: each drawn the way it faces as it fires - only the first was aimed, the rest drawn that same way as you went round it
 - Uncompromising Mode's Eye of Terror's mini eye shot: drawn in front of it as it shoots (the mini eye strikes only there, 2 to 4.5 ahead) - standing close, you were struck before it was ever seen; and on a server, the mini eyes in flight are drawn where they really are
 - Shadow Thrall mouths and horns called up by the Umbral Abomination: the mouth's first bite out of its portal is drawn; the horns' leap is drawn the way they face as they leap (they turn to you only so far), not always at you

@@ -2227,7 +2227,13 @@ function Predict.Draw(ents, ranges, my_radius, me, skip)
                 -- (walking: 1 to 10 a second - not set down somewhere at a stroke, the testbench putting it in place)
                 local d2 = w ~= nil and now > w.t and ((hx - w.x) ^ 2 + (hz - w.z) ^ 2) / (now - w.t) ^ 2 or 0
                 local moving = d2 > 1 and d2 < 100
-                walk_heading[ent] = { x = hx, z = hz, t = now, rot = ent.Transform:GetRotation(), moving = moving }
+                -- (and when last seen moving: its place comes 15 times a second, every other frame here the same - a frame
+                -- still between, taken for standing: the Twins' charge from a 5-frame walk drawn at you, it charging off
+                -- the other way, 168 off, lag 2026-10-31_1354. TR_OLD_WALKSEEN: this frame only)
+                local seen_t = moving and now or (w ~= nil and w.seen_t or nil)
+                if rawget(_G, "TR_OLD_WALKSEEN") then seen_t = moving and now or nil end
+                walk_heading[ent] = { x = hx, z = hz, t = now, rot = ent.Transform:GetRotation(), moving = moving, seen_t = seen_t,
+                    seen_rot = moving and ent.Transform:GetRotation() or (w ~= nil and w.seen_rot or nil) }
             end
             local a = Track(ent, moves, now, learned_all)
             -- (its SimMoves._land parts' going wide seen every frame - played outside the move's own animations, the
@@ -2255,7 +2261,7 @@ function Predict.Draw(ents, ranges, my_radius, me, skip)
             if kh ~= nil and a ~= nil and a.heading == nil and a.move.anims[1] == kh and (a.move.sim == nil or (a.move.sim.leg == nil and a.move.sim.tell == nil))
                 and not rawget(_G, "TR_OLD_KEEPHEADING") then
                 local w = walk_heading[ent]
-                a.heading = (w ~= nil and w.moving and now - w.t < .2) and w.rot or false
+                a.heading = (w ~= nil and w.seen_t ~= nil and now - w.seen_t < .2) and w.seen_rot or false
             end
             -- (one that turns to you only so far round - sim.cone, Frostjaw's 45 degrees: you stepping
             -- out of that, it lets you go, keeping where you were as you did - its dive goes that far
