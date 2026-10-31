@@ -147,6 +147,15 @@ local SETUP = {
     -- (it leaves unless a sandstorm's on (antlion.lua:218 OnInit -> Despawn); StartCombat (:284, :495): its
     -- combat, its angry stategraph and brain, after the one in reach)
     antlion = function(boss, p) boss:StartCombat(p) end,
+    -- (the moon pig: its brain kills it 5 s with no moon base within 60, petrifies it once the base's mooncharge is over
+    -- (moonbeastbrain.lua LostMoonBase, LostMoonCharge): gone 5.1 s in, lag 2026-10-31_0842. Its own base itself - always
+    -- near, never workable - charged all along)
+    moonpig = function(boss)
+        if boss.components.entitytracker == nil then return end
+        if boss.components.timer == nil then boss:AddComponent("timer") end
+        boss.components.timer:StartTimer("mooncharge", 1e6)
+        boss.components.entitytracker:TrackEntity("moonbase", boss)
+    end,
     -- (its brain kills it with no atrium gate round it (stalkerbrain.lua:218, stalker.lua:998): a gate where it
     -- is, tracked both ways - as fossil_mound.lua:53-58 makes it)
     stalker_atrium = function(boss, p, bx, bz)
