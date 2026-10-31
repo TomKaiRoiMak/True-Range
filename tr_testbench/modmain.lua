@@ -458,6 +458,9 @@ local function NextBoss()
     -- (and her decoy throw (swap_ammo: clone balls) only after 1500 taken (OnDamaged) - the bench's hurt never got there: asked for)
     if prefab == "shadow_wixie" or prefab == "shadow_wixie_helper" then boss:AddTag("puzzlespawn") end
     if prefab == "shadow_wixie" then boss.decoy_attack = true end
+    -- (Uncompromising Mode's shadow creatures go only for the insane: you made so while one is on, kept so (Tick))
+    run.insane = (prefab == "mindweaver" or prefab == "fuelseeker") or nil
+    if run.insane and p.components.sanity ~= nil then p.components.sanity:SetPercent(0) end
     -- (on ground, 10 off: straight aside was in the sea once, by the shore - a spider sank the frame it came)
     local map = G.TheWorld.Map
     local bx, bz = x + 10, z
@@ -568,6 +571,7 @@ local function TickLane()
         if not run.dummy then h:SetInvincible(true) end
         if h:GetPercent() < .5 or run.dummy then h:SetPercent(1) end
     end
+    if run.insane and p.components.sanity ~= nil and p.components.sanity:GetPercent() > .05 then p.components.sanity:SetPercent(0) end
     if p.components.freezable ~= nil and p.components.freezable:IsFrozen() then p.components.freezable:Unfreeze() end
     if p.components.pinnable ~= nil and p.components.pinnable:IsStuck() then p.components.pinnable:Unstick() end
     -- (the friend: FRIEND_OFF beside you every tick, kept whole and free as you are)

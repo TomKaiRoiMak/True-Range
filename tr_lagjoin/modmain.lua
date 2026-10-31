@@ -21,6 +21,23 @@ local function ReadJoin()
     return ip, port ~= nil and G.tonumber(port) or nil, speed ~= nil and G.tonumber(speed) or 1
 end
 local JOIN_IP, JOIN_PORT, JOIN_SPEED = ReadJoin()
+-- (back at the main menu after a run's game - played.txt, put by tools/run_lag.ps1 once you're in: the game shut, not left on
+-- "disconnected" when the run was stopped part way or its server died - the player 2026-10-31: "why doesn't the game close")
+if JOIN_IP == nil then
+    local io = G.rawget(G, "io")
+    local ok, fh = false, nil
+    if io ~= nil then ok, fh = G.pcall(io.open, MODROOT .. "played.txt", "r") end
+    if ok and fh ~= nil then
+        fh:close()
+        AddClassPostConstruct("screens/redux/multiplayermainscreen", function(self)
+            self.inst:DoTaskInTime(3, function()
+                G.pcall(G.rawget(G, "os").remove, MODROOT .. "played.txt")
+                print("[tr_lag] the run's game over - shutting down")
+                G.RequestShutdown()
+            end)
+        end)
+    end
+end
 if JOIN_IP == nil or JOIN_PORT == nil then return end
 
 -- (the main menu: on to the bench's server, a moment after it's up)

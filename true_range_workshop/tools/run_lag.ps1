@@ -46,8 +46,11 @@ Copy-Item (Join-Path $dev 'tr_lagjoin\modmain.lua'), (Join-Path $dev 'tr_lagjoin
 $settings = Join-Path $game 'mods\modsettings.lua'
 $forceLine = 'ForceEnableMod("tr_lagjoin") -- tools/run_lag.ps1, taken out at its end'
 $joinFile = Join-Path $join 'join.txt'
+# (played.txt: put once your game is in - stopped part way, its server gone, your game back at the main menu shuts itself (tr_lagjoin))
+$playedFile = Join-Path $join 'played.txt'
 function Cleanup {
     if (Test-Path $joinFile) { Remove-Item $joinFile -Force }
+    if (Test-Path $playedFile) { Remove-Item $playedFile -Force }
     if (Test-Path $settings) {
         $lines = @([IO.File]::ReadAllLines($settings) | Where-Object { $_ -ne $forceLine })
         [IO.File]::WriteAllLines($settings, $lines, $noBom)
@@ -129,6 +132,7 @@ try {
         "in game after $([math]::Round(((Get-Date) - $t0).TotalSeconds)) s"
         # (in once: the main menu after - the server gone - mustn't join again)
         Remove-Item $joinFile -Force
+        [IO.File]::WriteAllText($playedFile, "1`n", $noBom)
     } else {
         "-NoClient: join by hand (LAN, port $Port)"
     }
