@@ -74,6 +74,7 @@
 - Moves that begin with the same animation (the Twins' charge and shot, and others) are now told apart the same way every game - which one was guessed first could change from one game to the next
 - The Shadow Bishop's lane: no longer turned the wrong way round for a moment as it sets off (in a player's game)
 - The Nightmare Rook's charge: parts already struck no longer come back for a frame as it runs (in a player's game)
+- The Clockwork Rook's charge: drawn straight on the way it runs - each time its run went round again, its lane turned to you while it ran on straight
 - Spitter spiders' web spit and walruses' blow darts: drawn as they aim - in a player's game they used to strike before anything was drawn
 - Uncompromising Mode's Moon Tentacle mines: drawn where they lie, 3 around, until they go off
 - The Eye of Terror (and the Twins) between charges: the next charge no longer drawn a little ahead for a frame as it stops (in a player's game)

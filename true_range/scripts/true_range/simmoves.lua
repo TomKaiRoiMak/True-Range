@@ -32,6 +32,12 @@ do
         -- made within 2 frames. TR_OLD_SHAREDWIN: within 1 s)
         _hazards = not rawget(_G, "TR_OLD_SHAREDWIN") and { shadowthrall_projectile_fx = { shared_window = 2 / 30 } } or {},
     }
+    -- (and over the run's own: the Rook's running blow (atk - its charge's loop, SGrook run: RunForward, turned only as it set
+    -- off) run offline at its target - each loop of it begun again turned to you: in a player's game -149 while it ran on at -103
+    -- (lag 2026-10-31_1450 client, 1836.13), "its charge not straight at all", the player 2026-11-01. The way it faces.
+    -- TR_OLD_ROOKFACE: at its target)
+    local rook_atk = Data.rook ~= nil and Data.rook.atk or nil
+    if rook_atk ~= nil and not rawget(_G, "TR_OLD_ROOKFACE") then rook_atk.frame = "facing" end
     for prefab, moves in pairs(fields) do
         for name, f in pairs(moves) do
             local e = Data[prefab] ~= nil and Data[prefab][name] or nil
