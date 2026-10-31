@@ -157,7 +157,31 @@ local function MainLines()
     local i = 0
     return function() i = i + 1 return MAIN_LINES[i] end
 end
+-- (modmain's AGGRO_WHILE: a ring of r round a monster while it plays these - drawn by its own code, not a thing's shape: the
+-- Ancient Hulk's spin, its lasers setting you alight blamed on the nearest thing (its mines, its pound ring), 43 "missed"
+-- on the TE bench 2026-11-01_0556. Its traced places and animations, to judge such a blow by its ring. OLD_AGGRO_HAZ=1: not)
+local AGGRO = {}
+do
+    local mf = io.open(arg[1] .. "/modmain.lua", "rb")
+    local src = mf and mf:read("*a") or ""
+    if mf then mf:close() end
+    for name, body in (src:match("local AGGRO_WHILE = (%b{})") or ""):gmatch("\n%s*([%w_]+) = (%b{})") do
+        local r = tonumber(body:match("r = ([%d%.]+)"))
+        local anims = {}
+        for an in (body:match("anims = (%b{})") or ""):gmatch('"([%w_]+)"') do anims[an] = true end
+        if r ~= nil then AGGRO[name] = { r = r, anims = anims, linger = tonumber(body:match("linger = ([%d%.]+)")) or 0, seen = {} } end
+    end
+end
 for line in io.lines(arg[2]) do
+    do
+        local at, ap = line:match("%[tr_trace%] ([%d%.]+) ([%w_]+) after ")
+        local ag = ap ~= nil and AGGRO[ap] or nil
+        if ag ~= nil then
+            local ax, az = line:match(" pos=([%-%d%.]+),([%-%d%.]+)")
+            local an = line:match(" anim=([%w_]+)")
+            if ax ~= nil then ag.seen[#ag.seen + 1] = { t = tonumber(at), x = tonumber(ax), z = tonumber(az), on = an ~= nil and ag.anims[an] or false } end
+        end
+    end
     if not OLD_READ then
         local c = line:find("[tr", 1, true)
         if c ~= nil and line:find("[tr_haz]", c, true) ~= c then MAIN_LINES[#MAIN_LINES + 1] = line end
@@ -863,6 +887,19 @@ local function HzBenchMoved(t)
     end
     return false
 end
+local function AggroCovers(t, yx, yz)
+    if os.getenv("OLD_AGGRO_HAZ") or yx == nil then return false end
+    for _, ag in pairs(AGGRO) do
+        for k = #ag.seen, 1, -1 do
+            local e = ag.seen[k]
+            if e.t <= t + 1e-6 then
+                if t - e.t > .2 + ag.linger then break end
+                if e.on and (yx - e.x) ^ 2 + (yz - e.z) ^ 2 <= (ag.r + .5) ^ 2 then return true end
+            end
+        end
+    end
+    return false
+end
 local benchmoved = 0
 for _, h in ipairs(hits) do if HzInScene(h.t) then
     local near = false
@@ -876,6 +913,7 @@ for _, h in ipairs(hits) do if HzInScene(h.t) then
     -- (and the horns' lane - modmain's own, as the darts: 13 struck "undrawn" where they met on you, 2026-10-20. OLD_HORNS=1: as before)
     if not near and h.prefab == "ruinsnightmare_horn_attack" and h.x ~= nil and not os.getenv("OLD_HORNS") then near = HornCovers(h.t, h.x, h.z) end
     if not near and h.x ~= nil and h.prefab:find("^worm_boss") and not os.getenv("OLD_AGGRONEAR") then near = WormDirtCovers(h.t, h.x, h.z) end
+    if not near and AggroCovers(h.t, h.x, h.z) then near = true end
     if near then ok = ok + 1
     elseif HzBenchMoved(h.t) then
         benchmoved = benchmoved + 1
