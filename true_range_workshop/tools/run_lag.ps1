@@ -76,7 +76,7 @@ if (Test-Path $lvl) { Copy-Item $lvl (Join-Path $master 'leveldataoverride.lua')
 # (-Event hallowed_nights: that event on in the bench's world - its copy only, your world's file as it is: the Hallowed Nights
 # monsters (franken pig, mummy merm, vampire bunny: 30% of pigs, merms, bunnymen while it's on), 2026-10-30)
 if ($Event) { $lo = Join-Path $master 'leveldataoverride.lua'; (Get-Content $lo -Raw) -replace "$Event=`"default`"", "$Event=`"enabled`"" | ForEach-Object { [IO.File]::WriteAllText($lo, $_, (New-Object Text.UTF8Encoding($false))) } }
-luajit (Join-Path $here 'bench_overrides.lua') (Join-Path $userCluster 'Master\modoverrides.lua') (Join-Path $master 'modoverrides.lua') $Rounds $Speed tr $(if ($TE) { 'te' } else { '' }) | Out-Null
+luajit (Join-Path $here 'bench_overrides.lua') (Join-Path $userCluster 'Master\modoverrides.lua') (Join-Path $master 'modoverrides.lua') $Rounds $Speed tr $(if ($TE) { 'te' } else { '' }) $(if ($TE) { 'noum' } else { '' }) | Out-Null
 $seed = Join-Path $conf 'Bench\Master\save'
 if (Test-Path $seed) {
     if (Test-Path (Join-Path $master 'save')) { Remove-Item -Recurse -Force (Join-Path $master 'save') }

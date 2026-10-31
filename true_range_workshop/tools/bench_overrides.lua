@@ -33,6 +33,9 @@ local t = {
 -- never the user's; 2026-10-20)
 for i = 5, #arg do
     if arg[i] == "te" then t["workshop-1505270912"] = { enabled = true, configuration_options = {} } end
+    -- (noum: Uncompromising Mode off - with Tropical Experience on, its moisture postinit calls IsInBathingPool, which TE's moisture
+    -- has not: the server dies the moment a player is in it (lag 2026-10-31, wilson). The lag bench's -TE)
+    if arg[i] == "noum" then t["workshop-3193922031"] = nil end
 end
 local fh = assert(io.open(out, "wb"))
 fh:write("return " .. Dump(t) .. "\n")
