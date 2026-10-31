@@ -15,6 +15,12 @@ return {
     -- 2026-10-31_0933. Its atk_pre's shape from the frame it runs (30), as its blow. TR_OLD_ROOKRANGE: the Rook's)
     rookwater = not rawget(_G, "TR_OLD_ROOKWATER") and { atk = rawget(_G, "TR_OLD_ROOKRANGE") and { copy = { "rook", "atk" } }
         or { copy = { "rookwater", "atk_pre" }, shift = -30, anims = { "atk" }, lock = 0 } } or nil,
+    -- (the wild boar king's pound (SGwildboreking pound: jump, GroundPound at 30 round itself - groundpounder rings from 1, each
+    -- point striking 3 round, it doesn't move): run on into its walk (walk_loop, a leg of 6.5 twice), drawn 3.4 on ahead of it -
+    -- struck 1.99-2.56 behind it, 8 of 39 undrawn, TE bench 2026-10-31_1020. Its pound alone, where it stands. TR_OLD_BOARPOUND:
+    -- as run)
+    wildboreking = not rawget(_G, "TR_OLD_BOARPOUND") and { jump = { copy = { "wildboreking", "jump" }, drop = { "leg" },
+        anims = { "jump" }, replace = true } } or nil,
     scorpion = not rawget(_G, "TR_OLD_SCORPFAR") and { ["atk~leap_attack"] = { copy = { "scorpion", "atk~leap_attack" }, far = 3,
         replace = true } } or nil,
 }

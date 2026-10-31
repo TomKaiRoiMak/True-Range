@@ -96,4 +96,5 @@
 - Uncompromising Mode's Shadow Wixie's clones in her puzzle: drawn as she is
 - Tropical Experience's scorpion: its claw and its leap no longer both drawn at once - the claw till it leaps (it leaps only at you from over 3 away)
 - Tropical Experience's water rook: its charge drawn all the way as it runs, at its own reach (1 wider than the land rook's) - it struck while running with nothing drawn, and out past the rook's reach
+- Tropical Experience's wild boar king: its ground pound drawn round itself where it stands - it was drawn on ahead of it, striking behind it with nothing drawn
 - Game update (2026-10-31): moon pigs' bite drawn lunging forward as it now does; the Grim Harrier's runners as they now turn back at the arena's edge
