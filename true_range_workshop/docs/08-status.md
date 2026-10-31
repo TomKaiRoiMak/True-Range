@@ -8,7 +8,7 @@
 
 | วัด | ค่า | เมื่อ |
 |---|---|---|
-| bench ทุกมอน (271, 3 รอบ) เกม 761239 + replay | host missed 14 / 60,480 · false 2,146; client missed 24 / 60,507 · false 3,111 | bench 2026-10-31_0741 (replay หลัง volley) |
+| bench ทุกมอน (271, 3 รอบ) เกม 761239 + replay | host missed 20 / 58,304 · false 2,017; client missed 39 / 58,342 · false 2,619 (daywalker pounce 7 = ไม่แก้) | bench 2026-11-01_0433 (testbench ใหม่; 0741 หลังแก้: 14 / 2,159 · 24 / 3,122) |
 | bench TE (มอนของ TE 174) + replay -TE | host missed 36 / 25,306 · client 36 / 25,329 · two-shapes 0 (เดิม 45 / 57 / 962 ก่อนแก้ scorpion, rookwater) | bench 2026-10-31_0611 |
 | lag บอสหลัก 15 ตัว | NOT 7 / 1,495 (on 3/638, off 4/857) · false 60 · AG2 2, moonmaw 2, shrouden 2, daywalker 1; minotaur / stalker 0 / 84 | lag 2026-10-31_1354 + 1441 (เดิม 0407: 10 / 1,008) |
 | lag มอนทั่วไป 20 ตัว | NOT 3 / 546 (on 3/267: rook 2, walrus 1; off 0/279) · false 4 | lag 2026-10-31_1450 (เดิม 0448: 4 / 529) |
