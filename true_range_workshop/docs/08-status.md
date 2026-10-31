@@ -8,7 +8,7 @@
 
 | วัด | ค่า | เมื่อ |
 |---|---|---|
-| bench ทุกมอน (271, 3 รอบ) เกม 761239 + replay | host missed 15 / 60,480 · false 2,146; client missed 25 / 60,507 · false 3,111 | bench 2026-10-31_0741 (replay หลัง volley) |
+| bench ทุกมอน (271, 3 รอบ) เกม 761239 + replay | host missed 14 / 60,480 · false 2,146; client missed 24 / 60,507 · false 3,111 | bench 2026-10-31_0741 (replay หลัง volley) |
 | bench TE (มอนของ TE 174) + replay -TE | host missed 36 / 25,306 · client 36 / 25,329 · two-shapes 0 (เดิม 45 / 57 / 962 ก่อนแก้ scorpion, rookwater) | bench 2026-10-31_0611 |
 | lag บอสหลัก 15 ตัว 40 นาที | NOT 10 / 1,008 (on 3/401, off 7/607) · frame_check 243 | lag 2026-10-31_0407 |
 | lag มอนทั่วไป 20 ตัว | NOT 4 / 529 (icehound 3 on = ปลายเลนแบบ Glacial) · frame_check 80 | lag 2026-10-31_0448 |

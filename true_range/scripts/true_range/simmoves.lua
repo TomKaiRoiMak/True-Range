@@ -26,6 +26,11 @@ do
     local fields = {
         charlie_boss_runner = { attack = { lead = 16 / 30 }, attack_quick = { lead = 11 / 30 } },
         shadowthrall_horns = { shrouden_jump = { aim_facing = { turn = 45, min = 3.5, max = 9, free = 7, lead = 11 / 30 } } },
+        -- (the Shadow Thrall wings' shots: one patch's share whom they strike (SGshadowthrall_wings :326-342, made in one
+        -- tick), the ones it throws one by one as the Umbral Abomination calls it (:458, ~.23 s apart) each its own - taken
+        -- for one lot, a second struck you 0.23 s after the first with nothing drawn, 3 so (bench 2026-10-31_0741). A lot:
+        -- made within 2 frames. TR_OLD_SHAREDWIN: within 1 s)
+        _hazards = not rawget(_G, "TR_OLD_SHAREDWIN") and { shadowthrall_projectile_fx = { shared_window = 2 / 30 } } or {},
     }
     for prefab, moves in pairs(fields) do
         for name, f in pairs(moves) do
@@ -4185,7 +4190,7 @@ local function DrawHazardInner(ent, x, z, rot, px, pz, now, in_moves, sfx)
     -- set off from where that one was, about when (one throw's, not the next's)
     if h.shared then
         local sh = shared_struck[ent.prefab]
-        if sh ~= nil and s.fx ~= nil and math.abs(s.since - sh.at) <= SHARED_WINDOW
+        if sh ~= nil and s.fx ~= nil and math.abs(s.since - sh.at) <= (h.shared_window or SHARED_WINDOW)
             and (s.fx - sh.x) ^ 2 + (s.fz - sh.z) ^ 2 <= SHARED_NEAR * SHARED_NEAR then
             for _, td in ipairs(todo) do td.style = "fill_light" end
             DrawParts(steps, todo, x, z, rot, px, pz, nil, "_hazard|" .. ent.prefab .. sfx)
