@@ -10,7 +10,7 @@
 |---|---|---|
 | replay 1610 host / client (Predictive) | host missed 14 / 56,739 · false 1,879; client missed 24 / 56,798 · false 2,858 · boss jumps 748 | 2026-10-31 (นับ hit ไม่มีผู้ตีแล้ว cbae236) |
 | bench ทุกมอน (271, 3 รอบ) เกม 761239 + replay | host missed 15 / 60,408 · false 2,141; client missed 29 / 60,430 · false 3,111 | bench 2026-10-31_0741 |
-| bench TE (มอนของ TE 174) + replay -TE | host missed 45 / 25,306 · client 57 / 25,329 (ก่อนแก้ scorpion / rookwater) | bench 2026-10-31_0611 |
+| bench TE (มอนของ TE 174) + replay -TE | host missed 36 / 25,306 · client 36 / 25,329 · two-shapes 0 (เดิม 45 / 57 / 962 ก่อนแก้ scorpion, rookwater) | bench 2026-10-31_0611 |
 | lag บอสหลัก 15 ตัว 40 นาที | NOT 10 / 1,008 (on 3/401, off 7/607) · frame_check 243 | lag 2026-10-31_0407 |
 | lag มอนทั่วไป 20 ตัว | NOT 4 / 529 (icehound 3 on = ปลายเลนแบบ Glacial) · frame_check 80 | lag 2026-10-31_0448 |
 | lag TE (-TE ปิด UM) | NOT 0 / 90 | lag 2026-10-31_0706 |
