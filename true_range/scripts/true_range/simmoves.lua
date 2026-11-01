@@ -3098,6 +3098,15 @@ local UA = { most = 30, back = 24, ring = 18, alone = {}, count = {}, lots = {},
 -- as SGdeerclops' laser: laserempty at 0, then laser i at i - 1 frames, further on each): drawn
 -- as one lane, a wave - each stretch its colour by when its blobs go off, red where it goes off
 -- now, yellow on ahead, gone behind (DrawHazardInner sets them up, each frame)
+-- (testing, TR_TRACE_LASER: which way each laser blob is drawn, told as it changes - "[tr_lasertrace] t guid path")
+SimMoves._lt_last = setmetatable({}, { __mode = "k" })
+function SimMoves.LaserTrace(ent, path)
+    if not rawget(_G, "TR_TRACE_LASER") or ent == nil or ent.prefab ~= "eyeofterror_laser" then return end
+    if SimMoves._lt_last[ent] == path then return end
+    SimMoves._lt_last[ent] = path
+    local t = rawget(_G, "GetTime") ~= nil and GetTime() or 0
+    print(string.format("[tr_lasertrace] %.3f %s %s", t, tostring(ent.GUID), path))
+end
 function SimMoves.LaneDraw()
     for q = #UA.act, 1, -1 do
         local lot = UA.act[q]
@@ -3154,6 +3163,12 @@ function SimMoves.LaneDraw()
         end
         -- (this frame, as they were found so: each a disc of its reach, coloured by when the lot began - from the next on,
         -- each drawn as itself)
+        if lot.not_lane and rawget(_G, "TR_TRACE_LASER") and lot.prefab == "eyeofterror_laser" and not lot.told then
+            lot.told = true
+            local off = 0
+            for i = 1, n do off = math.max(off, math.abs((xs[i] - ax) * -uz + (zs[i] - az) * ux)) end
+            print(string.format("[tr_lasertrace] lot fr=%d n=%d len=%.2f maxoff=%.2f moved=%s", lot.fr, n, len, off, tostring(lot.moved_why)))
+        end
         if lot.not_lane then
             local st = ByTime(lot.start - now)
             for i = 1, n do SimMoves.DrawCapsule(xs[i], zs[i], 0, 0, r, S(st)) end
@@ -3683,7 +3698,7 @@ local function DrawHazardInner(ent, x, z, rot, px, pz, now, in_moves, sfx)
         if ent.AnimState ~= nil and ent.AnimState.GetCurrentAnimationTime ~= nil then
             age = math.max(0, math.min(ent.AnimState:GetCurrentAnimationTime() or 0, ((h.delay or 0) + 15) * FRAMES))
         end
-        seen[ent] = { since = now - age, x = x, z = z, fx = x, fz = z }
+        seen[ent] = { since = now - age, seen_at = now, x = x, z = z, fx = x, fz = z }
         -- (struck by it before it was seen - SimMoves.Struck)
         if SimMoves._struck_unseen[ent] then
             SimMoves._struck_unseen[ent] = nil
@@ -4281,7 +4296,7 @@ local function DrawHazardInner(ent, x, z, rot, px, pz, now, in_moves, sfx)
     -- (drawn just as last frame, nothing due to change: kept - Kept; not one of a shared lot)
     if not h.shared then
         local kept = Kept(s, x, z, rot, px, pz, now, sfx, start)
-        if kept ~= nil then return kept or inside end
+        if kept ~= nil then SimMoves.LaserTrace(ent, "kept") return kept or inside end
     end
     -- (its list kept from frame to frame, written over - not made anew for each thing every frame:
     -- the Crystal Deerclops' hundreds of spikes, a thousand tables a frame)
@@ -4324,14 +4339,21 @@ local function DrawHazardInner(ent, x, z, rot, px, pz, now, in_moves, sfx)
     -- gone, which goes off when told by its place along it)
     local lot_of = nil
     if spread > 0 and #steps == 1 and not h.moved and not h.shared and sfx == "" and start ~= nil then
-        local fr = math.floor(s.since / FRAMES + .5)
+        -- (its lot by the frame it was first seen, not by its age: a laser's 21 blobs, seen together, their animations' times
+        -- a frame or two apart on a player's game - lots of 2 at either side of the rest, under 4: "not a lane", drawn as a row
+        -- of circles, the player 2026-11-02 ([tr_lasertrace], lag). TR_OLD_LOTAGE: by its age)
+        local fr = math.floor(((not rawget(_G, "TR_OLD_LOTAGE") and s.seen_at) or s.since) / FRAMES + .5)
         local by = UA.lots[ent.prefab]
         if by == nil then by = {} UA.lots[ent.prefab] = by end
         lot_of = by[fr] or by[fr - 1] or by[fr + 1]
     end
     -- (a lot found not laid in a row (LaneDraw's not_lane): each drawn as itself, below)
+    if rawget(_G, "TR_TRACE_LASER") then SimMoves.LaserTrace(ent, string.format("inner spread=%.2f steps=%d moved=%s shared=%s sfx=%q start=%s lot=%s notlane=%s", spread, #steps, tostring(h.moved), tostring(h.shared), sfx, tostring(start ~= nil), tostring(lot_of ~= nil), tostring(lot_of ~= nil and lot_of.not_lane))) end
     if spread > 0 and #steps == 1 and not h.moved and not h.shared and sfx == "" and start ~= nil and not (lot_of ~= nil and lot_of.not_lane) then
-        local fr = math.floor(s.since / FRAMES + .5)
+        -- (its lot by the frame it was first seen, not by its age: a laser's 21 blobs, seen together, their animations' times
+        -- a frame or two apart on a player's game - lots of 2 at either side of the rest, under 4: "not a lane", drawn as a row
+        -- of circles, the player 2026-11-02 ([tr_lasertrace], lag). TR_OLD_LOTAGE: by its age)
+        local fr = math.floor(((not rawget(_G, "TR_OLD_LOTAGE") and s.seen_at) or s.since) / FRAMES + .5)
         local by = UA.lots[ent.prefab]
         local lot = lot_of
         if lot == nil then
@@ -4352,7 +4374,7 @@ local function DrawHazardInner(ent, x, z, rot, px, pz, now, in_moves, sfx)
             -- mushroom bombs, thrown out all at once - seen together at its feet, a lane taken from there, never told
             -- apart as they landed strewn about: long pieces over each other, the player 2026-10-21)
             local i = lot.has[ent]
-            if (lot.xs[i] - x) ^ 2 + (lot.zs[i] - z) ^ 2 > .01 then lot.not_lane = true end
+            if (lot.xs[i] - x) ^ 2 + (lot.zs[i] - z) ^ 2 > .01 then lot.not_lane = true lot.moved_why = string.format("%.2f,%.2f->%.2f,%.2f", lot.xs[i], lot.zs[i], x, z) end
             lot.xs[i], lot.zs[i] = x, z
         end
         if lot.at ~= now then lot.at = now UA.act[#UA.act + 1] = lot end
