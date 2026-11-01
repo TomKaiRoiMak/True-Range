@@ -1539,9 +1539,11 @@ while true do
         end
         -- (each thing made by now: there, as in the game)
         -- (a cursor through them by when made - not all of them every frame: a third of a replay's time)
-        while made_i <= #replay_made and replay_made[made_i].first <= t + 1e-6 do
+        -- (CLIENT: seen made ENT_LAG late, as the tell things are. OLD_MADELAG=1: at the server's time)
+        local mlag = (ENT_LAG > 0 and not os.getenv("OLD_MADELAG")) and ENT_LAG or 0
+        while made_i <= #replay_made and replay_made[made_i].first + mlag <= t + 1e-6 do
             local m = replay_made[made_i]
-            if Predict.made_hazards[m.e] == nil then Predict.made_hazards[m.e] = m.first end
+            if Predict.made_hazards[m.e] == nil then Predict.made_hazards[m.e] = m.first + mlag end
             made_live[#made_live + 1] = m
             made_i = made_i + 1
         end
