@@ -278,6 +278,9 @@ local SETUP_TICK = {
     twinofterror1 = TwinTransform,
     twinofterror2 = TwinTransform,
     stalker_atrium = function(boss) boss._lastplayerhittime = G.GetTime() end,
+    -- (the Malbatross: off over land 5 s, it departs (malbatrossbrain.lua ShouldLeaveLand, landtimer) - 1 strike all the
+    -- bench 2026-11-01_1604 (45 departs). Its land clock kept at now)
+    malbatross = function(boss) boss.landtimer = G.GetTime() end,
     -- (and on: combat:ResetCooldown sets it nil again (combat.lua :137) - set at spawn only, the error came back each scene)
     beetletaur = function(boss)
         if boss.components.combat ~= nil and boss.components.combat.laststartattacktime == nil then
