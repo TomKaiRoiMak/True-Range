@@ -8,7 +8,7 @@
 
 | วัด | ค่า | เมื่อ |
 |---|---|---|
-| bench ทุกมอน (271, 3 รอบ) เกม 761239 + replay | host missed 20 / 58,304 · false 2,017 → 1,421 (runner lots 221e52b; BENCHMOVED_FALSE 390 ช่วง แยกออก); client missed 35 / 58,313 · false 2,503 → 2,352 (runner lots 221e52b; things 1,510 → 1,115 หลังแยก BENCHMOVED_FALSE 395) (daywalker pounce 7 = ไม่แก้; replay CLIENT แก้ tell ช้า d34decb+) | bench 2026-11-01_0433 (testbench ใหม่; 0741 หลังแก้: 14 / 2,159 · 24 / 3,122) |
+| bench ทุกมอน (271, 3 รอบ) เกม 761239 + replay | host missed 20 / 58,304 · false 2,017 → 1,367 (runner lots 221e52b; BENCHMOVED_FALSE 390 ช่วง แยกออก; hit arc); client missed 35 → 34 / 58,311 · false 2,503 → 1,888 (hit arc ด้วย) ←เดิม 2,352 (runner lots 221e52b; things 1,510 → 1,115 หลังแยก BENCHMOVED_FALSE 395) (daywalker pounce 7 = ไม่แก้; replay CLIENT แก้ tell ช้า d34decb+) | bench 2026-11-01_0433 (testbench ใหม่; 0741 หลังแก้: 14 / 2,159 · 24 / 3,122) |
 | bench TE (170 ตัว, testbench ใหม่) + replay -TE | host missed 55 / 25,722 · false 1,515; client 53 / 25,739 · false 1,581 (ของ 47 / 46 → 3 / 2 หลัง replay_haz รู้จักวงสปินของ hulk) | bench 2026-11-01_0556 (0611: 36 / 2,036) |
 | lag บอสหลัก 15 ตัว | NOT 7 / 1,495 (on 3/638, off 4/857) · false 60 · AG2 2, moonmaw 2, shrouden 2, daywalker 1; minotaur / stalker 0 / 84 | lag 2026-10-31_1354 + 1441 (เดิม 0407: 10 / 1,008) |
 | lag มอนทั่วไป 20 ตัว | NOT 3 / 546 (on 3/267: rook 2, walrus 1; off 0/279) · false 4 | lag 2026-10-31_1450 (เดิม 0448: 4 / 529) |

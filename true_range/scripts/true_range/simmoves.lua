@@ -162,6 +162,85 @@ local function Unpack(text)
     return map
 end
 
+-- (a blow that lands only in front of it (combat:SetHitArc - Combat:CanHitTarget: within half the arc of the way it faces at
+-- the blow): run offline round it all the way, turned to its target - the Rock Lobster's claw drawn on you behind it, 36 of
+-- its 222 drawn in unstruck (bench 2026-11-01_0433, 27 of them the bench's stand-in set 150 round from where it faced). Its
+-- shapes cut to that arc, laid the way it faces. TUNING.DEFAULT_HIT_ARC 180, SLURTLE_HIT_ARC 120. TR_OLD_HITARC: as run)
+if not rawget(_G, "TR_OLD_HITARC") then
+    local arcs = { bat = { atk = 180 }, bunnyman = { atk = 180 }, merm = { atk = 180 }, pigman = { atk = 180 },
+        rocky = { atk = 180 }, rocky_boss = { atk = 180 }, slurtle = { atk = 120 }, snurtle = { atk = 120 } }
+    local function Pack(runs)
+        local out = {}
+        local function Put(v)
+            repeat
+                local d = v % 32
+                v = (v - d) / 32
+                local c = v > 0 and d + 32 or d
+                out[#out + 1] = B64:sub(c + 1, c + 1)
+            until v == 0
+        end
+        local last_row, i = -1, 1
+        while i <= #runs do
+            local j = i
+            while j + 1 <= #runs and runs[j + 1][1] == runs[i][1] do j = j + 1 end
+            Put(runs[i][1] - last_row)
+            Put(j - i + 1)
+            local last_end = -1
+            for q = i, j do
+                Put(runs[q][2] - last_end - 1)
+                Put(runs[q][3] - runs[q][2])
+                last_end = runs[q][3]
+            end
+            last_row, i = runs[i][1], j + 1
+        end
+        return table.concat(out)
+    end
+    local function Cut(text, arc)
+        local half = arc / 2 * math.pi / 180
+        local runs = {}
+        for _, r in ipairs(Unpack(text).runs) do
+            local side = -G.side + r[1] * G.step
+            local from = nil
+            for c = r[2], r[3] + 1 do
+                local ok = false
+                if c <= r[3] then
+                    local ahead = G.ahead + c * G.step
+                    ok = (ahead == 0 and side == 0) or math.abs(math.atan2(math.abs(side), ahead)) <= half + 1e-6
+                end
+                if ok and from == nil then from = c end
+                if not ok and from ~= nil then runs[#runs + 1] = { r[1], from, c - 1 } from = nil end
+            end
+        end
+        table.sort(runs, function(a, b) return a[1] < b[1] or (a[1] == b[1] and a[2] < b[2]) end)
+        return Pack(runs)
+    end
+    for prefab, moves in pairs(arcs) do
+        for name, arc in pairs(moves) do
+            local e = Data[prefab] ~= nil and Data[prefab][name] or nil
+            if type(e) == "table" then
+                for _, list in ipairs({ e.maps or {}, e.free or {} }) do
+                    for _, m in ipairs(list) do
+                        for _, st in ipairs(m.steps or {}) do
+                            if st.cells ~= nil then st.cells = Cut(st.cells, arc) end
+                        end
+                    end
+                end
+                e.frame = "facing"
+            end
+        end
+    end
+    -- (and not by its table (true_range/moves_table, run turned to its target wherever it stood - every row the one shape
+    -- all round): the Rock Lobster's claw)
+    local tab_ok, tabs = pcall(require, "true_range/moves_table")
+    if tab_ok and type(tabs) == "table" then
+        for prefab, moves in pairs(arcs) do
+            for name in pairs(moves) do
+                if type(tabs[prefab]) == "table" then tabs[prefab][name] = nil end
+            end
+        end
+    end
+end
+
 -- a move's maps: { { dist, raw } } - each one's steps unpacked only once it's drawn (MapSteps):
 -- every distance of every move at once would be some 50MB
 -- (src: which of its map lists - entry.maps, or entry.free: its target out of its way)

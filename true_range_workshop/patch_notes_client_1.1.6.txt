@@ -110,3 +110,4 @@
 - Year of the Horse knights' joust: its lane laid the way it really charges - it was turned up to 15 degrees off, to the way it faces
 - Uncompromising Mode's strong Deerclops' uppercut combo: its last blow drawn where its dash really stops - it was drawn about 3 further on
 - The Grim Harrier's runners: once one of a swipe's three has struck you, the other two drawn faint - they can't strike you again (also seen by players who aren't hosting)
+- Rock Lobsters, pigs, merms, bunnymen, bats and slurtles: their bite drawn only in front of them, as it lands (behind them it can't strike)
