@@ -14,6 +14,7 @@
 | lag บอสหลัก 15 ตัว | NOT 7 / 1,495 (on 3/638, off 4/857) · false 60 · AG2 2, moonmaw 2, shrouden 2, daywalker 1; minotaur / stalker 0 / 84 | lag 2026-10-31_1354 + 1441 (เดิม 0407: 10 / 1,008) |
 | lag มอนทั่วไป 20 ตัว | NOT 3 / 546 (on 3/267: rook 2, walrus 1; off 0/279) · false 4 | lag 2026-10-31_1450 (เดิม 0448: 4 / 529) |
 | lag TE (-TE ปิด UM) | NOT 0 / 90; wildboreking NOT 0 / 102 (on 44, off 58; false 9 / 22); tigershark, mandrakeman, spider_tropical, snake NOT 0 / 79 · false 0 (wildbeaverguard ตีแค่ 2 - item 10) | lag 2026-10-31_0706, 1029, 2026-11-01_2213 |
+| lag มอนที่ไม่เคยลง lag (UM 8 ตัว) | claywarg, crawlinghorror, junkrat NOT 0; stageusher มือ NOT 39 / 391 → 11 / 402 (lead ตามทิศมือ) · false 0; slurper false 10 = headslurpmiss ของ bench (เราบล็อกทุกครั้ง); bishop_nightmareb ไม่มี prefab, beeguard_seeker / monkey ไม่ตี | lag 2026-11-02_0133, 0209 / 0227 (A/B) |
 | lag UM walrus ปากับดัก (หลังวาดจุดตก) | NOT 0 / 38 · false 0; กับดักโดน 1 ครั้ง วาดที่จุดตก 0.4 วิก่อน (ห่างจุดจริง 0.1) | lag 2026-11-01_2222 |
 | เกม / ข้อมูล | 761239 / data `83852BF58E33` | ติดตั้งแล้ว |
 

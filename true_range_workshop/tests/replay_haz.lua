@@ -312,8 +312,16 @@ do
         return false
     end
     -- (not "a HIT with no STRIKE": mostly the boss's own area blow - replay.lua the same, VERIFY_PLAN 6.12b)
+    -- (and a lag bench's: you block every blow there - no HIT told, only the server's "[tr_lag] srv struck (blocked) by" with
+    -- where the boss and you were: the Stage Usher's hands' 139 blows judged as none, every hand on you "drawn in, not struck",
+    -- lag 2026-11-02_0133. As a HIT. OLD_LAGSTRUCK=1: not)
+    local lag_struck = not os.getenv("OLD_LAGSTRUCK")
     for line in MainLines() do
         local t, b, rest = line:match("%[tr_trace%] ([%d%.]+) ([%w_]+) HIT at wilson (.*)$")
+        if t == nil and lag_struck then
+            local lt, lb, lbx, lbz, lyx, lyz = line:match("%[tr_lag%] ([%d%.]+) srv struck %(blocked%) by ([%w_]+) ([%d%.%-]+) ([%d%.%-]+) you ([%d%.%-]+) ([%d%.%-]+)")
+            if lt ~= nil then t, b, rest = lt, lb, string.format("pos=%s,%s you=%s,%s", lbx, lbz, lyx, lyz) end
+        end
         if t ~= nil then
             t = tonumber(t)
             local bx, bz = rest:match("pos=([%d%.%-]+),([%d%.%-]+)")

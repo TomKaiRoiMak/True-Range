@@ -3622,6 +3622,9 @@ SimMoves._lead_ease = setmetatable({}, { __mode = "k" })
 SimMoves._lead_ease_of = { um_fire_projectile = true, snapperturtle = true, snapperturtlebaby = true,
     alterguardian_phase1_lunarrift = true, alterguardian_phase1 = true, wagboss_robot = true, alterguardian_phase2 = true,
     knook = true, shadowthrall_mouth = true }
+-- (things sent off straight the way they face at a set speed - DrawHazardInner leads them so from their first frame: the Stage
+-- Usher's hands (STAGEUSHER_ATTACK_SPEED), Uncompromising Mode's haunt's (um_haunt.lua: half that))
+SimMoves._ahead_v = { stageusher_attackhand = 6, um_haunt_attackhand = 3 }
 function SimMoves.LeadMoving(ent, x, z, now)
     local rx, rz = SimMoves._LeadMovingRaw(ent, x, z, now)
     -- (tried and left off - eased in, it came late: 2+0 -> 1+11 struck undrawn on the Moonmaw, 0-2 -> 2+4 on the Umbral Abomination,
@@ -3786,7 +3789,19 @@ local function DrawHazardInner(ent, x, z, rot, px, pz, now, in_moves, sfx)
     -- (one drawn with its move, on its own now, striking only as it appears - a pound's ring: as
     -- it comes, below - not all the while it's there)
     if h.lasting then
-        x, z = SimMoves.LeadMoving(ent, x, z, now)
+        local lx, lz = SimMoves.LeadMoving(ent, x, z, now)
+        -- (or, one sent off straight the way it faces at a set speed (h.ahead_v) - the Stage Usher's hands, 6 a second at you
+        -- (SetMotorVel): its first .3 s, before its way's been seen long enough to be led, on by the way it faces - struck
+        -- 1.7-2.0 from it as a player's game still had it 2.1-2.4 off, 9 undrawn on the lag bench 2026-11-02_0133.
+        -- TR_OLD_HANDLEAD: not led then)
+        local av = h.ahead_v or SimMoves._ahead_v[ent.prefab]
+        if lx == x and lz == z and av ~= nil and rot ~= nil and not rawget(_G, "TR_OLD_HANDLEAD")
+            and seen[ent] ~= nil and now - seen[ent].since < .3 and SimMoves.hazard_lead > 0
+            and not (rawget(_G, "TheWorld") ~= nil and TheWorld.ismastersim) then
+            local d = av * SimMoves.hazard_lead
+            lx, lz = x + math.cos(rot) * d, z - math.sin(rot) * d
+        end
+        x, z = lx, lz
         -- (one that strikes on and on round itself while it's there - a snare pulsing: its reach,
         -- all the while)
         -- (the same every frame: made once for its kind - the Great Depths Worm's hundreds of
