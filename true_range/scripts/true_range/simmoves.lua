@@ -229,6 +229,49 @@ if not rawget(_G, "TR_OLD_HITARC") then
             end
         end
     end
+    -- (the Rock Lobster grows (0.75 to 1.2, its reach with it: ROCKY_HIT_RANGE 3 times its size, and you 0.5) - run offline
+    -- at one size, 4.5 round; at 0.77 it struck 2.3 at most (bench 0433). One for each size, 0.05 apart, the nearest drawn
+    -- (true_range/predict picks by sim.scale). TR_OLD_ROCKYSIZE: the one size)
+    local rk = Data.rocky ~= nil and Data.rocky.atk or nil
+    if rk ~= nil and not rawget(_G, "TR_OLD_ROCKYSIZE") then
+        local function Disc(R)
+            local runs = {}
+            local n = math.floor(R / G.step) + 1
+            local r0, c0 = math.floor(G.side / G.step + .5), math.floor(-G.ahead / G.step + .5)
+            for dr = -n, n do
+                local side = dr * G.step
+                local w = R * R - side * side
+                if w >= 0 then
+                    local last = math.floor(math.sqrt(w) / G.step + 1e-6)
+                    runs[#runs + 1] = { r0 + dr, c0, c0 + last }
+                end
+            end
+            return Pack(runs)
+        end
+        local function Sized(sc)
+            local e = {}
+            for k, v in pairs(rk) do e[k] = v end
+            local cells = Disc(3 * sc + .5 + .25)
+            e.maps = {}
+            for i, m in ipairs(rk.maps or {}) do
+                local nm = { dist = m.dist, path = m.path }
+                if i == 1 then
+                    nm.steps = {}
+                    for _, st in ipairs(m.steps or {}) do nm.steps[#nm.steps + 1] = { at = st.at, cells = cells } end
+                else
+                    nm.same = true
+                end
+                e.maps[i] = nm
+            end
+            e.free = nil
+            e.scale = sc
+            return e
+        end
+        for i = 0, 9 do
+            local sc = .75 + i * .05
+            if math.abs(sc - 1) < 1e-6 then Data.rocky.atk = Sized(1) else Data.rocky[string.format("atk@s%.2f", sc)] = Sized(sc) end
+        end
+    end
     -- (and not by its table (true_range/moves_table, run turned to its target wherever it stood - every row the one shape
     -- all round): the Rock Lobster's claw)
     local tab_ok, tabs = pcall(require, "true_range/moves_table")
