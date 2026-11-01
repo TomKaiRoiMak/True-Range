@@ -1,6 +1,23 @@
 -- Moves written by hand for Tropical Experience, not by the offline runs - laid over its data as it's put on
 -- (true_range/moddata), as moves_hand_um is for Uncompromising Mode: a rebuild of moves_sim_te never drops them.
 return {
+    -- (Tropical Experience's twisters' attack (SGtwister / SGfiretwister attack): half the time, at random, its atk played 10
+    -- frames late with a tornado made then (twister_tornado / twister_tornadodefogo) - its blow still at the state's 33: 23
+    -- into that atk. Drawn 10 late, the red after the blow: 223 and 269 drawn-in unstruck (bench 2026-11-01_0556). Told by
+    -- the tornado. TR_OLD_TWISTERTELL: one timing)
+    twister = not rawget(_G, "TR_OLD_TWISTERTELL") and { ["atk~tornado"] = { copy = { "twister", "atk" }, shift = -10, tell = "twister_tornado" } } or nil,
+    firetwister = not rawget(_G, "TR_OLD_TWISTERTELL") and { ["atk~tornado"] = { copy = { "firetwister", "atk" }, shift = -10, tell = "twister_tornadodefogo" } } or nil,
+    -- (Tropical Experience's live fish (fishesunderwater.lua, SGfishunderwater): their "attack" plays walk_loop - their idle and
+    -- swim the same - its damage commented out, no retarget: 0 blows on the bench, ~70 drawn-in each kind, all while idle
+    -- (bench 2026-11-01_0556). Not a move. TR_OLD_FISHATK: as run)
+    mecfish_alive = not rawget(_G, "TR_OLD_FISHATK") and { walk_loop = false } or nil,
+    fish2_alive = not rawget(_G, "TR_OLD_FISHATK") and { walk_loop = false } or nil,
+    fish3_alive = not rawget(_G, "TR_OLD_FISHATK") and { walk_loop = false } or nil,
+    fish4_alive = not rawget(_G, "TR_OLD_FISHATK") and { walk_loop = false } or nil,
+    fish5_alive = not rawget(_G, "TR_OLD_FISHATK") and { walk_loop = false } or nil,
+    fish6_alive = not rawget(_G, "TR_OLD_FISHATK") and { walk_loop = false } or nil,
+    fish7_alive = not rawget(_G, "TR_OLD_FISHATK") and { walk_loop = false } or nil,
+    goldfish_alive = not rawget(_G, "TR_OLD_FISHATK") and { walk_loop = false } or nil,
     -- (the scorpion's leap (SGscorpion leap_attack: atk, SetMotorVelOverride 20 from frame 8, its blow at 19) and its claw (attack:
     -- atk, still, its blow at 25) begin alike - both drawn at once, 962 frames on the bench of its monsters (2026-10-31_0611
     -- BOTHDRAWN). The leap only when you're over 3 off (evade_pst: JUMP_DISTANCE 3) - the run never found that (not where it

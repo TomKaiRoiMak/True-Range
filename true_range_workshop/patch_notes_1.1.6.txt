@@ -112,3 +112,5 @@
 - The Grim Harrier's runners: once one of a swipe's three has struck you, the other two drawn faint - they can't strike you again (also seen by players who aren't hosting)
 - Rock Lobsters, pigs, merms, bunnymen, bats and slurtles: their bite drawn only in front of them, as it lands (behind them it can't strike)
 - Rock Lobsters: their claw drawn as far as it reaches at their size - drawn at the biggest's reach for all before (4.5 round; 3 for the smallest)
+- Tropical Experience's live fish: no longer drawn striking as they swim - they never strike
+- Tropical Experience's twisters: their blow drawn when it comes when they make a tornado as they strike - drawn a third of a second late before
