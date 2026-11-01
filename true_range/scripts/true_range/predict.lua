@@ -3369,8 +3369,8 @@ function Predict.Draw(ents, ranges, my_radius, me, skip)
                             a.gone = (a.gone or 0) + math.sqrt(dx * dx + dz * dz)
                             local fx, fz = x - line.x, z - line.z
                             if line.settling then
-                                if fx * fx + fz * fz > .25 then line.rot = math.atan2(-fz, fx) end
-                                if fx * fx + fz * fz > 4 then line.settling = false end
+                                if fx * fx + fz * fz > (sim.settle ~= nil and sim.settle - .5 or .5) ^ 2 then line.rot = math.atan2(-fz, fx) end
+                                if fx * fx + fz * fz > (sim.settle or 2) ^ 2 then line.settling = false end
                             end
                         end
                         local c, s = math.cos(line.rot), math.sin(line.rot)

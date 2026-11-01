@@ -30,6 +30,11 @@ do
         -- tick), the ones it throws one by one as the Umbral Abomination calls it (:458, ~.23 s apart) each its own - taken
         -- for one lot, a second struck you 0.23 s after the first with nothing drawn, 3 so (bench 2026-10-31_0741). A lot:
         -- made within 2 frames. TR_OLD_SHAREDWIN: within 1 s)
+        -- (the Year of the Horse knight's joust: faced to the nearest 45 as it sets off, run that way for the few frames left
+        -- of joust_pre, then on the way it really aims (SGknight joust_loop, statemem.dir) - its line taken from its first 2:
+        -- 132 while it ran at 118, 31% of its loop frames over 10 off (bench 2026-11-01_0433). From its first 5.
+        -- TR_OLD_KNIGHTSETTLE: 2)
+        knight_yoth = { joust_pre = { settle = not rawget(_G, "TR_OLD_KNIGHTSETTLE") and 5 or nil } },
         _hazards = not rawget(_G, "TR_OLD_SHAREDWIN") and { shadowthrall_projectile_fx = { shared_window = 2 / 30 } } or {},
     }
     -- (and over the run's own: the Rook's running blow (atk - its charge's loop, SGrook run: RunForward, turned only as it set
