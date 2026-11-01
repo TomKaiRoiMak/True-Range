@@ -32,8 +32,7 @@
 
 | งาน | ทางเลือก |
 |---|---|
-| UM Retinazer (twinofterror1) เลเซอร์ปาก mouthshoot_loop: ครึ่งหนึ่งของรอบ (bench 0433 31/63, lag 0813 17/33) เลเซอร์ออกทิศคงที่ทั้งชุด ไม่ตรง rot ที่ trace เห็น (เช่น 60 ทั้งชุดขณะหันจาก -125 ไป -53) - หาสาเหตุใน SpawnLaser ไม่เจอ; ตอนนี้วาดเลนไปหาเรา = false 31 (share065) แต่ตัวเลเซอร์จริง (eyeofterror_laser fx) ก็วาดอยู่แล้ว | ก) คงไว้ ข) ไม่วาดเลนของท่านี้ ให้ fx วาดอย่างเดียว (เตือน 0-19 เฟรม, 2 จุดแรกไม่มีเตือน) |
-| UM shadow Wes ลูกโป่ง (um_shadow_balloon) false 46 (bench 0433) - วงวาดตลอดอายุ แต่ตีแค่ตอนแตก (เข้าใกล้ 3 แล้วแตกภายใน ≤0.5 วิ + 0.1-0.3 วิ, รัศมี 2, ดาเมจ 5) | ก) คงไว้ (เตือนตลอด) ข) วาดเฉพาะตอนเล่น anim `pop` (เตือนแค่ 0.1-0.3 วิ) |
+| UM Retinazer (twinofterror1) เลเซอร์ปาก mouthshoot_loop: ครึ่งหนึ่งของรอบ (bench 0433 31/63, lag 0813 17/33) เลเซอร์ไม่มาทางเรา - ที่จริงออกตาม rot ตอนเริ่มแต่ละรอบ (SpawnLaser ที่ TimeEvent 0 ก่อน ForceFacePoint; lag 0813 2790.367 rot 120.4 = เลเซอร์ 120.4, 2790.633 166.1 = 166.1) หันได้ ~40° ต่อรอบ - เดิมเขียนว่าทิศคงที่ ผิด; ตอนนี้วาดเลนไปหาเรา = false 31 (share065) แต่ตัวเลเซอร์จริง (eyeofterror_laser fx) ก็วาดอยู่แล้ว | ก) คงไว้ ข) ไม่วาดเลนของท่านี้ ให้ fx วาดอย่างเดียว (เตือน 0-19 เฟรม, 2 จุดแรกไม่มีเตือน) ค) (เสนอ) เลนตาม rot ตอนเริ่มรอบ ล็อกไว้ทั้งรอบ - เจ้าของกำลังดูเอง 2026-11-02 |
 
 ## งานเปิด (เรียงตามความสำคัญ)
 
@@ -42,13 +41,14 @@
 | 2 | ของที่ client replay ยังพลาด (haz_missed 13 → 11 หลัง 946d035) | stageusher_attackhand 2 = client lead (เรานำไป 3 เฟรม หนีออก, บนจอห่างมือ 2.9 / server 1.9); glacialhound_icespike 2, guardian_goo 2, um_fire_projectile, sporecloud (3.30), um_bear_trap (0.11), magma_sludge, mortarball, charlie_boss_minion1 - อย่างละ 1 |
 | 10 | TE ที่เหลือ: wildbeaverguard brain ทำ action ไม่มีเป้า (actions.lua:1742 error, server ไม่ล่ม, ได้ฉากครบ); rookwater ในทะเลไม่ขยับตอนพุ่ง (bench); Hulk ตายแล้ว server ค้าง (dropparts ของ TE) - beetletaur / goddess_deer_gem bench วิ่งได้แล้ว (setup ใหม่, bench 1816/1820) | ไม่ใช่ของเรา ยกเว้นจะทำ setup ให้ bench |
 | 12 | NOT ของ lag 1354 (7 / 1,411) | AG2 2 = รางหนาม atk_spike หยุดสุ่ม 0.5-1.0 วิ (10-20) แล้วกำแพงโผล่ทันที (ห่างบอส 10, off) - วาดได้แค่ทั้งเลน = false; shrouden 2 = optic blast: server ห่าง fx 2.49 (AOE 2 + ตัว 0.5) แต่บน Predictive ตัวเรานำไป ~0.6 ลำแสง (_land at_thing) lead แล้ว (LeadMovingRaw) แต่ไม่พอตอนมันเร่ง 8-12/วิ เลยดูห่าง 3.0 - ไม่ใช่ลำแสงกว้าง (ไม่มี pre3); daywalker 1 (on, 2.14, age 2.5); moonmaw 2 = ลาวาวง (ไม่แก้) |
-| 14 | TE twister / firetwister vacuum: ดูดผู้เล่นเข้า (vacuum_loop, ระยะดูด 30, LOS) ตรึงไว้ 5 วิ แล้วตีตอนพ่นออก (vacuum.lua spitplayer → DoAttack ตอนเข้า vacuum_pst) - ไม่มีท่านี้ใน data: lag 1508 NOT 3 ครั้ง (ทั้งหมดเป็นท่านี้) | ถูกตรึงแล้วหนีไม่ได้ - ถ้าจะวาด ควรวาดตอนกำลังดูด (vacuum_pre/loop) ว่าเข้าใกล้แล้วจะโดน |
+| 14 | TE twister / firetwister vacuum (เจ้าของเลือกวาด 2026-11-02 - AGGRO_WHILE r 20.5, กำลัง A/B): ดูดผู้เล่นเข้า (vacuum_loop, ระยะจริง 20 - FindEntities 20 ก่อน 30, LOS) ตรึงไว้ 5 วิ แล้วตีตอนพ่นออก (vacuum.lua spitplayer → DoAttack ตอนเข้า vacuum_pst) - ไม่มีท่านี้ใน data: lag 1508 NOT 3 ครั้ง (ทั้งหมดเป็นท่านี้) | ถูกตรึงแล้วหนีไม่ได้ - ถ้าจะวาด ควรวาดตอนกำลังดูด (vacuum_pre/loop) ว่าเข้าใกล้แล้วจะโดน |
 | 15 | Eye/Twins พุ่ง เฉเกิน 45 เหลือ 6 / 94 (หลัง 10fdf3e, 32ef6e8): ไปทางเดินแต่เราวาดหาเป้า 1 (twin1 2113 112.5 - ครั้งแรกของ log), ไปหาเป้าทั้งที่เพิ่งเดิน 1 (eye 2056 633.7), จาก idle / spawnminieyes / walk_start 3, from walk อื่น 1 | ไม่มีแบบเดียว - เล็ก |
 | 16 | TE treeguard: ตอนปา (โหมดระยะไกล) DoAttack ดาเมจ 0 ที่เฟรม 25 = struck ไม่เจ็บ ไม่วาด; มะพร้าววาดจุดตกแล้ว รัศมี 4 (lag 0455: ห่างจุดจริง 0.1 / 0.4) แต่ lag 0455 / 0500 ไม่มีลูกไหนโดน | ต้องมี lag ที่โดนมะพร้าวจริงถึงจะวัด NOT ได้ |
 | 4 | กะพริบเล็กที่เหลือ (frame_check, lag 1042; lag 1354: 185 จุด เดิม 243 - wagboss_missile JUMP 19 / REVERSE 25 = lead เปิดทันทีตอนเร็วเกิน 1.5 แล้วปิดตอนชะลอ แบบ bearger_boulder; AG3 attk_swipe JUMP 3.62 = ไปจังหวะกวาดที่ 2 (เฟรม 59), bearger ground_pound 6.0 / 2.2 = ส่วนของท่าเอง ไม่ใช่กะพริบ) | Eye REVERSE เล็ก, Klaus POP 1, AG1 2, lunarrift roll JUMP 2; bearger_boulder JUMP 27 = lead เปิดทันทีตอนเริ่มกลิ้ง (ข้อแลกเดิม); gestalt projectile JUMP 20 = โซนข้างหน้าวางใหม่ 1.4 ครั้งเดียวก่อนหมด; AG2 spin_pst JUMP ~1.04 ครั้งเดียวตอนจบสปิน (replay client 67 - ตรงเกณฑ์ 1 พอดี, วาดทาง legs ไม่ใช่ Draw/DrawTable); web_mortar JUMP 11 (lag 1334) = ย้ายจากรอบตัวไปจุดตกครั้งเดียวตอนเริ่มตก; bigshadowtentacle AIM 14 |
 
 ## ตัดสินแล้วว่าไม่แก้
 
+- UM shadow Wes ลูกโป่งวาดตลอดอายุ (false 46) - เจ้าของ: คงไว้ เตือนตลอด (2026-11-02)
 - UM catcoon ขู่ (hiss) ถูกวาดเป็นท่าตะครุบ (pounce_pre) - anim เดียวกัน (taunt_pre, taunt) มีเป้าเหมือนกัน แยกได้แค่ตอนเริ่มตะครุบ (ช้า 0.77 วิ); เห็นแค่ตอนบังคับ (bench -Force 146 เฟรม), lag 0914 ไม่ขู่เลย - เลือกเตือนเร็ว (2026-11-01)
 
 - ลาวาวง Moonmaw NOT 0.65% ที่ขอบ 2.76-3.00 — client เห็นตำแหน่งช้า, ขยายวง = false ทุกรอบ
