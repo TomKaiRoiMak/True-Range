@@ -2232,6 +2232,9 @@ function Predict.Draw(ents, ranges, my_radius, me, skip)
                 -- the other way, 168 off, lag 2026-10-31_1354. TR_OLD_WALKSEEN: this frame only)
                 local seen_t = moving and now or (w ~= nil and w.seen_t or nil)
                 if rawget(_G, "TR_OLD_WALKSEEN") then seen_t = moving and now or nil end
+                -- (stopping (walk_pst): its walk over, its locomotor with it - it turns to its target and charges there: the Eye
+                -- of Terror charging from walk_stop drawn its walk's way, 180 off, lag 2026-11-01_2056. TR_OLD_WALKPST)
+                if ent.AnimState:IsCurrentAnimation("walk_pst") and not rawget(_G, "TR_OLD_WALKPST") then seen_t = nil end
                 walk_heading[ent] = { x = hx, z = hz, t = now, rot = ent.Transform:GetRotation(), moving = moving, seen_t = seen_t,
                     seen_rot = moving and ent.Transform:GetRotation() or (w ~= nil and w.seen_rot or nil) }
             end
