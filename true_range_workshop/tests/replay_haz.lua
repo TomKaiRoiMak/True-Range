@@ -876,7 +876,7 @@ end
 -- (where the server had you - the traced things' "you", not where a player's game shows you: led on in CLIENT, 244 blows taken
 -- for moved by the bench)
 local you_raw = nil
-local function HzBenchMoved(t)
+local function HzBenchMoved(t, from)
     if os.getenv("OLD_BENCHMOVED") then return false end
     if you_raw == nil then
         local seen = {}
@@ -891,7 +891,7 @@ local function HzBenchMoved(t)
     local prev = nil
     for _, d in ipairs(you_raw) do
         if d.t > t + 1e-6 then break end
-        if prev ~= nil and d.t >= t - .5 and d.t - prev.t < 1.5 * FRAMES and (d.x - prev.x) ^ 2 + (d.z - prev.z) ^ 2 > 1 then return true end
+        if prev ~= nil and d.t >= (from or t - .5) and d.t - prev.t < 1.5 * FRAMES and (d.x - prev.x) ^ 2 + (d.z - prev.z) ^ 2 > 1 then return true end
         prev = d
     end
     return false
@@ -1027,6 +1027,7 @@ if not os.getenv("NOACCURACY") then
 end
 -- (each stretch of frames you stood in something drawn, with no blow landing within .3s of it)
 local false_in = 0
+local benchmoved_false = 0
 -- (and their frames all told: the stretches alone split at an edge you stood on - the Moon Tentacle's
 -- 602 -> 2,409 stretches were 8,844 -> 5,885 frames, fewer; VERIFY_PLAN 6.15)
 local false_frames = 0
@@ -1092,7 +1093,16 @@ while i <= #drawn do
             table.sort(parts)
             real_print("ATTR " .. table.concat(parts, " "))
         end
-        if not real and InPiece(drawn[i].t) then
+        -- (you taken out of it by the bench itself, within 3 frames of its last drawn-in one - the Antlion's spikes, 30 frames
+        -- from coming up to striking, the stand-in set down elsewhere in between: said apart, not counted. OLD_BENCHMOVED=1: counted)
+        -- (a second at most: in it longer and not struck is its own - a spore cloud ticks once a second)
+        local moved_off = not real and InPiece(drawn[i].t) and drawn[j].t - drawn[i].t <= 1
+            and HzBenchMoved(drawn[j].t + 3 * FRAMES, drawn[i].t)
+        if moved_off then
+            benchmoved_false = benchmoved_false + 1
+            real_print(string.format("BENCHMOVED_FALSE %.3f _hazards: drawn in for %d frame(s), the bench moved you off (%s)", drawn[i].t, j - i + 1, drawn[i].names or "?"))
+        end
+        if not real and not moved_off and InPiece(drawn[i].t) then
             false_in = false_in + 1
             false_frames = false_frames + j - i + 1
             real_print(string.format("FALSE   %.3f _hazards: drawn in for %d frame(s), not struck (%s)", drawn[i].t, j - i + 1, drawn[i].names or "?"))
@@ -1139,6 +1149,7 @@ if not os.getenv("OLD_DARTS") then
     if n > 0 then real_print(string.format("_darts: %d strikes - %d drawn, %d missed; 0 drawn-in with no strike", n, dok, dmiss)) end
 end
 real_print(string.format("_hazards: %d frame(s) drawn-in with no strike", false_frames))
+real_print(string.format("BENCHMOVED_FALSE %d drawn-in stretches ended by the bench moving you", benchmoved_false))
 -- (drawn leaping further in a moment than the thing went - the Eye's mini eyes, the player's report 2026-10-18)
 for _, l in ipairs(rawget(_G, "TR_LANDWOB_EV") or {}) do real_print(l) end
 for k, w in pairs(rawget(_G, "TR_LANDWOB") or {}) do real_print(string.format("LANDWOB %s: %d frames, %d moved over .05, %.2f in all, most %.2f; off where it came down: %d, mean %.2f, most %.2f", k, w.n, w.moved, w.dist, w.most,
