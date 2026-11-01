@@ -1304,6 +1304,7 @@ local function Start(player)
         -- every other monster's known moves (read from the game's code, or learned)
         -- (one striking its target wherever it is just now (ANYWHERE): not its shape round it - a mark on you, if it's after you)
         local draw_list = picked
+        local anywhere_in = false
         for i, e in ipairs(picked) do
             local st = ANYWHERE[e.prefab] ~= nil and Anywhere(e) or nil
             if st ~= nil then
@@ -1311,7 +1312,11 @@ local function Start(player)
                     draw_list = {}
                     for k = 1, i - 1 do draw_list[k] = picked[k] end
                 end
-                if st and Hunting(e, player) then AggroFill(sx, sz, my_radius + .5, st) end
+                if st and Hunting(e, player) then
+                    AggroFill(sx, sz, my_radius + .5, st)
+                    -- (testing: you in it, as in any shape drawn - it's on you; "drawn: NOT" every such blow before, lag 1924)
+                    if not GLOBAL.rawget(GLOBAL, "TR_OLD_ANYWHEREIN") then anywhere_in = true end
+                end
             elseif draw_list ~= picked then
                 draw_list[#draw_list + 1] = e
             end
@@ -1322,7 +1327,7 @@ local function Start(player)
         -- what bosses set off: traps, spikes, lasers
         winding = Predict.DrawHazards(hazards, my_radius, { x = sx, z = sz }) or winding
         c_haz = Mark() - c0
-        if winding then last_inside_at = now end
+        if winding or anywhere_in then last_inside_at = now end
         -- (testing, to be removed: the game paused (P) - its clock still while frames go on: once,
         -- in chat and client_log.txt ("[tr_pause]"), what's drawn now and from what - Predict.Report)
         -- (still for .2s of the wall clock: not just frames drawn faster than the game ticks)
