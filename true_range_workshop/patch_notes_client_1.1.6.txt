@@ -116,3 +116,4 @@
 - Tropical Experience's twisters: their blow drawn when it comes when they make a tornado as they strike - drawn a third of a second late before
 - Uncompromising Mode's skeletons: no longer drawn striking as they walk or stand after a swing
 - Tropical Experience's beetletaur: its punches drawn on you as they land from its first fight on - out of its guard they strike whom it's after wherever they are; before its guard was first seen broken they were drawn only round itself
+- Eye of Terror and the Twins as mouths: their charge from walking drawn the way it really goes (the way it walked) - it was drawn at you

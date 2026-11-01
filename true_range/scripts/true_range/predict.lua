@@ -2258,7 +2258,11 @@ function Predict.Draw(ents, ranges, my_radius, me, skip)
             -- (one charge, not its mouth's charges one after another (sim.leg) - each of those aimed anew; nor the shot begun
             -- alike (sim.tell, Uncompromising Mode's): it keeps turning to you as it shoots - the Twins' laser drawn the way it
             -- had walked, 1 -> 6 undrawn on the lag bench 2026-10-27_1128)
-            if kh ~= nil and a ~= nil and a.heading == nil and a.move.anims[1] == kh and (a.move.sim == nil or (a.move.sim.leg == nil and a.move.sim.tell == nil))
+            -- (its mouth's charges (sim.leg) too, till its first leg: that one goes the way it walked - its charge_pre steers to
+            -- its target till 25, its locomotor never stopped turns it back the way it walked (12 of 12 from walking on lag
+            -- 2026-11-01_2009-2113, every first leg its walk's way). Each leg after aimed anew. TR_OLD_LEGHEADING: never for legs)
+            local leg_ok = not rawget(_G, "TR_OLD_LEGHEADING")
+            if kh ~= nil and a ~= nil and a.heading == nil and a.move.anims[1] == kh and (a.move.sim == nil or ((a.move.sim.leg == nil or leg_ok) and a.move.sim.tell == nil))
                 and not rawget(_G, "TR_OLD_KEEPHEADING") then
                 local w = walk_heading[ent]
                 a.heading = (w ~= nil and w.seen_t ~= nil and now - w.seen_t < .2) and w.seen_rot or false
@@ -2344,7 +2348,7 @@ function Predict.Draw(ents, ranges, my_radius, me, skip)
                     x, z = lx, lz
                 end
                 local rot = ent.Transform:GetRotation() * DEGREES
-                if a.heading and (a.move.sim == nil or a.move.sim.tell == nil) then rot = a.heading * DEGREES end
+                if a.heading and (a.move.sim == nil or (a.move.sim.tell == nil and not (a.move.sim.leg ~= nil and a.legs_begun))) then rot = a.heading * DEGREES end
                 -- (who it's after: a leap at its target lands on them)
                 local combat = ent.replica ~= nil and ent.replica.combat or nil
                 local tgt = combat ~= nil and combat:GetTarget() or nil
