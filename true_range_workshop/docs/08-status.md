@@ -8,6 +8,7 @@
 
 | วัด | ค่า | เมื่อ |
 |---|---|---|
+| replay -HazOnly หลังกับดัก walrus / มือ usher / turtle / มะพร้าว (8d3cc15) | UM host 17 / 59,547 · false 1,396; client 29 / 59,507 · false 2,138; TE host 15 / 25,717 · 421, client 11 / 25,709 · 594 - ไม่มีอะไรถอย | bench 1604 / 0556 replay 2026-11-02 |
 | bench ทุกมอน ใหม่ (โค้ดหลัง 5d745e1) + replay | host missed 17 / 59,547 · false 1,411; client 29 / 59,507 · false 2,153 (things host 687 / client 1,424 - client ราว 2 เท่าเหมือน 0433; worm_boss 97 / 250, groundpoundring_fx 87 / 225) | bench 2026-11-01_1604 |
 | bench ทุกมอน (271, 3 รอบ) เกม 761239 + replay | host missed 20 / 58,304 · false 2,017 → 1,367 (runner lots 221e52b; BENCHMOVED_FALSE 390 ช่วง แยกออก; hit arc); client missed 35 → 34 / 58,311 · false 2,503 → 1,888 (hit arc ด้วย) ←เดิม 2,352 (runner lots 221e52b; things 1,510 → 1,115 หลังแยก BENCHMOVED_FALSE 395) (daywalker pounce 7 = ไม่แก้; replay CLIENT แก้ tell ช้า d34decb+) | bench 2026-11-01_0433 (testbench ใหม่; 0741 หลังแก้: 14 / 2,159 · 24 / 3,122) |
 | bench TE (170 ตัว, testbench ใหม่) + replay -TE | host missed 55 → 15 / 25,717 · false 1,515 → 421; client 53 → 11 / 25,709 · false 1,581 → 594 (ปลา + twister ด้วย) (replay ใหม่หลัง 946d035/298208d) (ของ 47 / 46 → 3 / 2 หลัง replay_haz รู้จักวงสปินของ hulk) | bench 2026-11-01_0556 (0611: 36 / 2,036) |
