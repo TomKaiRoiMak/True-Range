@@ -1408,12 +1408,16 @@ while true do
     -- frames, the replay's just under: Klaus' bite at the frame it stops aiming was taken as still
     -- aiming here, as stopped in the game)
     now = t + (tonumber(os.getenv("T_EPS") or "") or 0)
-    while tells[tell_i] ~= nil and tells[tell_i].t <= now + 1e-6 do
+    -- (CLIENT: seen ENT_LAG late, as the monster that made it is - put there as the server made it, the Eye's shot's pulse came
+    -- 3 frames before its shot was seen begun, outside the tell's window: every UM Eye and Twin shot drawn as its charge,
+    -- 1,208 of 1,599 shoot_pre frames, bench 2026-11-01_0433; the lag bench's own client drew them right. OLD_TELLLAG=1: as before)
+    local tlag = (ENT_LAG > 0 and not os.getenv("OLD_TELLLAG")) and ENT_LAG or 0
+    while tells[tell_i] ~= nil and tells[tell_i].t + tlag <= now + 1e-6 do
         local p = tells[tell_i]
         local e = { prefab = p.prefab, Transform = {} }
-        function e:IsValid() return now - p.t < 1 end
+        function e:IsValid() return now - (p.t + tlag) < 1 end
         function e.Transform:GetWorldPosition() return p.x, 0, p.z end
-        Predict.tell_things[e] = p.t
+        Predict.tell_things[e] = p.t + tlag
         tell_i = tell_i + 1
     end
     local list, state, py = {}, nil, nil
