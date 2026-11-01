@@ -3485,6 +3485,18 @@ SimMoves._land = { shrouden = { teleport_pre = {
 if not rawget(_G, "TR_OLD_BEARSHOOT") then
     SimMoves._land.bearger = { t = { { anim = "t", r = 3.5, at = 25, till = 27 } } }
 end
+-- (Tropical Experience's beetletaur, out of its guard: its punches strike whom it's after wherever they are (SGbeetletaur
+-- BreakGuard: combat.ignorehitrange = true; DoPunchAOE = DoAttack()) - 1,604 of 1,724 struck undrawn on the bench
+-- 2026-11-01_1820, at 4 to 10 off its 3.5. Round its target as each lands - attack (attack1, 6), the combo's hooks (attack2,
+-- attack1b, 7), its uppercut (attack3, 3). TR_OLD_BEETLEPUNCH: round itself only)
+if not rawget(_G, "TR_OLD_BEETLEPUNCH") then
+    SimMoves._land.beetletaur = {
+        attack1 = { { anim = "attack1", r = 1.5, at = 6, till = 7, on_target = true } },
+        attack2 = { { anim = "attack2", r = 1.5, at = 7, till = 8, on_target = true } },
+        attack1b = { { anim = "attack1b", r = 1.5, at = 7, till = 8, on_target = true } },
+        attack3 = { { anim = "attack3", r = 1.5, at = 3, till = 4, on_target = true } },
+    }
+end
 if not rawget(_G, "TR_OLD_SPATSNOT") then
     SimMoves._land.spat = { snot_pre = {
         { anim = "snot", r = 4, at = 21, till = 29, on_target = true, lock_at = 21 },

@@ -155,6 +155,13 @@ local SETUP = {
         local lake = G.SpawnPrefab("goddess_lake")
         if lake ~= nil then lake.Transform:SetPosition(bx + 25, 0, bz) boss._tr_fire = lake end
     end,
+    -- (Tropical Experience's beetletaur: its doattack reads combat.laststartattacktime, nil till its first attack (SGbeetletaur
+    -- :197) - the server's Lua error each scene's first blow, TE bench 0556. Set, a period back; SETUP_TICK too)
+    beetletaur = function(boss)
+        if boss.components.combat ~= nil and boss.components.combat.laststartattacktime == nil then
+            boss.components.combat.laststartattacktime = G.GetTime() - (boss.components.combat.min_attack_period or 0)
+        end
+    end,
     -- (Tropical Experience's wild boar king: lying there as the Pig King does, up and fighting only once struck lying or
     -- asleep (SGwildboreking "attacked": standup, MakePigsAttack) - 0 strikes, "no scene begun" both runs, TE bench 0611.
     -- Struck once by you)
@@ -271,6 +278,13 @@ local SETUP_TICK = {
     twinofterror1 = TwinTransform,
     twinofterror2 = TwinTransform,
     stalker_atrium = function(boss) boss._lastplayerhittime = G.GetTime() end,
+    -- (and on: combat:ResetCooldown sets it nil again (combat.lua :137) - set at spawn only, the error came back each scene)
+    beetletaur = function(boss)
+        if boss.components.combat ~= nil and boss.components.combat.laststartattacktime == nil then
+            -- (a period back: its cooldown 0, as reset)
+            boss.components.combat.laststartattacktime = G.GetTime() - (boss.components.combat.min_attack_period or 0)
+        end
+    end,
 }
 
 -- (moves it never makes of itself, made: tr_force.txt in this mod's folder (tools/run_bench.ps1 -Force), a line a
