@@ -35,7 +35,14 @@ do
         -- 132 while it ran at 118, 31% of its loop frames over 10 off (bench 2026-11-01_0433). From its first 5.
         -- TR_OLD_KNIGHTSETTLE: 2)
         knight_yoth = { joust_pre = { settle = not rawget(_G, "TR_OLD_KNIGHTSETTLE") and 5 or nil } },
-        _hazards = not rawget(_G, "TR_OLD_SHAREDWIN") and { shadowthrall_projectile_fx = { shared_window = 2 / 30 } } or {},
+        _hazards = {
+            shadowthrall_projectile_fx = not rawget(_G, "TR_OLD_SHAREDWIN") and { shared_window = 2 / 30 } or {},
+            -- (the Grim Harrier's runners: one lot, both kinds, 7 frames from first to last (.3 s), set off 3 ahead and 2 ahead 4 to
+            -- either side - up to 8.3 apart)
+            charlie_boss_minion1 = { shared_group = "charlie_boss_minion", shared_near = 9, shared_window = .3, struck_fx = "charlie_boss_minion_hit_fx" },
+            charlie_boss_minion2 = { shared_group = "charlie_boss_minion", shared_near = 9, shared_window = .3, struck_fx = "charlie_boss_minion_hit_fx" },
+        },
+
     }
     -- (and over the run's own: the Rook's running blow (atk - its charge's loop, SGrook run: RunForward, turned only as it set
     -- off) run offline at its target - each loop of it begun again turned to you: in a player's game -149 while it ran on at -103
@@ -700,6 +707,7 @@ local CHAIN_ON, CHAIN_SPEED, CHAIN_TURN = false, 6, math.pi  -- (each frame on f
 -- (a lot sharing whom they strike, you struck by one of it: prefab -> { at, x, z } - when and where
 -- that one was set off; the rest of its lot set off within SHARED_WINDOW s and SHARED_NEAR of it)
 local shared_struck = {}
+SimMoves._struck_unseen = setmetatable({}, { __mode = "k" })
 local SHARED_WINDOW, SHARED_NEAR = 1, 1.5
 local FLOWN_PAST = .5   -- (how far past a part's middle one that flies is before that part is gone)
 
@@ -3537,6 +3545,11 @@ local function DrawHazardInner(ent, x, z, rot, px, pz, now, in_moves, sfx)
             age = math.max(0, math.min(ent.AnimState:GetCurrentAnimationTime() or 0, ((h.delay or 0) + 15) * FRAMES))
         end
         seen[ent] = { since = now - age, x = x, z = z, fx = x, fz = z }
+        -- (struck by it before it was seen - SimMoves.Struck)
+        if SimMoves._struck_unseen[ent] then
+            SimMoves._struck_unseen[ent] = nil
+            SimMoves.Struck(ent)
+        end
     end
     -- (done striking this many frames after it appeared, though still there (h.done_after) - the Shrouded Queen's shadows
     -- stop at their impact + 3 (charlie_boss_minions.lua OnEndHits) and play on till their animation ends: drawn on,
@@ -4200,9 +4213,13 @@ local function DrawHazardInner(ent, x, z, rot, px, pz, now, in_moves, sfx)
     -- throw's pieces): you struck by one, the rest of them can't - drawn faint, no danger. Its lot:
     -- set off from where that one was, about when (one throw's, not the next's)
     if h.shared then
-        local sh = shared_struck[ent.prefab]
+        -- (h.shared_group: a lot of more than one kind - the Grim Harrier's runners, 3 to a swipe, each a minion1 or 2 at random,
+        -- one list of whom they've struck (SGcharlie_boss :705-713) - set off up to 8 apart: h.shared_near. TR_OLD_SHAREDGROUP)
+        local old_g = rawget(_G, "TR_OLD_SHAREDGROUP")
+        local sh = shared_struck[(not old_g and h.shared_group) or ent.prefab]
+        local near = (not old_g and h.shared_near) or SHARED_NEAR
         if sh ~= nil and s.fx ~= nil and math.abs(s.since - sh.at) <= (h.shared_window or SHARED_WINDOW)
-            and (s.fx - sh.x) ^ 2 + (s.fz - sh.z) ^ 2 <= SHARED_NEAR * SHARED_NEAR then
+            and (s.fx - sh.x) ^ 2 + (s.fz - sh.z) ^ 2 <= near * near then
             for _, td in ipairs(todo) do td.style = "fill_light" end
             DrawParts(steps, todo, x, z, rot, px, pz, nil, "_hazard|" .. ent.prefab .. sfx)
             s.memo = nil
@@ -4221,8 +4238,31 @@ end
 function SimMoves.Struck(ent)
     local h = ent ~= nil and (Data._hazards or {})[ent.prefab] or nil
     local s = h ~= nil and h.shared and seen[ent] or nil
+    -- (struck by one before it's seen - the Grim Harrier's runners strike the tick they're made (InitMinion: OnUpdate):
+    -- told once it is. TR_OLD_SHAREDGROUP: dropped)
+    if s == nil and h ~= nil and h.shared and not rawget(_G, "TR_OLD_SHAREDGROUP") then SimMoves._struck_unseen[ent] = true return end
     if s == nil or s.fx == nil then return end
-    shared_struck[ent.prefab] = { at = s.since, x = s.fx, z = s.fz }
+    shared_struck[(not rawget(_G, "TR_OLD_SHAREDGROUP") and h.shared_group) or ent.prefab] = { at = s.since, x = s.fx, z = s.fz }
+end
+
+-- (the mark a lot's strike leaves on you (h.struck_fx, made where you are as you're struck - the runners'
+-- charlie_boss_minion_hit_fx): your game sees that, not the server's "attacked" - the nearest of those it comes of, struck
+-- you. x, z: where the mark is)
+function SimMoves.StruckFx(fx_prefab, x, z)
+    local best, bd = nil, 4 * 4
+    local near = (TheSim ~= nil and TheSim.FindEntities ~= nil) and TheSim:FindEntities(x, 0, z, 4) or {}
+    local cands = {}
+    for _, e in ipairs(near) do cands[e] = true end
+    for e in pairs(seen) do cands[e] = true end
+    for ent in pairs(cands) do
+        local h = (Data._hazards or {})[ent.prefab]
+        if h ~= nil and h.struck_fx == fx_prefab and ent.IsValid ~= nil and ent:IsValid() and ent.Transform ~= nil then
+            local ex, _, ez = ent.Transform:GetWorldPosition()
+            local d = (ex - x) ^ 2 + (ez - z) ^ 2
+            if d < bd then best, bd = ent, d end
+        end
+    end
+    if best ~= nil then SimMoves.Struck(best) end
 end
 
 -- (one that does no harm, only a status - a deer's ice circle, freezing: in its own colours)

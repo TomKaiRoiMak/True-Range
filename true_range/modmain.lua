@@ -1103,6 +1103,10 @@ local function Start(player)
     for _, ev in ipairs({ "attacked", "blocked" }) do
         player:ListenForEvent(ev, function(_, data)
             if data ~= nil and data.attacker ~= nil then GLOBAL.require("true_range/simmoves").Struck(data.attacker) end
+            -- (and the thing it struck with - the Grim Harrier's runners strike as it, each the weapon. TR_OLD_SHAREDGROUP)
+            if data ~= nil and data.weapon ~= nil and data.weapon ~= data.attacker and not GLOBAL.rawget(GLOBAL, "TR_OLD_SHAREDGROUP") then
+                GLOBAL.require("true_range/simmoves").Struck(data.weapon)
+            end
         end)
     end
     -- (testing: when you were really struck - even with no health lost (god mode), or blocked -
@@ -1984,6 +1988,28 @@ for prefab in pairs(SimData._hazards or {}) do
         -- (when: one made after a move began is that move's - true_range/predict, its tables)
         Predict.made_hazards[inst] = GLOBAL.GetTime()
     end)
+end
+-- (the mark a lot's strike leaves on whom it struck (h.struck_fx) - networked, so seen in every player's game, where the
+-- server's "attacked" isn't: made on you, the rest of that lot drawn faint. TR_OLD_SHAREDGROUP: hosting only)
+do
+    local fxs = {}
+    for _, h in pairs(SimData._hazards or {}) do
+        if type(h) == "table" and h.struck_fx ~= nil then fxs[h.struck_fx] = true end
+    end
+    for prefab in pairs(fxs) do
+        AddPrefabPostInit(prefab, function(inst)
+            if GLOBAL.rawget(GLOBAL, "TR_OLD_SHAREDGROUP") then return end
+            inst:DoTaskInTime(0, function(inst)
+                local me = GLOBAL.ThePlayer
+                if me == nil or not me:IsValid() or not inst:IsValid() then return end
+                local x, _, z = inst.Transform:GetWorldPosition()
+                local px, _, pz = me.Transform:GetWorldPosition()
+                if (x - px) ^ 2 + (z - pz) ^ 2 < 1.5 * 1.5 then
+                    GLOBAL.require("true_range/simmoves").StruckFx(prefab, x, z)
+                end
+            end)
+        end)
+    end
 end
 -- (what a move's state makes as it begins, telling it from one begun alike - sim.tell, the shot's
 -- eyeofterror_chargepulse: networked, made in every player's game - kept as each is made, for

@@ -488,16 +488,25 @@ while true do
         end
     end
     -- (you struck by one just now: told, as modmain does - one of a lot sharing whom they strike)
+    -- (the game tells the very thing (attacked: its weapon) - here found by where it was: one that struck as it was made,
+    -- not here yet, looked for over the next 3 frames, 1.5 round where it struck - the Grim Harrier's runners, each on
+    -- the tick it's made. OLD_STRUCKWAIT=1: that frame, 1 round, before it's judged)
+    local wait = os.getenv("OLD_STRUCKWAIT") and 1 or 6
+    local near2 = os.getenv("OLD_STRUCKWAIT") and 1 or 1.5 * 1.5
     for _, h in ipairs(hits) do
-        if h.t > t - FRAMES + 1e-6 and h.t <= t + 1e-6 and h.bx ~= nil then
-            local best, bd = nil, 1
+        -- (told once the strike is judged - drawn within 1.5 frames of it either way, below: the rest of its lot faint after,
+        -- not the one that struck, in its own frames)
+        -- (CLIENT: judged ENT_LAG later, its window that much on)
+        local upto = os.getenv("OLD_STRUCKWAIT") and t + 1e-6 or t - 2 * FRAMES - HZ_ENT_LAG + 1e-6
+        if not h.told and h.t > t - wait * FRAMES - HZ_ENT_LAG + 1e-6 and h.t <= upto and h.bx ~= nil then
+            local best, bd = nil, near2
             for _, e in ipairs(list) do
                 if e.prefab == h.prefab then
                     local d = (e.cur.x - h.bx) ^ 2 + (e.cur.z - h.bz) ^ 2
                     if d < bd then best, bd = e, d end
                 end
             end
-            if best ~= nil then SimMoves.Struck(best) end
+            if best ~= nil then SimMoves.Struck(best) h.told = not os.getenv("OLD_STRUCKWAIT") end
         end
     end
     -- (CLIENT: you where your game shows you - YOU_LEAD frames on (back, -) along how you went)
