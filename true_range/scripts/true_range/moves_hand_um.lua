@@ -106,6 +106,12 @@ return {
     spider_hider = not rawget(_G, "TR_OLD_HIDERSHIELD") and { hide = false } or nil,
     merm = not rawget(_G, "TR_OLD_KARATE") and { atk_combo = { copy = { "merm", "atk" }, anims = { "atk_combo" }, at_each = { 12, 18, 31 } } } or nil,
     _hazards = {
+        -- (the Walrus's thrown bear trap (postinit walrus.lua LaunchTrap, um_bear_trap.lua OnTrapLand): lobbed at where you stood
+        -- at its frame 20, ~.6 s up, then a trap that tests for you the moment it lands - the trap drawn only once down, too late:
+        -- struck 1.88 from where it fell (lag 2026-11-01_2159, 579.833). Drawn as the trap, where it'll come down (moved: its
+        -- landing fitted as it flies). TR_OLD_TRAPTHROW: none)
+        um_bear_trap_projectile = not rawget(_G, "TR_OLD_TRAPTHROW") and { copy_hazard = "um_bear_trap", by = { "walrus" },
+            lasting = false, moved = true } or nil,
         -- (the Moon Tentacle's mine (um_tentacle_moon_projectile.lua lobbedminefn): lands and waits, goes off 2-6 s on or as you come
         -- within 0.5 - striking all within 3 (OnExplode FindEntities 3); never drawn: 3 struck undrawn on the lag bench 2026-10-30_0045.
         -- As Toadstool's bomb (3.5) made 3. TR_OLD_MOONMINE: none)

@@ -13,7 +13,8 @@
 | bench TE (170 ตัว, testbench ใหม่) + replay -TE | host missed 55 → 15 / 25,717 · false 1,515 → 421; client 53 → 11 / 25,709 · false 1,581 → 594 (ปลา + twister ด้วย) (replay ใหม่หลัง 946d035/298208d) (ของ 47 / 46 → 3 / 2 หลัง replay_haz รู้จักวงสปินของ hulk) | bench 2026-11-01_0556 (0611: 36 / 2,036) |
 | lag บอสหลัก 15 ตัว | NOT 7 / 1,495 (on 3/638, off 4/857) · false 60 · AG2 2, moonmaw 2, shrouden 2, daywalker 1; minotaur / stalker 0 / 84 | lag 2026-10-31_1354 + 1441 (เดิม 0407: 10 / 1,008) |
 | lag มอนทั่วไป 20 ตัว | NOT 3 / 546 (on 3/267: rook 2, walrus 1; off 0/279) · false 4 | lag 2026-10-31_1450 (เดิม 0448: 4 / 529) |
-| lag TE (-TE ปิด UM) | NOT 0 / 90; wildboreking NOT 0 / 102 (on 44, off 58; false 9 / 22) | lag 2026-10-31_0706, 1029 |
+| lag TE (-TE ปิด UM) | NOT 0 / 90; wildboreking NOT 0 / 102 (on 44, off 58; false 9 / 22); tigershark, mandrakeman, spider_tropical, snake NOT 0 / 79 · false 0 (wildbeaverguard ตีแค่ 2 - item 10) | lag 2026-10-31_0706, 1029, 2026-11-01_2213 |
+| lag UM walrus ปากับดัก (หลังวาดจุดตก) | NOT 0 / 38 · false 0; กับดักโดน 1 ครั้ง วาดที่จุดตก 0.4 วิก่อน (ห่างจุดจริง 0.1) | lag 2026-11-01_2222 |
 | เกม / ข้อมูล | 761239 / data `83852BF58E33` | ติดตั้งแล้ว |
 
 ## กำลังทำ
