@@ -2270,6 +2270,25 @@ function Predict.Draw(ents, ranges, my_radius, me, skip)
                 local w = walk_heading[ent]
                 a.heading = (w ~= nil and w.seen_t ~= nil and now - w.seen_t < .2) and w.seen_rot or false
             end
+            -- (but not one still turned off the way it walked once its charge_pre has done steering (frame 11 an eye's, 25 a
+            -- mouth's): nothing turned it back - it charges the way it faces. Retinazer walking at -77.9, turned to -53.6 in 3
+            -- frames, -53.6 on till it went - drawn -77.9, its lane sliding along beside it, the player 2026-11-02 ("ไถลทั้ง
+            -- แกน"; their log, 41.4 s). 26 frames on, over 10 off its walk: the way it faces. Earlier is too soon - most turn
+            -- back at 11 / 25 (frame 4: 5 -> 22 of 51 over 45 off, lag 2009-2113). TR_OLD_STILLHEADING: kept)
+            if a ~= nil and a.heading and not rawget(_G, "TR_OLD_STILLHEADING") then
+                if a.head_t == nil then
+                    a.head_t = now
+                elseif not a.head_done and now - a.head_t >= 26 * FRAMES then
+                    a.head_done = true
+                    local off = math.abs((ent.Transform:GetRotation() - a.heading + 180) % 360 - 180)
+                    -- (its lane locked at frame 11 the way it walked: laid again the way it faces)
+                    if off > 10 then
+                        a.heading, a.locked = false, nil
+                        local r = ent.Transform:GetRotation() * DEGREES
+                        for _, h in ipairs(a.hist or {}) do h.rot = r end
+                    end
+                end
+            end
             -- (one that turns to you only so far round - sim.cone, Frostjaw's 45 degrees: you stepping
             -- out of that, it lets you go, keeping where you were as you did - its dive goes that far
             -- along; not taken up again until it comes at you anew)
