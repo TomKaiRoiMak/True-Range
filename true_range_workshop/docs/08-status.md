@@ -8,7 +8,7 @@
 
 | วัด | ค่า | เมื่อ |
 |---|---|---|
-| bench ทุกมอน (271, 3 รอบ) เกม 761239 + replay | host missed 20 / 58,304 · false 2,017 → 1,421 (runner lots 221e52b; BENCHMOVED_FALSE 390 ช่วง แยกออก); client missed 35 / 58,313 · false 2,503 → 2,352 (runner lots 221e52b) (daywalker pounce 7 = ไม่แก้; replay CLIENT แก้ tell ช้า d34decb+) | bench 2026-11-01_0433 (testbench ใหม่; 0741 หลังแก้: 14 / 2,159 · 24 / 3,122) |
+| bench ทุกมอน (271, 3 รอบ) เกม 761239 + replay | host missed 20 / 58,304 · false 2,017 → 1,421 (runner lots 221e52b; BENCHMOVED_FALSE 390 ช่วง แยกออก); client missed 35 / 58,313 · false 2,503 → 2,352 (runner lots 221e52b; things 1,510 → 1,115 หลังแยก BENCHMOVED_FALSE 395) (daywalker pounce 7 = ไม่แก้; replay CLIENT แก้ tell ช้า d34decb+) | bench 2026-11-01_0433 (testbench ใหม่; 0741 หลังแก้: 14 / 2,159 · 24 / 3,122) |
 | bench TE (170 ตัว, testbench ใหม่) + replay -TE | host missed 55 / 25,722 · false 1,515; client 53 / 25,739 · false 1,581 (ของ 47 / 46 → 3 / 2 หลัง replay_haz รู้จักวงสปินของ hulk) | bench 2026-11-01_0556 (0611: 36 / 2,036) |
 | lag บอสหลัก 15 ตัว | NOT 7 / 1,495 (on 3/638, off 4/857) · false 60 · AG2 2, moonmaw 2, shrouden 2, daywalker 1; minotaur / stalker 0 / 84 | lag 2026-10-31_1354 + 1441 (เดิม 0407: 10 / 1,008) |
 | lag มอนทั่วไป 20 ตัว | NOT 3 / 546 (on 3/267: rook 2, walrus 1; off 0/279) · false 4 | lag 2026-10-31_1450 (เดิม 0448: 4 / 529) |
@@ -25,6 +25,7 @@
 
 | งาน | ทางเลือก |
 |---|---|
+| UM Retinazer (twinofterror1) เลเซอร์ปาก mouthshoot_loop: ครึ่งหนึ่งของรอบ (bench 0433 31/63, lag 0813 17/33) เลเซอร์ออกทิศคงที่ทั้งชุด ไม่ตรง rot ที่ trace เห็น (เช่น 60 ทั้งชุดขณะหันจาก -125 ไป -53) - หาสาเหตุใน SpawnLaser ไม่เจอ; ตอนนี้วาดเลนไปหาเรา = false 31 (share065) แต่ตัวเลเซอร์จริง (eyeofterror_laser fx) ก็วาดอยู่แล้ว | ก) คงไว้ ข) ไม่วาดเลนของท่านี้ ให้ fx วาดอย่างเดียว (เตือน 0-19 เฟรม, 2 จุดแรกไม่มีเตือน) |
 | UM shadow Wes ลูกโป่ง (um_shadow_balloon) false 46 (bench 0433) - วงวาดตลอดอายุ แต่ตีแค่ตอนแตก (เข้าใกล้ 3 แล้วแตกภายใน ≤0.5 วิ + 0.1-0.3 วิ, รัศมี 2, ดาเมจ 5) | ก) คงไว้ (เตือนตลอด) ข) วาดเฉพาะตอนเล่น anim `pop` (เตือนแค่ 0.1-0.3 วิ) |
 
 ## งานเปิด (เรียงตามความสำคัญ)
