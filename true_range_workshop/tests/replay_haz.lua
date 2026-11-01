@@ -891,7 +891,11 @@ local function HzBenchMoved(t, from)
     local prev = nil
     for _, d in ipairs(you_raw) do
         if d.t > t + 1e-6 then break end
-        if prev ~= nil and d.t >= (from or t - .5) and d.t - prev.t < 1.5 * FRAMES and (d.x - prev.x) ^ 2 + (d.z - prev.z) ^ 2 > 1 then return true end
+        -- (or further than anyone goes in the time since the one before - the stand-in set down 192 off at a scene's start,
+        -- nothing traced near it in between: the Stage Usher's hands, 3 "missed" in a client replay. OLD_BENCHJUMP=1: a tick only)
+        local d2 = prev ~= nil and (d.x - prev.x) ^ 2 + (d.z - prev.z) ^ 2 or 0
+        local far = prev ~= nil and not os.getenv("OLD_BENCHJUMP") and d2 > 9 and d2 > (15 * (d.t - prev.t)) ^ 2
+        if prev ~= nil and d.t >= (from or t - .5) and ((d.t - prev.t < 1.5 * FRAMES and d2 > 1) or far) then return true end
         prev = d
     end
     return false
