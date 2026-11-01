@@ -43,7 +43,13 @@ return {
     -- (the gem deer's tornadoes: striking all within 3 of their middle (SGgreentornado1 destroystuff, FindEntities 3), run offline
     -- reaching ~2.85 - struck 2.85-3.00 off undrawn, 6 of 6 missed on the bench 2026-11-01. Drawn 1.05 as big (h.scale .95).
     -- TR_OLD_TORNADO2: as run)
-    _hazards = { greentornado2 = not rawget(_G, "TR_OLD_TORNADO2") and { copy_hazard = "greentornado2", scale = .95, replace = true } or nil },
+    -- (the spiky turtle's slide (SGspikyturtle_tfc slide: attack2_loop, up to 25 a second, 5 slides of 2 s): striking each
+    -- within 3 of its middle once a slide (SlideTask every 0.1 s, SLIDE_RADIUS) - not in the run's data, never drawn: 3 struck
+    -- undrawn on the lag bench 2026-11-02_0329. Round itself while it plays attack2_loop (simmoves _on_anims), the shape of UM
+    -- shadow Abigail's burst (FindEntities 3 too). TR_OLD_TURTLESLIDE: none)
+    _hazards = { greentornado2 = not rawget(_G, "TR_OLD_TORNADO2") and { copy_hazard = "greentornado2", scale = .95, replace = true } or nil,
+        spiky_turtle_tfc = not rawget(_G, "TR_OLD_TURTLESLIDE") and { by = { "spiky_turtle_tfc" }, delay = 0, lasting = true, moved = true,
+            steps = { { at = 0, cells = "b21k2411h2A11f2E11e2G11d2I11c2K11c2K11b2M11b2M11b2M11a2O11a2O11a2O11a2O11a2O11b2M11b2M11b2M11c2K11c2K11d2I11e2G11f2E11h2A11k24" } } } or nil },
     scorpion = not rawget(_G, "TR_OLD_SCORPFAR") and { ["atk~leap_attack"] = { copy = { "scorpion", "atk~leap_attack" }, far = 3,
         replace = true } } or nil,
 }

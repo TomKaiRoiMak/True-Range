@@ -3363,6 +3363,8 @@ SimMoves._on_anims = {
     um_beeguard_blocker = { "run_loop" },
     um_beeguard_seeker = { "run_loop" },
     um_beeguard_shooter = { "run_loop" },
+    -- (and Tropical Experience's spiky turtles, only as they slide - true_range/moves_hand_te _hazards)
+    spiky_turtle_tfc = { "attack2_loop" },
     -- (and Tropical Experience's Ancient Hulk's mines, only once set off - red_loop, going off 1.1 s on; armed, they may never)
     ancient_hulk_mine = { "red_loop" },
     -- (and the Shrouded Queen's arena spikes, only as they rise - a wall after; 2026-10-23 update)

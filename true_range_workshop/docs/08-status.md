@@ -15,6 +15,8 @@
 | lag มอนทั่วไป 20 ตัว | NOT 3 / 546 (on 3/267: rook 2, walrus 1; off 0/279) · false 4 | lag 2026-10-31_1450 (เดิม 0448: 4 / 529) |
 | lag TE (-TE ปิด UM) | NOT 0 / 90; wildboreking NOT 0 / 102 (on 44, off 58; false 9 / 22); tigershark, mandrakeman, spider_tropical, snake NOT 0 / 79 · false 0 (wildbeaverguard ตีแค่ 2 - item 10) | lag 2026-10-31_0706, 1029, 2026-11-01_2213 |
 | lag มอนที่ไม่เคยลง lag (UM 8 ตัว) | claywarg, crawlinghorror, junkrat NOT 0; stageusher มือ NOT 39 / 391 → 11 / 402 (lead ตามทิศมือ) · false 0; slurper false 10 = headslurpmiss ของ bench (เราบล็อกทุกครั้ง); bishop_nightmareb ไม่มี prefab, beeguard_seeker / monkey ไม่ตี | lag 2026-11-02_0133, 0209 / 0227 (A/B) |
+| lag มอนที่ไม่เคยลง lag (ชุด 2-4) | buzzard, chest_mimic, lunarfrog, merm_lunar, teenbird, bee, bulletbee, fruitdragon NOT 0 / 242 · false 0; TE crocodog, poisoncrocodog, frog_poison, rabid_beetle, weevole, zeb NOT 0 / 285 · false 1; TE ancient_herald NOT 1 / 262 · false 9 (state attack ค้าง t=0.033 ~0.6 วิ ก่อนตีที่ 0.667); birchnutdrake / stalker_minion2 ไม่ตี | lag 2026-11-02_0247, 0300, 0306 |
+| lag TE ชุด 5 + spiky turtle กลิ้ง | adult_flytrap, panda, snake_amphibious, swordfish NOT 0 / 82; spiky_turtle_tfc NOT 15 / 71 → 3 / 72 (วาดท่ากลิ้ง) · false 0 | lag 2026-11-02_0329, 0349 / 0354 (A/B) |
 | lag UM walrus ปากับดัก (หลังวาดจุดตก) | NOT 0 / 38 · false 0; กับดักโดน 1 ครั้ง วาดที่จุดตก 0.4 วิก่อน (ห่างจุดจริง 0.1) | lag 2026-11-01_2222 |
 | เกม / ข้อมูล | 761239 / data `83852BF58E33` | ติดตั้งแล้ว |
 
