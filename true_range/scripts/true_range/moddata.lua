@@ -163,7 +163,11 @@ function ModData.Apply(enabled)
                             data[k] = data[k] or {}
                             for mv, e in pairs(v) do
                                 if type(e) == "table" and e.copy ~= nil then e = ModData.Copy(data, e) end
-                                if e ~= nil and (data[k][mv] == nil or e.replace) then
+                                -- (or a move it hasn't, said false - one it has only by being drawn as another (_alias))
+                                if e == false then
+                                    data[k][mv] = nil
+                                    if tables[k] ~= nil then tables[k][mv] = nil end
+                                elseif e ~= nil and (data[k][mv] == nil or e.replace) then
                                     data[k][mv] = e
                                     if tables[k] ~= nil then tables[k][mv] = nil end
                                 end

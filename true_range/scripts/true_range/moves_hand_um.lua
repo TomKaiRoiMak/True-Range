@@ -88,6 +88,10 @@ return {
     -- unstruck on the bench 2026-11-01_0433 (979 frames in "hit"). Its own animation alone. TR_OLD_SPORELEAP: as run)
     sporehound = not rawget(_G, "TR_OLD_SPORELEAP") and { jump_atk_loop = { copy = { "sporehound", "jump_atk_loop" }, anims = { "jump_atk_loop" },
         replace = true } } or nil,
+    -- (the cave spider hider drawn as a spider (_alias): a spider's hide is the moon spider's spike attack (SGspider spike_attack,
+    -- DoSpikeAttack at 14), the hider's the same animation is its shield (SGspider shield) - harmless, drawn as spikes 120 of its
+    -- 200 shield frames on the bench 2026-11-01_0433. TR_OLD_HIDERSHIELD: as a spider's)
+    spider_hider = not rawget(_G, "TR_OLD_HIDERSHIELD") and { hide = false } or nil,
     merm = not rawget(_G, "TR_OLD_KARATE") and { atk_combo = { copy = { "merm", "atk" }, anims = { "atk_combo" }, at_each = { 12, 18, 31 } } } or nil,
     _hazards = {
         -- (the Moon Tentacle's mine (um_tentacle_moon_projectile.lua lobbedminefn): lands and waits, goes off 2-6 s on or as you come
