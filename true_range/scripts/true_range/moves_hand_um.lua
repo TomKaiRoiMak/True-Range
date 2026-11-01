@@ -82,7 +82,11 @@ return {
     -- (follow 7.25), its ring laid on from you - 4.32 and 5.49 behind it struck undrawn (bench 2026-11-01_0433). From itself.
     -- TR_OLD_DEERDASH: as run)
     deerclops = not rawget(_G, "TR_OLD_DEERDASH") and { ["uppercutcombo@MakeStrong"] = { copy = { "deerclops", "uppercutcombo@MakeStrong" },
-        drop = { "follow" }, replace = true } } or nil,
+        drop = { "follow" }, replace = true,
+        -- (and as fast as it really goes: run offline 1.1 a frame from 60, in the game .78 - 7.84 by 70, 21 of its 27 goes on the
+        -- bench 2026-11-01_0433; its ring laid ~3 past where it struck. TR_OLD_DEERSPEED: as run)
+        path_k = not rawget(_G, "TR_OLD_DEERSPEED") and { from = 60, k = .71 } or nil,
+        ring_from = not rawget(_G, "TR_OLD_DEERSPEED") and { at = 70, from = "free", ahead = 7.85 } or nil } } or nil,
     -- (the spore hound's leap (postinit SGhound: jump_atk_loop, its blow at 15) run on into hit and taunt, them in its list - any
     -- hit of it taken for gone straight into its leap's later part, its leap drawn through its stagger: 74 of its 77 drawn-in
     -- unstruck on the bench 2026-11-01_0433 (979 frames in "hit"). Its own animation alone. TR_OLD_SPORELEAP: as run)

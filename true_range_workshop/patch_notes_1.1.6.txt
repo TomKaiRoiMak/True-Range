@@ -108,3 +108,4 @@
 - Tropical Experience's gem deer's tornadoes: drawn as far out as they strike (3) - a little short before
 - Game update (2026-10-31): moon pigs' bite drawn lunging forward as it now does; the Grim Harrier's runners as they now turn back at the arena's edge
 - Year of the Horse knights' joust: its lane laid the way it really charges - it was turned up to 15 degrees off, to the way it faces
+- Uncompromising Mode's strong Deerclops' uppercut combo: its last blow drawn where its dash really stops - it was drawn about 3 further on

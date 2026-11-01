@@ -57,9 +57,95 @@ function ModData.Copy(data, e)
         end
         n.first = e.at_each[1]
     end
+    -- (path_k = { from = frame, k = factor }: how far it goes after that frame, times that - UM's strong Deerclops' dash at
+    -- walkspeed 20, run offline 1.1 a frame, in the game .78)
+    if e.path_k ~= nil then
+        for _, list in ipairs({ n.maps or {}, n.free or {} }) do
+            for _, m in ipairs(list) do
+                if type(m.path) == "string" then
+                    local p = {}
+                    for v in m.path:gmatch("[^,]+") do p[#p + 1] = tonumber(v) end
+                    local base = p[e.path_k.from + 1]
+                    if base ~= nil then
+                        for i = e.path_k.from + 2, #p do p[i] = base + (p[i] - base) * e.path_k.k end
+                        for i = 1, #p do p[i] = string.format("%.2f", p[i]) end
+                        m.path = table.concat(p, ",")
+                    end
+                end
+            end
+        end
+    end
+    -- (ring_from = { at = frame, from = "free", ahead = units }: that frame's shape, as its first map in that list has it, laid
+    -- that much on from where it is there, in every map - UM's strong Deerclops' blow at 70 round where its dash ends, run
+    -- offline 10.84 on from where it began, in the game 7.84 on, whoever's where)
+    if e.ring_from ~= nil then
+        local rf = e.ring_from
+        local src0 = (n[rf.from or "free"] or {})[1]
+        local cells0 = nil
+        for _, st in ipairs(src0 and src0.steps or {}) do if st.at == rf.at then cells0 = st.cells end end
+        if cells0 ~= nil then
+            local B64 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/"
+            local digit = {}
+            for i = 1, #B64 do digit[B64:byte(i)] = i - 1 end
+            local pos, runs, row = 1, {}, -1
+            local function Num()
+                local v, scale = 0, 1
+                while true do
+                    local d = digit[cells0:byte(pos)] or 0
+                    pos = pos + 1
+                    v = v + (d % 32) * scale
+                    if d < 32 then return v end
+                    scale = scale * 32
+                end
+            end
+            while pos <= #cells0 do
+                row = row + Num()
+                local k, last_end = Num(), -1
+                for _ = 1, k do
+                    local from = last_end + 1 + Num()
+                    local to = from + Num()
+                    runs[#runs + 1] = { row, from, to }
+                    last_end = to
+                end
+            end
+            local sa, sn = 0, 0
+            for _, r in ipairs(runs) do sa, sn = sa + (r[2] + r[3]) * .5 * (r[3] - r[2] + 1), sn + r[3] - r[2] + 1 end
+            local grid = data._grid or { ahead = -20, step = .25 }
+            local shift = math.floor((rf.ahead - grid.ahead) / grid.step + .5) - math.floor(sa / sn + .5)
+            local out = {}
+            local function Put(v)
+                repeat
+                    local d = v % 32
+                    v = (v - d) / 32
+                    out[#out + 1] = B64:sub((v > 0 and d + 32 or d) + 1, (v > 0 and d + 32 or d) + 1)
+                until v == 0
+            end
+            local last_row, i = -1, 1
+            while i <= #runs do
+                local j = i
+                while j + 1 <= #runs and runs[j + 1][1] == runs[i][1] do j = j + 1 end
+                Put(runs[i][1] - last_row)
+                Put(j - i + 1)
+                local last_end = -1
+                for q = i, j do
+                    local from, to = math.max(0, runs[q][2] + shift), math.max(0, runs[q][3] + shift)
+                    Put(math.max(0, from - last_end - 1))
+                    Put(to - from)
+                    last_end = to
+                end
+                last_row, i = runs[i][1], j + 1
+            end
+            local cells = table.concat(out)
+            for _, list in ipairs({ n.maps or {}, n.free or {} }) do
+                for _, m in ipairs(list) do
+                    for _, st in ipairs(m.steps or {}) do if st.at == rf.at then st.cells = cells end end
+                end
+            end
+        end
+    end
     for _, f in ipairs(e.drop or {}) do n[f] = nil end
     for f, x in pairs(e) do
-        if f ~= "copy" and f ~= "shift" and f ~= "drop" and f ~= "at_each" then n[f] = x end
+        if f ~= "copy" and f ~= "shift" and f ~= "drop" and f ~= "at_each" and f ~= "path_k" and f ~= "ring_from" then n[f] = x end
     end
     return n
 end
