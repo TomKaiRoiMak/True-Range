@@ -48,6 +48,12 @@ return {
     -- undrawn on the lag bench 2026-11-02_0329. Round itself while it plays attack2_loop (simmoves _on_anims), the shape of UM
     -- shadow Abigail's burst (FindEntities 3 too). TR_OLD_TURTLESLIDE: none)
     _hazards = { greentornado2 = not rawget(_G, "TR_OLD_TORNADO2") and { copy_hazard = "greentornado2", scale = .95, replace = true } or nil,
+        -- (the palm treeguard's coconuts (treeguard_coconut.lua onthrown, thrown at you ± 4 at random from range): striking as they
+        -- come down to 0.3 up - 50 within 1.5, then their ground pound 30 within 4 (initialRadius 1 + ringWidth 3) - where they are
+        -- then, not at their warning shadows (1.4 off, the shadows only 1.75 big): struck 1.45 from one undrawn on the lag bench
+        -- 2026-11-02_0404. As Spat's bomb (lobbed, within 4 of its middle): where it'll come down, as it flies; as_boss for the
+        -- checks (strikes_until), up ~1.2 s. TR_OLD_COCONUT: none)
+        treeguard_coconut = not rawget(_G, "TR_OLD_COCONUT") and { copy_hazard = "spat_bomb", by = { "treeguard" }, strikes_until = 60 } or nil,
         spiky_turtle_tfc = not rawget(_G, "TR_OLD_TURTLESLIDE") and { by = { "spiky_turtle_tfc" }, delay = 0, lasting = true, moved = true,
             steps = { { at = 0, cells = "b21k2411h2A11f2E11e2G11d2I11c2K11c2K11b2M11b2M11b2M11a2O11a2O11a2O11a2O11a2O11b2M11b2M11b2M11c2K11c2K11d2I11e2G11f2E11h2A11k24" } } } or nil },
     scorpion = not rawget(_G, "TR_OLD_SCORPFAR") and { ["atk~leap_attack"] = { copy = { "scorpion", "atk~leap_attack" }, far = 3,
