@@ -158,7 +158,8 @@ check(PD(1.5, 0) == true and PD(6, 0) == true, "pound: before it, near and far")
 now = 1000 + 1.6 -- (well into its waves)
 check(PD(1.5, 0) == false, "pound: the inner waves have struck - gone there")
 -- Klaus' chomp at you 5 away: where it lands (on you), not round where it set off
-check(Move("klaus", "attack_chomp", 5, 0) == true and Move("klaus", "attack_chomp", -2, 0) == false,
+-- (its bite reaches ~5.2 round where it lands, 2.6 on towards you - behind it at 3 it doesn't, SimMoves._land.klaus)
+check(Move("klaus", "attack_chomp", 5, 0) == true and Move("klaus", "attack_chomp", -3, 0) == false,
     "Klaus' chomp: where it lands on you, not where it set off")
 -- the Werepig's slam goes the way it faces (it turns slower than you run): you off to its side
 local function Side(px, pz) return Move("daywalker", "atk_slam_pre", px, pz, 0, -6) end
@@ -242,6 +243,7 @@ local function K2(px, pz) return Predict.Draw({ kl }, function() return { harmfu
 now = 4000
 K2(5, 0)
 now = 4000 + 30 * FRAMES -- (aimed)
+kt = 30 * FRAMES -- (its animation that far on too: it aims till frame 26 of it)
 K2(5, 0)
 kpos[1], kpos[2] = 5, -6 -- (you ran off)
 check(K2(5, 0) == true and K2(5, -6) == false, "Klaus' chomp: lands where it aimed, not following you after")
