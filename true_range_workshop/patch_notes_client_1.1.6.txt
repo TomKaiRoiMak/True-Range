@@ -3,6 +3,7 @@
 New
 - Settings: opacity for each part (attacks, outlines, your rings, other rings), 0% to 100% in 10% steps
 - Ctrl + the settings key (O): turn everything off or on at once
+- The cooldown glow round bosses taken out - less on screen
 - Now named True Range+, with a new icon
 - The bosses from the October 23 update: Hound Batilisk, Rock Master, Shrouded Queen, Grim Harrier, Umbral Abomination, Blighted Great Depths Worm (and their Blighted forms)
 - Uncompromising Mode: Shadow Wixie, mindweaver, fuelseeker, haunt, Moon Tentacle mines, lightning strikes, merm counter combo, lavae's burning slime

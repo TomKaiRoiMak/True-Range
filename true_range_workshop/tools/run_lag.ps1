@@ -6,7 +6,7 @@
 # testing lines (debug.txt). Then tools/lag_report.lua on your game's log: struck / drawn, on and off.
 # Your game is started and closed by this - not run while you play. -NoClient: the server only (join by hand).
 param([string]$Bosses = "deerclops,moose,bearger,mock_dragonfly,moonmaw_dragonfly", [int]$Rounds = 2, [int]$TickRate = 15,
-    [int]$Minutes = 60, [int]$Port = 11010, [switch]$NoClient, [int]$Speed = 1, [string]$Old = "", [string]$Event = "", [switch]$TE)
+    [int]$Minutes = 60, [int]$Port = 11010, [switch]$NoClient, [int]$Speed = 1, [string]$Old = "", [string]$Event = "", [switch]$TE, [switch]$NoUM, [switch]$NoDebug)
 # (-Old "TR_OLD_A,TR_OLD_B": True Range's switches back to how it was, set in your game (tr_lagjoin) - to tell which change did it)
 # (-Speed n: the server and your game both n times as fast (TheSim:SetTimeScale - the testbench's own speed, tr_lagjoin from
 # join.txt), the tick rate n times too unless given - the network's tick as often in the game's time as at 1x, its lag the same
@@ -27,7 +27,8 @@ $noBom = New-Object System.Text.UTF8Encoding $false
 $others = @(Get-CimInstance Win32_Process -Filter "Name='powershell.exe'" | Where-Object { $_.ProcessId -ne $PID -and $_.CommandLine -match 'run_(bench|lag)\.ps1' })
 if ($others.Count -gt 0) { "another run_bench / run_lag is running (pid $($others.ProcessId -join ',')) - wait for it or stop it"; exit 1 }
 if (-not $NoClient -and (Get-Process dontstarve_steam_x64 -ErrorAction SilentlyContinue)) { "your game is open - close it first (this starts and closes it)"; exit 1 }
-if (-not (Test-Path (Join-Path $game 'mods\true_range\debug.txt'))) { "True Range's debug.txt is missing in the game's copy - run tools\install.ps1"; exit 1 }
+# (-NoDebug: as players get it, no debug.txt - only crashes and what's drawn looked at, no struck/drawn table)
+if (-not $NoDebug -and -not (Test-Path (Join-Path $game 'mods\true_range\debug.txt'))) { "True Range's debug.txt is missing in the game's copy - run tools\install.ps1"; exit 1 }
 
 # 1. the testbench's server build, as run_bench makes it
 $srv = Join-Path $game 'mods\tr_testbench_server'
@@ -79,7 +80,7 @@ if (Test-Path $lvl) { Copy-Item $lvl (Join-Path $master 'leveldataoverride.lua')
 # (-Event hallowed_nights: that event on in the bench's world - its copy only, your world's file as it is: the Hallowed Nights
 # monsters (franken pig, mummy merm, vampire bunny: 30% of pigs, merms, bunnymen while it's on), 2026-10-30)
 if ($Event) { $lo = Join-Path $master 'leveldataoverride.lua'; (Get-Content $lo -Raw) -replace "$Event=`"default`"", "$Event=`"enabled`"" | ForEach-Object { [IO.File]::WriteAllText($lo, $_, (New-Object Text.UTF8Encoding($false))) } }
-luajit (Join-Path $here 'bench_overrides.lua') (Join-Path $userCluster 'Master\modoverrides.lua') (Join-Path $master 'modoverrides.lua') $Rounds $Speed tr $(if ($TE) { 'te' } else { '' }) $(if ($TE) { 'noum' } else { '' }) | Out-Null
+luajit (Join-Path $here 'bench_overrides.lua') (Join-Path $userCluster 'Master\modoverrides.lua') (Join-Path $master 'modoverrides.lua') $Rounds $Speed tr $(if ($TE) { 'te' } else { '' }) $(if ($TE -or $NoUM) { 'noum' } else { '' }) | Out-Null
 $seed = Join-Path $conf 'Bench\Master\save'
 if (Test-Path $seed) {
     if (Test-Path (Join-Path $master 'save')) { Remove-Item -Recurse -Force (Join-Path $master 'save') }

@@ -11,5 +11,5 @@
 -- tris: each part filled with triangles to its smooth outline (not cells); flip_tri: they come
 -- out on the wrong side of their long edge in the game (all of them: then turn this on).
 -- prerendered: the whole-move pictures (anim/trsil) instead - off.
-return { lines = false, outline = true, band = true, bodies = true, cooldown = "glow", flip_shapes = false,
+return { lines = false, outline = true, band = true, bodies = true, cooldown = false, flip_shapes = false,
     tris = true, flip_tri = false, prerendered = false }
