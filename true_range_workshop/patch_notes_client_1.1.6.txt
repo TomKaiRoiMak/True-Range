@@ -126,5 +126,5 @@
 - Tropical Experience's twisters: a ring round them as they wind up and suck you in (20 round), on through their spit - it was never drawn
 - Uncompromising Mode's Bee Queen guards: no longer drawn as they dive down from up in the air - only their blow once they land
 - The Shrouded Queen: her swipe drawn as the three lanes her shadows run, not one wide area; outlines no longer broken where her shadows had just been as they run
-- New settings: how solid each part is drawn, 10% to 100% in steps of 10% - the inside of attacks, their outlines, your own rings (body and reach), and everyone else's (monsters, friends, Abigail, the yellow ring)
+- New settings: how solid each part is drawn, 0% to 100% in steps of 10%, in two columns in the settings window - the inside of attacks, their outlines, your own rings (body and reach), and everyone else's (monsters, friends, Abigail, the yellow ring)
 - Ctrl + the settings key (O): everything off at once, and on again - nothing worked out while off
