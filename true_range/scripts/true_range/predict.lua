@@ -2168,6 +2168,18 @@ local function LandSpot(ent, ld, x, z, target, now)
     if rawget(_G, "TR_OLD_LANDAT") then return x, z end
     local dx, dz = x, z
     if ld.on_target and target ~= nil then dx, dz = target.x, target.z end
+    -- (or not quite onto them: as far on towards them as it goes - short of them by both bodies (ld.back), so far at most
+    -- (ld.cap) - Klaus' chomp, its lunge to where you stood at frame 26 (SGklaus CalcChompSpeed))
+    if ld.on_target and target ~= nil and (ld.back ~= nil or ld.cap ~= nil) then
+        local ux, uz = target.x - x, target.z - z
+        local d = math.sqrt(ux * ux + uz * uz)
+        if d > 1e-3 then
+            local go = math.max(0, math.min(ld.cap or math.huge, d - (ld.back or 0)))
+            dx, dz = x + ux / d * go, z + uz / d * go
+        else
+            dx, dz = x, z
+        end
+    end
     if ld.at_thing ~= nil then
         local near = Predict.EntsNear ~= nil and Predict.EntsNear(x, z, 30)
             or (TheSim ~= nil and TheSim:FindEntities(x, 0, z, 30)) or {}

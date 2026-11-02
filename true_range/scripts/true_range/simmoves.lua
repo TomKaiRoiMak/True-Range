@@ -3514,6 +3514,16 @@ if not rawget(_G, "TR_OLD_BEETLEPUNCH") then
         attack3 = { { anim = "attack3", r = 1.5, at = 3, till = 4, on_target = true } },
     }
 end
+-- (Klaus' chomp: aimed at frame 26 at where you stand (SGklaus CalcChompSpeed), its lunge stopping short of that by ~2.4
+-- (~3 - the player's game 2026-11-02, 40 chomps) or at its most (~4.6; ~8.2 enraged), its bite at 35 striking you within ~5.2 of
+-- where it lands (11 struck at 3.6-5.3, 29 missed at 5.2 on). Run offline it was laid out on past you - 7 "drawn IN but NOT
+-- struck" of 34 in that game, "klaus ยังพลาดอยู่เยอะ". Round where it will land, on you till 26, then kept. TR_OLD_KLAUSCHOMP)
+if not rawget(_G, "TR_OLD_KLAUSCHOMP") then
+    SimMoves._land.klaus = {
+        attack_chomp = { { anim = "attack_chomp", r = 5.2, at = 35, till = 1e6, on_target = true, lock_at = 26, back = 2.4, cap = 4.6 } },
+        ["attack_chomp@Enrage"] = { { anim = "attack_chomp", r = 5.2, at = 35, till = 1e6, on_target = true, lock_at = 26, back = 2.4, cap = 14 } },
+    }
+end
 if not rawget(_G, "TR_OLD_SPATSNOT") then
     SimMoves._land.spat = { snot_pre = {
         { anim = "snot", r = 4, at = 21, till = 29, on_target = true, lock_at = 21 },
