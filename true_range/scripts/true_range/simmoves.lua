@@ -2076,6 +2076,8 @@ local function DrawAtoms(owner, todo, x, z, rot, px, pz, edge_style, whole)
         local R = rg.by[id]
         if R == nil then R = { maps = {}, mask = {}, lc = {}, lcx = {}, lcz = {}, lcr = {}, lcm = {} } rg.by[id] = R end
         local wr = draw_unturned and 0 or rot
+        -- (how far it went since last frame - a shape gone on fast doesn't cut others where it was: below)
+        R.mv2 = (R.x ~= nil and R.f == rg.f - 1) and ((x - R.x) ^ 2 + (z - R.z) ^ 2) or (R.f == rg.f and R.mv2 or 0)
         R.f, R.x, R.z, R.rot, R.step, R.ga, R.gs = rg.f, x, z, wr, G.step, G.ahead, G.side
         if R.c == nil or R.crot ~= wr then R.c, R.s, R.crot = math.cos(wr), math.sin(wr), wr end
         local rb = 0
@@ -2089,7 +2091,11 @@ local function DrawAtoms(owner, todo, x, z, rot, px, pz, edge_style, whole)
         rg.nc = 0
         for q = 1, rg.na do
             local O = rg.act[q]
-            if O ~= R and O.f >= rg.f - 1 and O.r ~= nil and (O.x - x) ^ 2 + (O.z - z) ^ 2 < (O.r + rb) ^ 2 then
+            -- (not one not drawn yet this frame that goes fast - where it was last frame isn't where it'll be: the Shrouded
+            -- Queen's shadows running 20-24 a second, the outlines round them cut where one had just been - "ขอบหาย", the
+            -- player 2026-11-02. Over .2 a frame. TR_OLD_RGSTALE: last frame's wherever)
+            if O ~= R and O.f >= rg.f - 1 and O.r ~= nil and (O.x - x) ^ 2 + (O.z - z) ^ 2 < (O.r + rb) ^ 2
+                and (O.f == rg.f or (O.mv2 or 0) <= .04 or rawget(_G, "TR_OLD_RGSTALE")) then
                 rg.nc = rg.nc + 1
                 rg.cand[rg.nc] = O
             end
@@ -3508,6 +3514,19 @@ if not rawget(_G, "TR_OLD_KLAUSCHOMP") then
         attack_chomp = { { anim = "attack_chomp", r = 5.2, at = 35, till = 1e6, on_target = true, lock_at = 26, back = 2.4, cap = 4.6 } },
         ["attack_chomp@Enrage"] = { { anim = "attack_chomp", r = 5.2, at = 35, till = 1e6, on_target = true, lock_at = 26, back = 2.4, cap = 14 } },
     }
+end
+-- (moves drawn as the lanes their shadows run, not as run offline - the Shrouded Queen's swipe (SGcharlie_boss castlift):
+-- nothing of its own, three shadows sent off the way she faces as she stops aiming (frame 22) - 3 ahead at 33, then 2 ahead 4
+-- to either side at 37 and 40 (SpawnMinion), each running 7-8.4 on (charlie_boss_minions.lua: jumpout 2-3 to impact 13-17,
+-- 20-24 a second, x .7 / 1) striking within 2.4 (AOEUtil.Attack, and your body). Run offline, all of it one wide shape:
+-- "ขึ้นเตือนกว้างมาก แต่ไม่โดนดาเมจจริง", the player 2026-11-02. true_range/predict. TR_OLD_QUEENLANES: as run)
+SimMoves._lanes_of = {}
+if not rawget(_G, "TR_OLD_QUEENLANES") then
+    SimMoves._lanes_of.charlie_boss = { castlift = { lock = 22, till = 60, lanes = {
+        { ahead = 3, side = 0, len = 8.4, r = 2.9, at = 35 },
+        { ahead = 2, side = 4, len = 7.0, r = 2.9, at = 39 },
+        { ahead = 2, side = -4, len = 7.0, r = 2.9, at = 42 },
+    } } }
 end
 if not rawget(_G, "TR_OLD_SPATSNOT") then
     SimMoves._land.spat = { snot_pre = {

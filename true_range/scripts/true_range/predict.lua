@@ -2948,6 +2948,24 @@ function Predict.Draw(ents, ranges, my_radius, me, skip)
                     if not over then
                         danger = SimMoves.DrawAround(sim, sx, sz, crot, px, pz, t, winding_down and 0 or a.around_ahead) or danger
                     end
+                -- (as the lanes its shadows will run (SimMoves._lanes_of) - the way it faces, kept from its last aim on)
+                elseif sim ~= nil and a.move.name ~= nil and SimMoves._lanes_of[ent.prefab] ~= nil and SimMoves._lanes_of[ent.prefab][a.move.name] ~= nil then
+                    local spec = SimMoves._lanes_of[ent.prefab][a.move.name]
+                    local into = ent.AnimState:GetCurrentAnimationTime()
+                    if into <= spec.till * FRAMES then
+                        local bx, _, bz = ent.Transform:GetWorldPosition()
+                        if into < spec.lock * FRAMES or a.lanes_rot == nil then a.lanes_rot, a.lanes_x, a.lanes_z = ent.Transform:GetRotation() * DEGREES, bx, bz end
+                        local lr = a.lanes_rot
+                        local c, s = math.cos(lr), math.sin(lr)
+                        for _, ln in ipairs(spec.lanes) do
+                            local sx0 = a.lanes_x + ln.ahead * c + ln.side * s
+                            local sz0 = a.lanes_z - ln.ahead * s + ln.side * c
+                            local left = ln.at * FRAMES - into
+                            local style = left <= 0 and "hit" or (left <= 10 * FRAMES and "strike" or "fill")
+                            danger = SimMoves.DrawCapsule(sx0, sz0, lr, ln.len, ln.r, style, px, pz) or danger
+                        end
+                        Note(ent, "as its shadows' lanes", a.move, t)
+                    end
                 -- (coming down where it is, after a chase of its own length (SimMoves._land): round it now - TR_OLD_LAND2)
                 elseif sim ~= nil and a.move.name ~= nil and SimMoves._land[ent.prefab] ~= nil and SimMoves._land[ent.prefab][a.move.name] ~= nil
                     and Predict._LandNow(ent, a, SimMoves._land[ent.prefab][a.move.name]) ~= nil and not rawget(_G, "TR_OLD_LAND2") then
