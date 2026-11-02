@@ -50,11 +50,6 @@ do
     -- TR_OLD_ROOKFACE: at its target)
     local rook_atk = Data.rook ~= nil and Data.rook.atk or nil
     if rook_atk ~= nil and not rawget(_G, "TR_OLD_ROOKFACE") then rook_atk.frame = "facing" end
-    -- (the Shrouded Queen's swipe (SGcharlie_boss attack: castlift) strikes nothing itself - its three shadows sent off at
-    -- frames 33 / 37 / 40 (SpawnMinion, 20-24 a second) do, each drawn on its own (charlie_boss_minion1/2, one lot). Run
-    -- offline the move was laid out as all of them together, wide and in front of her: "queen hit box ตีธรรมดา โครตมั่ว
-    -- มันไม่โดน โครตกว้าง", the player 2026-11-02. Its shadows only. TR_OLD_QUEENCAST: drawn as run)
-    if Data.charlie_boss ~= nil and not rawget(_G, "TR_OLD_QUEENCAST") then Data.charlie_boss.castlift = nil end
     for prefab, moves in pairs(fields) do
         for name, f in pairs(moves) do
             local e = Data[prefab] ~= nil and Data[prefab][name] or nil
