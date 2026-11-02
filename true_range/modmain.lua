@@ -892,6 +892,12 @@ local AGGRO_WHILE = {
     worm_boss_dirt = { r = 2.5, anims = { "dirt_pre_slow", "dirt_pre_fast", "dirt_emerge_loop_pre", "dirt_emerge_loop", "dirt_emerge" }, linger = .3, any_target = true, near = { "worm_boss_segment", 1.6 } },
     worm_boss_shadow_dirt = { r = 2.5, anims = { "dirt_pre_slow", "dirt_shadow_pre_slow", "dirt_pre_fast", "dirt_emerge_loop_pre", "dirt_emerge_loop", "dirt_emerge" }, linger = .3, any_target = true, near = { "worm_boss_shadow_segment", 1.6 } },
     mutated_penguin = { r = 3, anims = { "slide_loop", "slide_bounce" } },
+    -- (Tropical Experience's twisters: their vacuum (SGtwister / SGfiretwister vacuum_loop, components/vacuum.lua) pulls in
+    -- whoever's middle is within 20 (FindEntities 20 players, then within 30, in sight), holds you 5 s at 3 and strikes as it
+    -- spits you out - once pulled, no getting away: struck 3 times undrawn on the lag bench 2026-10-31_1508. The owner's
+    -- choice (2026-11-02): a ring round it as it winds up (vacuum_antic, 5 s) and sucks - whoever it is. TR_OLD_VACUUM: none)
+    twister = not GLOBAL.rawget(GLOBAL, "TR_OLD_VACUUM") and { r = 20.5, anims = { "vacuum_antic_pre", "vacuum_antic_loop", "vacuum_pre", "vacuum_loop", "vacuum_pst" }, linger = .5, any_target = true, counts = true } or nil,
+    firetwister = not GLOBAL.rawget(GLOBAL, "TR_OLD_VACUUM") and { r = 20.5, anims = { "vacuum_antic_pre", "vacuum_antic_loop", "vacuum_pre", "vacuum_loop", "vacuum_pst" }, linger = .5, any_target = true, counts = true } or nil,
     -- (Tropical Experience's jellyfish - the kraken's (its ink shot's) and the underwater ones: now and then a shock (idle_shock), the
     -- nearest whose middle is within 3 at frame 5 (GetClosestInstWithTag("player", inst, 3) - health:DoDelta, electrocuted), whoever
     -- it is: nothing drawn till now. The planted one's shock is commented out in the mod. TR_OLD_JELLY: none)
@@ -1044,7 +1050,9 @@ local DARTS = { blowdart_walrus = { len = 22, width = 1.5 }, spider_web_spit = {
     -- 2026-10-20; its lane ahead of it, 12 from the guards' ring and some)
     -- (by, strikes_until: its blows the game's as the shooter guard's, the guard dead by then sometimes - for the checks only,
     -- tests/replay*.lua: 6 "missed" in its death, 3-5 off, the bench 2026-10-21; 15 at 25 a second and some)
-    um_beestinger_projectile = { len = 15, width = 1.414, by = "um_beeguard_shooter", strikes_until = 30 },
+    -- (only a short way ahead of it - 15 on was a lane over the screen from each guard up in the air, the player 2026-11-02:
+    -- "ไม่ต้องวาดเลนพุ่งมาหาผู้เล่น บังจอเกิน". 25 a second: 4 is a sixth of a second ahead. TR_OLD_STINGLANE: 15)
+    um_beestinger_projectile = { len = 4, width = 1.414, by = "um_beeguard_shooter", strikes_until = 30 },
     -- (Uncompromising Mode's Eye of Terror's mini eye flung at you: straight on at 20 a second (postinit SGeyeofterror
     -- ShootEye), never coming down (its ground check commented out), gone in 3 s - 60 on; striking whoever its 1.5
     -- capsule meets, and your body (eyeofterror_extras.lua fneye_proj, oncollide): drawn as a ring once it stopped, 25
@@ -1073,6 +1081,7 @@ local DARTS = { blowdart_walrus = { len = 22, width = 1.5 }, spider_web_spit = {
     -- (and the plain lizardman's, the same (lizardman.lua: 16 + 4, 40 a second, hit within 1) - 4 struck undrawn as it ran on, the
     -- stress bench 2026-10-21)
     lizardman_spit = { len = 24, width = 1.5, face = true, by = "lizardman", strikes_until = 30 } }
+if GLOBAL.rawget(GLOBAL, "TR_OLD_STINGLANE") ~= nil then DARTS.um_beestinger_projectile.len = 15 end
 for prefab, d in pairs(DARTS) do
     AddPrefabPostInit(prefab, function(inst) darts[#darts + 1] = { ent = inst, len = d.len, width = d.width, face = d.face } end)
     -- (and their lane before they're shot, from the one that shoots them - true_range/simmoves DrawShot)
@@ -1460,7 +1469,12 @@ local function Start(player)
                 end
                 -- (the whole of it, pale - may be: as a filled area too, not a thin line alone; not under a core as big)
                 if w == nil then Telegraph.Circle(ex, ez, AGGRO[e.prefab], "edge_light", e)
-                elseif not core_drawn then AggroFill(ex, ez, AGGRO[e.prefab], "fill_light") end
+                elseif not core_drawn then
+                    AggroFill(ex, ez, AGGRO[e.prefab], "fill_light")
+                    -- (testing: you in it - "drawn: in" when struck, for one whose whole ring is the warning (w.counts - the
+                    -- twisters' vacuum: 3 of its spits "drawn: NOT" though drawn, lag 2026-11-02_0801))
+                    if w.counts and (sx - ex) ^ 2 + (sz - ez) ^ 2 <= AGGRO[e.prefab] ^ 2 then last_inside_at = now end
+                end
             end
         end
         for i = #horns, 1, -1 do
