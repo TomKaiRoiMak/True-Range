@@ -89,7 +89,7 @@ configuration_options = {
             { description = "28", data = 28 }, { description = "32", data = 32 }, { description = "48", data = 48 },
             { description = "64", data = 64 }, { description = "All on screen", data = 0 },
         },
-        default = 16,
+        default = 8,
         client = true,
     },
     {

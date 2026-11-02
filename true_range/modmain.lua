@@ -423,6 +423,9 @@ local S = Settings.values
 Lines.opacity, Rings.opacity = S, S
 -- (everything off for now - Ctrl + the settings key; not kept)
 local all_off, all_off_cleared = false, false
+-- (a setting changed in the window: shapes kept from frame to frame (rings, groups) laid again - an
+-- opacity is set on them as they're laid; they kept the old one, "the rings' opacity didn't change")
+local settings_seen = Settings.changed
 
 -- (how far on you're shown from where the server has you, eased - each frame's drawing, below)
 local lead = { x = 0, z = 0 }
@@ -1250,6 +1253,10 @@ local function Start(player)
             return
         end
         all_off_cleared = false
+        if Settings.changed ~= settings_seen then
+            settings_seen = Settings.changed
+            Lines.version = Lines.version + 1
+        end
         local c_start = Mark()
         local wall = GLOBAL.os.clock()  -- (Windows: the wall clock, to the ms)
         local gap = perf.last_wall ~= nil and (wall - perf.last_wall) or 0

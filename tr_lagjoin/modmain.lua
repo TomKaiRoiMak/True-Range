@@ -588,7 +588,21 @@ AddPlayerPostInit(function(p)
         if p ~= G.ThePlayer then return end
         local ok, fh = G.pcall(G.io.open, MODROOT .. "shot.txt", "r")
         if not ok or fh == nil then return end
+        local what = fh:read("*l") or ""
         fh:close()
+        -- ("op": all four opacities flipped, 100% <-> 20%, in memory (not saved - the player's own file untouched), for a
+        -- picture of rings laid before the change)
+        if what:match("^op") then
+            local S = G.require("true_range/settings")
+            local function Flip(n)
+                for _, k in ipairs({ "op_area", "op_edge", "op_you", "op_others" }) do S.values[k] = S.values[k] == 1 and .2 or 1 end
+                S.changed = S.changed + 1
+                print(string.format("[tr_lag] settings shown (opacity flipped %d: %s)", n, tostring(S.values.op_you)))
+            end
+            Flip(1)
+            p:DoTaskInTime(4, function() Flip(2) end)
+            return
+        end
         local screen = G.require("true_range/settingsscreen")()
         G.TheFrontEnd:PushScreen(screen)
         print("[tr_lag] settings shown")

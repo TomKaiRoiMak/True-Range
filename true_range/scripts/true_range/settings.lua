@@ -36,7 +36,7 @@ Settings.OPTIONS = {
     { name = "monsters", label = "Monsters shown", default = "all",
       hover = "Which monsters' attacks are drawn.",
       choices = { { text = "Pointed at", data = "hover" }, { text = "+ hunting you", data = "target" }, { text = "All nearby", data = "all" } } },
-    { name = "max_monsters", label = "Most monsters drawn", default = 16,
+    { name = "max_monsters", label = "Most monsters drawn", default = 8,
       hover = "At most this many monsters' attacks drawn at once - the nearest, and those after you first. Fewer runs smoother with a crowd.",
       choices = { { text = "4", data = 4 }, { text = "8", data = 8 }, { text = "12", data = 12 }, { text = "16", data = 16 },
           { text = "20", data = 20 }, { text = "24", data = 24 }, { text = "28", data = 28 }, { text = "32", data = 32 },
@@ -67,6 +67,8 @@ Settings.OPTIONS = {
 
 -- (the values in use - the same table all along, changed in place: modmain keeps it)
 Settings.values = {}
+-- (counted up at each change: modmain lays its kept shapes again - their colours set as laid)
+Settings.changed = 0
 local defaults = {}
 
 local function Valid(o, v)
@@ -119,12 +121,14 @@ function Settings.Set(name, v)
     local o = OptionOf(name)
     if o == nil or not Valid(o, v) then return end
     Settings.values[name] = v
+    Settings.changed = Settings.changed + 1
     Save()
 end
 
 -- back to the mod settings
 function Settings.Reset()
     for name, v in pairs(defaults) do Settings.values[name] = v end
+    Settings.changed = Settings.changed + 1
     Save()
 end
 
