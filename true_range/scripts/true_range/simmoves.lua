@@ -3515,6 +3515,19 @@ if not rawget(_G, "TR_OLD_KLAUSCHOMP") then
         ["attack_chomp@Enrage"] = { { anim = "attack_chomp", r = 5.2, at = 35, till = 1e6, on_target = true, lock_at = 26, back = 2.4, cap = 14 } },
     }
 end
+-- (and each of her shadows round itself only (AOEUtil.Attack 2.4, and your body) - not stretched the way it faces: 4 / 6 faced,
+-- its turn snapped to a quarter on a player's game, its stretch laid off to one side or behind her - 189 frames of them behind
+-- her on the lag bench 2026-11-02_1254, "ข้างหลังยังติดมาอยู่ มันมาจากไหน", the player. Its way is her swipe's lanes above.
+-- TR_OLD_MINIONRING: stretched as run)
+if not rawget(_G, "TR_OLD_MINIONRING") and Data._hazards ~= nil then
+    for _, n in ipairs({ "charlie_boss_minion1", "charlie_boss_minion2" }) do
+        local h = Data._hazards[n]
+        if h ~= nil then
+            h.steps = { { at = 0, cells = "b21k2411h2A11f2E11e2G11d2I11c2K11c2K11b2M11b2M11b2M11a2O11a2O11a2O11a2O11a2O11b2M11b2M11b2M11c2K11c2K11d2I11e2G11f2E11h2A11k24" } }
+            h.travel = nil
+        end
+    end
+end
 -- (moves drawn as the lanes their shadows run, not as run offline - the Shrouded Queen's swipe (SGcharlie_boss castlift):
 -- nothing of its own, three shadows sent off the way she faces as she stops aiming (frame 22) - 3 ahead at 33, then 2 ahead 4
 -- to either side at 37 and 40 (SpawnMinion), each running 7-8.4 on (charlie_boss_minions.lua: jumpout 2-3 to impact 13-17,
@@ -3522,7 +3535,7 @@ end
 -- "ขึ้นเตือนกว้างมาก แต่ไม่โดนดาเมจจริง", the player 2026-11-02. true_range/predict. TR_OLD_QUEENLANES: as run)
 SimMoves._lanes_of = {}
 if not rawget(_G, "TR_OLD_QUEENLANES") then
-    SimMoves._lanes_of.charlie_boss = { castlift = { lock = 22, till = 60, lanes = {
+    SimMoves._lanes_of.charlie_boss = { castlift = { turn = 8, turn_max = 2, lock = 22, till = 60, lanes = {
         { ahead = 3, side = 0, len = 8.4, r = 2.9, at = 35 },
         { ahead = 2, side = 4, len = 7.0, r = 2.9, at = 39 },
         { ahead = 2, side = -4, len = 7.0, r = 2.9, at = 42 },

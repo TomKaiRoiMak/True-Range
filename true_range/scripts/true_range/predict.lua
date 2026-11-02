@@ -2954,8 +2954,35 @@ function Predict.Draw(ents, ranges, my_radius, me, skip)
                     local into = ent.AnimState:GetCurrentAnimationTime()
                     if into <= spec.till * FRAMES then
                         local bx, _, bz = ent.Transform:GetWorldPosition()
-                        if into < spec.lock * FRAMES or a.lanes_rot == nil then a.lanes_rot, a.lanes_x, a.lanes_z = ent.Transform:GetRotation() * DEGREES, bx, bz end
-                        local lr = a.lanes_rot
+                        -- (its aim (statemem.rot) as its code turns it: the way it faces till frame `turn` (canturn); after, unseen,
+                        -- on towards its target half the way left a frame, `turn_max` degrees at most, never back; set at `lock` -
+                        -- its shadows set off that way, more turned than it shows: "เลิกเล็ง แต่ของจริงมันหันเยอะกว่า", the player
+                        -- 2026-11-02. TR_OLD_QUEENTURN: the way it faces at `lock`)
+                        local f_now = math.floor(into / FRAMES + .5)
+                        if a.lanes_f == nil or f_now < a.lanes_f then a.lanes_rot = nil end
+                        a.lanes_x, a.lanes_z = bx, bz
+                        if rawget(_G, "TR_OLD_QUEENTURN") or spec.turn == nil then
+                            if f_now < spec.lock or a.lanes_rot == nil then a.lanes_rot = ent.Transform:GetRotation() end
+                            a.lanes_f = f_now
+                        else
+                            if a.lanes_rot == nil or f_now <= spec.turn then
+                                a.lanes_rot, a.lanes_d, a.lanes_f = ent.Transform:GetRotation(), nil, math.min(f_now, spec.turn)
+                            end
+                            local tg = ent.replica ~= nil and ent.replica.combat ~= nil and ent.replica.combat:GetTarget() or nil
+                            while a.lanes_f < math.min(f_now, spec.lock) do
+                                a.lanes_f = a.lanes_f + 1
+                                if tg ~= nil and tg:IsValid() and a.lanes_d ~= 0 then
+                                    local tx, _, tz = tg.Transform:GetWorldPosition()
+                                    local want = math.deg(math.atan2(-(tz - bz), tx - bx))
+                                    local d = ((want - a.lanes_rot + 180) % 360 - 180) * .5
+                                    d = math.max(-spec.turn_max, math.min(spec.turn_max, d))
+                                    if a.lanes_d ~= nil then d = math.max(math.min(0, a.lanes_d), math.min(math.max(0, a.lanes_d), d)) end
+                                    a.lanes_rot, a.lanes_d = a.lanes_rot + d, d
+                                end
+                            end
+                            a.lanes_f = math.max(a.lanes_f, f_now)
+                        end
+                        local lr = a.lanes_rot * DEGREES
                         local c, s = math.cos(lr), math.sin(lr)
                         for _, ln in ipairs(spec.lanes) do
                             local sx0 = a.lanes_x + ln.ahead * c + ln.side * s
