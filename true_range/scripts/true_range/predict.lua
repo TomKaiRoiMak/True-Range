@@ -2278,7 +2278,7 @@ function Predict.Draw(ents, ranges, my_radius, me, skip)
             if a ~= nil and a.heading and not rawget(_G, "TR_OLD_STILLHEADING") then
                 if a.head_t == nil then
                     a.head_t = now
-                elseif not a.head_done and now - a.head_t >= 26 * FRAMES then
+                elseif not a.head_done and now - a.head_t >= ((rawget(_G, "TR_OLD_HEADAT26") or (a.move.sim ~= nil and a.move.sim.leg ~= nil)) and 27 or 14) * FRAMES then
                     a.head_done = true
                     local off = math.abs((ent.Transform:GetRotation() - a.heading + 180) % 360 - 180)
                     -- (its lane locked at frame 11 the way it walked: laid again the way it faces)
@@ -2371,6 +2371,17 @@ function Predict.Draw(ents, ranges, my_radius, me, skip)
                 end
                 local rot = ent.Transform:GetRotation() * DEGREES
                 if a.heading and (a.move.sim == nil or (a.move.sim.tell == nil and not (a.move.sim.leg ~= nil and a.legs_begun))) then rot = a.heading * DEGREES end
+                -- (testing, TR_TRACE_LASER: the Twins' / Eye's move picked and its heading, told as they change)
+                if rawget(_G, "TR_TRACE_LASER") and (ent.prefab == "twinofterror1" or ent.prefab == "twinofterror2" or ent.prefab == "eyeofterror") then
+                    local key = tostring(a.move.name) .. "|" .. tostring(a.heading) .. "|" .. tostring(a.locked ~= nil)
+                    if a.tr_key ~= key then
+                        a.tr_key = key
+                        local w = walk_heading[ent]
+                        print(string.format("[tr_movetrace] %.3f %s move=%s tell=%s heading=%s locked=%s rot=%.1f walk_seen=%s", now, ent.prefab, tostring(a.move.name),
+                            tostring(a.move.sim ~= nil and a.move.sim.tell), tostring(a.heading), tostring(a.locked ~= nil), ent.Transform:GetRotation(),
+                            w ~= nil and w.seen_t ~= nil and string.format("%.3f@%.1f", w.seen_t, w.seen_rot or 0) or "-"))
+                    end
+                end
                 -- (who it's after: a leap at its target lands on them)
                 local combat = ent.replica ~= nil and ent.replica.combat or nil
                 local tgt = combat ~= nil and combat:GetTarget() or nil
@@ -3897,6 +3908,7 @@ function Predict.DrawHazards(ents, my_radius, me)
         -- (nowhere yet - not put anywhere: passed over)
         if x == nil or z == nil then hz_def = nil end
         if hz_def ~= nil and SimMoves.Spent(ent, x, z) then
+            SimMoves.LaserTrace(ent, "spent")
             ST.n_quick = ST.n_quick + 1
         elseif hz_def ~= nil then
             -- (run offline: where it hits, seen from it)
@@ -3904,6 +3916,7 @@ function Predict.DrawHazards(ents, my_radius, me)
             -- (drawn just as last frame: kept so - nothing else gone through; SimMoves.QuickKeep)
             local kept = SimMoves.QuickKeep(ent, x, z, rot, px, pz, clock)
             if kept ~= nil then
+                SimMoves.LaserTrace(ent, "quickkeep")
                 Predict.haz_n = Predict.haz_n + 1
                 ST.n_quick = ST.n_quick + 1
                 danger = kept or danger
