@@ -880,7 +880,6 @@ local AGGRO = { bigshadowtentacle = 4, tentacle = 4, tentacle_pillar_arm = 3, ge
     -- (and the three red ones it throws out as it bursts - each bursting 3 round itself a moment on)
     fused_shadeling_quickfuse_bomb = 3 }
 local AGGRO_CANT = { "INLIMBO" }
-local aggro_tr = nil -- (testing: TR_TRACE_LASER's last told state of each twister's vacuum ring)
 -- (and only while it plays these, after you - a Pengull sliding at you strikes whoever it comes
 -- within 2.5 of (PENGUIN_ATTACK_DIST) and their body on its slide's first frame: nothing to warn of
 -- as it begins - the ring round it all the while it slides)
@@ -1415,19 +1414,6 @@ local function Start(player)
                     local nx, _, nz = e.Transform:GetWorldPosition()
                     for _, o in ipairs(GLOBAL.TheSim:FindEntities(nx, 0, nz, w.near[2])) do
                         if o.prefab ~= nil and o.prefab:find(w.near[1], 1, true) == 1 then on = true break end
-                    end
-                end
-                -- (testing, TR_TRACE_LASER: the twisters' vacuum ring on or off, as it changes - "[tr_aggrotrace]")
-                if GLOBAL.rawget(GLOBAL, "TR_TRACE_LASER") and (e.prefab == "twister" or e.prefab == "firetwister") then
-                    aggro_tr = aggro_tr or GLOBAL.setmetatable({}, { __mode = "k" })
-                    local an = "?"
-                    for _, a2 in ipairs({ "vacuum_antic_pre", "vacuum_antic_loop", "vacuum_pre", "vacuum_loop", "vacuum_pst", "idle", "atk", "walk_loop" }) do
-                        if e.AnimState:IsCurrentAnimation(a2) then an = a2 end
-                    end
-                    local key = tostring(on) .. an
-                    if aggro_tr[e] ~= key then
-                        aggro_tr[e] = key
-                        print(string.format("[tr_aggrotrace] %.3f %s on=%s anim=%s", now, e.prefab, tostring(on), an))
                     end
                 end
                 -- (and a while after - what it set off still to come: w.linger seconds)
