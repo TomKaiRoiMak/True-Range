@@ -419,6 +419,10 @@ end
 local Settings = GLOBAL.require("true_range/settings")
 Settings.Init(function(name) return GetModConfigData(name, true) end)
 local S = Settings.values
+-- (each kind of drawing's opacity, from the settings: true_range/lines)
+Lines.opacity, Rings.opacity = S, S
+-- (everything off for now - Ctrl + the settings key; not kept)
+local all_off, all_off_cleared = false, false
 
 -- (how far on you're shown from where the server has you, eased - each frame's drawing, below)
 local lead = { x = 0, z = 0 }
@@ -1234,6 +1238,18 @@ local function Start(player)
         if player ~= GLOBAL.ThePlayer or not player:IsValid() then
             return
         end
+        -- (all turned off - Ctrl + the settings key: nothing worked out, what was drawn taken away once)
+        if all_off then
+            if not all_off_cleared then
+                all_off_cleared = true
+                Rings.Begin()
+                Rings.Sweep()
+                Lines.Begin()
+                Lines.End()
+            end
+            return
+        end
+        all_off_cleared = false
         local c_start = Mark()
         local wall = GLOBAL.os.clock()  -- (Windows: the wall clock, to the ms)
         local gap = perf.last_wall ~= nil and (wall - perf.last_wall) or 0
@@ -1673,6 +1689,15 @@ TheInput:AddKeyHandler(function(key, down)
         return
     end
     if key == Settings.KeyCode("settings_key") then
+        -- (with Ctrl: everything off, or on again, at once - the window not opened)
+        if TheInput:IsKeyDown(GLOBAL.KEY_CTRL) then
+            all_off = not all_off
+            local player = GLOBAL.ThePlayer
+            if player ~= nil and player.components.talker ~= nil then
+                player.components.talker:Say(all_off and "True Range: off" or "True Range: on")
+            end
+            return
+        end
         frontend:PushScreen(GLOBAL.require("true_range/settingsscreen")())
     end
     -- (no show-all key any more - a key too many: show_all stays off)

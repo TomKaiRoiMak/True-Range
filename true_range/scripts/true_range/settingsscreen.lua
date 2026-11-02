@@ -9,7 +9,8 @@ local TEMPLATES = require "widgets/redux/templates"
 
 local Settings = require "true_range/settings"
 
-local ROW_H = 44
+-- (rows packed closer - 13 of them, the window must fit a small screen)
+local ROW_H = 38
 local WIDTH, LABEL_W, SPINNER_W = 560, 250, 220
 
 local SettingsScreen = Class(Screen, function(self)
@@ -49,7 +50,7 @@ local SettingsScreen = Class(Screen, function(self)
     self.rows = {}
     local top = height / 2 - 60
     for i, o in ipairs(Settings.OPTIONS) do
-        local row = root:AddChild(TEMPLATES.LabelSpinner(o.label, o.choices, LABEL_W, SPINNER_W, 40, 10, CHATFONT, 24, nil,
+        local row = root:AddChild(TEMPLATES.LabelSpinner(o.label, o.choices, LABEL_W, SPINNER_W, 34, 10, CHATFONT, 24, nil,
             function(data) Settings.Set(o.name, data) end))
         row:SetPosition(0, top - (i - 1) * ROW_H)
         row.spinner:SetSelected(Settings.Get(o.name))

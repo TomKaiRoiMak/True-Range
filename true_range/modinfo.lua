@@ -12,7 +12,7 @@ Green: your reach (by your weapon). Yellow outline: where a monster starts
 attacking you. Body ring: orange in danger, red when hit.
 Friends: a body ring each, and their reach if you turn it on.
 
-O: settings window, in the game.
+O: settings window, in the game. Ctrl+O: everything off / on.
 Players get it automatically when they join.
 ]]
 author = "TomKaiRoiMak"
@@ -61,6 +61,10 @@ local keys = {
     { description = "Page Up", data = "KEY_PAGEUP" },
     { description = "Page Down", data = "KEY_PAGEDOWN" },
 }
+
+-- (an opacity: 10% to 100%, 10% a step)
+local percent = {}
+for i = 1, 10 do percent[i] = { description = (i * 10) .. "%", data = i / 10 } end
 
 configuration_options = {
     {
@@ -126,9 +130,41 @@ configuration_options = {
     {
         name = "settings_key",
         label = "Settings window key",
-        hover = "Opens a window to change these settings in the game (kept on your computer).",
+        hover = "Opens a window to change these settings in the game (kept on your computer). Ctrl + this key: everything off, or on again, at once.",
         options = keys,
         default = "KEY_O",
+        client = true,
+    },
+    {
+        name = "op_area",
+        label = "Attacks' opacity",
+        hover = "How solid the inside of monsters' attacks is drawn.",
+        options = percent,
+        default = 1,
+        client = true,
+    },
+    {
+        name = "op_edge",
+        label = "Outlines' opacity",
+        hover = "How solid the outlines of monsters' attacks are drawn.",
+        options = percent,
+        default = 1,
+        client = true,
+    },
+    {
+        name = "op_you",
+        label = "Your rings' opacity",
+        hover = "How solid your body ring and your own reach are drawn.",
+        options = percent,
+        default = 1,
+        client = true,
+    },
+    {
+        name = "op_others",
+        label = "Other rings' opacity",
+        hover = "How solid monsters' and friends' rings, Abigail's reach and the yellow ring are drawn.",
+        options = percent,
+        default = 1,
         client = true,
     },
     {

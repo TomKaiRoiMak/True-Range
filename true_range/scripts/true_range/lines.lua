@@ -102,6 +102,24 @@ local STYLES = {
     attack_start = { colour = { 1, .85, .1, .4 }, width = .06, sort = 0 },
 }
 
+-- Each style's opacity setting (true_range/settings: op_*, .1 to 1): the inside of attacks, their
+-- outlines, your own rings, everyone else's. Lines.opacity: the settings' values (modmain gives it;
+-- nil - all as they are)
+local OPACITY = {}
+for _, s in ipairs({ "edge", "edge_light", "edge_zone", "edge_seam", "st_edge", "st_edge_zone", "st_edge_seam",
+    "shape_flash", "flash", "glow_1", "glow_2", "glow_3", "glow_4", "soon", "wave",
+    "pound_ready", "pound_wave", "pound_charging", "shape" }) do OPACITY[s] = "op_edge" end
+for _, s in ipairs({ "body", "body_danger", "body_hit", "own" }) do OPACITY[s] = "op_you" end
+for _, s in ipairs({ "monster_body", "friend_own", "abigail", "abigail_cmd", "attack_start" }) do OPACITY[s] = "op_others" end
+Lines.opacity = nil
+-- a style's opacity now: its own times its setting's
+local function Alpha(style, a)
+    local o = Lines.opacity
+    if o == nil then return a end
+    return a * (o[OPACITY[style] or "op_area"] or 1)
+end
+Lines.Alpha = Alpha
+
 -- (pieces kept by kind, one heap whatever their sort order - nothing laid over anything else now
 -- (true_range/simmoves), so which the game draws on top doesn't matter)
 local pools = { square = {}, disc = {}, wedge = {}, tri = {} }
@@ -174,9 +192,10 @@ local function Take(anim, style)
     -- (the colour looked at every time: a style's opacity can pulse - but told the game only when
     -- it changed: hundreds of pieces, most the same as the frame before)
     local c = st.colour
-    if p._r ~= c[1] or p._g ~= c[2] or p._b ~= c[3] or p._a ~= c[4] then
-        p._r, p._g, p._b, p._a = c[1], c[2], c[3], c[4]
-        p.AnimState:SetMultColour(c[1], c[2], c[3], c[4])
+    local a = Alpha(style, c[4])
+    if p._r ~= c[1] or p._g ~= c[2] or p._b ~= c[3] or p._a ~= a then
+        p._r, p._g, p._b, p._a = c[1], c[2], c[3], a
+        p.AnimState:SetMultColour(c[1], c[2], c[3], a)
     end
     -- (the sort order told the game only when it changed - the style's own can, Lines.TestEdge)
     if p._sort ~= (st.sort or 4) then
@@ -568,7 +587,7 @@ function Lines.Shape(name, x, z, deg, scale, style, flip)
     end
     local st = STYLES[style] or STYLES.edge
     local c = st.colour
-    p.AnimState:SetMultColour(c[1], c[2], c[3], c[4])
+    p.AnimState:SetMultColour(c[1], c[2], c[3], Alpha(style, c[4]))
     if p.style ~= style or p._layer ~= layer then
         p.style = style
         p.AnimState:SetSortOrder(st.sort or 1)
@@ -649,9 +668,10 @@ Lines.groups_made, Lines.groups_revived = 0, 0  -- (testing: modmain's frame tim
 local function GroupStyle(p, style)
     local st = STYLES[style] or STYLES.edge
     local c = st.colour
-    if p._r ~= c[1] or p._g ~= c[2] or p._b ~= c[3] or p._a ~= c[4] then
-        p._r, p._g, p._b, p._a = c[1], c[2], c[3], c[4]
-        p.AnimState:SetMultColour(c[1], c[2], c[3], c[4])
+    local a = Alpha(style, c[4])
+    if p._r ~= c[1] or p._g ~= c[2] or p._b ~= c[3] or p._a ~= a then
+        p._r, p._g, p._b, p._a = c[1], c[2], c[3], a
+        p.AnimState:SetMultColour(c[1], c[2], c[3], a)
     end
     if p._sort ~= (st.sort or 4) then
         p.style, p._sort = style, st.sort or 4

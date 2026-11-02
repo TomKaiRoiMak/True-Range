@@ -27,12 +27,23 @@ local COLOURS = {
 local SORT = { attack = 1, area = 2, hit = 3, own_start = 3, own = 4, friend_own = 4, body = 5, body_danger = 5, body_hit = 5 }
 -- how much of the colour is added on top of the texture
 local ADD = .55
+-- each kind's opacity setting (true_range/settings: op_*); Rings.opacity: the settings' values
+-- (modmain gives it)
+local OPACITY = { own = "op_you", own_start = "op_you", body = "op_you", body_danger = "op_you", body_hit = "op_you",
+    friend_own = "op_others", attack = "op_others" }
+Rings.opacity = nil
+local function Alpha(kind, a)
+    local o = Rings.opacity
+    if o == nil then return a end
+    return a * (o[OPACITY[kind] or "op_area"] or 1)
+end
 
 -- (the ring's texture is light blue: multiplying alone turns colours grey, so the colour is
 -- added on top too)
 local function Colour(inst, kind)
     local c = COLOURS[kind] or COLOURS.hit
-    inst.AnimState:SetMultColour(c[1], c[2], c[3], c[4])
+    inst._a = Alpha(kind, c[4])
+    inst.AnimState:SetMultColour(c[1], c[2], c[3], inst._a)
     inst.AnimState:SetAddColour(c[1] * ADD, c[2] * ADD, c[3] * ADD, 0)
     inst.AnimState:SetSortOrder(SORT[kind] or 3)
 end
@@ -79,6 +90,8 @@ function Rings.Show(key, kind, owner, radius, offset)
     elseif r.kind ~= kind then
         r.kind = kind
         Colour(r.inst, kind)
+    elseif r.inst._a ~= Alpha(kind, (COLOURS[kind] or COLOURS.hit)[4]) then
+        Colour(r.inst, kind)  -- (its opacity setting changed)
     end
     r.owner = owner
     r.offset = offset or 0
