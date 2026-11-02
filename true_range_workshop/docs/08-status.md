@@ -8,6 +8,7 @@
 
 | วัด | ค่า | เมื่อ |
 |---|---|---|
+| replay เต็ม หลัง Queen (6635d99, 4c1e7d4) + ขอบไม่ขาด (125515e) | UM host 17 / 59,548 · false 1,347; client 26 / 59,510 · false 2,089; TE host 15 / 25,717 · 421; client 11 / 25,709 · 594 | bench 1604 / 0556 replay 2026-11-02 14:10 |
 | replay เต็ม หลังงาน 2026-11-02 (ท่าพุ่ง Eye/Twins, เลเซอร์, Klaus, Bee Queen, twister) | UM host 17 / 59,546 · false 1,362; client 26 / 59,507 · false 2,107; TE host 15 / 25,717 · 421; client 11 / 25,709 · 594 | bench 1604 / 0556 replay 2026-11-02 |
 | replay -HazOnly หลังกับดัก walrus / มือ usher / turtle / มะพร้าว (8d3cc15) | UM host 17 / 59,547 · false 1,396; client 29 / 59,507 · false 2,138; TE host 15 / 25,717 · 421, client 11 / 25,709 · 594 - ไม่มีอะไรถอย | bench 1604 / 0556 replay 2026-11-02 |
 | bench ทุกมอน ใหม่ (โค้ดหลัง 5d745e1) + replay | host missed 17 / 59,547 · false 1,411; client 29 / 59,507 · false 2,153 (things host 687 / client 1,424 - client ราว 2 เท่าเหมือน 0433; worm_boss 97 / 250, groundpoundring_fx 87 / 225) | bench 2026-11-01_1604 |
