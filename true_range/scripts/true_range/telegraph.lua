@@ -381,20 +381,50 @@ local function RingPieces(r)
     if not rawget(_G, "TR_OLD_RINGSEG") then n = math.max(12, math.min(n, math.ceil(2 * math.pi * r / .75))) end
     return n
 end
+-- Rings that aren't attacks (bodies, reaches, the yellow ring, Abigail's) drawn dotted if wanted - Telegraph.settings
+-- (modmain's: ring_dash, the gap from one dot to the next, 0 solid); attacks' outlines always solid
+local DASHED = { body = true, body_danger = true, body_hit = true, own = true, monster_body = true, friend_own = true,
+    abigail = true, abigail_cmd = true, attack_start = true }
+Telegraph.settings = nil
+local function DashOf(style)
+    local o = Telegraph.settings
+    local d = o ~= nil and DASHED[style] and o.ring_dash or 0
+    return type(d) == "number" and d > 0 and d or 0
+end
+-- the dots round a ring of r: each (from angle, to angle) to fn - each dot 40% of the way to the next
+local function Dots(r, dash, fn)
+    local n = math.max(6, math.floor(2 * math.pi * r / dash + .5))
+    local half = math.pi / n * .4
+    for i = 0, n - 1 do
+        local a = 2 * math.pi * i / n
+        fn(a - half, a + half)
+    end
+end
 function Telegraph.Circle(x, z, r, style, slot)
+    local dash = DashOf(style)
     if slot == nil or Lines.GroupFor == nil then
         -- (laid piece by piece: the same pieces as kept as a group - 60 still here while the group's were cut to its size,
         -- tests/body_ring.lua's 4 failing, 2026-10-25)
+        if dash > 0 then
+            Dots(r, dash, function(a1, a2) Arc(x, z, r, a1, a2, style, 1) end)
+            return
+        end
         local n = RingPieces(r)
         Arc(x, z, r, 0, 2 * math.pi, style, n)
         return
     end
     local s = ring_slot[slot]
     if s == nil then s = {} ring_slot[slot] = s end
-    local key = "ring|" .. math.floor(r * 100 + .5)
+    local key = "ring|" .. math.floor(r * 100 + .5) .. "|" .. dash
     local g = Lines.GroupFor(s, key)
     if g.sig ~= key or g.ring_style ~= style or g.ring_ver ~= Lines.version then
         Lines.GroupClear(g)
+        if dash > 0 then
+            Dots(r, dash, function(a1, a2)
+                local rec = Lines.SegRec(r * math.cos(a1), -r * math.sin(a1), r * math.cos(a2), -r * math.sin(a2), style)
+                if rec ~= nil then Lines.GroupSeg(g, rec, style, "e") end
+            end)
+        else
         -- (as many pieces as its size wants: every ring 60, a crowd's body rings were thousands of pieces for the
         -- game to draw - 110-130 frames a second for 144, a player's test (Render.bodies off: 144), 2026-10-23)
         local n = RingPieces(r)
@@ -405,6 +435,7 @@ function Telegraph.Circle(x, z, r, style, slot)
             local rec = Lines.SegRec(px, pz, qx, qz, style)
             if rec ~= nil then Lines.GroupSeg(g, rec, style, "e") end
             px, pz = qx, qz
+        end
         end
         Lines.GroupDone(g)
         g.sig, g.ring_style, g.ring_ver = key, style, Lines.version

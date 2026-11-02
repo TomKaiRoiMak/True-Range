@@ -61,6 +61,10 @@ Settings.OPTIONS = {
       hover = "How solid your body ring and your own reach are drawn." },
     { name = "op_others", col = 2, label = "Other rings' opacity", default = 1, choices = PERCENT,
       hover = "How solid monsters' and friends' rings, Abigail's reach and the yellow ring are drawn." },
+    { name = "ring_dash", col = 2, label = "Rings' line", default = 0,
+      choices = { { text = "Solid", data = 0 }, { text = "Dots: very dense", data = .25 }, { text = "Dots: dense", data = .4 },
+          { text = "Dots: medium", data = .6 }, { text = "Dots: sparse", data = .9 }, { text = "Dots: very sparse", data = 1.3 } },
+      hover = "Rings that aren't attacks (your body and reach, friends', monsters' bodies, the yellow ring, Abigail's) drawn solid or dotted - and how close the dots." },
     { name = "settings_key", col = 2, label = "This window's key", default = "KEY_O", choices = KEYS,
       hover = "Opens this window. Ctrl + this key: everything off, or on again, at once." },
 }

@@ -168,6 +168,21 @@ configuration_options = {
         client = true,
     },
     {
+        name = "ring_dash",
+        label = "Rings' line",
+        hover = "Rings that aren't attacks (your body and reach, friends', monsters' bodies, the yellow ring, Abigail's) drawn solid or dotted - and how close the dots.",
+        options = {
+            { description = "Solid", data = 0 },
+            { description = "Dots: very dense", data = .25 },
+            { description = "Dots: dense", data = .4 },
+            { description = "Dots: medium", data = .6 },
+            { description = "Dots: sparse", data = .9 },
+            { description = "Dots: very sparse", data = 1.3 },
+        },
+        default = 0,
+        client = true,
+    },
+    {
         name = "body",
         label = "Your body ring",
         hover = "A small ring around you: the part of you attacks have to reach. Orange while you stand where an attack reaches, red when you're hit.",

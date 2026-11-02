@@ -599,8 +599,19 @@ AddPlayerPostInit(function(p)
                 S.changed = S.changed + 1
                 print(string.format("[tr_lag] settings shown (opacity flipped %d: %s)", n, tostring(S.values.op_you)))
             end
+            -- ("dash": flip 1 at full opacity, solid; flip 2 the rings dotted, "medium" - opacity back to 100% too)
+            if what:match("^opdash") then
+                for _, k in ipairs({ "op_area", "op_edge", "op_you", "op_others" }) do S.values[k] = .2 end
+                S.values.ring_dash = 0
+            end
             Flip(1)
-            p:DoTaskInTime(4, function() Flip(2) end)
+            p:DoTaskInTime(4, function()
+                if what:match("^opdash") then
+                    for _, k in ipairs({ "op_area", "op_edge", "op_you", "op_others" }) do S.values[k] = .2 end
+                    S.values.ring_dash = .6
+                end
+                Flip(2)
+            end)
             return
         end
         local screen = G.require("true_range/settingsscreen")()

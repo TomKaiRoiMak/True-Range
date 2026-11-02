@@ -4,6 +4,9 @@ New
 - Settings: opacity for each part (attacks, outlines, your rings, other rings), 0% to 100% in 10% steps
 - Ctrl + the settings key (O): turn everything off or on at once
 - The cooldown glow round bosses taken out - less on screen
+- Rings that aren't attacks (body, reach, friends, monsters' bodies, yellow ring, Abigail) can be drawn dotted, with how close the dots
+- Your body ring stays white - no more red flash on a hit or orange when an attack reaches you
+- "In a fight" stays on 10 s after the last sign of a fight, like the game's fight music - no more blinking off (Eye of Terror)
 - Now named True Range+, with a new icon
 - The bosses from the October 23 update: Hound Batilisk, Rock Master, Shrouded Queen, Grim Harrier, Umbral Abomination, Blighted Great Depths Worm (and their Blighted forms)
 - Uncompromising Mode: Shadow Wixie, mindweaver, fuelseeker, haunt, Moon Tentacle mines, lightning strikes, merm counter combo, lavae's burning slime

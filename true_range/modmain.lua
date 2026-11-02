@@ -420,7 +420,7 @@ local Settings = GLOBAL.require("true_range/settings")
 Settings.Init(function(name) return GetModConfigData(name, true) end)
 local S = Settings.values
 -- (each kind of drawing's opacity, from the settings: true_range/lines)
-Lines.opacity, Rings.opacity = S, S
+Lines.opacity, Rings.opacity, Telegraph.settings = S, S, S
 -- (everything off for now - Ctrl + the settings key; not kept)
 local all_off, all_off_cleared = false, false
 -- (a setting changed in the window: shapes kept from frame to frame (rings, groups) laid again - an
@@ -429,8 +429,6 @@ local settings_seen = Settings.changed
 
 -- (how far on you're shown from where the server has you, eased - each frame's drawing, below)
 local lead = { x = 0, z = 0 }
--- how long your body ring stays red after a hit
-local HIT_FLASH = .45
 -- a boss whose next attack is known warns this much before its target is in its reach
 local SOON_MARGIN = 1.5
 
@@ -623,20 +621,28 @@ local function Pick(player)
     return list
 end
 
+-- (held on 10 s after the last sign of one, as the game's own fight music is - the Eye of Terror flying off or
+-- changing whom it's after went out of the fight for a moment, the reach ring blinking out; a hit on you starts it too)
+local FIGHT_HOLD = 10
+local fight_until = -math.huge
 local function InFight(player, list)
+    local now = GLOBAL.GetStaticTime()
+    local on = false
     local combat = player.replica.combat
     if combat ~= nil and combat:GetTarget() ~= nil then
-        return true
-    end
-    if player:HasTag("attack") or (player.sg ~= nil and player.sg:HasStateTag("attack")) then
-        return true
-    end
-    for _, ent in ipairs(list) do
-        if Hunting(ent, player) then
-            return true
+        on = true
+    elseif player:HasTag("attack") or (player.sg ~= nil and player.sg:HasStateTag("attack")) then
+        on = true
+    else
+        for _, ent in ipairs(list) do
+            if Hunting(ent, player) then
+                on = true
+                break
+            end
         end
     end
-    return false
+    if on then fight_until = now + FIGHT_HOLD end
+    return now < fight_until
 end
 
 -- (other players near: their body rings, and their reach if wanted - Friends; S.friend_own as S.own, for
@@ -1109,6 +1115,7 @@ local function Start(player)
     player:ListenForEvent("healthdelta", function(_, data)
         if data ~= nil and not data.overtime and (data.newpercent or 1) < (data.oldpercent or 0) then
             last_hit = GLOBAL.GetStaticTime()
+            fight_until = last_hit + FIGHT_HOLD
         end
     end)
     -- struck by a thing that strikes each once among its lot (junk falling): the rest of that lot
@@ -1587,7 +1594,9 @@ local function Start(player)
         -- your body ring: red just after a hit, orange while you stand where something's attack
         -- reaches (or one winding up), white otherwise
         if S.body and (Render.lines or Render.bodies) then
-            local style = (now - last_hit < HIT_FLASH and "body_hit") or ((danger or winding) and "body_danger") or "body"
+            -- (always white: no red flash on a hit, no orange while something's attack reaches you - "too bright, it
+            -- catches the eye", the owner 2026-11-02)
+            local style = "body"
             Telegraph.Circle(mx, mz, my_radius, style, player)
         end
         -- (and each other player's - white)
