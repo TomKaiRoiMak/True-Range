@@ -1052,7 +1052,7 @@ local DARTS = { blowdart_walrus = { len = 22, width = 1.5 }, spider_web_spit = {
     -- tests/replay*.lua: 6 "missed" in its death, 3-5 off, the bench 2026-10-21; 15 at 25 a second and some)
     -- (only a short way ahead of it - 15 on was a lane over the screen from each guard up in the air, the player 2026-11-02:
     -- "ไม่ต้องวาดเลนพุ่งมาหาผู้เล่น บังจอเกิน". 25 a second: 4 is a sixth of a second ahead. TR_OLD_STINGLANE: 15)
-    um_beestinger_projectile = { len = 4, width = 1.414, by = "um_beeguard_shooter", strikes_until = 30 },
+    um_beestinger_projectile = { len = 4, width = 1.414, ahead = true, by = "um_beeguard_shooter", strikes_until = 30 },
     -- (Uncompromising Mode's Eye of Terror's mini eye flung at you: straight on at 20 a second (postinit SGeyeofterror
     -- ShootEye), never coming down (its ground check commented out), gone in 3 s - 60 on; striking whoever its 1.5
     -- capsule meets, and your body (eyeofterror_extras.lua fneye_proj, oncollide): drawn as a ring once it stopped, 25
@@ -1083,7 +1083,7 @@ local DARTS = { blowdart_walrus = { len = 22, width = 1.5 }, spider_web_spit = {
     lizardman_spit = { len = 24, width = 1.5, face = true, by = "lizardman", strikes_until = 30 } }
 if GLOBAL.rawget(GLOBAL, "TR_OLD_STINGLANE") ~= nil then DARTS.um_beestinger_projectile.len = 15 end
 for prefab, d in pairs(DARTS) do
-    AddPrefabPostInit(prefab, function(inst) darts[#darts + 1] = { ent = inst, len = d.len, width = d.width, face = d.face } end)
+    AddPrefabPostInit(prefab, function(inst) darts[#darts + 1] = { ent = inst, len = d.len, width = d.width, face = d.face, ahead = d.ahead } end)
     -- (and their lane before they're shot, from the one that shoots them - true_range/simmoves DrawShot)
     GLOBAL.require("true_range/simmoves").shots[prefab] = { len = d.len, width = d.width }
 end
@@ -1536,6 +1536,9 @@ local function Start(player)
                 wx, wz = math.cos(r), -math.sin(r)
                 ex, ez = d.x + wx * d.len, d.z + wz * d.len
             end
+            -- (or len on from where it is now, not from where it was first seen (d.ahead): the stinger's short lane - from its
+            -- first spot, 4 on, gone before it got to you: 25 more struck undrawn in a replay of bench 1604)
+            if ex ~= nil and d.ahead and not GLOBAL.rawget(GLOBAL, "TR_OLD_STINGLANE") then ex, ez = dx + wx * d.len, dz + wz * d.len end
             if ex ~= nil then
                 local left = (ex - dx) * wx + (ez - dz) * wz
                 if left > 0 then

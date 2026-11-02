@@ -766,7 +766,7 @@ do
     local src = mf and mf:read("*a") or ""
     if mf then mf:close() end
     for name, len, width, rest in (src:match("local DARTS = (%b{})") or ""):gmatch("([%w_]+) = { len = ([%d%.]+), width = ([%d%.]+)([^}]*)}") do
-        DARTS[name] = { len = tonumber(len), width = tonumber(width), face = rest:find("face = true", 1, true) ~= nil }
+        DARTS[name] = { len = tonumber(len), width = tonumber(width), face = rest:find("face = true", 1, true) ~= nil, ahead = rest:find("ahead = true", 1, true) ~= nil }
     end
 end
 -- (whether you, at yx, yz, were in the lane of one of that kind drawn at t; and how far off its middle the nearest was)
@@ -791,6 +791,8 @@ local function DartCovers(prefab, t, yx, yz)
             end
             if cur ~= nil and wx ~= nil then
                 local ex, ez = first.x + wx * dd.len, first.z + wz * dd.len
+                -- (as modmain: len on from where it is now (ahead))
+                if dd.ahead then ex, ez = cur.x + wx * dd.len, cur.z + wz * dd.len end
                 local left = (ex - cur.x) * wx + (ez - cur.z) * wz
                 if left > 0 then
                     local ax, az = ex - wx * left, ez - wz * left
