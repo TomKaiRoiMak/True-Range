@@ -16,7 +16,7 @@ O: settings window, in the game. Ctrl+O: everything off / on.
 Players get it automatically when they join.
 ]]
 author = "TomKaiRoiMak"
-version = "1.1.7"
+version = "1.1.8"
 icon_atlas = "modicon.xml"
 icon = "modicon.tex"
 
