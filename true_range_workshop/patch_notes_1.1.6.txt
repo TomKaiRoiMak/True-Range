@@ -1,130 +1,28 @@
 1.1.6
 
-- Lighter body rings and yellow rings: each drawn with as many pieces as its size needs (12 for a small monster), not 60 - with many monsters on screen, these were a big part of what the game had to draw (thanks to a player's testing)
-- Now named True Range+ in the game, with its new icon
-- Fixed: some pieces of the drawn shapes were missing in the last version - parts of filled areas and the corners of outlines (a line of code lost in 1.1.5)
-- Rings drawn without a group (some outlines round an area) use as many pieces as their size needs too, like the body rings
-- Klaus' quick swipe right after his bite is now drawn ahead - on a server (caves, or joining a friend) it came with no warning at all, about 1 in 10 of his blows
-- Celestial Champion's tri-beam: the side beams were drawn turned in about 3 degrees (0.7 off at their far end) - fixed, all three now within a degree of where the lasers come down (the Clockwork Bishop's charge steadier too)
-- Celestial Champion's tri-beam (and other moves that keep aiming after they lock - Klaus' chomp, leaps): on a server (caves, or a friend's), aimed where the server has you, not where your screen shows you - the side beams were drawn a little off you
-- Uncompromising Mode's Deerclops: its swipe right after being hit turns with you, as the game's own does - it was drawn the way it faced as it began, its far ice spikes coming down outside what was drawn (up to 40 degrees off)
-- Uncompromising Mode's strong Deerclops: its uppercut combo's second blow laid from itself as it dashes on, not past you
-- Moon Spider's spikes: drawn out to where the furthest of them can come up (about 1 in 10 came up outside what was drawn)
-- Ancient Fuelweaver's spike spiral: drawn round the atrium gate, where the game sets it out - it was drawn round the Fuelweaver, wherever in the arena it stood
-- The new bosses from the game's October 23 update: Hound Batilisk and its Blighted form (swoop, and the leap onto your head), Rock Master and its Blighted form (claw, snip, dash - each of the Blighted one's dashes one after another), Shrouded Queen (her swipe of shadows, her vines, the shadow missiles she throws back at whoever strikes her, the spikes rising in her arena), Grim Harrier (pounce), Umbral Abomination (punch, teleport - timed to when it comes up, however long it stays under - optic blast, drawn round it as it chases you down, and the Shadow Thrall mouths, horns and hands it calls up), the Blighted Great Depths Worm (its spiked segments and holes, as the worm's) - and the Rock Lobster's and Batilisk's new moves
-- Lag Compensation on: charges and swipes that lock onto you as they start (the Ancient Guardian's charge, Bearger's swipes, the Eye of Terror's charge and 38 more) now aim where the server has you, as other moves already did - no more drawn after you, then snapping back as the charge sets off
-- On a server (caves, or joining a friend): fast things that strike round themselves as they go (the Shrouded Queen's vines and shadow missiles, ghosts) are drawn where they really are - your game shows them a moment behind (about 0.1 s): her vines struck you before ever being drawn under you
-- Thrown things (the Ink Blights' balls, fireballs, goo, the Sea Weed's seeds, ink and more): where they'll come down no longer slides to and fro as they fly - drawn where all its guesses average, not the newest one
-- Eye of Terror and the Twins (Uncompromising Mode): a charge begun while walking goes the way it was walking - it was drawn at you for its first third of a second, then flipped round the other way
-- The Twins' and the Eye of Terror's charge from a short walk: drawn the way it then charges off, not at you - a walk of a few frames was missed half the time
-- Uncompromising Mode's Retinazer (the laser twin), its mouth's lasers 3 to 5 in a row: each drawn the way it faces as it fires - only the first was aimed, the rest drawn that same way as you went round it
-- Uncompromising Mode's Eye of Terror's mini eye shot: drawn in front of it as it shoots (the mini eye strikes only there, 2 to 4.5 ahead) - standing close, you were struck before it was ever seen; and on a server, the mini eyes in flight are drawn where they really are
-- Shadow Thrall mouths and horns called up by the Umbral Abomination: the mouth's first bite out of its portal is drawn; the horns' leap is drawn the way they face as they leap (they turn to you only so far), not always at you
-- Shadow Thrall wings called up by the Umbral Abomination: each of the shots it throws one by one drawn as its own - after one struck you, the next ones' rings went faint as if spent
-- More monsters than "Most monsters drawn": those striking right now are kept first - in a swarm of the Eye of Terror's mini eyes, one biting you could be left out for the nearest 16; and a boss before its own swarm - Moonmaw, further off than its lavae, was left out and its spinning ring of lavae struck undrawn
-- Klaus' blue deer: its ice circle drawn as big as it really is right now, growing to its full size (outlined) - it was drawn smaller, shrinking, while the real one froze you
-- On a server: the deer's spells drawn where the server has you as it casts, not where your screen shows you
-- On a server: a monster striking as it runs (Moonmaw's lavae, snapper turtles, fruit bats...) drawn where it really is, not a moment behind
-- Filled circles (Klaus' deer's ice circle, Uncompromising Mode's fireballs, arenas): drawn as big as they are - a circle could be drawn up to a quarter smaller, the size of one drawn before it
-- Uncompromising Mode's lavae: the burning slime one leaves as it dies is drawn (4 round it) - it blows up a few seconds later, setting alight all round it, with nothing drawn
-- Uncompromising Mode's Magma Hound and Pepper Dragon: their fire breath stays drawn a moment after it ends - each fireball sets alight all ahead of them up to half a second later, after the breath was over
-- Uncompromising Mode's Rock Lobster: its uppercut straight out of walking is drawn (it was drawn only after its other attack)
-- The Umbral Abomination's optic blast: its fall at the end drawn round it where it comes down, after chasing you as long as it likes - it was drawn where a set chase would have ended, up to 4 off
-- The Celestial Champion's roll: the end of a roll stays drawn as it stops - it strikes as it stops, its lane gone a frame before
-- The Umbral Abomination's optic blast: drawn round it as it chases you (its beam, wider once it widens), from where it comes up after teleporting onto you
-- The Blighted Rock Master's dashes: its last dash of a chain drawn stopping where it stops - it was drawn sliding on and snipping far ahead, as if it dashed again
-- The Great Depths Worm's mounds: the ring round each is drawn only as its head comes up out of one or goes down into it (when it swallows) - it was drawn round every mound all the while, outside the spiked segments that really strike
-- On a server: Moonmaw's lavae no longer drawn running on past where they stop to stab, then jumping back
-- Thrown things (the Ink Blights' balls and more): where they come down drawn still - it crept on a hair each frame
-- On a server: the Umbral Abomination teleporting onto you no longer flicks its shape out past where it comes up and back
-- The Umbral Abomination's teleport: drawn where it is under the ground as it comes after you, and round it as it comes up - it was drawn on far past where it came up
-- A boss whose move is nearly ready: its warning glow lights up and stays lit - it pulsed twice, going out a frame between, a ring blinking round it (the Umbral Abomination and others)
-- Thrown things (the Ink Blights' balls and more): where they come down is drawn once it's sure - its first guesses, up to 3 off, were drawn and then jumped over; and held there as it lands, not slid over as it strikes
-- A boss whose move is nearly ready: its warning glow stays lit until the move begins - it went out a frame or two just before, a ring blinking round it (the Umbral Abomination and others)
-- Thrown things lobbed high (the Ink Blights' balls): no ring drawn round them up in the air, blinking and creeping along under them as they flew - only where they come down
-- Thrown things (the Ink Blights' balls and more): where they came down drawn still once they lie there - it jumped over a little two frames after they touched down
-- A boss whose move is nearly ready: its glow no longer goes out a frame before the move's shape comes up
-- On a server: the Umbral Abomination teleporting for its optic blast no longer drawn a frame past where it comes up
-- A boss whose move is nearly ready: its glow stays lit as the server's word moves it from one cooldown to the next - it went out and faded in again (the Umbral Abomination)
-- Thrown things (the Ink Blights' balls and more): where they come down drawn once its first guesses have settled (a long throw a moment later, a short one as before) - they were drawn early, then stepped over as the guesses came right
-- The Umbral Abomination's optic blast: as it winds up, drawn round you (it comes up on you) - it was drawn out ahead of it as if it ran there; its beam drawn round the beam itself as it chases you, where it is by now - it was drawn round the Abomination
-- The Great Depths Worm: no ring drawn round each new dirt mound as it comes up - that pound does no damage
-- Enraged Klaus' leaping bite: drawn where it really comes down - after you, it leaps about half as far as its full leap (its walk slowing it), and the bite was drawn 3-4 further on, "it says I'm hit, I'm not". Learned from its first few bites each fight
-- Bearger's butt slam: drawn whichever way it turns - turning right (butt_pre_R, half its slams) it wasn't drawn at all
-- The Shadow Runner's long pounce at you from afar: drawn - only its short one was
-- Moonmaw's lava pups: their stab drawn steady as they glide to a stop - it jumped about a unit past them and back as they braked (in a player's game, not the host's)
-- Spat's phlegm and other low, quick throws: drawn round them as they fly in a player's game - hidden until they landed, so never seen before they struck
-- In a player's game (not the host's): a move done twice running (the Shadow Rocky's dashes, Oculets' and mini eyes' bites) drawn from where the second one really began - it was drawn from where the first began, up to 17 off
-- The Umbral Abomination coming up from a teleport: its whole ring drawn as it comes up - it widens as it strikes, and in a player's game the wider ring came up a moment after the blow
-- The W.A.R.B.O.T.'s missiles in a player's game: drawn where they are by now as they skim in low - drawn where they were a moment ago, they struck before reaching you on screen
-- The Umbral Abomination's optic blast: no big shape flashed for a frame as it begins - drawn its own way from the start
-- The Umbral Abomination's wide beam: drawn wide by the beam itself - in a player's game it was sometimes drawn narrow, striking outside it
-- The Umbral Abomination going under the ground: drawn as a ring round it - it was drawn as a long shape across the ground, and the dig itself does no harm
-- Thrown things lobbed high (the Moon Tentacle's shots): no ring blinking at the thrower as they set off
-- Spat's phlegm: drawn round you as Spat winds up to spit, kept where it was aimed - in a player's game it struck before it was drawn
-- Uncompromising Mode's Bearger throwing boulders: drawn round it as it winds up - beside it, a boulder strikes the moment it's thrown, unseen in a player's game
-- Uncompromising Mode's ice hounds: their spike line from afar drawn as they wind up - it was drawn as a bite, the spikes only as they came up
-- Uncompromising Mode's ice hounds: a plain bite from over 3 away no longer drawn as the spike line - told apart by the wind-up's pace (the spike's plays slow)
-- Uncompromising Mode's spore hounds: their leap no longer drawn each time they're hit
-- With Uncompromising Mode: the cave spider hider's shield no longer drawn as a moon spider's spikes
-- In a player's game: things moving on (beams, shots) no longer drawn to and fro each frame - the server tells where they are 15 times a second, every other frame looked like a stop
-- The Blighted Rock Master: its dash no longer thrown far ahead for a frame each time
-- Uncompromising Mode's merms: their counter combo (three blows after being hit four times) drawn - it wasn't drawn at all
-- Uncompromising Mode's Glacial Hounds: all three of their ice howls in a row drawn as howls - the first sometimes taken for a bite, then all three, their spikes struck undrawn in a player's game
-- Charlie's shadow hands: drawn on both sides as she casts - they come up on one side at random, and only one side was drawn
-- The W.A.R.B.O.T.'s leap: its landing no longer thrown far ahead for a moment as it walks right up to you before leaping
-- The Celestial Champion's spike trails: their wall of spikes stays drawn until it comes up - it comes up at a random moment, and a late one could strike after its warning was gone
-- Hosting your own game: Uncompromising Mode's Moon Tentacle shots no longer drawn landing short of where they fall
-- Moves that begin with the same animation (the Twins' charge and shot, and others) are now told apart the same way every game - which one was guessed first could change from one game to the next
-- The Shadow Bishop's lane: no longer turned the wrong way round for a moment as it sets off (in a player's game)
-- The Nightmare Rook's charge: parts already struck no longer come back for a frame as it runs (in a player's game)
-- The Clockwork Rook's charge: drawn straight on the way it runs - each time its run went round again, its lane turned to you while it ran on straight
-- Spitter spiders' web spit and walruses' blow darts: drawn as they aim - in a player's game they used to strike before anything was drawn
-- Uncompromising Mode's Moon Tentacle mines: drawn where they lie, 3 around, until they go off
-- The Eye of Terror (and the Twins) between charges: the next charge no longer drawn a little ahead for a frame as it stops (in a player's game)
-- Game update (Hallowed Nights): pigs, merms and bunnymen now drawn biting only ahead of them, as the game now has it; the werepig's leap forward as it bites drawn; the franken pig, mummy merm and vampire bunny drawn
-- Uncompromising Mode's Bee Queen: the bullet bees' stinger shot drawn as a lane while they aim, steady as they fly round her
-- Uncompromising Mode's bomber bees: their blast drawn round them the whole way down, yellow to red as they come down - it was up for a frame or two at the end
-- Uncompromising Mode's Bee Queen: no ring round you in the wrong place during the bullet bees' mortar (their shadows up in the air strike nothing)
-- Uncompromising Mode's fire and magma hounds: their fireballs no longer flash big as they appear, and their circle no longer jitters back and forth as they slow (in a player's game)
-- Spitter spiders, walruses and Uncompromising Mode's bullet bees: their aiming lane turns smoothly as it follows you, not in jumps
-- Uncompromising Mode's snapper turtles: their attack no longer jumps ahead as they speed up into a spin (in a player's game)
-- Celestial Champion, W.A.R.B.O.T., the knook and the Umbral Abomination's mouth: their attack no longer jumps ahead as they set off (in a player's game)
-- Uncompromising Mode's Shadow Wixie: drawn - her charges, her slingshot burst and volley, and her marbles had nothing drawn at all
-- Uncompromising Mode's mindweaver and fuelseeker (shadow creatures): their grab and burst drawn
-- Uncompromising Mode's lightning strikes (lightning hounds, the alpha goat, tornadoes): drawn 3.5 round where they come down, and the alpha goat's lightning running along the ground drawn as it runs
-- A crash guard: when a great many things appear at once (dozens of shots in one go), drawing them is spread over a few frames instead of all in one - Shadow Wixie's ring of 48 shots crashed the game
-- Uncompromising Mode's haunt: the hands it sends drawn, as the Stage Usher's
-- Tropical Experience's big foot (the glommer's bell): its stomp drawn as it comes down
-- Tropical Experience's jellyfish (the kraken's and the underwater ones): their shock drawn 3 round them as they shock
-- Uncompromising Mode's acid mushrooms: the toadling spawner's burst drawn, as Toadstool's mushroom bombs
-- Uncompromising Mode's Eye of Terror and Spazmatism: the cursed fire their fireballs leave drawn as big as it burns, shrinking as it dies down
-- The Scion's lunar fissures (in Wagstaff's arena): each burning tile drawn as the square it is
-- Uncompromising Mode's Shadow Wixie's clones in her puzzle: drawn as she is
-- Uncompromising Mode's Shadow Wixie's slingshot volley: each of its 7 shots' path drawn from her as she aims, till they've passed you - they fly so fast a player's game saw them only as they reached you
-- Tropical Experience's scorpion: its claw and its leap no longer both drawn at once - the claw till it leaps (it leaps only at you from over 3 away)
-- Tropical Experience's water rook: its charge drawn all the way as it runs, at its own reach (1 wider than the land rook's) - it struck while running with nothing drawn, and out past the rook's reach
-- Tropical Experience's wild boar king: its ground pound drawn round itself where it stands - it was drawn on ahead of it, striking behind it with nothing drawn
-- Tropical Experience's gem deer's tornadoes: drawn as far out as they strike (3) - a little short before
-- Game update (2026-10-31): moon pigs' bite drawn lunging forward as it now does; the Grim Harrier's runners as they now turn back at the arena's edge
-- Year of the Horse knights' joust: its lane laid the way it really charges - it was turned up to 15 degrees off, to the way it faces
-- Uncompromising Mode's strong Deerclops' uppercut combo: its last blow drawn where its dash really stops - it was drawn about 3 further on
-- The Grim Harrier's runners: once one of a swipe's three has struck you, the other two drawn faint - they can't strike you again (also seen by players who aren't hosting)
-- Rock Lobsters, pigs, merms, bunnymen, bats and slurtles: their bite drawn only in front of them, as it lands (behind them it can't strike)
-- Rock Lobsters: their claw drawn as far as it reaches at their size - drawn at the biggest's reach for all before (4.5 round; 3 for the smallest)
-- Tropical Experience's live fish: no longer drawn striking as they swim - they never strike
-- Tropical Experience's twisters: their blow drawn when it comes when they make a tornado as they strike - drawn a third of a second late before
-- Uncompromising Mode's skeletons: no longer drawn striking as they walk or stand after a swing
-- Tropical Experience's beetletaur: its punches drawn on you as they land from its first fight on - out of its guard they strike whom it's after wherever they are; before its guard was first seen broken they were drawn only round itself
-- Eye of Terror and the Twins as mouths: their charge from walking drawn the way it really goes (the way it walked) - it was drawn at you
-- Uncompromising Mode's walruses: the bear trap they throw drawn where it will land while it flies - drawn only once down, as it already caught you
-- The Stage Usher's hands: drawn where they are by now as they first creep out at you - a player's game had them a hand's step behind, struck at the edge undrawn
-- Tropical Experience's spiky turtles: their spinning slide drawn round them as they slide - it was never drawn
-- Tropical Experience's palm treeguards: their coconuts drawn where they will come down, as big as their ground pound - only the warning shadow was drawn, smaller and where they were aimed
-- Retinazer, Spazmatism and the Eye of Terror: a charge begun from walking, once it has turned and stopped to aim, drawn the way it faces - its lane was laid the way it had walked, sliding along beside it
-- Klaus: his chomp drawn round where he will land - on you till he aims, then kept; it was drawn on after you as you ran, warning of bites that never reached you
-- Tropical Experience's twisters: a ring round them as they wind up and suck you in (20 round), on through their spit - it was never drawn
-- Uncompromising Mode's Bee Queen guards: no longer drawn as they dive down from up in the air - only their blow once they land
-- The Shrouded Queen: her swipe drawn as the three lanes her shadows run, not one wide area; outlines no longer broken where her shadows had just been as they run
-- New settings: how solid each part is drawn, 0% to 100% in steps of 10%, in two columns in the settings window - the inside of attacks, their outlines, your own rings (body and reach), and everyone else's (monsters, friends, Abigail, the yellow ring)
-- Ctrl + the settings key (O): everything off at once, and on again - nothing worked out while off
+New
+- Settings: opacity for each part (attacks, outlines, your rings, other rings), 0% to 100% in 10% steps
+- Ctrl + the settings key (O): turn everything off or on at once
+- Now named True Range+, with a new icon
+- The bosses from the October 23 update: Hound Batilisk, Rock Master, Shrouded Queen, Grim Harrier, Umbral Abomination, Blighted Great Depths Worm (and their Blighted forms)
+- Uncompromising Mode: Shadow Wixie, mindweaver, fuelseeker, haunt, Moon Tentacle mines, lightning strikes, merm counter combo, lavae's burning slime
+- Tropical Experience: big foot, jellyfish, water rook, spiky turtles, twisters, palm treeguard coconuts
+- Game updates: Hallowed Nights pigs, merms and bunnymen; moon pigs; Grim Harrier's runners
+
+Playing on a server (caves, or joining a friend)
+- Lag Compensation: charges and swipes aim where the server has you - no more snapping back as they set off
+- Fast things (vines, shots, lavae, mini eyes, missiles) drawn where they really are, not a moment behind
+- Quick throws and shots (Spat's phlegm, spitter spiders, blow darts, Wixie's volley) drawn before they strike, not after
+
+Fixed
+- Lighter drawing: rings use only as many pieces as their size needs - smoother with many monsters
+- Missing pieces of shapes from 1.1.5
+- Thrown things: where they land no longer slides or jumps as they fly
+- Charges (Eye of Terror, Twins, Clockwork Rook, knights): drawn the way they really go
+- Klaus: bite and leaping chomp drawn where they really land
+- Shrouded Queen: her swipe drawn as the three lanes her shadows run; no warning behind her
+- Celestial Champion: tri-beam side beams aimed right; spike trails stay drawn until they come up
+- Umbral Abomination: teleport and optic blast drawn where they really are
+- Bite attacks (pigs, merms, Rock Lobsters, bats...) drawn only in front, as they hit
+- Bee Queen: no lanes for guards diving from the sky
+- A crash when dozens of shots appear at once
