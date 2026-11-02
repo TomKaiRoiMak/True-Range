@@ -3519,6 +3519,7 @@ end
 -- its turn snapped to a quarter on a player's game, its stretch laid off to one side or behind her - 189 frames of them behind
 -- her on the lag bench 2026-11-02_1254, "ข้างหลังยังติดมาอยู่ มันมาจากไหน", the player. Its way is her swipe's lanes above.
 -- TR_OLD_MINIONRING: stretched as run)
+SimMoves._lead_round = { charlie_boss_minion1 = true, charlie_boss_minion2 = true }
 if not rawget(_G, "TR_OLD_MINIONRING") and Data._hazards ~= nil then
     for _, n in ipairs({ "charlie_boss_minion1", "charlie_boss_minion2" }) do
         local h = Data._hazards[n]
@@ -3748,6 +3749,9 @@ local function DrawHazardInner(ent, x, z, rot, px, pz, now, in_moves, sfx)
         return false
     end
     local steps = Steps(ent.prefab, h)
+    -- (one drawn round itself as it runs fast (SimMoves._lead_round): on where it is by now - the Shrouded Queen's shadows,
+    -- 14-24 a second, a player's game seeing them a few frames back: struck .77 s out of their ring, lag 2026-11-02_1318)
+    if SimMoves._lead_round[ent.prefab] and not rawget(_G, "TR_OLD_MINIONLEAD") then x, z = SimMoves.LeadMoving(ent, x, z, now) end
     -- (one its own code carries off before it comes down - the Scrappy Werepig's junk, each piece
     -- sliding out from where they all appear: where it's going - as fast on as it's seen going,
     -- to h.glide frames after it appeared; not seen going yet, that can't be told)
