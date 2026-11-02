@@ -19,6 +19,7 @@
 | lag มอนที่ไม่เคยลง lag (ชุด 2-4) | buzzard, chest_mimic, lunarfrog, merm_lunar, teenbird, bee, bulletbee, fruitdragon NOT 0 / 242 · false 0; TE crocodog, poisoncrocodog, frog_poison, rabid_beetle, weevole, zeb NOT 0 / 285 · false 1; TE ancient_herald NOT 1 / 262 · false 9 (state attack ค้าง t=0.033 ~0.6 วิ ก่อนตีที่ 0.667); birchnutdrake / stalker_minion2 ไม่ตี | lag 2026-11-02_0247, 0300, 0306 |
 | lag TE ชุด 5 + spiky turtle กลิ้ง | adult_flytrap, panda, snake_amphibious, swordfish NOT 0 / 82; spiky_turtle_tfc NOT 15 / 71 → 3 / 72 (วาดท่ากลิ้ง) · false 0 | lag 2026-11-02_0329, 0349 / 0354 (A/B) |
 | lag ชุด 6-8 | bight NOT 0 / 23; TE bear, flup, giantsnow, spider_snow, spiderb2, trapslug, gnat NOT 0 / 130; TE treeguard NOT 2 / 5 (item 16); TE piggolem, pigman_minion, pinkman, snapdragon, terrorbeak NOT 0 / 96; hatty_piggy_tfc NOT 2 / 54 (เรานำ 0.5-0.76 ที่ขอบ) · false 0 ทุกชุด | lag 2026-11-02_0400, 0404, 0425 |
+| lag Klaus ท่ากัดใหม่ (d2e1d90) | NOT 0 / 387 · false 1 เทียบตัวเดิม 0 / 375 · 1 (bench ไม่วิ่งหนีท่ากัด - log ผู้เล่น false 7 → 0) | lag 2026-11-02_0838 / 0850 |
 | lag UM walrus ปากับดัก (หลังวาดจุดตก) | NOT 0 / 38 · false 0; กับดักโดน 1 ครั้ง วาดที่จุดตก 0.4 วิก่อน (ห่างจุดจริง 0.1) | lag 2026-11-01_2222 |
 | เกม / ข้อมูล | 761239 / data `83852BF58E33` | ติดตั้งแล้ว |
 
