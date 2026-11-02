@@ -26,9 +26,9 @@ local WHEN = {
     { text = "Always", data = "always" },
 }
 local ONOFF = { { text = "On", data = true }, { text = "Off", data = false } }
--- (an opacity: 10% to 100%, 10% a step)
+-- (an opacity: 0% (not drawn) to 100%, 10% a step)
 local PERCENT = {}
-for i = 1, 10 do PERCENT[i] = { text = (i * 10) .. "%", data = i / 10 } end
+for i = 0, 10 do PERCENT[i + 1] = { text = (i * 10) .. "%", data = i / 10 } end
 
 -- (each: its name as in modinfo, what it's called, what it does, its choices, and its value if
 -- neither modinfo nor this computer says)
@@ -53,15 +53,15 @@ Settings.OPTIONS = {
       hover = "Abigail's attack range (only while she's after something, or always), and her commands' ranges as you aim them." },
     { name = "start_ring", label = "Yellow ring", default = true, choices = ONOFF,
       hover = "How near a monster comes before it starts attacking you." },
-    { name = "op_area", label = "Attacks' opacity", default = 1, choices = PERCENT,
+    { name = "op_area", col = 2, label = "Attacks' opacity", default = 1, choices = PERCENT,
       hover = "How solid the inside of monsters' attacks is drawn." },
-    { name = "op_edge", label = "Outlines' opacity", default = 1, choices = PERCENT,
+    { name = "op_edge", col = 2, label = "Outlines' opacity", default = 1, choices = PERCENT,
       hover = "How solid the outlines of monsters' attacks are drawn." },
-    { name = "op_you", label = "Your rings' opacity", default = 1, choices = PERCENT,
+    { name = "op_you", col = 2, label = "Your rings' opacity", default = 1, choices = PERCENT,
       hover = "How solid your body ring and your own reach are drawn." },
-    { name = "op_others", label = "Other rings' opacity", default = 1, choices = PERCENT,
+    { name = "op_others", col = 2, label = "Other rings' opacity", default = 1, choices = PERCENT,
       hover = "How solid monsters' and friends' rings, Abigail's reach and the yellow ring are drawn." },
-    { name = "settings_key", label = "This window's key", default = "KEY_O", choices = KEYS,
+    { name = "settings_key", col = 2, label = "This window's key", default = "KEY_O", choices = KEYS,
       hover = "Opens this window. Ctrl + this key: everything off, or on again, at once." },
 }
 

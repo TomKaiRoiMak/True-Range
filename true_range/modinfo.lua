@@ -62,9 +62,9 @@ local keys = {
     { description = "Page Down", data = "KEY_PAGEDOWN" },
 }
 
--- (an opacity: 10% to 100%, 10% a step)
+-- (an opacity: 0% (not drawn) to 100%, 10% a step)
 local percent = {}
-for i = 1, 10 do percent[i] = { description = (i * 10) .. "%", data = i / 10 } end
+for i = 0, 10 do percent[i + 1] = { description = (i * 10) .. "%", data = i / 10 } end
 
 configuration_options = {
     {

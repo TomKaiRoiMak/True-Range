@@ -580,3 +580,18 @@ AddClientModRPCHandler("tr_lag", "you", function(n, sx, sz, st)
     print(string.format("[tr_lag] %.3f you n=%d srv_t=%.3f gap=%.2f speed=%.2f pred=%d", now, n, st,
         math.sqrt((mx - sx) ^ 2 + (mz - sz) ^ 2), speed, cur_pred and 1 or 0))
 end)
+
+-- (shot.txt in this folder, put by hand: 8 s in, True Range's settings window opened, said in the log
+-- "[tr_lag] settings shown" - a picture of it taken from outside; taken away again 12 s later)
+AddPlayerPostInit(function(p)
+    p:DoTaskInTime(8, function()
+        if p ~= G.ThePlayer then return end
+        local ok, fh = G.pcall(G.io.open, MODROOT .. "shot.txt", "r")
+        if not ok or fh == nil then return end
+        fh:close()
+        local screen = G.require("true_range/settingsscreen")()
+        G.TheFrontEnd:PushScreen(screen)
+        print("[tr_lag] settings shown")
+        p:DoTaskInTime(12, function() if screen.inst:IsValid() then screen:Close() end end)
+    end)
+end)
