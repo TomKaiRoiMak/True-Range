@@ -2,6 +2,8 @@
 # Everything else in this folder (other mods, patches) stays out.
 /*
 !/.gitignore
+!/README.md
+!/LICENSE
 !/true_range/
 !/true_range_workshop/
 !/tr_testbench/
