@@ -20,7 +20,7 @@ Playing on a server (caves, or joining a friend)
 - Quick throws and shots (Spat's phlegm, spitter spiders, blow darts, Wixie's volley) drawn before they strike, not after
 
 Fixed
-- Missing pieces of shapes from 1.1.5
+- Missing pieces of shapes from 1.1.6
 - Thrown things: where they land no longer slides or jumps as they fly
 - Charges (Eye of Terror, Twins, Clockwork Rook, knights): drawn the way they really go
 - Klaus: bite and leaping chomp drawn where they really land
