@@ -1,38 +1,38 @@
-# True Range — เอกสารสำหรับทีม
+# True Range - developer docs
 
-True Range คือ mod ของ Don't Starve Together ที่วาด **พื้นที่โจมตีจริง** ของบอสและของที่บอสปล่อย (ลูกไฟ หนาม เลเซอร์) ลงบนพื้นแบบเรียลไทม์
-รูปท่าทุกท่า **ไม่ได้วาดเดา** แต่ได้จากการรันโค้ดเกมจริงแบบ offline และความถูกต้องวัดเป็นตัวเลขทั้งฝั่ง host และฝั่งผู้เล่นที่มีแลค
+True Range is a Don't Starve Together mod that draws the **real attack areas** of bosses, and of the things they put out (fireballs, spikes, lasers), on the ground in real time.
+No move's shape is guessed: each comes from running the game's own code offline, and accuracy is measured as numbers on both the host and a lagging client.
 
-> อ่านตามลำดับถ้าเพิ่งเข้าทีม ถ้ามาแก้บั๊กเร่งด่วน ไปที่ [06 ขั้นตอนแก้บั๊ก](06-workflow.md) ได้เลย
+> New here? Read in order. Fixing an urgent bug? Go straight to [06 Workflow](06-workflow.md).
 
-## สารบัญ
+## Contents
 
-| # | หน้า | อ่านเมื่อ |
+| # | Page | Read it when |
 |---|---|---|
-| 01 | [ภาพรวมระบบ](01-overview.md) | อยากเข้าใจว่าระบบทั้งหมดต่อกันยังไง |
-| 02 | [ตั้งเครื่องและติดตั้ง](02-setup.md) | วันแรก — ทำให้รันได้บนเครื่องตัวเอง |
-| 03 | [โค้ดของ mod (ในเกม)](03-mod-code.md) | จะแก้การวาด / การจับท่า |
-| 04 | [ข้อมูลท่าและการสร้างข้อมูล](04-data-pipeline.md) | บอสใหม่, เกมอัปเดต, ท่าที่ข้อมูลไม่มี |
-| 05 | [การทดสอบ](05-testing.md) | จะพิสูจน์ว่าแก้แล้วถูก |
-| 06 | [ขั้นตอนแก้บั๊ก + กฎของทีม](06-workflow.md) | **ก่อนแก้อะไรทุกครั้ง** |
-| 07 | [อ้างอิง: เครื่องมือ สวิตช์ คำศัพท์](07-reference.md) | ค้นหาเร็ว |
-| 08 | [สถานะปัจจุบัน (1.1.6)](08-status.md) | อยากรู้ว่าค้างอะไรอยู่ หยิบงานต่อ |
-| 📖 | [**สารบัญมอนและท่า**](catalog/README.md) | หามอน/ท่าตัวไหนก็ได้ → ข้อมูลอยู่ไฟล์ไหน บรรทัดไหน โค้ดพิเศษอยู่ตรงไหน (398 มอน, 773 ท่า) |
+| 01 | [Overview](01-overview.md) | you want to see how the whole system fits together |
+| 02 | [Setup](02-setup.md) | day one - getting it to run on your machine |
+| 03 | [Mod code (in game)](03-mod-code.md) | you're changing how things are drawn or how moves are tracked |
+| 04 | [Move data and how it's built](04-data-pipeline.md) | a new boss, a game update, a move the data lacks |
+| 05 | [Testing](05-testing.md) | you need to prove a fix is right |
+| 06 | [Workflow and rules](06-workflow.md) | **before changing anything** |
+| 07 | [Reference: tools, switches, terms](07-reference.md) | quick lookup |
+| 08 | [Status (open items)](08-status.md) | you want to know what's pending and pick up work |
+| 📖 | [**Monster and move catalog**](catalog/README.md) | finding any monster or move: which data file and line, where its special code is (408 monsters, 810 moves) |
 
-## 5 ข้อที่ต้องรู้ก่อนแตะอะไร
+## 5 things to know before you touch anything
 
-1. **ต้นฉบับอยู่ที่ `true_range\`** เกมไม่ได้อ่านโฟลเดอร์นี้ — ต้องรัน `tools\install.ps1` ก่อน ถึงจะเรียกว่า "ติดตั้งแล้ว"
-2. **กฎใหม่ทุกข้อมีสวิตช์ `TR_OLD_xxx`** ไว้ปิดกลับเป็นแบบเดิม เพื่อเทียบ A/B — ดู [06](06-workflow.md)
-3. **ห้ามแก้ไฟล์ที่ bench/replay กำลังอ่าน** ระหว่างที่มันรันอยู่ (ผลจะปนกัน)
-4. **ห้ามอัปโหลดขึ้น Workshop เอง** เจ้าของโปรเจกต์เป็นคนอัปโหลด และ `tr_testbench`, `tr_lagjoin` ห้ามอัปโหลดเด็ดขาด
-5. **`cluster_token.txt` เป็นความลับ** ห้าม commit / ห้ามแปะในแชต (`.gitignore` กันไว้แล้ว)
+1. **The source is `true_range\`.** The game doesn't read that folder - run `tools\install.ps1` first; only then is it "installed".
+2. **Every new rule has a `TR_OLD_xxx` switch** that turns it back to the old behaviour, for A/B comparison - see [06](06-workflow.md).
+3. **Don't edit files a bench or replay is reading** while it runs (the results get mixed).
+4. **Don't upload to the Workshop yourself.** The project owner uploads. `tr_testbench` and `tr_lagjoin` are never uploaded.
+5. **`cluster_token.txt` is secret.** Never commit it or paste it anywhere (`.gitignore` keeps it out).
 
-กฎทั้งหมด: [VERIFY_PLAN.md §3](../VERIFY_PLAN.md)
+All rules: [VERIFY_PLAN.md §3](../VERIFY_PLAN.md)
 
-## เอกสารอื่นที่เกี่ยวข้อง
+## Other documents
 
-- `../VERIFY_PLAN.md` — เกณฑ์ "แก้แล้ว", แม่แบบ commit, กฎของทีม (สั้น)
-- `git log` — ผลวัดและเหตุผลของการแก้แต่ละครั้ง (ตั้งแต่ 2026-10-28)
-- [history/](history/README.md) — บันทึกการวิเคราะห์เก่าทั้งหมด 16–28 ต.ค. (~3,300 บรรทัด) ค้นด้วยชื่อบอส/สวิตช์
-- `../patch_notes_1.1.6.txt` — สิ่งที่เปลี่ยนในเวอร์ชันนี้ (ภาษาอังกฤษ สำหรับผู้เล่น)
-- `../REDESIGN.md` — การออกแบบระบบตาราง (`moves_table`)
+- `../VERIFY_PLAN.md` - what counts as "fixed", the commit template, the team rules (short)
+- `git log` - the measurements and reasons behind each fix (since 2026-10-28)
+- [history/hash_map.md](history/hash_map.md) - old commit hashes (cited in older notes) mapped to the current ones
+- `../patch_notes_<version>.txt` - what changed in each version (for players)
+- [04 Data pipeline - tables](04-data-pipeline.md#tables-moves_table) - the table system (`moves_table`)

@@ -1,5 +1,5 @@
 -- luajit trace_moves.lua <game scripts> <prefab:state> [prefab:state ...]
--- What each blow of a move depends on - REDESIGN.md part [2].
+-- What each blow of a move depends on - docs/04-data-pipeline.md, Tables, part [2].
 -- The move is run once as the game would (tools/sim_moves.lua, as a library), and every time the
 -- game's code reads where its target is (its position, distance, angle to it; facing it) the frame
 -- and whose code it was are noted. Then it is run again and again with the target jumping aside at

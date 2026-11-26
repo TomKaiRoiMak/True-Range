@@ -1,4 +1,4 @@
-# True Range: is each move better drawn from its REDESIGN.md table, or as before? Every replay
+# True Range: is each move better drawn from its table (docs/04-data-pipeline.md), or as before? Every replay
 # (the game logs kept in tests/logs, and the offline runs' traces) of every boss with a table, run
 # twice - with the tables, and without (TR_TABLES_OFF) - and what each says went wrong told to the
 # move drawn then (replay.lua's SPAN lines, GATE=1). A move worse with its table goes into

@@ -2092,7 +2092,7 @@ local function DrawAtoms(owner, todo, x, z, rot, px, pz, edge_style, whole)
         for q = 1, rg.na do
             local O = rg.act[q]
             -- (not one not drawn yet this frame that goes fast - where it was last frame isn't where it'll be: the Shrouded
-            -- Queen's shadows running 20-24 a second, the outlines round them cut where one had just been - "ขอบหาย", the
+            -- Queen's shadows running 20-24 a second, the outlines round them cut where one had just been - "the outline goes missing", the
             -- player 2026-11-02. Over .2 a frame. TR_OLD_RGSTALE: last frame's wherever)
             if O ~= R and O.f >= rg.f - 1 and O.r ~= nil and (O.x - x) ^ 2 + (O.z - z) ^ 2 < (O.r + rb) ^ 2
                 and (O.f == rg.f or (O.mv2 or 0) <= .04 or rawget(_G, "TR_OLD_RGSTALE")) then
@@ -3508,7 +3508,7 @@ end
 -- (Klaus' chomp: aimed at frame 26 at where you stand (SGklaus CalcChompSpeed), its lunge stopping short of that by ~2.4
 -- (~3 - the player's game 2026-11-02, 40 chomps) or at its most (~4.6; ~8.2 enraged), its bite at 35 striking you within ~5.2 of
 -- where it lands (11 struck at 3.6-5.3, 29 missed at 5.2 on). Run offline it was laid out on past you - 7 "drawn IN but NOT
--- struck" of 34 in that game, "klaus ยังพลาดอยู่เยอะ". Round where it will land, on you till 26, then kept. TR_OLD_KLAUSCHOMP)
+-- struck" of 34 in that game, "Klaus still misses a lot". Round where it will land, on you till 26, then kept. TR_OLD_KLAUSCHOMP)
 if not rawget(_G, "TR_OLD_KLAUSCHOMP") then
     SimMoves._land.klaus = {
         attack_chomp = { { anim = "attack_chomp", r = 5.2, at = 35, till = 1e6, on_target = true, lock_at = 26, back = 2.4, cap = 4.6 } },
@@ -3517,7 +3517,7 @@ if not rawget(_G, "TR_OLD_KLAUSCHOMP") then
 end
 -- (and each of her shadows round itself only (AOEUtil.Attack 2.4, and your body) - not stretched the way it faces: 4 / 6 faced,
 -- its turn snapped to a quarter on a player's game, its stretch laid off to one side or behind her - 189 frames of them behind
--- her on the lag bench 2026-11-02_1254, "ข้างหลังยังติดมาอยู่ มันมาจากไหน", the player. Its way is her swipe's lanes above.
+-- her on the lag bench 2026-11-02_1254, "something still sticks out behind, where is it from", the player. Its way is her swipe's lanes above.
 -- TR_OLD_MINIONRING: stretched as run)
 SimMoves._lead_round = { charlie_boss_minion1 = true, charlie_boss_minion2 = true }
 if not rawget(_G, "TR_OLD_MINIONRING") and Data._hazards ~= nil then
@@ -3533,7 +3533,7 @@ end
 -- nothing of its own, three shadows sent off the way she faces as she stops aiming (frame 22) - 3 ahead at 33, then 2 ahead 4
 -- to either side at 37 and 40 (SpawnMinion), each running 7-8.4 on (charlie_boss_minions.lua: jumpout 2-3 to impact 13-17,
 -- 20-24 a second, x .7 / 1) striking within 2.4 (AOEUtil.Attack, and your body). Run offline, all of it one wide shape:
--- "ขึ้นเตือนกว้างมาก แต่ไม่โดนดาเมจจริง", the player 2026-11-02. true_range/predict. TR_OLD_QUEENLANES: as run)
+-- "the warning is very wide but no real damage lands", the player 2026-11-02. true_range/predict. TR_OLD_QUEENLANES: as run)
 SimMoves._lanes_of = {}
 if not rawget(_G, "TR_OLD_QUEENLANES") then
     SimMoves._lanes_of.charlie_boss = { castlift = { turn = 8, turn_max = 2, lock = 22, till = 60, lanes = {

@@ -1,6 +1,6 @@
 -- luajit build_tables.lua <game scripts> <out dir> [-list] [-one=prefab#i] [-pic] [-budget=s]
 --     [-client=<file>] [prefab:state ...]
--- REDESIGN.md part [3]: for each move, where it strikes with its target at each place round the
+-- docs/04-data-pipeline.md, Tables, part [3]: for each move, where it strikes with its target at each place round the
 -- boss - the target there all along, at an angle from the way the boss faces as the move begins
 -- (all the way round), at each distance - every blow its code makes, as the game's own code runs.
 -- Each place's cells kept as the offline data's maps are (steps by frame), seen from the boss as
@@ -841,7 +841,7 @@ if CLIENT ~= nil then
     end
     table.sort(prefabs)
     local out = { "-- Made by true_range_workshop/tools/build_tables.lua - not by hand. Where each move strikes",
-        "-- with its target at each place round it (REDESIGN.md): angle from the way the boss faced as",
+        "-- with its target at each place round it (docs/04-data-pipeline.md, Tables): angle from the way the boss faced as",
         "-- the move began (degrees, round to the left), distance; frames from its first animation's start.",
         "-- like: as that row of it (dx, dz: moved on by so much, seen the same way)",
         "return {" }

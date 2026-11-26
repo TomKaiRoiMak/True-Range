@@ -1,69 +1,71 @@
-# 05 · การทดสอบ
+# 05 · Testing
 
-[← สารบัญ](README.md)
+[<- Contents](README.md)
 
-มี 3 ระดับ เลือกตามคำถามที่อยากตอบ:
+Three levels - pick by the question you want answered:
 
-| ระดับ | ตอบคำถาม | เวลา | คำสั่ง |
+| Level | Answers | Time | Command |
 |---|---|---|---|
-| **Replay** (offline) | กฎใหม่ทำให้พลาด/วาดเกินมากขึ้นไหม — ทุกบอส | 5–20 นาที (16 core) | `tests\bench_replay.ps1` |
-| **Testbench** (server ไร้จอ + บอท) | สร้าง log การต่อสู้จริงชุดใหม่ (หลังเกมอัปเดต, บอสใหม่) | ~20 นาที (ทุกบอส 3 รอบ) | `tools\run_bench.ps1` |
-| **Lag bench** (เกมจริงของคุณ + server) | ผู้เล่นที่มีแลคเห็นอะไรจริง — ภาพกระพริบ กระโดด วาดช้า | 4–12 นาที | `tools\run_lag.ps1` |
+| **Replay** (offline) | does a new rule miss or over-draw more - for every boss | 5-20 min (16 cores) | `tests\bench_replay.ps1` |
+| **Testbench** (headless server + bot) | makes a fresh set of real fight logs (after a game update, a new boss) | ~20 min (every boss, 3 rounds) | `tools\run_bench.ps1` |
+| **Lag bench** (your real game + a server) | what a lagging player really sees - flicker, jumps, late drawing | 4-12 min | `tools\run_lag.ps1` |
 
-ผลทดสอบเก็บที่ `tests\work\` (ไม่อยู่ใน git — ใหญ่และสร้างใหม่ได้)
+Results go to `tests\work\` (not in git - big and can be remade).
 
 ---
 
-## 1. Testbench — `tools\run_bench.ps1`
+## 1. Testbench - `tools\run_bench.ps1`
 
-เปิด dedicated server หลายตัวพร้อมกัน แต่ละตัวมีหลายเลน (lane) mod `tr_testbench` เสกบอส วางหุ่นแทนผู้เล่นที่หลายระยะ/มุม/ท่าหลบ และเขียนทุก tick:
+Starts several dedicated servers at once, each with several lanes. The `tr_testbench` mod spawns the boss, puts stand-in players at many distances/angles/dodges, and writes every tick:
 
-- `[tr_trace]` สถานะบอส, เวลาใน state, ตำแหน่ง, `STRIKE` / `HIT`
-- `[tr_haz]` ของที่ปล่อยทุกชิ้น
-- `[tr_bench]` เริ่ม/จบฉาก, give up
-
-```powershell
-powershell -File tools\run_bench.ps1 -All -Rounds 3                 # ทุกบอส (bench เต็ม — baseline ใช้ 3 รอบ; ค่าเริ่มต้นคือ 10)
-powershell -File tools\run_bench.ps1 -Bosses shrouden,deerclops      # บางตัว
-powershell -File tools\run_bench.ps1 -Force <ไฟล์> -Rounds 2         # บังคับเข้า state (ท่าที่ไม่เคยออก)
-```
-
-ผล: `tests\work\bench_logs\<วันเวลา>_shares\shareNNN.txt` + สรุป coverage (`tested` / `NEVER`) ท้าย output
-
-ข้อควรรู้:
-- **fail-fast** — ถ้าโค้ดของเรา error ระหว่างรัน มันหยุด ให้ดูนาทีแรกของทุกรอบเอง
-- server ล่มด้วยของ mod อื่น (เช่น `cherrybulletbee` หา prefab ไม่เจอ) ไม่ใช่บั๊กของเรา — บอสพวกนี้รันเดี่ยว (`!np`)
-- หนอน (`worm_boss`) ต้องรันหลังบอสอื่นใน share เดียวกัน (`deer+worm_boss`) — ตัวแรกในโลกใหม่ไม่ออกจากดิน
-
-## 2. Replay — `tests\bench_replay.ps1`
-
-เดินเวลาตาม trace ของ bench แล้ววาดด้วย **โค้ด mod จริง** (`predict.lua`/`simmoves.lua`) ทุกเฟรม เทียบกับการโดนจริง
+- `[tr_trace]` the boss's state, time in state, position, `STRIKE` / `HIT`
+- `[tr_haz]` every thing put out
+- `[tr_bench]` scene start/end, give up
 
 ```powershell
-powershell -File tests\bench_replay.ps1 -Run tests\work\bench_logs\2026-10-28_0805_shares     # baseline
-powershell -File tests\bench_replay.ps1 -Run <run> -Client 1        # จำลองมุมผู้เล่น Predictive เปิด (0 = ปิด)
-powershell -File tests\bench_replay.ps1 -Run <run> -HazOnly         # เฉพาะของที่ปล่อย
-powershell -File tests\bench_replay.ps1 -Run <run> -Mod <โฟลเดอร์ true_range อื่น>   # A/B (ผลแยกโฟลเดอร์)
-powershell -File tests\bench_replay.ps1 -Run <run> -Bosses shrouden,catcoon     # เฉพาะบางบอส
-powershell -File tests\bench_replay.ps1 -Run <run> -Walk                        # ผู้เล่นเดินเข้า-ออกรอบบอส
+powershell -File tools\run_bench.ps1 -All -Rounds 3                 # every boss (full bench - baselines use 3 rounds; the default is 10)
+powershell -File tools\run_bench.ps1 -Bosses shrouden,deerclops      # some
+powershell -File tools\run_bench.ps1 -Force <file> -Rounds 2         # force states (moves that never came up)
 ```
 
-### อ่านตาราง
+Results: `tests\work\bench_logs\<date-time>_shares\shareNNN.txt` + a coverage summary (`tested` / `NEVER`) at the end of the output.
+
+Good to know:
+- **fail-fast** - if our code errors during a run it stops; look at the first minute of every run yourself.
+- A server dying from another mod (e.g. `cherrybulletbee` missing a prefab) isn't our bug - those bosses run alone (`!np`).
+- The worm (`worm_boss`) must run after another boss in the same share (`deer+worm_boss`) - the first one in a new world never comes out of the ground.
+- After a bench, grep for `LUA ERROR` and list monsters with ~0 strikes - a crash hides misses.
+
+## 2. Replay - `tests\bench_replay.ps1`
+
+Steps through a bench trace and draws with the **real mod code** (`predict.lua`/`simmoves.lua`) every frame, against the real hits.
+
+```powershell
+powershell -File tests\bench_replay.ps1 -Run "<full path>\tests\work\bench_logs\2026-11-01_1604_shares"   # UM baseline
+powershell -File tests\bench_replay.ps1 -Run <run> -TE              # Tropical Experience runs
+powershell -File tests\bench_replay.ps1 -Run <run> -Client 1        # as a player with Predictive on (0 = off)
+powershell -File tests\bench_replay.ps1 -Run <run> -HazOnly         # things put out only
+powershell -File tests\bench_replay.ps1 -Run <run> -Mod <another true_range folder>   # A/B (results in their own folder)
+powershell -File tests\bench_replay.ps1 -Run <run> -Bosses shrouden,catcoon     # some bosses only
+powershell -File tests\bench_replay.ps1 -Run <run> -Walk                        # the player walks in and out round the boss
+```
+
+### Reading the table
 
 ```
 TOTAL strikes 59086  missed 25  drawn-in-no-strike 2019  ...  gaps 160  glitches 2287
 ```
 
-| คอลัมน์ | ความหมาย | ทิศที่ดี |
+| Column | Meaning | Better is |
 |---|---|---|
-| strikes | การโดนจริงทั้งหมด | — |
-| **missed** | โดน แต่ตอนนั้นไม่ได้วาดคลุมตัว | ↓ สำคัญที่สุด |
-| drawn-in-no-strike (false) | วาดคลุมตัว แต่ไม่โดน | ↓ (รองลงมา) |
-| gaps / jumped / glitches | ภาพขาด / กระโดด / ผิดปกติ ต่อเฟรม | ↓ |
+| strikes | all real hits | - |
+| **missed** | hit, but nothing was drawn over you then | ↓ most important |
+| drawn-in-no-strike (false) | drawn over you, but no hit | ↓ (next) |
+| gaps / jumped / glitches | missing / jumping / odd pictures, per frame | ↓ |
 
-ผลต่อไฟล์: `tests\work\bench_replay\<run>\<share>__<boss>.txt` มีบรรทัด `MISSED`, `FALSE`, `FOLLOWS`, `AIMED` พร้อมเวลา
+Per-file results: `tests\work\bench_replay\<run>\<share>__<boss>.txt` with `MISSED`, `FALSE`, `FOLLOWS`, `AIMED` lines and times.
 
-### A/B ด้วยสวิตช์ (เร็วที่สุด)
+### A/B with a switch (fastest)
 
 ```powershell
 $env:TR_MODS='workshop-3193922031'; $env:TR_OLD_LANDSTOP='1'
@@ -71,72 +73,80 @@ luajit tests\replay.lua ..\true_range <share.txt> tests\work\game_scripts_um <bo
 luajit tests\replay_haz.lua ..\true_range <share.txt>
 ```
 
-> ⚠ A/B ด้วย `bench_replay.ps1`:
-> - cache ดูชื่อ env และสวิตช์ `TR_OLD_*` ที่พบในโค้ดแล้ว แต่ **สวิตช์ใหม่ต้องอยู่ในรายการของ `replay.lua`/`replay_haz.lua`** ไม่งั้นถูกเมิน
-> - ทั้งสองรอบเขียนโฟลเดอร์ผลเดียวกัน (`tests\work\bench_replay\<run>`) — คัดลอก/เปลี่ยนชื่อโฟลเดอร์ผลรอบแรกก่อนรันรอบที่สอง หรือใช้ `-Mod` (แยกโฟลเดอร์ให้เอง)
-> - `NO_CACHE=1` = รันใหม่ทั้งหมด
-> - สวิตช์ใน `modmain.lua` (เช่น `HUNTSTICK`, `WORMDIRT`) **replay มองไม่เห็น** — A/B ได้ด้วย lag bench `-Old` เท่านั้น
+> ⚠ `replay.lua` treats **any** `CLIENT` value (even `CLIENT=0`) as client mode - leave it unset for the host.
+>
+> ⚠ A/B with `bench_replay.ps1`:
+> - the cache keys on the env names and the `TR_OLD_*` switches found in the code, but **a new switch must be in `replay.lua`/`replay_haz.lua`'s list** or it's ignored; delete the result file before an on/off pair.
+> - both runs write the same result folder (`tests\work\bench_replay\<run>`) - copy/rename the first run's folder before the second, or use `-Mod` (separate folder).
+> - `NO_CACHE=1` = run everything again.
+> - switches in `modmain.lua` (e.g. `HUNTSTICK`, `WORMDIRT`) are **invisible to replay** - A/B them with the lag bench's `-Old` only.
 
-### ตัวช่วยดูทีละเฟรม
+### Frame-by-frame helpers
 
-| คำสั่ง | ได้อะไร |
+| Command | Gives |
 |---|---|
-| `DRAWLOG=1` + `-v` กับ `replay.lua` | `[tr_draw]` ทุกเฟรม: ท่า, เฟรม, ตำแหน่ง, run |
-| `TRACE_GUID=<guid>` กับ `replay_haz.lua` | การตัดสินใจทุกเฟรมของของชิ้นนั้น (hide/draw และเหตุผล) |
-| `GAP_V=1`, `LANDWOB_V=1` | รายการช่องว่าง / การขยับของจุดตก |
-| `tests\pics.ps1 -Log <log> -Boss <b> -At t1,t2 -R 8` | ภาพ PNG ของสิ่งที่วาด + บอส + ตัวผู้เล่น ณ เวลานั้น |
+| `DRAWLOG=1` + `-v` with `replay.lua` | `[tr_draw]` every frame: move, frame, position, run |
+| `DUMP=t0,t1` with `replay.lua` | what was drawn each frame in that time window (state vs move, drawn rotation vs travel) |
+| `TRACE_GUID=<guid>` with `replay_haz.lua` | every frame's decision for that one thing (hide/draw and why) |
+| `GAP_V=1`, `LANDWOB_V=1` | the gaps / landing-spot wobble listed |
+| `tests\pics.ps1 -Log <log> -Boss <b> -At t1,t2 -R 8` | PNG pictures of what was drawn + the boss + the player at those times |
 
-## 3. Lag bench — `tools\run_lag.ps1`
+## 3. Lag bench - `tools\run_lag.ps1`
 
-server (testbench โหมด lag) + **เกม Steam ของคุณเข้าร่วมเอง** (mod `tr_lagjoin`) ฉากสลับ Lag Compensation Predictive/None
+A server (testbench in lag mode) + **your Steam game joins it by itself** (the `tr_lagjoin` mod). Scenes switch Lag Compensation between Predictive and None.
 
 ```powershell
 powershell -File tools\run_lag.ps1 -Bosses shrouden,shadowthrall_wings -Rounds 1
-powershell -File tools\run_lag.ps1 -Bosses moonmaw_dragonfly -Rounds 1 -Old "TR_OLD_LEADSTOP,TR_OLD_LANDSTOP"   # A/B: ตั้งสวิตช์ในเกม client
+powershell -File tools\run_lag.ps1 -Bosses moonmaw_dragonfly -Rounds 1 -Old "TR_OLD_LEADSTOP,TR_OLD_LANDSTOP"   # A/B: switches set in the client game
+powershell -File tools\run_lag.ps1 -Bosses tigershark -Rounds 1 -TE        # Tropical Experience (UM off - the two crash together with a player)
+powershell -File tools\run_lag.ps1 -Bosses deerclops,klaus -Rounds 1 -NoUM -NoDebug   # the plain game, as players get it
 ```
 
-พารามิเตอร์: `-Bosses` (ค่าเริ่มต้น deerclops, moose, bearger, mock_dragonfly, moonmaw_dragonfly), `-Rounds` (2), `-Old` (สวิตช์ฝั่ง client), `-Speed` (เร่งเวลา), `-TickRate` (15)
+Parameters: `-Bosses` (default deerclops, moose, bearger, mock_dragonfly, moonmaw_dragonfly), `-Rounds` (2), `-Old` (client-side switches), `-Speed` (faster time), `-TickRate` (15), `-TE`, `-NoUM`, `-NoDebug` (no debug.txt needed; only crashes and what's drawn are checked, no struck/drawn table).
 
-ผล: `tests\work\bench_logs\<วันเวลา>_lag\` มี `client_log.txt` (ส่งให้ตัววิเคราะห์ด้วย `-Log`) และ `server_log.txt`
+Results: `tests\work\bench_logs\<date-time>_lag\` with `client_log.txt` (pass it to the analysers with `-Log`) and `server_log.txt`.
 
-ระหว่างรัน **อย่าใช้เกม** — มันขยับตัวละครเอง · ห้ามรัน bench/replay หนักพร้อมกัน (timing เพี้ยน)
+While it runs **don't use the game** - it moves the character itself. Don't run heavy benches/replays at the same time (timing goes off).
 
-> ⚠ ถ้าหยุด lag bench กลางทาง (kill) ให้เช็คว่า `mods\modsettings.lua` ของเกมไม่มีบรรทัด `ForceEnableMod("tr_lagjoin")` ค้าง และลบ `mods\tr_lagjoin\join.txt` — ไม่งั้นเกมจะเข้า server ทดสอบเองตอนเปิดครั้งหน้า
+> ⚠ If you stop a lag bench part way (kill), check that the game's `mods\modsettings.lua` has no leftover `ForceEnableMod("tr_lagjoin")` line, and delete `mods\tr_lagjoin\join.txt` - otherwise the game joins the test server by itself next time it opens.
+>
+> ⚠ After a run, check for a client crash: the table can look fine after one. Grep for `.dmp` files; Windows' CrashReporter can block later runs.
 
-### สิ่งที่ `client_log.txt` บันทึก (ทุกเฟรม)
+### What `client_log.txt` records (every frame)
 
-| แท็ก | เนื้อหา |
+| Tag | Content |
 |---|---|
-| `[tr_lagdraw]` | ท่าที่วาด จุดยึด เทียบตำแหน่งบอส |
-| `[tr_lagframe]` | ชิ้นที่วาดจริง ต่อเจ้าของ ต่อเฟรม: จำนวน ตำแหน่ง และขนาดกลุ่ม (`ext`) |
-| `[tr_lagthing]` | ตำแหน่ง x y z จริงของของที่ปล่อย ทุกเฟรม |
-| `[tr_lagdl]` | บอสอยู่ในรายการวาดไหม, คำของ server (cooldown, เป้า) |
-| `you were struck ... drawn: NOT` | โดนตอนไม่ได้วาด |
+| `[tr_lagdraw]` | the move drawn, its anchor, against the boss's position |
+| `[tr_lagframe]` | the pieces really drawn, per owner, per frame: count, position and group size (`ext`) |
+| `[tr_lagthing]` | the real x y z of every thing put out, every frame |
+| `[tr_lagdl]` | whether the boss is in the draw list, the server's word (cooldowns, target) |
+| `you were struck ... drawn: NOT` | hit while nothing was drawn |
 
-### รายงานอัตโนมัติท้ายรัน
+### The report at the end of a run
 
 ```
   shrouden pred=1     struck 89  NOT drawn 0  false 1
 all, on: frames 24071, jumps 43, snap backs 5 (0.21 per 1000)
 ```
 
-### ตัววิเคราะห์
+### Analysers
 
-| คำสั่ง | ตอบ |
+| Command | Answers |
 |---|---|
-| `tools\lag_frames.ps1 -Log <client_log>` | อะไรกระพริบ (หาย 1–3 เฟรมแล้วกลับ) ต่อเจ้าของ — กรองการย้ายฉากออกแล้ว |
-| `tools\lag_land.ps1 -Log <client_log> [-Prefab <ของ>]` | ลูกโยน: จุดที่วาดห่างจุดตกจริงเท่าไร (ค่าเริ่มต้น `-Prefab shadowthrall_projectile_fx` = Ink Blight) |
-| `tools\lagthing_to_haz.ps1 -Log <client_log> -Out <trace> [-Prefab <ของ>]` | แปลงสิ่งที่เกม client เห็นจริงเป็น trace → `replay_haz.lua` บนมุม client (ทดลองค่าได้ offline) — ค่าเริ่มต้นเฉพาะ Ink Blight เช่นกัน |
+| `tools\lag_frames.ps1 -Log <client_log>` | what flickers (gone 1-3 frames and back) per owner - scene changes filtered out |
+| `tools\lag_land.ps1 -Log <client_log> [-Prefab <thing>]` | thrown things: how far the drawn spot was from where they really landed (default `-Prefab shadowthrall_projectile_fx` = Ink Blight) |
+| `tools\lagthing_to_haz.ps1 -Log <client_log> -Out <trace> [-Prefab <thing>]` | turns what the client really saw into a trace -> `replay_haz.lua` from the client's view (try values offline) - also Ink Blight by default |
+| `tools\move_tree.lua` | every stretch of a move on a lag run, flagged where drawing and reality part - fix all flagged stretches together |
 
-## 4. Unit test
+## 4. Unit tests
 
-อยู่ใน `tests\` (`test_sim.lua`, `pool_hide.lua`, ...) รายการที่ต้องผ่านอยู่ใน `tests\last_summary.txt` (บรรทัด `unit ...`) — `install.ps1` รันให้ทุกครั้ง
+In `tests\` (`test_sim.lua`, `body_ring.lua`, `pool_hide.lua`, ...). The list that must pass is in `tests\last_summary.txt` (the `unit ...` lines) - `install.ps1` runs them every time.
 
-## 5. Baseline ปัจจุบัน
+## 5. Current baselines
 
-| ชุด | ใช้เทียบ |
+| Set | Used for |
 |---|---|
-| `bench_logs\2026-10-28_0805_shares` | replay หลักของเวอร์ชัน 1.1.6 (missed 25 ด้วยโค้ดปัจจุบัน) |
-| `bench_logs\2026-10-28_1503_shares` | bench เต็มล่าสุด (missed 35 — ต่างรอบ ไม่ใช่ถดถอย) |
+| `bench_logs\2026-11-01_1604_shares` (UM, every monster) | the main replay. 2026-11-02: host missed 17 / 59,548, false 1,347; client 26 / 59,510, false 2,089 |
+| `bench_logs\2026-11-01_0556_shares` (TE, 170 monsters) | `-TE` replay. 2026-11-02: host 15 / 25,717, false 421; client 11 / 25,709, false 594 |
 
-> รอบ bench ต่างกันให้ตัวเลขต่างกันได้ (โลก/จังหวะสุ่ม) — เทียบกฎด้วย A/B บน **log ชุดเดียวกัน** เสมอ
+> Different bench runs can give different numbers (random worlds/timing) - always compare rules with A/B on **the same set of logs**.

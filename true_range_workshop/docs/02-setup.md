@@ -1,110 +1,101 @@
-# 02 · ตั้งเครื่องและติดตั้ง
+# 02 · Setup
 
-[← สารบัญ](README.md)
+[<- Contents](README.md)
 
-## สิ่งที่ต้องมี
+## What you need
 
-| โปรแกรม | ใช้ทำอะไร | หมายเหตุ |
+| Program | Used for | Notes |
 |---|---|---|
-| Don't Starve Together (Steam) | เกม + dedicated server สำหรับ bench | |
-| Uncompromising Mode (Workshop `3193922031`) | บอสของ UM — bench รันกับ UM เปิดเสมอ | |
-| LuaJIT 2.1 (`luajit` ใน PATH) | replay, unit test, compile-check | ทุก tool `.lua` รันด้วย luajit (ดาวน์โหลด build สำหรับ Windows จาก luajit.org หรือ build เอง) |
-| Windows PowerShell 5.1 | สคริปต์ `.ps1` ทั้งหมด | |
-| Git | เวอร์ชันโค้ด | ติดตั้งที่ `C:\Program Files\Git` — ถ้า PowerShell หา `git` ไม่เจอ: `$env:Path += ';C:\Program Files\Git\cmd'` |
-| Python + Pillow (ไม่บังคับ) | แปลงภาพ `.ppm → .png` ของ `tests\pics.ps1` | `pip install pillow` |
+| Don't Starve Together (Steam) | the game + the dedicated server for benches | |
+| Uncompromising Mode (Workshop `3193922031`) | UM's bosses - benches run with UM on | |
+| LuaJIT 2.1 (`luajit` on PATH) | replays, unit tests, compile checks | every tool `.lua` runs with luajit (a Windows build from luajit.org, or build it yourself) |
+| Windows PowerShell 5.1 | all the `.ps1` scripts | |
+| Git | version control | if PowerShell can't find `git`: `$env:Path += ';C:\Program Files\Git\cmd'` |
+| Python + Pillow (optional) | turning `.ppm` pictures into `.png` for `tests\pics.ps1` | `pip install pillow` |
 
-สำหรับ **lag bench** เพิ่มเติม: Steam เปิดและล็อกอินบัญชีที่มี DST, ปิดเกมก่อนรัน, มี `debug.txt` ในสำเนาที่ติดตั้ง (install.ps1 ทำให้), และ cluster `Cluster_4` ที่ตั้ง UM ไว้ (ดูตารางข้างล่าง)
+For the **lag bench** as well: Steam running and logged in with DST, the game closed before a run, a `debug.txt` in the installed copy (install.ps1 makes it), and a cluster `Cluster_4` set up with UM (see the table below).
 
-## โฟลเดอร์ (path ที่ฝังในสคริปต์)
+## Folders (paths written into the scripts)
 
-| Path | คืออะไร |
+| Path | What it is |
 |---|---|
-| `D:\Work\Coding\dont starve\true_range\` | **ต้นฉบับของ mod** |
-| `D:\Work\Coding\dont starve\true_range_workshop\` | tools, tests, เอกสาร, patch notes |
-| `D:\Work\Coding\dont starve\tr_testbench\` | mod ทดสอบฝั่ง server (เสกบอส, ใส่ตัวแทนผู้เล่น) |
-| `D:\Work\Coding\dont starve\tr_lagjoin\` | mod ทดสอบฝั่ง client (เข้าเกมเอง, บันทึกทุกเฟรม) |
-| `D:\Games Manager\Games\steamapps\common\Don't Starve Together\` | เกม (`mods\true_range` คือสำเนาที่เกมอ่านจริง) |
-| `D:\Games Manager\Games\steamapps\workshop\content\322330\3193922031\` | Uncompromising Mode (รวม `postinit\`) |
-| `Documents\Klei\DoNotStarveTogether\<บัญชี>\Cluster_4\` | ตั้งค่า world/mod (UM) ที่ bench และ lag bench คัดลอกไปใช้ |
-| `Documents\Klei\DoNotStarveTogether\<บัญชี>\Cluster_17\cluster_token.txt` | token ของ server ที่ lag bench คัดลอกไปใช้ — **ความลับ** |
-| `Documents\Klei\DoNotStarveTogether\client_log.txt` | log ของเกม (ที่ mod และ lag bench เขียน) |
+| `D:\Work\Coding\dont starve\true_range\` | **the mod's source** |
+| `D:\Work\Coding\dont starve\true_range_workshop\` | tools, tests, docs, patch notes |
+| `D:\Work\Coding\dont starve\tr_testbench\` | server-side test mod (spawns bosses, puts in a stand-in player) |
+| `D:\Work\Coding\dont starve\tr_lagjoin\` | client-side test mod (joins by itself, records every frame) |
+| `D:\Games Manager\Games\steamapps\common\Don't Starve Together\` | the game (`mods\true_range` is the copy the game really reads) |
+| `D:\Games Manager\Games\steamapps\workshop\content\322330\3193922031\` | Uncompromising Mode (including `postinit\`) |
+| `Documents\Klei\DoNotStarveTogether\<account>\Cluster_4\` | world/mod settings (UM) that the bench and lag bench copy |
+| `Documents\Klei\DoNotStarveTogether\<account>\Cluster_17\cluster_token.txt` | the server token the lag bench copies - **secret** |
+| `Documents\Klei\DoNotStarveTogether\client_log.txt` | the game's log (written by the mod and the lag bench) |
 
-> path เหล่านี้ฝังอยู่ในสคริปต์ราว 25 ไฟล์ — ถ้าเครื่องคุณต่าง ให้ค้น `Games Manager` ใน `tools\` กับ `tests\` แล้วแก้ให้ครบ - ส่วนโฟลเดอร์บัญชี Klei (`<บัญชี>`) สคริปต์หาเอง (โฟลเดอร์ตัวเลขที่ client_save ใหม่สุด) หรือตั้ง `DST_KLEI_ACCOUNT`
+> The game's path is written into about 25 scripts - if your machine differs, search `tools\` and `tests\` for `Games Manager` and change them all. Your Klei account folder (`<account>`) is found by the scripts themselves (the numbered folder with the newest client_save), or set `DST_KLEI_ACCOUNT`.
 
-### โฟลเดอร์อื่นใน `D:\Work\Coding\dont starve\` (ไม่ใช่ True Range)
+### `true_range_workshop\tests\work\` (big, not in git, can be remade)
 
-| โฟลเดอร์ | คืออะไร |
+| Folder | Notes |
 |---|---|
-| `tmir_quick`, `tmir_modded_bosses` | ทดสอบ TMIR (local) |
-| `find_me`, `crockpot_guide`, `fps_meter`, `boss_report` | mod อื่น — ไม่อยู่ใน repo นี้ |
-| `server_patches`, `workshop_patches` | แพตช์ server/mod ของ cluster |
-| `_trash_*` | ของที่ย้ายมาแทนการลบ — ลบเองเมื่อแน่ใจ |
-
-### `true_range_workshop\tests\work\` (ใหญ่ ไม่อยู่ใน git สร้างใหม่ได้)
-
-| โฟลเดอร์ | หมายเหตุ |
-|---|---|
-| `bench_logs` | log ของ bench ทุกครั้ง (~85 GB) — ดูแลด้วย `tools\prune_bench_logs.ps1` |
-| `bench_x` | สำเนาขยายสำหรับ replay — สร้างใหม่ได้ |
-| `bench_replay` | ผล replay แยกต่อ share |
-| `bench_server` | config/world ของ server ทดสอบ (มี cluster token — ห้ามเผยแพร่) |
-| `game_scripts*`, `game_scripts.hash` | โค้ดเกม/UM/TE แตกออกมา (แตกใหม่หลังเกมอัปเดต) |
+| `bench_logs` | every bench's logs (~85 GB) - kept in check by `tools\prune_bench_logs.ps1` |
+| `bench_x` | expanded copies for replay - can be remade |
+| `bench_replay` | replay results per share |
+| `bench_server` | the test server's config/world (holds the cluster token - never publish) |
+| `game_scripts*`, `game_scripts.hash` | the game's / UM's / TE's code unpacked (unpack again after a game update) |
 
 ## Git
 
 ```
-repo: D:\Work\Coding\dont starve      (repo เดียวครอบ true_range, true_range_workshop, tr_testbench, tr_lagjoin)
+repo: D:\Work\Coding\dont starve      (one repo for true_range, true_range_workshop, tr_testbench, tr_lagjoin)
 ```
 
-`.gitignore` กันไว้แล้ว: mod อื่นในโฟลเดอร์เดียวกัน, `cluster_token.txt`, `_trash_*`, และของใหญ่ที่สร้างใหม่ได้
-(`tests\work\`, `old\`, `tests\logs\`, `tests\perf_logs\`, `tests\controls\`)
+`.gitignore` already keeps out: other mods in the same folder, `cluster_token.txt`, `_trash_*`, and big files that can be remade
+(`tests\work\`, `old\`, `tests\logs\`, `tests\perf_logs\`, `tests\controls\`).
 
-ไฟล์ข้อมูล `moves_sim*.lua` (≈11 MB) **commit ด้วย** — เพื่อย้อนดูได้ว่าเวอร์ชันที่ปล่อยใช้ข้อมูลอะไร
+The data files `moves_sim*.lua` (≈11 MB) **are committed** - so you can see which data a released version used.
 
-A/B แบบ worktree (รันทุกบรรทัดจาก `D:\Work\Coding\dont starve\true_range_workshop`):
+A/B with a worktree (run every line from `D:\Work\Coding\dont starve\true_range_workshop`):
 
 ```powershell
-git worktree add ..\..\tr_ab_old <commit>                                     # ได้ D:\Work\Coding\tr_ab_old
-powershell -File tools\install.ps1 -Src ..\..\tr_ab_old\true_range            # ติดตั้งตัวเก่าเข้าเกม
-powershell -File tests\bench_replay.ps1 -Mod ..\..\tr_ab_old\true_range       # replay ด้วยตัวเก่า (ผลแยกโฟลเดอร์)
-powershell -File tools\install.ps1                                            # เสร็จแล้ว ติดตั้งตัวปัจจุบันกลับ
+git worktree add ..\..\tr_ab_old <commit>                                     # gives D:\Work\Coding\tr_ab_old
+powershell -File tools\install.ps1 -Src ..\..\tr_ab_old\true_range            # install the old one into the game
+powershell -File tests\bench_replay.ps1 -Mod ..\..\tr_ab_old\true_range       # replay with the old one (results in their own folder)
+powershell -File tools\install.ps1                                            # done: install the current one back
 git worktree remove ..\..\tr_ab_old
 ```
 
-## ติดตั้ง mod เข้าเกม
+## Installing the mod into the game
 
 ```powershell
 cd D:\Work\Coding\dont starve\true_range_workshop
-powershell -File tools\install.ps1          # ต้องเห็นบรรทัด "installed: ..." เท่านั้นถึงจะนับว่าติดตั้ง
-powershell -File tools\install_client.ps1   # ตัว Client (สร้างจากต้นฉบับเดียวกัน) — รันหลัง install.ps1 ผ่านแล้วเท่านั้น
+powershell -File tools\install.ps1          # only counts as installed once you see the "installed: ..." line
+powershell -File tools\install_client.ps1   # the Client build (made from the same source) - only after install.ps1 passed
 ```
 
-`install.ps1` ตรวจตามลำดับ และ **หยุด** ถ้าไม่ผ่าน:
+`install.ps1` checks in order and **stops** if one fails:
 
-| ขั้น | ตรวจ | ถ้าไม่ผ่าน |
+| Step | Checks | If it fails |
 |---|---|---|
-| 0 | `modmain.lua` ไม่ใช้ของที่ mod environment ไม่มี (`modenv_check.lua`) | หยุด |
-| 0b | `patch_notes_X.txt` = `patch_notes_client_X.txt` | หยุด |
-| 0c | เวอร์ชันเกมตรงกับ `tools\data_game_version.txt` | **เตือน** (ไม่หยุด) |
-| 0d | ท่าเขียนมือยังมี prefab/อนิเมชันในเกม (`hand_check.ps1`) | หยุด |
-| — | ทุกไฟล์ `.lua` compile ได้ | หยุด |
-| — | unit test ทุกตัวใน `tests\last_summary.txt` | หยุด |
-| — | คัดลอก แล้วเทียบ hash ทุกไฟล์ | หยุด |
+| 0 | `modmain.lua` uses nothing the mod environment lacks (`modenv_check.lua`) | stop |
+| 0b | `patch_notes_X.txt` = `patch_notes_client_X.txt` | stop |
+| 0c | the game version matches `tools\data_game_version.txt` | **warn** (doesn't stop) |
+| 0d | hand-written moves' prefabs/animations still exist in the game (`hand_check.ps1`) | stop |
+| - | every `.lua` file compiles | stop |
+| - | every unit test in `tests\last_summary.txt` | stop |
+| - | copy, then compare the hash of every file | stop |
 
-ตัวเลือก: `-Src <โฟลเดอร์ true_range อื่น>` (worktree), `-SkipTests` (อย่าใช้ก่อนส่งงาน)
+Options: `-Src <another true_range folder>` (worktree), `-SkipTests` (don't use before handing work in)
 
-## เช็คว่าเกมโหลดตัวที่ติดตั้งจริง
+## Checking the game loaded the installed copy
 
-ใน `Documents\Klei\DoNotStarveTogether\client_log.txt` จะมี
+`Documents\Klei\DoNotStarveTogether\client_log.txt` will have
 
 ```
-[true_range] data <hash 12 ตัว>          ← ตรงกับที่ install.ps1 พิมพ์
+[true_range] data <12-character hash>      <- the same as install.ps1 printed
 [true_range] moves data loaded in 93 ms, 29.9 MB of Lua memory ...
 ```
 
-## การเปิด debug log
+## Debug log
 
-`mods\true_range\debug.txt` (ในโฟลเดอร์เกม) — มีไฟล์นี้ mod จะพิมพ์ `[true_range] ...` ละเอียดลง log
-`install.ps1` **สร้างไฟล์นี้ในสำเนาที่ติดตั้งทุกครั้ง** (ต้นฉบับไม่มี) — สำเนาในเกมจึงเป็นตัวทดสอบเสมอ
+`mods\true_range\debug.txt` (in the game's folder) - with this file there, the mod prints detailed `[true_range] ...` lines to the log.
+`install.ps1` **creates it in the installed copy every time** (the source never has it) - so the game's copy is always the test one. Delete it to play as players do.
 
-> ⚠ **อัปโหลดจากต้นฉบับ `true_range\` เท่านั้น ห้ามอัปโหลดจาก `mods\true_range`** (มี debug.txt — ผู้เล่นจะได้ log เต็มจอ)
+> ⚠ **Upload from the source `true_range\` only, never from `mods\true_range`** (it has debug.txt - players would get a log full of lines).

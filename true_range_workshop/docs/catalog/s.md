@@ -1,937 +1,984 @@
-# สารบัญมอน — S
+# Monster catalog - S
 
-[← สารบัญทั้งหมด](README.md) · สร้างอัตโนมัติด้วย `tools\make_catalog.ps1` — **อย่าแก้หน้านี้ด้วยมือ**
+[<- full index](README.md) · made by `tools\make_catalog.ps1` - **don't edit this page by hand**
 
-คอลัมน์: **ตีเฟรม** = เฟรมแรกที่ตี (30 เฟรม/วินาที) · **เล็ง** = `target` หันตามเป้า / `facing` ตามที่บอสหัน · **lock** = เฟรมที่หยุดเล็ง · **แบบ** = ลักษณะพิเศษของท่า · **ที่อยู่** = ไฟล์ข้อมูล:บรรทัด (ใน `true_range/scripts/true_range/`)
+Columns: **hit frame** = first frame it strikes (30 frames/s) · **aim** = `target` turns to its target / `facing` the way the boss faces · **lock** = frame it stops aiming · **kind** = the move's special traits · **where** = data file:line (in `true_range/scripts/true_range/`)
 
 <a id="scorpion"></a>
 
 ## scorpion
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:153`
+Data from: TE `moves_sim_te.lua:488`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 25 | target | 0 |  |  |  | TE | `moves_sim_te.lua:153` |
-| `atk~leap_attack` | atk, taunt | 19 | target | 0 | ตามเป้า |  |  | TE | `moves_sim_te.lua:153` |
-| `spit` | spit, taunt | 21 | target | 0 |  |  |  | TE | `moves_sim_te.lua` |
-| `tail` | tail | 20 | target | 0 |  |  |  | TE | `moves_sim_te.lua` |
+| `atk` | atk | 25 | target | 0 |  |  |  | TE | `moves_sim_te.lua:489` |
+| `atk~leap_attack` | atk, taunt | 19 | target | 0 | follows target |  |  | TE | `moves_sim_te.lua:490` |
+| `spit` | spit, taunt | 21 | target | 0 |  |  |  | TE | `moves_sim_te.lua:491` |
+| `tail` | tail | 20 | target | 0 |  |  |  | TE | `moves_sim_te.lua:492` |
 
 <a id="sea_eel"></a>
 
 ## sea_eel
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:154`
+Data from: TE `moves_sim_te.lua:494`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 30 | target | 0 | ขนาด 0.3 |  |  | TE | `moves_sim_te.lua:154` |
+| `atk` | atk | 30 | target | 0 | scale 0.3 |  |  | TE | `moves_sim_te.lua:495` |
 
 <a id="seaquaketentacle"></a>
 
 ## seaquaketentacle
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:155`
+Data from: TE `moves_sim_te.lua:497`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk_loop, atk_idle | 32 | target | 0 |  |  |  | TE | `moves_sim_te.lua:155` |
+| `atk_pre` | atk_pre, atk_loop, atk_idle | 32 | target | 0 |  |  |  | TE | `moves_sim_te.lua:498` |
 
 <a id="seatentacle"></a>
 
 ## seatentacle
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:156`
+Data from: TE `moves_sim_te.lua:500`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk_loop, atk_idle | 32 | target | 0 |  |  |  | TE | `moves_sim_te.lua:156` |
+| `atk_pre` | atk_pre, atk_loop, atk_idle | 32 | target | 0 |  |  |  | TE | `moves_sim_te.lua:501` |
 
 <a id="shadow_bishop"></a>
 
 ## shadow_bishop — Shadow Bishop
 
-แหล่งข้อมูล: เกม `moves_sim.lua:490` · UM `moves_sim_um.lua:345`
+Data from: game `moves_sim.lua:493` · UM `moves_sim_um.lua:369`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_side_pre` | atk_side_pre, atk_side_loop_pre, atk_side_loop, atk_side_pst | 35 | target |  | ตามเป้า · รอบตัว · เคลื่อน 1.0 |  |  | เกม | `moves_sim.lua:491` |
-| `atk_side_pre` | atk_side_pre, atk_side_loop_pre, atk_side_loop, atk_side_loop_pst, … | 35 | facing |  | ตามเป้า · พุ่งเป็นขา · รอบตัว · เคลื่อน 6.2 |  |  | UM | `moves_sim_um.lua:346` |
-| `atk_side_pre@LevelUp` | atk_side_pre, atk_side_loop_pre, atk_side_loop, atk_side_pst | 35 | target |  | ตามเป้า · รอบตัว · ขนาด 1.6 · เคลื่อน 1.0 |  |  | เกม | `moves_sim.lua:492` |
-| `atk_side_pre@LevelUp` | atk_side_pre, atk_side_loop_pre, atk_side_loop, atk_side_loop_pst, … | 35 | facing |  | ตามเป้า · พุ่งเป็นขา · รอบตัว · ขนาด 1.6 · เคลื่อน 8.8 |  |  | UM | `moves_sim_um.lua:347` |
-| `atk_side_pre@LevelUp,LevelUp` | atk_side_pre, atk_side_loop_pre, atk_side_loop, atk_side_pst | 35 | target |  | ตามเป้า · รอบตัว · ขนาด 2.2 · เคลื่อน 1.0 |  |  | เกม | `moves_sim.lua:493` |
-| `atk_side_pre@LevelUp,LevelUp` | atk_side_pre, atk_side_loop_pre, atk_side_loop, atk_side_loop_pst, … | 35 | facing |  | ตามเป้า · พุ่งเป็นขา · รอบตัว · ขนาด 2.2 · เคลื่อน 9.8 |  |  | UM | `moves_sim_um.lua:348` |
+| `atk_side_pre` | atk_side_pre, atk_side_loop_pre, atk_side_loop, atk_side_pst | 35 | target |  | follows target · around itself · moves 1.0 |  |  | game | `moves_sim.lua:494` |
+| `atk_side_pre` | atk_side_pre, atk_side_loop_pre, atk_side_loop, atk_side_loop_pst, … | 35 | facing |  | follows target · charge legs · around itself · moves 6.2 |  |  | UM | `moves_sim_um.lua:370` |
+| `atk_side_pre@LevelUp` | atk_side_pre, atk_side_loop_pre, atk_side_loop, atk_side_pst | 35 | target |  | follows target · around itself · scale 1.6 · moves 1.0 |  |  | game | `moves_sim.lua:495` |
+| `atk_side_pre@LevelUp` | atk_side_pre, atk_side_loop_pre, atk_side_loop, atk_side_loop_pst, … | 35 | facing |  | follows target · charge legs · around itself · scale 1.6 · moves 8.8 |  |  | UM | `moves_sim_um.lua:371` |
+| `atk_side_pre@LevelUp,LevelUp` | atk_side_pre, atk_side_loop_pre, atk_side_loop, atk_side_pst | 35 | target |  | follows target · around itself · scale 2.2 · moves 1.0 |  |  | game | `moves_sim.lua:496` |
+| `atk_side_pre@LevelUp,LevelUp` | atk_side_pre, atk_side_loop_pre, atk_side_loop, atk_side_loop_pst, … | 35 | facing |  | follows target · charge legs · around itself · scale 2.2 · moves 9.8 |  |  | UM | `moves_sim_um.lua:372` |
 
 <a id="shadow_knight"></a>
 
 ## shadow_knight — Shadow Knight
 
-แหล่งข้อมูล: เกม `moves_sim.lua:495`
+Data from: game `moves_sim.lua:498`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` ▦ | atk | 3 | target |  |  |  |  | เกม | `moves_sim.lua:496` |
-| `atk@LevelUp` | atk | 3 | target |  | ขนาด 1.7 |  |  | เกม | `moves_sim.lua:497` |
-| `atk@LevelUp,LevelUp` | atk | 3 | target |  | ขนาด 2.5 |  |  | เกม | `moves_sim.lua:498` |
-| `atk_plus` | atk_plus | 5 | target | 0 |  |  |  | เกม | `moves_sim.lua:499` |
-| `atk_plus@LevelUp` ▦ | atk_plus | 5 | target | 0 | ขนาด 1.7 |  |  | เกม | `moves_sim.lua:500` |
-| `atk_plus@LevelUp,LevelUp` | atk_plus | 5 | target | 0 | ขนาด 2.5 |  |  | เกม | `moves_sim.lua:501` |
-| `atk_pre` | atk_pre, atk | 17 | target | 0 |  |  |  | เกม | `moves_sim.lua:502` |
-| `atk_pre@LevelUp` | atk_pre, atk | 17 | target | 0 | ขนาด 1.7 |  |  | เกม | `moves_sim.lua:503` |
-| `atk_pre@LevelUp,LevelUp` | atk_pre, atk | 17 | target | 0 | ขนาด 2.5 |  |  | เกม | `moves_sim.lua:504` |
+| `atk` ▦ | atk | 3 | target |  |  |  |  | game | `moves_sim.lua:499` |
+| `atk@LevelUp` | atk | 3 | target |  | scale 1.7 |  |  | game | `moves_sim.lua:500` |
+| `atk@LevelUp,LevelUp` | atk | 3 | target |  | scale 2.5 |  |  | game | `moves_sim.lua:501` |
+| `atk_plus` | atk_plus | 5 | target | 0 |  |  |  | game | `moves_sim.lua:502` |
+| `atk_plus@LevelUp` ▦ | atk_plus | 5 | target | 0 | scale 1.7 |  |  | game | `moves_sim.lua:503` |
+| `atk_plus@LevelUp,LevelUp` | atk_plus | 5 | target | 0 | scale 2.5 |  |  | game | `moves_sim.lua:504` |
+| `atk_pre` | atk_pre, atk | 17 | target | 0 |  |  |  | game | `moves_sim.lua:505` |
+| `atk_pre@LevelUp` | atk_pre, atk | 17 | target | 0 | scale 1.7 |  |  | game | `moves_sim.lua:506` |
+| `atk_pre@LevelUp,LevelUp` | atk_pre, atk | 17 | target | 0 | scale 2.5 |  |  | game | `moves_sim.lua:507` |
 
 <a id="shadow_leech"></a>
 
 ## shadow_leech — Parasitic Shadeling
 
-แหล่งข้อมูล: เกม `moves_sim.lua:506`
+Data from: game `moves_sim.lua:509`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
 
 <a id="shadow_rook"></a>
 
 ## shadow_rook — Shadow Rook
 
-แหล่งข้อมูล: เกม `moves_sim.lua:507`
+Data from: game `moves_sim.lua:510`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `teleport_pre` | teleport_pre, teleport, teleport_atk, teleport_pst | 48 | facing | 32 | กรวย · เคลื่อน 1.0 |  |  | เกม | `moves_sim.lua:508` |
-| `teleport_pre@LevelUp` | teleport_pre, teleport, teleport_atk, teleport_pst | 48 | facing | 32 | กรวย · ขนาด 1.2 · เคลื่อน 1.0 |  |  | เกม | `moves_sim.lua:509` |
-| `teleport_pre@LevelUp,LevelUp` | teleport_pre, teleport, teleport_atk, teleport_pst | 48 | facing | 32 | กรวย · ขนาด 1.6 · เคลื่อน 1.0 |  |  | เกม | `moves_sim.lua:510` |
+| `teleport_pre` | teleport_pre, teleport, teleport_atk, teleport_pst | 48 | facing | 32 | cone · moves 1.0 |  |  | game | `moves_sim.lua:511` |
+| `teleport_pre@LevelUp` | teleport_pre, teleport, teleport_atk, teleport_pst | 48 | facing | 32 | cone · scale 1.2 · moves 1.0 |  |  | game | `moves_sim.lua:512` |
+| `teleport_pre@LevelUp,LevelUp` | teleport_pre, teleport, teleport_atk, teleport_pst | 48 | facing | 32 | cone · scale 1.6 · moves 1.0 |  |  | game | `moves_sim.lua:513` |
+
+<a id="shadow_wixie"></a>
+
+## shadow_wixie — Wixie?
+
+Data from: UM `moves_sim_um.lua:374` · hand-UM `moves_hand_um.lua:87`
+
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
+|---|---|---|---|---|---|---|---|---|---|
+| `slingshot_pre` |  |  |  |  |  |  |  | hand-UM | `moves_hand_um.lua:87` |
+| `slingshot_pre` | slingshot_pre, slingshot | 15 | facing | 0 |  |  |  | UM | `moves_sim_um.lua:375` |
+| `spearjab` | spearjab, emote_laugh | 1 | target | 0 |  |  |  | UM | `moves_sim_um.lua:376` |
+| `staff_pre` | staff_pre, staff, spearjab_pre, spearjab, … | 62 | facing | 0 |  |  |  | UM | `moves_sim_um.lua:377` |
+
+**Things it puts out**
+
+| thing | name | kind | source | where | code that names it |
+|---|---|---|---|---|---|
+| `bagofwarbles` |  | moving · lasting · delay 16 | UM | `moves_sim_um.lua:35` |  |
+| `slipperymarbles` |  | delay 3 | UM | `moves_sim_um.lua:67` |  |
+| `wixie_shadow_shot` |  | moving · lasting · delay 0 · strikes until 60 | UM | `moves_sim_um.lua:85` |  |
 
 <a id="shadowtentacle"></a>
 
 ## shadowtentacle — Shadow Tentacle
 
-แหล่งข้อมูล: เกม `moves_sim.lua:512`
+Data from: game `moves_sim.lua:515`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk_loop, atk_idle, atk_pst | 37 | target | 0 | ขนาด 0.5 |  |  | เกม | `moves_sim.lua:513` |
+| `atk_pre` | atk_pre, atk_loop, atk_idle, atk_pst | 37 | target | 0 | scale 0.5 |  |  | game | `moves_sim.lua:516` |
 
 <a id="shadowthrall_hands"></a>
 
 ## shadowthrall_hands — Ink Blight
 
-แหล่งข้อมูล: เกม `moves_sim.lua:515` · มือ `moves_hand.lua:65`
+Data from: game `moves_sim.lua:518` · hand `moves_hand.lua:80`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `portal_appear` | portal_appear, run_loop, shrouden_disappear | 11 | facing | 0 |  |  |  | มือ | `moves_hand.lua:65` |
-| `run_pre` | run_pre, run_loop, run_pst | 15 | facing | 0 |  |  |  | เกม | `moves_sim.lua:516` |
+| `portal_appear` | portal_appear, run_loop, shrouden_disappear | 11 | facing | 0 |  |  |  | hand | `moves_hand.lua:80` |
+| `run_pre` | run_pre, run_loop, run_pst | 15 | facing | 0 |  |  |  | game | `moves_sim.lua:519` |
 
 <a id="shadowthrall_horns"></a>
 
 ## shadowthrall_horns — Ink Blight
 
-แหล่งข้อมูล: เกม `moves_sim.lua:518` · มือ `moves_hand.lua:54`
+Data from: game `moves_sim.lua:521` · hand `moves_hand.lua:69`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `appear` | appear | 47 | facing | 0 |  |  |  | เกม | `moves_sim.lua:519` |
-| `jump` ▦ | jump, jump_pst | 29 | facing | 6 | ตามเป้า · เคลื่อน 1.1 |  |  | เกม | `moves_sim.lua:520` |
-| `shrouden_jump` | shrouden_jump, shrouden_jump_pst | 11 | target | 1 | เคลื่อน 4.2 |  |  | มือ | `moves_hand.lua:54` |
-| `slap` | slap | 14 | facing | 0 |  |  |  | เกม | `moves_sim.lua:521` |
+| `appear` | appear | 47 | facing | 0 |  |  |  | game | `moves_sim.lua:522` |
+| `jump` ▦ | jump, jump_pst | 29 | facing | 6 | follows target · moves 1.1 |  |  | game | `moves_sim.lua:523` |
+| `shrouden_jump` | shrouden_jump, shrouden_jump_pst | 11 | target | 1 | moves 4.2 |  |  | hand | `moves_hand.lua:69` |
+| `slap` | slap | 14 | facing | 0 |  |  |  | game | `moves_sim.lua:524` |
 
-**โค้ดพิเศษที่อ้างถึง:** simmoves.lua:28
+**Special code that names it:** simmoves.lua:28
 
 <a id="shadowthrall_mouth"></a>
 
 ## shadowthrall_mouth — Ink Blight
 
-แหล่งข้อมูล: เกม `moves_sim.lua:523` · มือ `moves_hand.lua:60`
+Data from: game `moves_sim.lua:526` · hand `moves_hand.lua:75`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `bite_final` | bite_final | 6 | facing | 0 |  |  |  | มือ | `moves_hand.lua:60` |
-| `bite_pre` | bite_pre, bite_loop, bite_final | 19 | facing |  | รอบตัว |  |  | เกม | `moves_sim.lua:524` |
-| `land` | land | 0 | facing |  | รอบตัว |  |  | เกม | `moves_sim.lua:525` |
-| `leap_pre` | leap_pre, land | 38 | target | 25 | ตามเป้า · เคลื่อน 1.0 |  | leap_cd | เกม | `moves_sim.lua:526` |
-| `portal_appear` | portal_appear | 8 | facing | 0 |  |  |  | มือ | `moves_hand.lua:60` |
-| `shrouden_disappear` | shrouden_disappear | 6 | facing | 0 |  |  |  | มือ | `moves_hand.lua:60` |
-| `stalk_bite` | stalk_bite | 22 | facing | 0 |  |  |  | เกม | `moves_sim.lua:527` |
+| `bite_final` | bite_final | 6 | facing | 0 |  |  |  | hand | `moves_hand.lua:75` |
+| `bite_pre` | bite_pre, bite_loop, bite_final | 19 | facing |  | around itself |  |  | game | `moves_sim.lua:527` |
+| `land` | land | 0 | facing |  | around itself |  |  | game | `moves_sim.lua:528` |
+| `leap_pre` | leap_pre, land | 38 | target | 25 | follows target · moves 1.0 |  | leap_cd | game | `moves_sim.lua:529` |
+| `portal_appear` | portal_appear | 8 | facing | 0 |  |  |  | hand | `moves_hand.lua:75` |
+| `shrouden_disappear` | shrouden_disappear | 6 | facing | 0 |  |  |  | hand | `moves_hand.lua:75` |
+| `stalk_bite` | stalk_bite | 22 | facing | 0 |  |  |  | game | `moves_sim.lua:530` |
+
+**Special code that names it:** simmoves.lua:3669
 
 <a id="shadowthrall_wings"></a>
 
 ## shadowthrall_wings — Ink Blight
 
-แหล่งข้อมูล: เกม `moves_sim.lua:529`
+Data from: game `moves_sim.lua:532`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `shadowthrall_projectile_fx` |  | เคลื่อนที่ · ดีเลย์ 21 · ตีถึง 31 | เกม | `moves_sim.lua:92` |  |
+| `shadowthrall_projectile_fx` |  | moving · delay 21 · strikes until 31 | game | `moves_sim.lua:92` | simmoves.lua:39 |
 
 <a id="shark"></a>
 
 ## shark — Rockjaw
 
-แหล่งข้อมูล: เกม `moves_sim.lua:530` · UM `moves_sim_um.lua:350`
+Data from: game `moves_sim.lua:533` · UM `moves_sim_um.lua:379`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `attack` | attack | 12 | target | 0 |  |  | getdistance | เกม | `moves_sim.lua:531` |
-| `attack` | attack | 12 | facing | 0 |  |  | getdistance | UM | `moves_sim_um.lua:351` |
-| `attack~bite` | attack, idle | 12 | target | 0 |  |  |  | เกม | `moves_sim.lua:532` |
-| `attack~bite` | attack, idle | 12 | facing | 0 |  |  |  | UM | `moves_sim_um.lua:352` |
+| `attack` | attack | 12 | target | 0 |  |  | getdistance | game | `moves_sim.lua:534` |
+| `attack` | attack | 12 | facing | 0 |  |  | getdistance | UM | `moves_sim_um.lua:380` |
+| `attack~bite` | attack, idle | 12 | target | 0 |  |  |  | game | `moves_sim.lua:535` |
+| `attack~bite` | attack, idle | 12 | facing | 0 |  |  |  | UM | `moves_sim_um.lua:381` |
 
 <a id="sharkboi"></a>
 
 ## sharkboi — Frostjaw
 
-แหล่งข้อมูล: เกม `moves_sim.lua:534`
+Data from: game `moves_sim.lua:537`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk1` | atk1 | 16 | target | 0 |  | sharkboi_swipe_fx |  | เกม | `moves_sim.lua:535` |
-| `atk2` ▦ | atk2, atk2_delay | 4 | facing | 0 |  | sharkboi_swipe_fx |  | เกม | `moves_sim.lua:536` |
-| `atk3` ▦ | atk3 | 12 | facing | 0 |  |  |  | เกม | `moves_sim.lua:537` |
-| `icedive_jump_pre` | icedive_jump_pre, icedive_jump, icedive_dig_pre, icedive_dig_loop | 3 | facing | 6 | กรวย · เคลื่อน 2.0 |  | standing_dive_cd | เกม | `moves_sim.lua:538` |
-| `icedive_standing_jump_pre` | icedive_standing_jump_pre, icedive_jump, icedive_dig_pre, icedive_dig_loop | 33 | facing | 14 | ตามเป้า · กรวย · เคลื่อน 1.8 |  | standing_dive_cd | เกม | `moves_sim.lua:539` |
-| `torpedo_pre` | torpedo_pre, torpedo_jump, torpedo_loop, torpedo_climb | 34 | facing | 34 | เคลื่อน 20.4 |  | torpedo_cd | เกม | `moves_sim.lua:540` |
+| `atk1` | atk1 | 16 | target | 0 |  | sharkboi_swipe_fx |  | game | `moves_sim.lua:538` |
+| `atk2` ▦ | atk2, atk2_delay | 4 | facing | 0 |  | sharkboi_swipe_fx |  | game | `moves_sim.lua:539` |
+| `atk3` ▦ | atk3 | 12 | facing | 0 |  |  |  | game | `moves_sim.lua:540` |
+| `icedive_jump_pre` | icedive_jump_pre, icedive_jump, icedive_dig_pre, icedive_dig_loop | 3 | facing | 6 | cone · moves 2.0 |  | standing_dive_cd | game | `moves_sim.lua:541` |
+| `icedive_standing_jump_pre` | icedive_standing_jump_pre, icedive_jump, icedive_dig_pre, icedive_dig_loop | 33 | facing | 14 | follows target · cone · moves 1.8 |  | standing_dive_cd | game | `moves_sim.lua:542` |
+| `torpedo_pre` | torpedo_pre, torpedo_jump, torpedo_loop, torpedo_climb | 34 | facing | 34 | moves 20.4 |  | torpedo_cd | game | `moves_sim.lua:543` |
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `sharkboi_swipe_fx` |  | วาดกับท่าบอส · ดีเลย์ 4 · ตีถึง 4 | เกม | `moves_sim.lua:93` |  |
+| `sharkboi_swipe_fx` |  | drawn with the boss move · delay 4 · strikes until 4 | game | `moves_sim.lua:93` |  |
 
 <a id="sharkitten"></a>
 
 ## sharkitten
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:157`
+Data from: TE `moves_sim_te.lua:503`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk | 16 | target | 0 |  |  |  | TE | `moves_sim_te.lua:157` |
+| `atk_pre` | atk_pre, atk | 16 | target | 0 |  |  |  | TE | `moves_sim_te.lua:504` |
 
 <a id="sharx"></a>
 
 ## sharx
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:158`
+Data from: TE `moves_sim_te.lua:506`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk | 16 | target | 0 |  |  |  | TE | `moves_sim_te.lua:158` |
+| `atk_pre` | atk_pre, atk | 16 | target | 0 |  |  |  | TE | `moves_sim_te.lua:507` |
 
 <a id="sharxunderwater"></a>
 
 ## sharxunderwater
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:159`
+Data from: TE `moves_sim_te.lua:509`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk | 16 | target | 0 |  |  |  | TE | `moves_sim_te.lua:159` |
+| `atk_pre` | atk_pre, atk | 16 | target | 0 |  |  |  | TE | `moves_sim_te.lua:510` |
 
 <a id="shockworm"></a>
 
 ## shockworm — Depths Eel
 
-แหล่งข้อมูล: UM `moves_sim_um.lua:354`
+Data from: UM `moves_sim_um.lua:383`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 25 | target | 0 |  |  |  | UM | `moves_sim_um.lua:355` |
+| `atk` | atk | 25 | target | 0 |  |  |  | UM | `moves_sim_um.lua:384` |
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `um_shock_projectile` |  | ดีเลย์ 3 | UM | `moves_sim_um.lua:74` |  |
+| `um_shock_projectile` |  | delay 3 | UM | `moves_sim_um.lua:78` |  |
 
 <a id="shrouden"></a>
 
 ## shrouden — Umbral Abomination
 
-แหล่งข้อมูล: เกม `moves_sim.lua:542`
+Data from: game `moves_sim.lua:545`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `optic_blast_pre1` | optic_blast_pre1, optic_blast_pre2, optic_blast_loop, optic_blast_pst, … | 45 | facing | 116 | ตามเป้า · กรวย · เคลื่อน 1.0 |  | opticblastcd | เกม | `moves_sim.lua:543` |
-| `punch_pre` | punch_pre, punch_loop, punch_pst | 19 | target | 1 |  |  | portalcd | เกม | `moves_sim.lua:544` |
-| `teleport_pre` | teleport_pre, teleport_loop, teleport_pst | 57 | target | 60 | เคลื่อน 1.0 |  | teleportcd | เกม | `moves_sim.lua:545` |
+| `optic_blast_pre1` | optic_blast_pre1, optic_blast_pre2, optic_blast_loop, optic_blast_pst, … | 45 | facing | 116 | follows target · cone · moves 1.0 |  | opticblastcd | game | `moves_sim.lua:546` |
+| `punch_pre` | punch_pre, punch_loop, punch_pst | 19 | target | 1 |  |  | portalcd | game | `moves_sim.lua:547` |
+| `teleport_pre` | teleport_pre, teleport_loop, teleport_pst | 57 | target | 60 | moves 1.0 |  | teleportcd | game | `moves_sim.lua:548` |
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `charliearena_spike` | Dreadstone Outcrop | ดีเลย์ 29 | เกม | `moves_sim.lua:61` | simmoves.lua:3166 |
-| `shrouden_optic_blast_fx` |  | อยู่นาน · วาดกับท่าบอส · ดีเลย์ 26 · ตีถึง 90 | เกม | `moves_sim.lua:94` | simmoves.lua:3238 simmoves.lua:3239 simmoves.lua:3241 |
+| `charliearena_spike` | Dreadstone Outcrop | delay 29 | game | `moves_sim.lua:61` | simmoves.lua:3377 |
+| `shrouden_optic_blast_fx` |  | lasting · drawn with the boss move · delay 26 · strikes until 90 | game | `moves_sim.lua:94` | simmoves.lua:3483 simmoves.lua:3484 simmoves.lua:3486 |
 
-**โค้ดพิเศษที่อ้างถึง:** simmoves.lua:3231
+**Special code that names it:** simmoves.lua:3473
 
 <a id="sinheniddnadtdfo"></a>
 
 ## sinheniddnadtdfo
 
-แหล่งข้อมูล: UM `moves_sim_um.lua:357`
+Data from: UM `moves_sim_um.lua:386`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 3 | target |  | ขนาด 2 |  |  | UM | `moves_sim_um.lua:358` |
+| `atk` | atk | 3 | target |  | scale 2 |  |  | UM | `moves_sim_um.lua:387` |
 
 <a id="slip"></a>
 
 ## slip
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:160`
+Data from: TE `moves_sim_te.lua:512`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `eat_pre` | eat_pre, taunt | 19 | target | 0 |  |  |  | TE | `moves_sim_te.lua:160` |
-| `eat_pre~attack` | eat_pre | 18 | target | 0 |  |  |  | TE | `moves_sim_te.lua:160` |
-| `eat_pre~spitter_attack` | eat_pre, taunt | 21 | target | 0 |  |  |  | TE | `moves_sim_te.lua` |
+| `eat_pre` | eat_pre, taunt | 19 | target | 0 |  |  |  | TE | `moves_sim_te.lua:513` |
+| `eat_pre~attack` | eat_pre | 18 | target | 0 |  |  |  | TE | `moves_sim_te.lua:514` |
+| `eat_pre~spitter_attack` | eat_pre, taunt | 21 | target | 0 |  |  |  | TE | `moves_sim_te.lua:515` |
 
 <a id="slipstor"></a>
 
 ## slipstor
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:161`
+Data from: TE `moves_sim_te.lua:517`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `anim` | anim, idle_loop | 11 | target | 0 |  |  |  | TE | `moves_sim_te.lua:161` |
+| `anim` | anim, idle_loop | 11 | target | 0 |  |  |  | TE | `moves_sim_te.lua:518` |
 
 <a id="slurper"></a>
 
 ## slurper — Slurper
 
-แหล่งข้อมูล: เกม `moves_sim.lua:547`
+Data from: game `moves_sim.lua:550`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 30 | facing | 0 | เคลื่อน 6.7 |  |  | เกม | `moves_sim.lua:548` |
-| `headslurp` | headslurp | 23 | facing | 0 | เคลื่อน 2.0 |  |  | เกม | `moves_sim.lua:549` |
+| `atk` | atk | 30 | facing | 0 | moves 6.7 |  |  | game | `moves_sim.lua:551` |
+| `headslurp` | headslurp | 23 | facing | 0 | moves 2.0 |  |  | game | `moves_sim.lua:552` |
 
 <a id="slurtle"></a>
 
 ## slurtle — Slurtle
 
-แหล่งข้อมูล: เกม `moves_sim.lua:551`
+Data from: game `moves_sim.lua:554`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 10 | target | 0 |  |  |  | เกม | `moves_sim.lua:552` |
+| `atk` | atk | 10 | target | 0 |  |  |  | game | `moves_sim.lua:555` |
+
+**Special code that names it:** simmoves.lua:171
 
 <a id="smallbird"></a>
 
 ## smallbird — Smallbird
 
-แหล่งข้อมูล: เกม `moves_sim.lua:554` · มือ `moves_hand.lua:43`
+Data from: game `moves_sim.lua:557` · hand `moves_hand.lua:43`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 12 | target | 0 |  |  |  | เกม | `moves_sim.lua:555` |
-| `chase` | walk_loop, idle_loop, walk_pre |  | facing |  | พุ่งเป็นขา |  |  | มือ | `moves_hand.lua` |
+| `atk` | atk | 12 | target | 0 |  |  |  | game | `moves_sim.lua:558` |
+| `chase` | walk_loop, idle_loop, walk_pre |  | facing |  | charge legs |  |  | hand | `moves_hand.lua` |
 
 <a id="snaildrake_magma"></a>
 
 ## snaildrake_magma — Snaildrake
 
-แหล่งข้อมูล: UM `moves_sim_um.lua:360`
+Data from: UM `moves_sim_um.lua:389`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 16 | target | 0 | ขนาด 1.2 |  |  | UM | `moves_sim_um.lua:361` |
+| `atk` | atk | 16 | target | 0 | scale 1.2 |  |  | UM | `moves_sim_um.lua:390` |
 
 <a id="snaildrake_slime"></a>
 
 ## snaildrake_slime — Snaildrake
 
-แหล่งข้อมูล: UM `moves_sim_um.lua:363`
+Data from: UM `moves_sim_um.lua:392`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 16 | target | 0 | ขนาด 1.2 |  |  | UM | `moves_sim_um.lua:364` |
+| `atk` | atk | 16 | target | 0 | scale 1.2 |  |  | UM | `moves_sim_um.lua:393` |
 
 <a id="snake"></a>
 
 ## snake
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:162`
+Data from: TE `moves_sim_te.lua:520`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk, atk_pst | 27 | target | 0 |  |  |  | TE | `moves_sim_te.lua:162` |
+| `atk_pre` | atk_pre, atk, atk_pst | 27 | target | 0 |  |  |  | TE | `moves_sim_te.lua:521` |
 
 <a id="snake_amphibious"></a>
 
 ## snake_amphibious
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:163`
+Data from: TE `moves_sim_te.lua:523`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk, atk_pst | 27 | target | 0 |  |  |  | TE | `moves_sim_te.lua:163` |
+| `atk_pre` | atk_pre, atk, atk_pst | 27 | target | 0 |  |  |  | TE | `moves_sim_te.lua:524` |
 
 <a id="snake_poison"></a>
 
 ## snake_poison
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:164`
+Data from: TE `moves_sim_te.lua:526`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk, atk_pst | 27 | target | 0 |  |  |  | TE | `moves_sim_te.lua:164` |
+| `atk_pre` | atk_pre, atk, atk_pst | 27 | target | 0 |  |  |  | TE | `moves_sim_te.lua:527` |
 
 <a id="snapdragon"></a>
 
 ## snapdragon
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:165`
+Data from: TE `moves_sim_te.lua:529`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk | 15 | target | 0 | ขนาด 1.22 |  |  | TE | `moves_sim_te.lua:165` |
+| `atk_pre` | atk_pre, atk | 15 | target | 0 | scale 1.22 |  |  | TE | `moves_sim_te.lua:530` |
 
 <a id="snapperturtle"></a>
 
 ## snapperturtle — Snapper Turtle
 
-แหล่งข้อมูล: UM `moves_sim_um.lua:366`
+Data from: UM `moves_sim_um.lua:395`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 8 | target | 0 | ขนาด 1 |  |  | UM | `moves_sim_um.lua:367` |
-| `spin_pre` | spin_pre, spin_loop, spin_pst | 16 | facing |  | รอบตัว · ขนาด 1 · เคลื่อน 2.0 |  |  | UM | `moves_sim_um.lua:368` |
-| `spin_pst` | spin_pst | 16 | target | 0 | ขนาด 1 |  |  | UM | `moves_sim_um.lua:369` |
+| `atk` | atk | 8 | target | 0 | scale 1 |  |  | UM | `moves_sim_um.lua:396` |
+| `spin_pre` | spin_pre, spin_loop, spin_pst | 16 | facing |  | around itself · scale 1 · moves 2.0 |  |  | UM | `moves_sim_um.lua:397` |
+| `spin_pst` | spin_pst | 16 | target | 0 | scale 1 |  |  | UM | `moves_sim_um.lua:398` |
+
+**Special code that names it:** simmoves.lua:3667
 
 <a id="snapperturtlebaby"></a>
 
 ## snapperturtlebaby — Whippersnapper Turtle
 
-แหล่งข้อมูล: UM `moves_sim_um.lua:371`
+Data from: UM `moves_sim_um.lua:400`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 8 | target | 0 | ขนาด 0.6 |  |  | UM | `moves_sim_um.lua:372` |
-| `spin_pre` | spin_pre, spin_loop, spin_pst | 16 | facing |  | รอบตัว · ขนาด 0.6 · เคลื่อน 2.3 |  |  | UM | `moves_sim_um.lua:373` |
-| `spin_pst` | spin_pst | 16 | target | 0 | ขนาด 0.6 |  |  | UM | `moves_sim_um.lua:374` |
+| `atk` | atk | 8 | target | 0 | scale 0.6 |  |  | UM | `moves_sim_um.lua:401` |
+| `spin_pre` | spin_pre, spin_loop, spin_pst | 16 | facing |  | around itself · scale 0.6 · moves 2.3 |  |  | UM | `moves_sim_um.lua:402` |
+| `spin_pst` | spin_pst | 16 | target | 0 | scale 0.6 |  |  | UM | `moves_sim_um.lua:403` |
+
+**Special code that names it:** simmoves.lua:3667
 
 <a id="snowgoat"></a>
 
 ## snowgoat
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:166`
+Data from: TE `moves_sim_te.lua:532`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 12 | target | 0 |  |  |  | TE | `moves_sim_te.lua:166` |
+| `atk` | atk | 12 | target | 0 |  |  |  | TE | `moves_sim_te.lua:533` |
 
 <a id="snowmong"></a>
 
 ## snowmong — Abominamole
 
-แหล่งข้อมูล: UM `moves_sim_um.lua:376`
+Data from: UM `moves_sim_um.lua:405`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `action` | action | 8 | target | 0 | ขนาด 2 |  |  | UM | `moves_sim_um.lua:377` |
-| `exit` | exit | 22 | facing | 0 | ขนาด 2 |  |  | UM | `moves_sim_um.lua:378` |
+| `action` | action | 8 | target | 0 | scale 2 |  |  | UM | `moves_sim_um.lua:406` |
+| `exit` | exit | 22 | facing | 0 | scale 2 |  |  | UM | `moves_sim_um.lua:407` |
 
 <a id="snowperd"></a>
 
 ## snowperd
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:167`
+Data from: TE `moves_sim_te.lua:535`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 20 | target | 0 |  |  |  | TE | `moves_sim_te.lua:167` |
+| `atk` | atk | 20 | target | 0 |  |  |  | TE | `moves_sim_te.lua:536` |
 
 <a id="snowwarg"></a>
 
 ## snowwarg
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:168`
+Data from: TE `moves_sim_te.lua:538`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 11 | target | 0 |  |  |  | TE | `moves_sim_te.lua:168` |
+| `atk` | atk | 11 | target | 0 |  |  |  | TE | `moves_sim_te.lua:539` |
 
 <a id="snurtle"></a>
 
 ## snurtle — Snurtle
 
-แหล่งข้อมูล: เกม `moves_sim.lua:557`
+Data from: game `moves_sim.lua:560`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 10 | target | 0 |  |  |  | เกม | `moves_sim.lua:558` |
+| `atk` | atk | 10 | target | 0 |  |  |  | game | `moves_sim.lua:561` |
+
+**Special code that names it:** simmoves.lua:171
 
 <a id="spat"></a>
 
 ## spat — Ewecus
 
-แหล่งข้อมูล: เกม `moves_sim.lua:560`
+Data from: game `moves_sim.lua:563` · hand `moves_hand.lua:47`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `strike` | strike, strike_pst | 5 | target | 0 |  |  |  | เกม | `moves_sim.lua:561` |
+| `snot_pre` | snot_pre, snot, snot_pst | 27 | target | 27 |  |  |  | hand | `moves_hand.lua:47` |
+| `strike` | strike, strike_pst | 5 | target | 0 |  |  |  | game | `moves_sim.lua:564` |
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `spat_bomb` |  | เคลื่อนที่ · ดีเลย์ 0 · ตีถึง 15 | เกม | `moves_sim.lua:96` |  |
+| `spat_bomb` |  | moving · delay 0 · strikes until 15 | game | `moves_sim.lua:96` |  |
+
+**Special code that names it:** simmoves.lua:3546
 
 <a id="spider"></a>
 
 ## spider — Spider
 
-แหล่งข้อมูล: เกม `moves_sim.lua:563` · UM `moves_sim_um.lua:380`
+Data from: game `moves_sim.lua:566` · UM `moves_sim_um.lua:409`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` ▦ | atk | 25 | target | 0 |  |  |  | เกม | `moves_sim.lua:564` |
-| `hide` | hide, hit_shield | 15 | target | 0 | ตีด้วยของเท่านั้น | minimoonspider_spike |  | UM | `moves_sim_um.lua:381` |
-| `trapdoor_atk` | trapdoor_atk, taunt | 19 | target | 0 | ตามเป้า |  |  | UM | `moves_sim_um.lua:382` |
-| `warrior_atk` | warrior_atk, taunt | 19 | facing | 0 | เลน |  |  | UM | `moves_sim_um.lua:383` |
+| `atk` ▦ | atk | 25 | target | 0 |  |  |  | game | `moves_sim.lua:567` |
+| `hide` | hide, hit_shield | 15 | target | 0 | strikes only through things | minimoonspider_spike |  | UM | `moves_sim_um.lua:410` |
+| `trapdoor_atk` | trapdoor_atk, taunt | 19 | target | 0 | follows target |  |  | UM | `moves_sim_um.lua:411` |
+| `warrior_atk` | warrior_atk, taunt | 19 | facing | 0 | lane |  |  | UM | `moves_sim_um.lua:412` |
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `minimoonspider_spike` |  | อยู่นาน · ดีเลย์ 1 · ตีถึง 82 | UM | `moves_sim_um.lua:54` |  |
+| `minimoonspider_spike` |  | lasting · delay 1 · strikes until 82 | UM | `moves_sim_um.lua:57` |  |
 
 <a id="spider_ape"></a>
 
 ## spider_ape
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:169`
+Data from: TE `moves_sim_te.lua:541`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 17 | target | 0 |  |  |  | TE | `moves_sim_te.lua:169` |
+| `atk` | atk | 17 | target | 0 |  |  |  | TE | `moves_sim_te.lua:542` |
+
+<a id="spider_hider"></a>
+
+## spider_hider — Cave Spider
+
+Data from: hand-UM
+
+Drawn as: `spider`
+
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
+|---|---|---|---|---|---|---|---|---|---|
 
 <a id="spider_monkey"></a>
 
 ## spider_monkey
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:170`
+Data from: TE `moves_sim_te.lua:544`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 11 | target | 0 |  |  |  | TE | `moves_sim_te.lua:170` |
-| `throw` | throw | 14 | target | 0 |  |  |  | TE | `moves_sim_te.lua:170` |
+| `atk` | atk | 11 | target | 0 |  |  |  | TE | `moves_sim_te.lua:545` |
+| `throw` | throw | 14 | target | 0 |  |  |  | TE | `moves_sim_te.lua:546` |
 
 <a id="spider_moon"></a>
 
 ## spider_moon — Shattered Spider
 
-แหล่งข้อมูล: เกม `moves_sim.lua:566` · UM `moves_sim_um.lua:385`
+Data from: game `moves_sim.lua:569` · UM `moves_sim_um.lua:414`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 25 | target | 0 | ขนาด 1.25 |  |  | เกม | `moves_sim.lua:567` |
-| `hide` | hide, hit_shield, unhide | 15 | target | 0 | ขนาด 1.25 · ตีด้วยของเท่านั้น | moonspider_spike |  | เกม | `moves_sim.lua:568` |
-| `trapdoor_atk` | trapdoor_atk, taunt | 19 | target | 0 | ตามเป้า · ขนาด 1.25 |  |  | UM | `moves_sim_um.lua:386` |
+| `atk` | atk | 25 | target | 0 | scale 1.25 |  |  | game | `moves_sim.lua:570` |
+| `hide` | hide, hit_shield, unhide | 15 | target | 0 | scale 1.25 · strikes only through things | moonspider_spike |  | game | `moves_sim.lua:571` |
+| `trapdoor_atk` | trapdoor_atk, taunt | 19 | target | 0 | follows target · scale 1.25 |  |  | UM | `moves_sim_um.lua:415` |
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `moonspider_spike` | Shattered Spider | อยู่นาน · ดีเลย์ 1 · ตีถึง 81 | เกม | `moves_sim.lua:83` |  |
+| `moonspider_spike` | Shattered Spider | lasting · delay 1 · strikes until 81 | game | `moves_sim.lua:83` |  |
 
 <a id="spider_snow"></a>
 
 ## spider_snow
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:171`
+Data from: TE `moves_sim_te.lua:548`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 25 | target | 0 | ขนาด 1.25 |  |  | TE | `moves_sim_te.lua:171` |
-| `hide` | hide, hit_shield, unhide | 15 | target | 0 | ขนาด 1.25 · ตีด้วยของเท่านั้น | snowspider_spike |  | TE | `moves_sim_te.lua:171` |
-| `spit` | spit, taunt | 21 | target | 0 | ขนาด 1.25 |  |  | TE | `moves_sim_te.lua:171` |
-| `warrior_atk` | warrior_atk, taunt | 19 | facing | 0 | เลน · ขนาด 1.25 |  |  | TE | `moves_sim_te.lua:171` |
+| `atk` | atk | 25 | target | 0 | scale 1.25 |  |  | TE | `moves_sim_te.lua:549` |
+| `hide` | hide, hit_shield, unhide | 15 | target | 0 | scale 1.25 · strikes only through things | snowspider_spike |  | TE | `moves_sim_te.lua:550` |
+| `spit` | spit, taunt | 21 | target | 0 | scale 1.25 |  |  | TE | `moves_sim_te.lua:551` |
+| `warrior_atk` | warrior_atk, taunt | 19 | facing | 0 | lane · scale 1.25 |  |  | TE | `moves_sim_te.lua:552` |
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `snowspider_spike` |  | อยู่นาน · ดีเลย์ 1 · ตีถึง 82 | TE | `moves_sim_te.lua:28` |  |
+| `snowspider_spike` |  | lasting · delay 1 · strikes until 82 | TE | `moves_sim_te.lua:54` |  |
 
 <a id="spider_snow2"></a>
 
 ## spider_snow2
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:172`
+Data from: TE `moves_sim_te.lua:554`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 25 | target | 0 | ขนาด 1.25 |  |  | TE | `moves_sim_te.lua:172` |
-| `hide` | hide, hit_shield, unhide | 15 | target | 0 | ขนาด 1.25 · ตีด้วยของเท่านั้น | snowspider_spike2 |  | TE | `moves_sim_te.lua:172` |
-| `spit` | spit, taunt | 21 | target | 0 | ขนาด 1.25 |  |  | TE | `moves_sim_te.lua:172` |
-| `warrior_atk` | warrior_atk, taunt | 19 | facing | 0 | เลน · ขนาด 1.25 |  |  | TE | `moves_sim_te.lua:172` |
+| `atk` | atk | 25 | target | 0 | scale 1.25 |  |  | TE | `moves_sim_te.lua:555` |
+| `hide` | hide, hit_shield, unhide | 15 | target | 0 | scale 1.25 · strikes only through things | snowspider_spike2 |  | TE | `moves_sim_te.lua:556` |
+| `spit` | spit, taunt | 21 | target | 0 | scale 1.25 |  |  | TE | `moves_sim_te.lua:557` |
+| `warrior_atk` | warrior_atk, taunt | 19 | facing | 0 | lane · scale 1.25 |  |  | TE | `moves_sim_te.lua:558` |
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `snowspider_spike2` |  | อยู่นาน · ดีเลย์ 1 · ตีถึง 82 | TE | `moves_sim_te.lua:29` |  |
+| `snowspider_spike2` |  | lasting · delay 1 · strikes until 82 | TE | `moves_sim_te.lua:55` |  |
 
 <a id="spider_spitter"></a>
 
 ## spider_spitter — Spitter
 
-แหล่งข้อมูล: เกม `moves_sim.lua:570` · UM `moves_sim_um.lua:388`
+Data from: game `moves_sim.lua:573` · UM `moves_sim_um.lua:417` · hand
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 25 | target | 0 |  |  |  | เกม | `moves_sim.lua:571` |
-| `trapdoor_atk` | trapdoor_atk, taunt | 19 | target | 0 | ตามเป้า |  |  | UM | `moves_sim_um.lua:389` |
+| `atk` | atk | 25 | target | 0 |  |  |  | game | `moves_sim.lua:574` |
+| `spit` | spit | 21 | target | 21 |  |  |  | hand | `moves_hand.lua` |
+| `trapdoor_atk` | trapdoor_atk, taunt | 19 | target | 0 | follows target |  |  | UM | `moves_sim_um.lua:418` |
 
 <a id="spider_trapdoor"></a>
 
 ## spider_trapdoor — Trapdoor Spider
 
-แหล่งข้อมูล: UM `moves_sim_um.lua:391`
+Data from: UM `moves_sim_um.lua:420`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 25 | target | 0 | ขนาด 1.1 |  |  | UM | `moves_sim_um.lua:392` |
-| `spit` | spit, taunt | 21 | target | 0 | ขนาด 1.1 |  |  | UM | `moves_sim_um.lua:393` |
-| `trapdoor_atk` | trapdoor_atk, taunt | 19 | target | 0 | ตามเป้า · ขนาด 1.1 |  |  | UM | `moves_sim_um.lua:394` |
-| `warrior_atk` | warrior_atk, taunt | 19 | facing | 0 | เลน · ขนาด 1.1 |  |  | UM | `moves_sim_um.lua:395` |
+| `atk` | atk | 25 | target | 0 | scale 1.1 |  |  | UM | `moves_sim_um.lua:421` |
+| `spit` | spit, taunt | 21 | target | 0 | scale 1.1 |  |  | UM | `moves_sim_um.lua:422` |
+| `trapdoor_atk` | trapdoor_atk, taunt | 19 | target | 0 | follows target · scale 1.1 |  |  | UM | `moves_sim_um.lua:423` |
+| `warrior_atk` | warrior_atk, taunt | 19 | facing | 0 | lane · scale 1.1 |  |  | UM | `moves_sim_um.lua:424` |
 
 <a id="spider_trapdoor_hooded"></a>
 
 ## spider_trapdoor_hooded — Hooded Widower
 
-แหล่งข้อมูล: UM `moves_sim_um.lua:397`
+Data from: UM `moves_sim_um.lua:426`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 25 | target | 0 | ขนาด 1.1 |  |  | UM | `moves_sim_um.lua:398` |
-| `spit` | spit, taunt | 21 | target | 0 | ขนาด 1.1 |  |  | UM | `moves_sim_um.lua:399` |
-| `trapdoor_atk` | trapdoor_atk, taunt | 19 | target | 0 | ตามเป้า · ขนาด 1.1 |  |  | UM | `moves_sim_um.lua:400` |
-| `warrior_atk` | warrior_atk, taunt | 19 | facing | 0 | เลน · ขนาด 1.1 |  |  | UM | `moves_sim_um.lua:401` |
+| `atk` | atk | 25 | target | 0 | scale 1.1 |  |  | UM | `moves_sim_um.lua:427` |
+| `spit` | spit, taunt | 21 | target | 0 | scale 1.1 |  |  | UM | `moves_sim_um.lua:428` |
+| `trapdoor_atk` | trapdoor_atk, taunt | 19 | target | 0 | follows target · scale 1.1 |  |  | UM | `moves_sim_um.lua:429` |
+| `warrior_atk` | warrior_atk, taunt | 19 | facing | 0 | lane · scale 1.1 |  |  | UM | `moves_sim_um.lua:430` |
 
 <a id="spider_tropical"></a>
 
 ## spider_tropical
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:173`
+Data from: TE `moves_sim_te.lua:560`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 25 | target | 0 |  |  |  | TE | `moves_sim_te.lua:173` |
-| `spit` | spit, taunt | 21 | target | 0 |  |  |  | TE | `moves_sim_te.lua:173` |
-| `warrior_atk` | warrior_atk, taunt | 19 | facing | 0 | เลน |  |  | TE | `moves_sim_te.lua:173` |
+| `atk` | atk | 25 | target | 0 |  |  |  | TE | `moves_sim_te.lua:561` |
+| `spit` | spit, taunt | 21 | target | 0 |  |  |  | TE | `moves_sim_te.lua:562` |
+| `warrior_atk` | warrior_atk, taunt | 19 | facing | 0 | lane |  |  | TE | `moves_sim_te.lua:563` |
 
 <a id="spider_warrior"></a>
 
 ## spider_warrior — Spider Warrior
 
-แหล่งข้อมูล: เกม `moves_sim.lua:573` · UM `moves_sim_um.lua:403`
+Data from: game `moves_sim.lua:576` · UM `moves_sim_um.lua:432`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` ▦ | atk | 25 | target | 0 |  |  |  | เกม | `moves_sim.lua:574` |
-| `atk` ▦ | atk | 25 | target | 0 |  |  |  | UM | `moves_sim_um.lua:404` |
-| `trapdoor_atk` | trapdoor_atk, taunt | 19 | target | 0 | ตามเป้า |  |  | UM | `moves_sim_um.lua:405` |
-| `warrior_atk` ▦ | warrior_atk, taunt | 19 | facing | 0 | เลน |  |  | เกม | `moves_sim.lua:575` |
-| `warrior_atk` ▦ | warrior_atk, taunt | 19 | facing | 0 | เลน |  |  | UM | `moves_sim_um.lua:406` |
+| `atk` ▦ | atk | 25 | target | 0 |  |  |  | game | `moves_sim.lua:577` |
+| `atk` ▦ | atk | 25 | target | 0 |  |  |  | UM | `moves_sim_um.lua:433` |
+| `trapdoor_atk` | trapdoor_atk, taunt | 19 | target | 0 | follows target |  |  | UM | `moves_sim_um.lua:434` |
+| `warrior_atk` ▦ | warrior_atk, taunt | 19 | facing | 0 | lane |  |  | game | `moves_sim.lua:578` |
+| `warrior_atk` ▦ | warrior_atk, taunt | 19 | facing | 0 | lane |  |  | UM | `moves_sim_um.lua:435` |
 
 <a id="spider_water"></a>
 
 ## spider_water — Sea Strider
 
-แหล่งข้อมูล: เกม `moves_sim.lua:577`
+Data from: game `moves_sim.lua:580`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 16 | target | 0 |  |  |  | เกม | `moves_sim.lua:578` |
+| `atk` | atk | 16 | target | 0 |  |  |  | game | `moves_sim.lua:581` |
 
 <a id="spiderb"></a>
 
 ## spiderb
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:174`
+Data from: TE `moves_sim_te.lua:565`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 25 | target | 0 |  |  |  | TE | `moves_sim_te.lua:174` |
-| `spit` | spit, taunt | 21 | target | 0 |  |  |  | TE | `moves_sim_te.lua:174` |
-| `warrior_atk` | warrior_atk, taunt | 19 | facing | 0 | เลน |  |  | TE | `moves_sim_te.lua:174` |
+| `atk` | atk | 25 | target | 0 |  |  |  | TE | `moves_sim_te.lua:566` |
+| `spit` | spit, taunt | 21 | target | 0 |  |  |  | TE | `moves_sim_te.lua:567` |
+| `warrior_atk` | warrior_atk, taunt | 19 | facing | 0 | lane |  |  | TE | `moves_sim_te.lua:568` |
 
 <a id="spiderb1"></a>
 
 ## spiderb1
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:175`
+Data from: TE `moves_sim_te.lua:570`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 25 | target | 0 |  |  |  | TE | `moves_sim_te.lua:175` |
-| `spit` | spit, taunt | 21 | target | 0 |  |  |  | TE | `moves_sim_te.lua:175` |
-| `warrior_atk` | warrior_atk, taunt | 19 | facing | 0 | เลน |  |  | TE | `moves_sim_te.lua:175` |
+| `atk` | atk | 25 | target | 0 |  |  |  | TE | `moves_sim_te.lua:571` |
+| `spit` | spit, taunt | 21 | target | 0 |  |  |  | TE | `moves_sim_te.lua:572` |
+| `warrior_atk` | warrior_atk, taunt | 19 | facing | 0 | lane |  |  | TE | `moves_sim_te.lua:573` |
 
 <a id="spiderb2"></a>
 
 ## spiderb2
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:176`
+Data from: TE `moves_sim_te.lua:575`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 25 | target | 0 |  |  |  | TE | `moves_sim_te.lua:176` |
-| `spit` | spit, taunt | 21 | target | 0 |  |  |  | TE | `moves_sim_te.lua:176` |
-| `warrior_atk` | warrior_atk, taunt | 19 | facing | 0 | เลน |  |  | TE | `moves_sim_te.lua:176` |
+| `atk` | atk | 25 | target | 0 |  |  |  | TE | `moves_sim_te.lua:576` |
+| `spit` | spit, taunt | 21 | target | 0 |  |  |  | TE | `moves_sim_te.lua:577` |
+| `warrior_atk` | warrior_atk, taunt | 19 | facing | 0 | lane |  |  | TE | `moves_sim_te.lua:578` |
 
 <a id="spiderqueen"></a>
 
 ## spiderqueen — Spider Queen
 
-แหล่งข้อมูล: เกม `moves_sim.lua:580`
+Data from: game `moves_sim.lua:583`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 28 | target | 0 |  |  |  | เกม | `moves_sim.lua:581` |
+| `atk` | atk | 28 | target | 0 |  |  |  | game | `moves_sim.lua:584` |
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `queen_web_bomb` |  | เคลื่อนที่ · ดีเลย์ 0 | UM | `moves_sim_um.lua:59` |  |
+| `queen_web_bomb` |  | moving · delay 0 | UM | `moves_sim_um.lua:62` |  |
 
 <a id="spiky_monkey_tfc"></a>
 
 ## spiky_monkey_tfc
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:177`
+Data from: TE `moves_sim_te.lua:580`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `attack1` | attack1 | 21 | facing | 0 |  |  |  | TE | `moves_sim_te.lua:177` |
-| `attack2` | attack2 | 12 | target | 0 |  |  |  | TE | `moves_sim_te.lua:177` |
+| `attack1` | attack1 | 21 | facing | 0 |  |  |  | TE | `moves_sim_te.lua:581` |
+| `attack2` | attack2 | 12 | target | 0 |  |  |  | TE | `moves_sim_te.lua:582` |
 
 <a id="spiky_turtle_tfc"></a>
 
 ## spiky_turtle_tfc
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:178`
+Data from: TE `moves_sim_te.lua:584`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `attack1` | attack1 | 12 | facing | 0 |  |  |  | TE | `moves_sim_te.lua:178` |
+| `attack1` | attack1 | 12 | facing | 0 |  |  |  | TE | `moves_sim_te.lua:585` |
 
-**โค้ดพิเศษที่อ้างถึง:** modmain.lua:935
+**Special code that names it:** modmain.lua:959 simmoves.lua:3373
 
 <a id="sporehound"></a>
 
 ## sporehound — Spore Hound
 
-แหล่งข้อมูล: UM `moves_sim_um.lua:408`
+Data from: UM `moves_sim_um.lua:437` · hand-UM
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk | 16 | target | 0 |  |  |  | UM | `moves_sim_um.lua:409` |
-| `jump_atk_loop` | jump_atk_loop, hit, taunt | 15 | target | 0 | ตามเป้า · เคลื่อน 1.0 |  | lightningshot_cooldown | UM | `moves_sim_um.lua:410` |
+| `atk_pre` | atk_pre, atk | 16 | target | 0 |  |  |  | UM | `moves_sim_um.lua:438` |
+| `jump_atk_loop` | jump_atk_loop |  |  |  |  |  |  | hand-UM | `moves_hand_um.lua` |
+| `jump_atk_loop` | jump_atk_loop, hit, taunt | 15 | target | 0 | follows target · moves 1.0 |  | lightningshot_cooldown | UM | `moves_sim_um.lua:439` |
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `sporecloud_toad` | Spore Cloud | อยู่นาน · ดีเลย์ 30 | UM | `moves_sim_um.lua:64` |  |
+| `sporecloud_toad` | Spore Cloud | lasting · delay 30 | UM | `moves_sim_um.lua:68` |  |
 
 <a id="squid"></a>
 
 ## squid — Skittersquid
 
-แหล่งข้อมูล: เกม `moves_sim.lua:583` · TE `moves_sim_te.lua:179`
+Data from: game `moves_sim.lua:586` · TE `moves_sim_te.lua:587`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `attack` | attack | 10 | target | 0 |  |  |  | เกม | `moves_sim.lua:584` |
-| `attack` | attack | 10 | facing | 0 |  |  |  | TE | `moves_sim_te.lua:179` |
+| `attack` | attack | 10 | target | 0 |  |  |  | game | `moves_sim.lua:587` |
+| `attack` | attack | 10 | facing | 0 |  |  |  | TE | `moves_sim_te.lua:588` |
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `inksplat` |  | เคลื่อนที่ · ดีเลย์ 20 | เกม | `moves_sim.lua:80` |  |
-| `inksplat` |  | เคลื่อนที่ · ดีเลย์ 20 | TE | `moves_sim_te.lua:20` |  |
+| `inksplat` |  | moving · delay 20 | game | `moves_sim.lua:80` |  |
+| `inksplat` |  | moving · delay 20 | TE | `moves_sim_te.lua:46` |  |
 
 <a id="squidunderwater2"></a>
 
 ## squidunderwater2
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:180`
+Data from: TE `moves_sim_te.lua:590`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `attack` | attack | 10 | facing | 0 |  |  |  | TE | `moves_sim_te.lua:180` |
+| `attack` | attack | 10 | facing | 0 |  |  |  | TE | `moves_sim_te.lua:591` |
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `inksplat` |  | เคลื่อนที่ · ดีเลย์ 20 | TE | `moves_sim_te.lua:20` |  |
+| `inksplat` |  | moving · delay 20 | TE | `moves_sim_te.lua:46` |  |
 
 <a id="stageusher"></a>
 
 ## stageusher — Prickly Stagehand
 
-แหล่งข้อมูล: เกม `moves_sim.lua:586`
+Data from: game `moves_sim.lua:589`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `sleep` | sleep, idle_loop_01 | 166 | facing | 16 |  | stageusher_attackhand |  | เกม | `moves_sim.lua:587` |
+| `sleep` | sleep, idle_loop_01 | 166 | facing | 16 |  | stageusher_attackhand |  | game | `moves_sim.lua:590` |
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `stageusher_attackhand` |  | อยู่นาน · ดีเลย์ 0 · ตีถึง 300 | เกม | `moves_sim.lua:99` |  |
+| `stageusher_attackhand` |  | lasting · delay 0 · strikes until 300 | game | `moves_sim.lua:99` | simmoves.lua:3672 |
 
 <a id="stalker_atrium"></a>
 
 ## stalker_atrium — Ancient Fuelweaver
 
-แหล่งข้อมูล: เกม `moves_sim.lua:589` · UM `moves_sim_um.lua:412` · TE `moves_sim_te.lua:181`
+Data from: game `moves_sim.lua:592` · UM `moves_sim_um.lua:441` · TE `moves_sim_te.lua:593`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `attack` | attack | 32 | target | 0 |  |  |  | เกม | `moves_sim.lua:590` |
-| `attack` | attack | 32 | facing | 0 |  |  |  | TE | `moves_sim_te.lua:181` |
-| `attack` | attack | 32 | facing | 0 |  |  |  | UM | `moves_sim_um.lua:413` |
-| `attack1` | attack1 | 26 | target | 27 |  | fossilspike | mindcontrol_cd | เกม | `moves_sim.lua:591` |
-| `spike` ▦ | spike | 51 | facing | 0 |  | fossilspike2 | mindcontrol_cd | เกม | `moves_sim.lua:592` |
+| `attack` | attack | 32 | target | 0 |  |  |  | game | `moves_sim.lua:593` |
+| `attack` | attack | 32 | facing | 0 |  |  |  | TE | `moves_sim_te.lua:594` |
+| `attack` | attack | 32 | facing | 0 |  |  |  | UM | `moves_sim_um.lua:442` |
+| `attack1` | attack1 | 26 | target | 27 |  | fossilspike | mindcontrol_cd | game | `moves_sim.lua:594` |
+| `spike` ▦ | spike | 51 | facing | 0 |  | fossilspike2 | mindcontrol_cd | game | `moves_sim.lua:595` |
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `fossilspike` | Fossil Cage | ดีเลย์ 0 | เกม | `moves_sim.lua:71` |  |
-| `fossilspike2` | Fossil Spike | ดีเลย์ 46 | เกม | `moves_sim.lua:72` |  |
+| `fossilspike` | Fossil Cage | delay 0 | game | `moves_sim.lua:71` |  |
+| `fossilspike2` | Fossil Spike | delay 46 | game | `moves_sim.lua:72` |  |
 
 <a id="stalker_minion"></a>
 
 ## stalker_minion — Woven Shadow
 
-แหล่งข้อมูล: เกม `moves_sim.lua:594`
+Data from: game `moves_sim.lua:597`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
 
 <a id="stalker_npc"></a>
 
 ## stalker_npc — Ancient Fuelweaver
 
-แหล่งข้อมูล: เกม `moves_sim.lua:595`
+Data from: game `moves_sim.lua:598`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `attack` | attack | 32 | target | 0 |  |  |  | เกม | `moves_sim.lua:596` |
-| `attack1` | attack1 | 26 | facing | 0 |  |  |  | เกม | `moves_sim.lua:597` |
-| `spike` | spike | 51 | facing | 0 |  |  |  | เกม | `moves_sim.lua:598` |
+| `attack` | attack | 32 | target | 0 |  |  |  | game | `moves_sim.lua:599` |
+| `attack1` | attack1 | 26 | facing | 0 |  |  |  | game | `moves_sim.lua:600` |
+| `spike` | spike | 51 | facing | 0 |  |  |  | game | `moves_sim.lua:601` |
 
 <a id="strange_scorpion_tfc"></a>
 
 ## strange_scorpion_tfc
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:182`
+Data from: TE `moves_sim_te.lua:596`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `attack_pre` | attack_pre, attack | 12 | target | 0 |  |  |  | TE | `moves_sim_te.lua:182` |
+| `attack_pre` | attack_pre, attack | 12 | target | 0 |  |  |  | TE | `moves_sim_te.lua:597` |
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `strange_scorpion_massproj_tfc` |  | เคลื่อนที่ · ดีเลย์ 0 · ตีถึง 45 | TE | `moves_sim_te.lua:30` |  |
-| `strange_scorpion_proj_tfc` |  | เคลื่อนที่ · ดีเลย์ 0 · ตีถึง 30 | TE | `moves_sim_te.lua:31` |  |
+| `strange_scorpion_massproj_tfc` |  | moving · delay 0 · strikes until 45 | TE | `moves_sim_te.lua:56` |  |
+| `strange_scorpion_proj_tfc` |  | moving · delay 0 · strikes until 30 | TE | `moves_sim_te.lua:57` |  |
 
 <a id="stumpling"></a>
 
 ## stumpling — Pineling
 
-แหล่งข้อมูล: UM `moves_sim_um.lua:415`
+Data from: UM `moves_sim_um.lua:444`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `attack` | attack, taunt | 10 | facing | 0 |  |  |  | UM | `moves_sim_um.lua:416` |
+| `attack` | attack, taunt | 10 | facing | 0 |  |  |  | UM | `moves_sim_um.lua:445` |
 
 <a id="stungray"></a>
 
 ## stungray
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:183`
+Data from: TE `moves_sim_te.lua:599`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 8 | facing | 0 | ขนาด 1.05 |  |  | TE | `moves_sim_te.lua:183` |
+| `atk` | atk | 8 | facing | 0 | scale 1.05 |  |  | TE | `moves_sim_te.lua:600` |
 
 <a id="stungrayunderwater"></a>
 
 ## stungrayunderwater
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:184`
+Data from: TE `moves_sim_te.lua:602`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 8 | facing | 0 | ขนาด 1.05 |  |  | TE | `moves_sim_te.lua:184` |
+| `atk` | atk | 8 | facing | 0 | scale 1.05 |  |  | TE | `moves_sim_te.lua:603` |
 
 <a id="summerwalrus"></a>
 
 ## summerwalrus
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:185`
+Data from: TE `moves_sim_te.lua:605`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 20 | target | 20 |  |  |  | TE | `moves_sim_te.lua:185` |
+| `atk` | atk | 20 | target | 20 |  |  |  | TE | `moves_sim_te.lua:605` |
 
 <a id="swathgrithr"></a>
 
 ## swathgrithr — Wigfrid?
 
-แหล่งข้อมูล: UM `moves_sim_um.lua:418`
+Data from: UM `moves_sim_um.lua:447`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk, lunge_pst | 32 | target |  | ตามเป้า |  |  | UM | `moves_sim_um.lua:419` |
-| `lunge_pre` | lunge_pre, lunge_lag, sing_pre | 12 | target | 16 | ตามเป้า |  |  | UM | `moves_sim_um.lua:420` |
+| `atk_pre` | atk_pre, atk, lunge_pst | 32 | target |  | follows target |  |  | UM | `moves_sim_um.lua:448` |
+| `lunge_pre` | lunge_pre, lunge_lag, sing_pre | 12 | target | 16 | follows target |  |  | UM | `moves_sim_um.lua:449` |
 
 <a id="swilson"></a>
 
 ## swilson — Wilson?
 
-แหล่งข้อมูล: UM `moves_sim_um.lua:422`
+Data from: UM `moves_sim_um.lua:451`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk, run_loop | 32 | target |  | ตามเป้า |  |  | UM | `moves_sim_um.lua:423` |
+| `atk_pre` | atk_pre, atk, run_loop | 32 | target |  | follows target |  |  | UM | `moves_sim_um.lua:452` |
 
 <a id="swordfish"></a>
 
 ## swordfish
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:186`
+Data from: TE `moves_sim_te.lua:606`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk | 16 | facing | 0 |  |  |  | TE | `moves_sim_te.lua:186` |
+| `atk_pre` | atk_pre, atk | 16 | facing | 0 |  |  |  | TE | `moves_sim_te.lua:607` |
 
 <a id="swordfishunderwater"></a>
 
 ## swordfishunderwater
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:187`
+Data from: TE `moves_sim_te.lua:609`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk | 16 | target | 0 |  |  |  | TE | `moves_sim_te.lua:187` |
+| `atk_pre` | atk_pre, atk | 16 | target | 0 |  |  |  | TE | `moves_sim_te.lua:610` |
 

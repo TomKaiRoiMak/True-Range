@@ -1,51 +1,55 @@
-# 06 · ขั้นตอนแก้บั๊ก + กฎของทีม
+# 06 · Workflow and rules
 
-[← สารบัญ](README.md)
+[<- Contents](README.md)
 
-## ขั้นตอนมาตรฐาน (ตัวอย่างจริง: "วงจุดตกของ Ink Blight ยังขยับ")
+## The standard steps (a real example: "the Ink Blight's landing ring still moves")
 
 ```
-1. ได้รับรายงาน ──► 2. หาเฟรมจริง ──► 3. หาสาเหตุ ──► 4. แก้ + สวิตช์ ──► 5. A/B offline
-                                                                              │
-8. commit ◀── 7. patch notes ◀── 6. install + lag bench ยืนยัน ◀──────────────────┘
+1. report ──► 2. find the real frame ──► 3. find the cause ──► 4. fix + switch ──► 5. A/B offline
+                                                                                        │
+8. commit ◀── 7. patch notes ◀── 6. install + confirm with the lag bench ◀───────────────┘
 ```
 
-| ขั้น | ทำอะไร | ตัวอย่าง |
+| Step | What | Example |
 |---|---|---|
-| 1 | อ่าน log ของผู้รายงานก่อน (ถ้ามี) | `client_log.txt` ล่าสุดของเขา |
-| 2 | lag bench บอสนั้น → ดูทุกเฟรม | `run_lag.ps1 -Bosses shadowthrall_wings -Rounds 1` แล้ว `lag_land.ps1` |
-| 3 | ระบุเฟรม/กฎที่ผิดด้วยตัวเลข | "78/91 การขยับเกิด 2 เฟรมหลังแตะพื้น" |
-| 4 | แก้ที่กฎ + `TR_OLD_xxx` + เพิ่มชื่อสวิตช์ในรายการของ `tests\replay.lua`, `tests\replay_haz.lua` | `TR_OLD_LANDSTOP` |
-| 5 | replay ใหม่ vs เก่าบน log ชุดเดียวกัน | missed/false ไม่เพิ่ม |
-| 6 | `install.ps1` → `install_client.ps1` → lag bench เดิมอีกรอบ | ขยับ 0.84 → 0.13 ต่อลูก (เฉพาะ LANDSTOP) |
-| 7 | เพิ่มบรรทัดใน `patch_notes_1.1.6.txt` **และ** `patch_notes_client_1.1.6.txt` (ต้องเหมือนกัน) | ภาษาอังกฤษ สำหรับผู้เล่น |
-| 8 | commit ตามแม่แบบใน [`VERIFY_PLAN.md`](../VERIFY_PLAN.md) | ปัญหา / สาเหตุ / แก้ / วัด |
+| 1 | read the reporter's log first (if there is one) | their latest `client_log.txt` |
+| 2 | lag bench that boss -> look at every frame | `run_lag.ps1 -Bosses shadowthrall_wings -Rounds 1`, then `lag_land.ps1` |
+| 3 | name the wrong frame/rule with numbers | "78/91 of the moves happen 2 frames after touching down" |
+| 4 | fix the rule + `TR_OLD_xxx` + add the switch name to the lists in `tests\replay.lua` and `tests\replay_haz.lua` | `TR_OLD_LANDSTOP` |
+| 5 | replay new vs old on the same logs | missed/false don't go up |
+| 6 | `install.ps1` -> `install_client.ps1` -> the same lag bench again | moves 0.84 -> 0.13 per ball (LANDSTOP alone) |
+| 7 | add a line to `patch_notes_<version>.txt` **and** `patch_notes_client_<version>.txt` (they must match) | short, in English, for players |
+| 8 | commit with the template in [`VERIFY_PLAN.md`](../VERIFY_PLAN.md) | Problem / Cause / Fix / Measured / Left |
 
-ถ้าลองแล้ว **แย่ลง**: ปิดกฎ (เปลี่ยนเป็นสวิตช์ opt-in เช่น `TR_LEADEASE`) แล้ว commit พร้อมตัวเลขที่แย่ลง — อย่าลบเงียบ ๆ
+If it turned out **worse**: turn the rule off (make it an opt-in switch, e.g. `TR_LEADEASE`) and commit with the worse numbers - don't delete it quietly.
 
-## เช็คลิสต์ก่อน commit
+## Checklist before a commit
 
-- [ ] `luajit -bl <ไฟล์ที่แก้>` ผ่าน (โดยเฉพาะ `simmoves.lua` — เพดาน 200 local)
-- [ ] ไม่มี global ใหม่ที่ไม่ได้ประกาศ (สวิตช์: `rawget(_G, "...")` ใน scripts, `GLOBAL.rawget(GLOBAL, "...")` ใน modmain)
-- [ ] `true_range\scripts\true_range\data_id.lua` เปลี่ยนทุกครั้งที่ install — ไม่ต้อง commit ถ้าไม่ได้เปลี่ยนข้อมูล
-- [ ] แก้ไฟล์ข้อมูล (`moves_*.lua`) → รัน `tools\make_catalog.ps1` ให้ [สารบัญมอน](catalog/README.md) ตรงกับข้อมูล
-- [ ] สวิตช์อยู่ในรายการของ replay ทั้งสองไฟล์
-- [ ] A/B มีตัวเลข
-- [ ] `install.ps1` แสดง `installed:`
-- [ ] patch notes ทั้งสองไฟล์
-- [ ] ไม่มีไฟล์ใหญ่/ลับหลุดเข้า commit (`git status` ก่อน)
+- [ ] `luajit -bl <changed file>` passes (especially `simmoves.lua` - the 200-local limit)
+- [ ] no new undeclared globals (switches: `rawget(_G, "...")` in scripts, `GLOBAL.rawget(GLOBAL, "...")` in modmain)
+- [ ] `true_range\scripts\true_range\data_id.lua` changes on every install - no need to commit it if the data didn't change
+- [ ] changed a data file (`moves_*.lua`) -> run `tools\make_catalog.ps1` so the [catalog](catalog/README.md) matches the data
+- [ ] the switch is in both replay files' lists
+- [ ] the A/B has numbers
+- [ ] `install.ps1` showed `installed:`
+- [ ] both patch-notes files
+- [ ] no big or secret file slipped into the commit (`git status` first)
 
-## กฎของทีม
+## After a Workshop upload
 
-กฎทั้งหมดอยู่ที่เดียว: [VERIFY_PLAN.md §3](../VERIFY_PLAN.md) — อ่านก่อนแก้ครั้งแรก
+Bump `version` in `true_range\modinfo.lua` right away and start empty `patch_notes_<next>.txt` and `patch_notes_client_<next>.txt`, so the next changes are noted in the right version.
 
-## แยกอาการของ testbench ออกจากบั๊กจริง
+## Team rules
 
-ก่อนสรุปว่า "พลาด" ให้ดู trace รอบเวลานั้นก่อน อาการเหล่านี้ **ไม่ใช่บั๊กของ mod**:
+All rules are in one place: [VERIFY_PLAN.md §3](../VERIFY_PLAN.md) - read them before your first change.
 
-| อาการใน trace | ความหมาย |
+## Telling testbench artefacts from real bugs
+
+Before concluding "missed", look at the trace around that time. These are **not mod bugs**:
+
+| In the trace | Means |
 |---|---|
-| ตำแหน่งผู้เล่น/บอสกระโดด > 10 ใน tick เดียว | testbench ย้ายฉาก |
-| `t=` (เวลา state) ค้างหลายเฟรมแล้วกระโดด | state time freeze ของ server ที่เร่งความเร็ว |
-| `lead=20.00` ใน `struck by` | ตัวผู้เล่นถูกย้ายตอนโดน |
-| โดนจากของสองชิ้นที่จุดเดียวกัน ชิ้นหนึ่ง in อีกชิ้น NOT | นับแยกต่อผู้ตี — ตัวผู้เล่นอยู่ในวงจริง |
+| the player's/boss's position jumps > 10 in one tick | the testbench moved the scene |
+| `t=` (state time) stuck for several frames, then jumps | the sped-up server's state time froze |
+| `lead=20.00` in `struck by` | the player was moved as it was hit |
+| hit by two things at the same spot, one "in" and one "NOT" | counted per striker - the player really was in the drawn area |

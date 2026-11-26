@@ -1,48 +1,48 @@
-# สารบัญมอน — N
+# Monster catalog - N
 
-[← สารบัญทั้งหมด](README.md) · สร้างอัตโนมัติด้วย `tools\make_catalog.ps1` — **อย่าแก้หน้านี้ด้วยมือ**
+[<- full index](README.md) · made by `tools\make_catalog.ps1` - **don't edit this page by hand**
 
-คอลัมน์: **ตีเฟรม** = เฟรมแรกที่ตี (30 เฟรม/วินาที) · **เล็ง** = `target` หันตามเป้า / `facing` ตามที่บอสหัน · **lock** = เฟรมที่หยุดเล็ง · **แบบ** = ลักษณะพิเศษของท่า · **ที่อยู่** = ไฟล์ข้อมูล:บรรทัด (ใน `true_range/scripts/true_range/`)
+Columns: **hit frame** = first frame it strikes (30 frames/s) · **aim** = `target` turns to its target / `facing` the way the boss faces · **lock** = frame it stops aiming · **kind** = the move's special traits · **where** = data file:line (in `true_range/scripts/true_range/`)
 
 <a id="nervoustick"></a>
 
 ## nervoustick — Nervous Tick
 
-แหล่งข้อมูล: UM `moves_sim_um.lua:288`
+Data from: UM `moves_sim_um.lua:310`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk, taunt | 0 | target |  |  |  |  | UM | `moves_sim_um.lua:289` |
+| `atk` | atk, taunt | 0 | target |  |  |  |  | UM | `moves_sim_um.lua:311` |
 
 <a id="nightcrawler"></a>
 
 ## nightcrawler — Night Crawler
 
-แหล่งข้อมูล: UM `moves_sim_um.lua:291`
+Data from: UM `moves_sim_um.lua:313`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 10 | target | 0 |  |  |  | UM | `moves_sim_um.lua:292` |
-| `shuttle_pre` | shuttle_pre, shuttle_loop, shuttle_pst | 15 | target | 0 | ตามเป้า |  |  | UM | `moves_sim_um.lua:293` |
+| `atk` | atk | 10 | target | 0 |  |  |  | UM | `moves_sim_um.lua:314` |
+| `shuttle_pre` | shuttle_pre, shuttle_loop, shuttle_pst | 15 | target | 0 | follows target |  |  | UM | `moves_sim_um.lua:315` |
 
 <a id="nohatty_piggy_tfc"></a>
 
 ## nohatty_piggy_tfc
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:115`
+Data from: TE `moves_sim_te.lua:360`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `attack1` | attack1 | 12 | target | 0 | ขนาด 0.8 |  |  | TE | `moves_sim_te.lua:115` |
-| `attack2` | attack2 | 26 | target | 0 | ตามเป้า · ขนาด 0.8 |  |  | TE | `moves_sim_te.lua:115` |
+| `attack1` | attack1 | 12 | target | 0 | scale 0.8 |  |  | TE | `moves_sim_te.lua:361` |
+| `attack2` | attack2 | 26 | target | 0 | follows target · scale 0.8 |  |  | TE | `moves_sim_te.lua:362` |
 
 <a id="nymph"></a>
 
 ## nymph — Nymph
 
-แหล่งข้อมูล: UM `moves_sim_um.lua:295`
+Data from: UM `moves_sim_um.lua:317`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 8 | target | 0 |  |  |  | UM | `moves_sim_um.lua:296` |
+| `atk` | atk | 8 | target | 0 |  |  |  | UM | `moves_sim_um.lua:318` |
 

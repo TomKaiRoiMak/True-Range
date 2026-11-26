@@ -1,323 +1,340 @@
-# สารบัญมอน — P
+# Monster catalog - P
 
-[← สารบัญทั้งหมด](README.md) · สร้างอัตโนมัติด้วย `tools\make_catalog.ps1` — **อย่าแก้หน้านี้ด้วยมือ**
+[<- full index](README.md) · made by `tools\make_catalog.ps1` - **don't edit this page by hand**
 
-คอลัมน์: **ตีเฟรม** = เฟรมแรกที่ตี (30 เฟรม/วินาที) · **เล็ง** = `target` หันตามเป้า / `facing` ตามที่บอสหัน · **lock** = เฟรมที่หยุดเล็ง · **แบบ** = ลักษณะพิเศษของท่า · **ที่อยู่** = ไฟล์ข้อมูล:บรรทัด (ใน `true_range/scripts/true_range/`)
+Columns: **hit frame** = first frame it strikes (30 frames/s) · **aim** = `target` turns to its target / `facing` the way the boss faces · **lock** = frame it stops aiming · **kind** = the move's special traits · **where** = data file:line (in `true_range/scripts/true_range/`)
 
 <a id="packim"></a>
 
 ## packim
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:126`
+Data from: TE `moves_sim_te.lua:394`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `fireball` | fireball | 21 | target | 0 |  |  |  | TE | `moves_sim_te.lua:126` |
+| `fireball` | fireball | 21 | target | 0 |  |  |  | TE | `moves_sim_te.lua:395` |
 
 <a id="panda"></a>
 
 ## panda
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:127`
+Data from: TE `moves_sim_te.lua:397`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk | 9 | target | 0 |  |  |  | TE | `moves_sim_te.lua:127` |
+| `atk_pre` | atk_pre, atk | 9 | target | 0 |  |  |  | TE | `moves_sim_te.lua:398` |
 
 <a id="pangolden"></a>
 
 ## pangolden
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:128`
+Data from: TE `moves_sim_te.lua:400`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 17 | target | 0 |  |  |  | TE | `moves_sim_te.lua:128` |
+| `atk` | atk | 17 | target | 0 |  |  |  | TE | `moves_sim_te.lua:401` |
 
 <a id="parrot"></a>
 
 ## parrot
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:129`
+Data from: TE `moves_sim_te.lua:403`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `mutated_attack` | mutated_attack, mutated_flap | 1 | target |  | ขนาด 1 · เคลื่อน 33.4 |  |  | TE | `moves_sim_te.lua:129` |
+| `mutated_attack` | mutated_attack, mutated_flap | 1 | target |  | scale 1 · moves 33.4 |  |  | TE | `moves_sim_te.lua:404` |
 
 <a id="parrot_pirate"></a>
 
 ## parrot_pirate
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:130`
+Data from: TE `moves_sim_te.lua:406`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `mutated_attack` | mutated_attack, mutated_flap | 1 | target |  | ขนาด 1 · เคลื่อน 33.4 |  |  | TE | `moves_sim_te.lua:130` |
+| `mutated_attack` | mutated_attack, mutated_flap | 1 | target |  | scale 1 · moves 33.4 |  |  | TE | `moves_sim_te.lua:407` |
 
 <a id="peagawk"></a>
 
 ## peagawk
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:131`
+Data from: TE `moves_sim_te.lua:409`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 20 | target | 0 |  |  |  | TE | `moves_sim_te.lua:131` |
+| `atk` | atk | 20 | target | 0 |  |  |  | TE | `moves_sim_te.lua:410` |
 
 <a id="peagawk_prism"></a>
 
 ## peagawk_prism
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:132`
+Data from: TE `moves_sim_te.lua:412`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 20 | target | 0 |  |  |  | TE | `moves_sim_te.lua:132` |
+| `atk` | atk | 20 | target | 0 |  |  |  | TE | `moves_sim_te.lua:413` |
 
 <a id="peekhen"></a>
 
 ## peekhen
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:133`
+Data from: TE `moves_sim_te.lua:415`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 15 | target | 0 |  |  |  | TE | `moves_sim_te.lua:133` |
+| `atk` | atk | 15 | target | 0 |  |  |  | TE | `moves_sim_te.lua:416` |
 
 <a id="penguin"></a>
 
 ## penguin — Pengull
 
-แหล่งข้อมูล: เกม `moves_sim.lua:442` · มือ `moves_hand.lua:41`
+Data from: game `moves_sim.lua:444` · hand `moves_hand.lua:41`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` ▦ | atk_pre, atk | 15 | target | 0 |  |  |  | เกม | `moves_sim.lua:443` |
-| `slide` | slide_bounce, slide_loop |  | facing |  | พุ่งเป็นขา |  |  | มือ | `moves_hand.lua` |
+| `atk_pre` ▦ | atk_pre, atk | 15 | target | 0 |  |  |  | game | `moves_sim.lua:445` |
+| `slide` | slide_bounce, slide_loop |  | facing |  | charge legs |  |  | hand | `moves_hand.lua` |
 
-**โค้ดพิเศษที่อ้างถึง:** modmain.lua:887
+**Special code that names it:** modmain.lua:900
 
 <a id="pied_rat"></a>
 
 ## pied_rat — Pied Piper
 
-แหล่งข้อมูล: UM `moves_sim_um.lua:312`
+Data from: UM `moves_sim_um.lua:334`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `playatk` | playatk | 10 | target | 0 |  |  |  | UM | `moves_sim_um.lua:313` |
+| `playatk` | playatk | 10 | target | 0 |  |  |  | UM | `moves_sim_um.lua:335` |
 
 <a id="pig_ruins_spear_trap"></a>
 
 ## pig_ruins_spear_trap
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:134`
+Data from: TE `moves_sim_te.lua:418`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `extending` | extending, idle_extend | 5 | facing | 0 |  |  |  | TE | `moves_sim_te.lua:134` |
+| `extending` | extending, idle_extend | 5 | facing | 0 |  |  |  | TE | `moves_sim_te.lua:419` |
 
 <a id="pigbandit"></a>
 
 ## pigbandit
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:135`
+Data from: TE `moves_sim_te.lua:421`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 13 | target | 0 |  |  |  | TE | `moves_sim_te.lua:135` |
+| `atk` | atk | 13 | target | 0 |  |  |  | TE | `moves_sim_te.lua:422` |
 
 <a id="pigelite1"></a>
 
 ## pigelite1 — Wade
 
-แหล่งข้อมูล: เกม `moves_sim.lua:445`
+Data from: game `moves_sim.lua:447`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_object` | atk_object | 7 | facing | 0 |  |  |  | เกม | `moves_sim.lua:446` |
+| `atk_object` | atk_object | 7 | facing | 0 |  |  |  | game | `moves_sim.lua:448` |
 
 <a id="pigelitefighter1"></a>
 
 ## pigelitefighter1 — Wade
 
-แหล่งข้อมูล: เกม `moves_sim.lua:448`
+Data from: game `moves_sim.lua:450`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_combo` | atk_combo | 12 | target | 0 |  |  |  | เกม | `moves_sim.lua:449` |
+| `atk_combo` | atk_combo | 12 | target | 0 |  |  |  | game | `moves_sim.lua:451` |
 
 <a id="piggolem"></a>
 
 ## piggolem
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:136`
+Data from: TE `moves_sim_te.lua:424`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 13 | target | 0 |  |  |  | TE | `moves_sim_te.lua:136` |
+| `atk` | atk | 13 | target | 0 |  |  |  | TE | `moves_sim_te.lua:425` |
+
+<a id="pigguard_minion"></a>
+
+## pigguard_minion
+
+Data from: TE `moves_sim_te.lua:427`
+
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
+|---|---|---|---|---|---|---|---|---|---|
+| `atk` | atk | 13 | target | 0 |  |  |  | TE | `moves_sim_te.lua:428` |
+| `were_atk_pre` | were_atk_pre, were_atk, were_atk_pst | 16 | target | 0 |  |  |  | TE | `moves_sim_te.lua:429` |
 
 <a id="pigking_pigguard"></a>
 
 ## pigking_pigguard
 
-แหล่งข้อมูล: UM `moves_sim_um.lua:315`
+Data from: UM `moves_sim_um.lua:337`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 13 | target | 0 |  |  |  | UM | `moves_sim_um.lua:316` |
-| `counter_atk` | counter_atk, charge_pre, charge_loop, charge_atk | 54 | target | 0 | ตามเป้า |  |  | UM | `moves_sim_um.lua:317` |
-| `counter_atk~counterattack_pre` | counter_atk, charge_pre, charge_loop, charge_atk | 54 | facing | 0 | ตามเป้า |  |  | UM | `moves_sim_um.lua:318` |
-| `paw_loop` | paw_loop, charge_pre, charge_loop, charge_atk | 74 | target | 0 | ตามเป้า |  |  | UM | `moves_sim_um.lua:319` |
-| `paw_pre` | paw_pre, paw_loop, charge_pre, charge_loop, … | 79 | target | 0 | ตามเป้า |  |  | UM | `moves_sim_um.lua:320` |
+| `atk` | atk | 13 | target | 0 |  |  |  | UM | `moves_sim_um.lua:338` |
+| `counter_atk` | counter_atk, charge_pre, charge_loop, charge_atk | 54 | target | 0 | follows target |  |  | UM | `moves_sim_um.lua:339` |
+| `counter_atk~counterattack_pre` | counter_atk, charge_pre, charge_loop, charge_atk | 54 | facing | 0 | follows target |  |  | UM | `moves_sim_um.lua:340` |
+| `paw_loop` | paw_loop, charge_pre, charge_loop, charge_atk | 74 | target | 0 | follows target |  |  | UM | `moves_sim_um.lua:341` |
+| `paw_pre` | paw_pre, paw_loop, charge_pre, charge_loop, … | 79 | target | 0 | follows target |  |  | UM | `moves_sim_um.lua:342` |
+| `were_atk_pre` | were_atk_pre, were_atk, halloween_atk_pst | 12 | target | 0 |  |  |  | UM | `moves_sim_um.lua:343` |
 
 <a id="pigman"></a>
 
 ## pigman — Pig Man
 
-แหล่งข้อมูล: เกม `moves_sim.lua:451` · UM `moves_sim_um.lua:322`
+Data from: game `moves_sim.lua:453` · UM `moves_sim_um.lua:345`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 13 | target | 0 |  |  |  | เกม | `moves_sim.lua:452` |
-| `counter_atk` | counter_atk, charge_pre, charge_loop, charge_atk | 54 | target | 0 | ตามเป้า |  |  | UM | `moves_sim_um.lua:323` |
-| `counter_atk~counterattack_pre` | counter_atk, charge_pre, charge_loop, charge_atk | 54 | facing | 0 | ตามเป้า |  |  | UM | `moves_sim_um.lua:324` |
-| `paw_loop` | paw_loop, charge_pre, charge_loop, charge_atk | 74 | target | 0 | ตามเป้า |  |  | UM | `moves_sim_um.lua:325` |
-| `paw_pre` | paw_pre, paw_loop, charge_pre, charge_loop, … | 79 | target | 0 | ตามเป้า |  |  | UM | `moves_sim_um.lua:326` |
-| `were_atk_pre` | were_atk_pre, were_atk | 16 | target | 0 |  |  |  | เกม | `moves_sim.lua:453` |
-| `were_atk_pre` | were_atk_pre, were_atk | 16 | facing | 0 |  |  |  | UM | `moves_sim_um.lua:327` |
+| `atk` | atk | 13 | target | 0 |  |  |  | game | `moves_sim.lua:454` |
+| `counter_atk` | counter_atk, charge_pre, charge_loop, charge_atk | 54 | target | 0 | follows target |  |  | UM | `moves_sim_um.lua:346` |
+| `counter_atk~counterattack_pre` | counter_atk, charge_pre, charge_loop, charge_atk | 54 | facing | 0 | follows target |  |  | UM | `moves_sim_um.lua:347` |
+| `paw_loop` | paw_loop, charge_pre, charge_loop, charge_atk | 74 | target | 0 | follows target |  |  | UM | `moves_sim_um.lua:348` |
+| `paw_pre` | paw_pre, paw_loop, charge_pre, charge_loop, … | 79 | target | 0 | follows target |  |  | UM | `moves_sim_um.lua:349` |
+| `were_atk_pre` | were_atk_pre, were_atk, were_atk_pst | 16 | target | 0 |  |  |  | game | `moves_sim.lua:455` |
+| `were_atk_pre` | were_atk_pre, were_atk | 16 | facing | 0 |  |  |  | UM | `moves_sim_um.lua:350` |
+| `were_atk_pre~hn_attack` | were_atk_pre, were_atk, halloween_atk_pst | 12 | target | 0 |  |  |  | game | `moves_sim.lua:456` |
+| `were_atk_pre~hn_attack` | were_atk_pre, were_atk, halloween_atk_pst | 12 | target | 0 |  |  |  | UM | `moves_sim_um.lua:351` |
+
+**Special code that names it:** simmoves.lua:170
 
 <a id="pigman_minion"></a>
 
 ## pigman_minion
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:137`
+Data from: TE `moves_sim_te.lua:431`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 13 | target | 0 |  |  |  | TE | `moves_sim_te.lua:137` |
-| `atk_object` | atk_object | 7 | facing | 0 |  |  |  | TE | `moves_sim_te.lua:137` |
+| `atk` | atk | 13 | target | 0 |  |  |  | TE | `moves_sim_te.lua:432` |
+| `atk_object` | atk_object | 7 | facing | 0 |  |  |  | TE | `moves_sim_te.lua:433` |
+| `were_atk_pre` | were_atk_pre, were_atk, were_atk_pst | 16 | target | 0 |  |  |  | TE | `moves_sim_te.lua:434` |
 
 <a id="piko"></a>
 
 ## piko
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:138`
+Data from: TE `moves_sim_te.lua:436`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `attack` | attack | 10 | target | 0 |  |  |  | TE | `moves_sim_te.lua:138` |
+| `attack` | attack | 10 | target | 0 |  |  |  | TE | `moves_sim_te.lua:437` |
 
 <a id="piko_orange"></a>
 
 ## piko_orange
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:139`
+Data from: TE `moves_sim_te.lua:439`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `attack` | attack | 10 | target | 0 |  |  |  | TE | `moves_sim_te.lua:139` |
+| `attack` | attack | 10 | target | 0 |  |  |  | TE | `moves_sim_te.lua:440` |
 
 <a id="pinkman"></a>
 
 ## pinkman
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:140`
+Data from: TE `moves_sim_te.lua:442`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 13 | target | 0 |  |  |  | TE | `moves_sim_te.lua:140` |
-| `charge_atk` | charge_atk | 12 | target | 0 |  |  |  | TE | `moves_sim_te.lua:140` |
+| `atk` | atk | 13 | target | 0 |  |  |  | TE | `moves_sim_te.lua:443` |
+| `charge_atk` | charge_atk | 12 | target | 0 |  |  |  | TE | `moves_sim_te.lua:444` |
 
 <a id="pog"></a>
 
 ## pog
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:141`
+Data from: TE `moves_sim_te.lua:446`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `attack` | attack | 16 | target | 0 |  |  |  | TE | `moves_sim_te.lua:141` |
+| `attack` | attack | 16 | target | 0 |  |  |  | TE | `moves_sim_te.lua:447` |
 
 <a id="poisoncrocodog"></a>
 
 ## poisoncrocodog
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:142`
+Data from: TE `moves_sim_te.lua:449`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk | 20 | target | 0 |  |  |  | TE | `moves_sim_te.lua:142` |
+| `atk_pre` | atk_pre, atk | 20 | target | 0 |  |  |  | TE | `moves_sim_te.lua:450` |
 
 <a id="pollenmites"></a>
 
 ## pollenmites — Pollen Mites
 
-แหล่งข้อมูล: UM `moves_sim_um.lua:329`
+Data from: UM `moves_sim_um.lua:353`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `attack_pre` | attack_pre, attack_pst | 20 | target | 0 |  |  |  | UM | `moves_sim_um.lua:330` |
+| `attack_pre` | attack_pre, attack_pst | 20 | target | 0 |  |  |  | UM | `moves_sim_um.lua:354` |
 
 <a id="powder_monkey"></a>
 
 ## powder_monkey — Powder Monkey
 
-แหล่งข้อมูล: เกม `moves_sim.lua:455`
+Data from: game `moves_sim.lua:458`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `unequipped_atk` | unequipped_atk | 14 | target | 0 |  |  |  | เกม | `moves_sim.lua:456` |
+| `unequipped_atk` | unequipped_atk | 14 | target | 0 |  |  |  | game | `moves_sim.lua:459` |
 
 <a id="prime_mate"></a>
 
 ## prime_mate — Prime Mate
 
-แหล่งข้อมูล: เกม `moves_sim.lua:458`
+Data from: game `moves_sim.lua:461`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 9 | target | 0 | ขนาด 1.2 |  |  | เกม | `moves_sim.lua:459` |
+| `atk` | atk | 9 | target | 0 | scale 1.2 |  |  | game | `moves_sim.lua:462` |
 
 <a id="primeape"></a>
 
 ## primeape
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:143`
+Data from: TE `moves_sim_te.lua:452`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 17 | target | 0 |  |  | go_home_delay | TE | `moves_sim_te.lua:143` |
+| `atk` | atk | 17 | target | 0 |  |  | go_home_delay | TE | `moves_sim_te.lua:453` |
 
 <a id="pugalisk"></a>
 
 ## pugalisk
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:144`
+Data from: TE `moves_sim_te.lua:455`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 17 | target | 0 | ขนาด 1.5 |  |  | TE | `moves_sim_te.lua:144` |
+| `atk` | atk | 17 | target | 0 | scale 1.5 |  |  | TE | `moves_sim_te.lua:456` |
 
-**โค้ดพิเศษที่อ้างถึง:** modmain.lua:946
+**Special code that names it:** modmain.lua:970
 
 <a id="pugalisk_body"></a>
 
 ## pugalisk_body
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:145`
+Data from: TE `moves_sim_te.lua:458`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 17 | target | 0 | ขนาด 1.5 |  |  | TE | `moves_sim_te.lua:145` |
+| `atk` | atk | 17 | target | 0 | scale 1.5 |  |  | TE | `moves_sim_te.lua:459` |
 
 <a id="pugalisk_tail"></a>
 
 ## pugalisk_tail
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:146`
+Data from: TE `moves_sim_te.lua:461`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `tail_smack` | tail_smack | 17 | target | 0 | ขนาด 1.5 |  |  | TE | `moves_sim_te.lua:146` |
+| `tail_smack` | tail_smack | 17 | target | 0 | scale 1.5 |  |  | TE | `moves_sim_te.lua:462` |
 

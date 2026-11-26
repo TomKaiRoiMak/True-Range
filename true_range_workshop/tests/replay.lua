@@ -34,7 +34,7 @@ function EffOrThing(s)
     local k = string.format("%.3f", s.t)
     return EFF_AT[k] ~= nil or (s.by ~= nil and THING_AT[k] == s.by and not os.getenv("OLD_THINGSTRIKE"))
 end
--- (TR_TABLES_OFF: the mod as it was before REDESIGN.md's tables - tools/table_gate.ps1 compares)
+-- (TR_TABLES_OFF: the mod as it was before the tables (docs/04-data-pipeline.md) - tools/table_gate.ps1 compares)
 if os.getenv("TR_TABLES_OFF") then TR_TABLES_OFF = true end
 -- (DRAWLOG=1: true_range/simmoves "[tr_draw]" lines, as the local copy writes them in the game - with -v)
 if os.getenv("DRAWLOG") then TR_DRAWLOG = true end
@@ -3021,7 +3021,7 @@ do
     local SM = require("true_range/simmoves")
     local entries = {}
     for _, m in ipairs(SM.Moves(PREFAB) or {}) do if m.name ~= nil then entries[m.name] = m.sim end end
-    -- (one told by its table (REDESIGN.md): it stops aiming at its deciding frame)
+    -- (one told by its table (docs/04-data-pipeline.md, Tables): it stops aiming at its deciding frame)
     local tok, Tables = pcall(require, "true_range/moves_table")
     local tabs = tok and type(Tables) == "table" and Tables[PREFAB] or {}
     local i = 1

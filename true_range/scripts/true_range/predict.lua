@@ -16,7 +16,7 @@ local Learn = require("true_range/learn")
 local SimMoves = require("true_range/simmoves")
 local Legacy = require("true_range/legacy")
 local Preload = require("true_range/moves_preload")
--- (REDESIGN.md's tables - the moves told that way: true_range/moves_table; none, if it isn't there)
+-- (the tables (docs/04-data-pipeline.md) - the moves told that way: true_range/moves_table; none, if it isn't there)
 local tab_ok, Tables = pcall(require, "true_range/moves_table")
 if not tab_ok or type(Tables) ~= "table" then Tables = {} end
 
@@ -1596,7 +1596,7 @@ end
 -- (tests/flash_aim.lua)
 Predict._Flash = Flash
 
--- A move with a table (true_range/moves_table, REDESIGN.md): where it strikes with its target at
+-- A move with a table (true_range/moves_table, docs/04-data-pipeline.md): where it strikes with its target at
 -- each place round it, run offline. One rule: until its deciding frame (tab.decide), for where its
 -- target is now; from then, for where its target was then - nothing else matters after. Its place
 -- in the table: the nearest angle and distance run, turned and moved on to just where its target
@@ -2284,8 +2284,8 @@ function Predict.Draw(ents, ranges, my_radius, me, skip)
             end
             -- (but not one still turned off the way it walked once its charge_pre has done steering (frame 11 an eye's, 25 a
             -- mouth's): nothing turned it back - it charges the way it faces. Retinazer walking at -77.9, turned to -53.6 in 3
-            -- frames, -53.6 on till it went - drawn -77.9, its lane sliding along beside it, the player 2026-11-02 ("ไถลทั้ง
-            -- แกน"; their log, 41.4 s). 26 frames on, over 10 off its walk: the way it faces. Earlier is too soon - most turn
+            -- frames, -53.6 on till it went - drawn -77.9, its lane sliding along beside it, the player 2026-11-02 ("the whole
+            -- lane slides"; their log, 41.4 s). 26 frames on, over 10 off its walk: the way it faces. Earlier is too soon - most turn
             -- back at 11 / 25 (frame 4: 5 -> 22 of 51 over 45 off, lag 2009-2113). TR_OLD_STILLHEADING: kept)
             if a ~= nil and a.heading and not rawget(_G, "TR_OLD_STILLHEADING") then
                 if a.head_t == nil then
@@ -2956,7 +2956,7 @@ function Predict.Draw(ents, ranges, my_radius, me, skip)
                         local bx, _, bz = ent.Transform:GetWorldPosition()
                         -- (its aim (statemem.rot) as its code turns it: the way it faces till frame `turn` (canturn); after, unseen,
                         -- on towards its target half the way left a frame, `turn_max` degrees at most, never back; set at `lock` -
-                        -- its shadows set off that way, more turned than it shows: "เลิกเล็ง แต่ของจริงมันหันเยอะกว่า", the player
+                        -- its shadows set off that way, more turned than it shows: "it stops aiming, but the real one turns more", the player
                         -- 2026-11-02. TR_OLD_QUEENTURN: the way it faces at `lock`)
                         local f_now = math.floor(into / FRAMES + .5)
                         if a.lanes_f == nil or f_now < a.lanes_f then a.lanes_rot = nil end

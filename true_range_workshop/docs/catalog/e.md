@@ -1,71 +1,72 @@
-# สารบัญมอน — E
+# Monster catalog - E
 
-[← สารบัญทั้งหมด](README.md) · สร้างอัตโนมัติด้วย `tools\make_catalog.ps1` — **อย่าแก้หน้านี้ด้วยมือ**
+[<- full index](README.md) · made by `tools\make_catalog.ps1` - **don't edit this page by hand**
 
-คอลัมน์: **ตีเฟรม** = เฟรมแรกที่ตี (30 เฟรม/วินาที) · **เล็ง** = `target` หันตามเป้า / `facing` ตามที่บอสหัน · **lock** = เฟรมที่หยุดเล็ง · **แบบ** = ลักษณะพิเศษของท่า · **ที่อยู่** = ไฟล์ข้อมูล:บรรทัด (ใน `true_range/scripts/true_range/`)
+Columns: **hit frame** = first frame it strikes (30 frames/s) · **aim** = `target` turns to its target / `facing` the way the boss faces · **lock** = frame it stops aiming · **kind** = the move's special traits · **where** = data file:line (in `true_range/scripts/true_range/`)
 
 <a id="elephantcactus_active"></a>
 
 ## elephantcactus_active
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:62`
+Data from: TE `moves_sim_te.lua:182`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `attack_pre` | attack_pre, attack | 30 | facing | 0 |  |  | SPIKE | TE | `moves_sim_te.lua:62` |
+| `attack_pre` | attack_pre, attack | 30 | facing | 0 |  |  | SPIKE | TE | `moves_sim_te.lua:183` |
 
 <a id="eyeofterror"></a>
 
 ## eyeofterror — Eye Of Terror
 
-แหล่งข้อมูล: เกม `moves_sim.lua:277` · UM `moves_sim_um.lua:179` · มือ-UM `moves_hand_um.lua:12`
+Data from: game `moves_sim.lua:278` · UM `moves_sim_um.lua:192` · hand-UM `moves_hand_um.lua:20`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `charge_pre` | charge_pre, charge_loop, charge_pst | 34 | facing | 11 | เคลื่อน 15.0 |  | charge_cd | เกม | `moves_sim.lua:278` |
-| `charge_pre~charge_pre` | charge_pre, charge_loop, charge_pst, taunt | 34 | facing | 123 | พุ่งเป็นขา · เคลื่อน 18.8 |  | charge_cd | เกม | `moves_sim.lua:279` |
-| `charge_pre~shoot_pre` | charge_pre, charge_loop, charge_pst | 39 | target | 39 | แยกด้วย eyeofterror_chargepulse |  | charge_cd | มือ-UM | `moves_hand_um.lua:13` |
-| `charge_pre~shoot_pre~2` | charge_pre, charge_loop, charge_pst | 39 | target | 39 | แยกด้วย eyeofterror_chargepulse |  | charge_cd | มือ-UM | `moves_hand_um.lua:14` |
-| `chomp` ▦ | chomp, taunt | 25 | facing | 0 |  |  |  | เกม | `moves_sim.lua:280` |
-| `shoot` | shoot | 11 | target | 11 |  | eyeofterror_laser, eyeofterror_laserempty |  | UM | `moves_sim_um.lua:180` |
+| `charge_pre` | charge_pre, charge_loop, charge_pst | 34 | facing | 11 | moves 15.0 |  | charge_cd | game | `moves_sim.lua:279` |
+| `charge_pre~charge_pre` | charge_pre, charge_loop, charge_pst, taunt | 34 | facing | 123 | charge legs · moves 18.8 |  | charge_cd | game | `moves_sim.lua:280` |
+| `charge_pre~shoot_pre` | charge_pre, charge_loop, charge_pst | 39 | target | 39 | told by eyeofterror_chargepulse |  | charge_cd | hand-UM | `moves_hand_um.lua:21` |
+| `charge_pre~shoot_pre~2` | charge_pre, charge_loop, charge_pst | 39 | target | 39 | told by eyeofterror_chargepulse |  | charge_cd | hand-UM | `moves_hand_um.lua:22` |
+| `chomp` ▦ | chomp, taunt | 25 | facing | 0 |  |  |  | game | `moves_sim.lua:281` |
+| `shoot` | shoot | 11 | target | 11 |  | eyeofterror_laser, eyeofterror_laserempty |  | UM | `moves_sim_um.lua:193` |
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `eyeofterror_laser` |  | ดีเลย์ 1 | UM | `moves_sim_um.lua:46` |  |
-| `eyeofterror_laserempty` |  | ดีเลย์ 0 | UM | `moves_sim_um.lua:47` |  |
-| `eyeofterror_minieye_projectile` |  | เคลื่อนที่ · ดีเลย์ 0 | UM | `moves_sim_um.lua:48` | modmain.lua:1051 |
+| `cursed_fire` |  | lasting | hand-UM | `moves_hand_um.lua` | simmoves.lua:4621 |
+| `eyeofterror_laser` |  | delay 1 | UM | `moves_sim_um.lua:47` |  |
+| `eyeofterror_laserempty` |  | delay 0 | UM | `moves_sim_um.lua:48` |  |
+| `eyeofterror_minieye_projectile` |  | moving · delay 0 | UM | `moves_sim_um.lua:49` | modmain.lua:1076 |
 
-**โค้ดพิเศษที่อ้างถึง:** simmoves.lua:3200
+**Special code that names it:** simmoves.lua:3411
 
 <a id="eyeofterror_mini"></a>
 
 ## eyeofterror_mini — Suspicious Peeper
 
-แหล่งข้อมูล: เกม `moves_sim.lua:282`
+Data from: game `moves_sim.lua:283`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk, taunt | 14 | target | 0 | เคลื่อน 2.3 |  |  | เกม | `moves_sim.lua:283` |
+| `atk_pre` | atk_pre, atk, taunt | 14 | target | 0 | moves 2.3 |  |  | game | `moves_sim.lua:284` |
 
 <a id="eyeofterror_mini_ally"></a>
 
 ## eyeofterror_mini_ally — Hardy Peeper
 
-แหล่งข้อมูล: UM `moves_sim_um.lua:182`
+Data from: UM `moves_sim_um.lua:195`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk, taunt | 14 | target | 0 | ขนาด 1.2 · เคลื่อน 2.7 |  |  | UM | `moves_sim_um.lua:183` |
+| `atk_pre` | atk_pre, atk, taunt | 14 | target | 0 | scale 1.2 · moves 2.7 |  |  | UM | `moves_sim_um.lua:196` |
 
 <a id="eyeplant"></a>
 
 ## eyeplant — Eye Plant
 
-แหล่งข้อมูล: เกม `moves_sim.lua:285`
+Data from: game `moves_sim.lua:286`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` ▦ | atk | 14 | target | 0 |  |  |  | เกม | `moves_sim.lua:286` |
+| `atk` ▦ | atk | 14 | target | 0 |  |  |  | game | `moves_sim.lua:287` |
 

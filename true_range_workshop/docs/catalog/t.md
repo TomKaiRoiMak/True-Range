@@ -1,234 +1,246 @@
-# สารบัญมอน — T
+# Monster catalog - T
 
-[← สารบัญทั้งหมด](README.md) · สร้างอัตโนมัติด้วย `tools\make_catalog.ps1` — **อย่าแก้หน้านี้ด้วยมือ**
+[<- full index](README.md) · made by `tools\make_catalog.ps1` - **don't edit this page by hand**
 
-คอลัมน์: **ตีเฟรม** = เฟรมแรกที่ตี (30 เฟรม/วินาที) · **เล็ง** = `target` หันตามเป้า / `facing` ตามที่บอสหัน · **lock** = เฟรมที่หยุดเล็ง · **แบบ** = ลักษณะพิเศษของท่า · **ที่อยู่** = ไฟล์ข้อมูล:บรรทัด (ใน `true_range/scripts/true_range/`)
+Columns: **hit frame** = first frame it strikes (30 frames/s) · **aim** = `target` turns to its target / `facing` the way the boss faces · **lock** = frame it stops aiming · **kind** = the move's special traits · **where** = data file:line (in `true_range/scripts/true_range/`)
 
 <a id="tallbird"></a>
 
 ## tallbird — Tallbird
 
-แหล่งข้อมูล: เกม `moves_sim.lua:600`
+Data from: game `moves_sim.lua:603`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk | 12 | target | 0 |  |  |  | เกม | `moves_sim.lua:601` |
-| `teenatk_pre` | teenatk_pre, teenatk | 13 | target | 0 |  |  |  | เกม | `moves_sim.lua:602` |
+| `atk_pre` | atk_pre, atk | 12 | target | 0 |  |  |  | game | `moves_sim.lua:604` |
+| `teenatk_pre` | teenatk_pre, teenatk | 13 | target | 0 |  |  |  | game | `moves_sim.lua:605` |
 
 <a id="teenbird"></a>
 
 ## teenbird — Smallish Tallbird
 
-แหล่งข้อมูล: เกม `moves_sim.lua:604`
+Data from: game `moves_sim.lua:607`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk | 12 | target | 0 | ขนาด 0.8 |  |  | เกม | `moves_sim.lua:605` |
-| `teenatk_pre` | teenatk_pre, teenatk | 13 | target | 0 | ขนาด 0.8 |  |  | เกม | `moves_sim.lua:606` |
+| `atk_pre` | atk_pre, atk | 12 | target | 0 | scale 0.8 |  |  | game | `moves_sim.lua:608` |
+| `teenatk_pre` | teenatk_pre, teenatk | 13 | target | 0 | scale 0.8 |  |  | game | `moves_sim.lua:609` |
 
 <a id="tentacle"></a>
 
 ## tentacle — Tentacle
 
-แหล่งข้อมูล: เกม `moves_sim.lua:608`
+Data from: game `moves_sim.lua:611`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_loop` | atk_loop, atk_idle | 7 | target | 0 |  |  |  | เกม | `moves_sim.lua:609` |
-| `atk_pre` | atk_pre, atk_loop, atk_idle | 32 | target | 0 |  |  |  | เกม | `moves_sim.lua:610` |
+| `atk_loop` | atk_loop, atk_idle | 7 | target | 0 |  |  |  | game | `moves_sim.lua:612` |
+| `atk_pre` | atk_pre, atk_loop, atk_idle | 32 | target | 0 |  |  |  | game | `moves_sim.lua:613` |
 
-**โค้ดพิเศษที่อ้างถึง:** modmain.lua:877
+**Special code that names it:** modmain.lua:890
 
 <a id="tentacle_pillar_arm"></a>
 
 ## tentacle_pillar_arm — Baby Tentacle
 
-แหล่งข้อมูล: เกม `moves_sim.lua:612`
+Data from: game `moves_sim.lua:615`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_loop` | atk_loop, atk_pst | 7 | target | 0 | ขนาด 0.95 |  |  | เกม | `moves_sim.lua:613` |
+| `atk_loop` | atk_loop, atk_pst | 7 | target | 0 | scale 0.95 |  |  | game | `moves_sim.lua:616` |
 
-**โค้ดพิเศษที่อ้างถึง:** modmain.lua:877
+**Special code that names it:** modmain.lua:890
 
 <a id="tentacleunderwater"></a>
 
 ## tentacleunderwater
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:188`
+Data from: TE `moves_sim_te.lua:612`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk_loop, atk_idle | 32 | target | 0 |  |  |  | TE | `moves_sim_te.lua:188` |
+| `atk_pre` | atk_pre, atk_loop, atk_idle | 32 | target | 0 |  |  |  | TE | `moves_sim_te.lua:613` |
 
 <a id="thunderbird"></a>
 
 ## thunderbird
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:189`
+Data from: TE `moves_sim_te.lua:615`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
 
 <a id="ticoon"></a>
 
 ## ticoon — Ticoon
 
-แหล่งข้อมูล: เกม `moves_sim.lua:615`
+Data from: game `moves_sim.lua:618`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 16 | target | 0 | ขนาด 1.1 |  |  | เกม | `moves_sim.lua:616` |
+| `atk` | atk | 16 | target | 0 | scale 1.1 |  |  | game | `moves_sim.lua:619` |
 
 <a id="tigershark"></a>
 
 ## tigershark
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:190`
+Data from: TE `moves_sim_te.lua:616`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 23 | facing | 0 |  |  | Run | TE | `moves_sim_te.lua:190` |
-| `launch_down_pst` | launch_down_pst | 0 | facing |  | รอบตัว |  |  | TE | `moves_sim_te.lua` |
-| `launch_up_pre` | launch_up_pre, launch_up_loop | 0 | facing |  | รอบตัว |  |  | TE | `moves_sim_te.lua` |
-| `launch_up_pre~jump` | launch_up_pre, launch_up_loop | 0 | facing |  | รอบตัว · เคลื่อน 1.0 |  |  | TE | `moves_sim_te.lua` |
-| `water_atk_pre` | water_atk_pre, water_atk, water_atk_pst | 27 | facing | 0 |  |  | Run | TE | `moves_sim_te.lua` |
+| `atk` | atk | 23 | facing | 0 |  |  | Run | TE | `moves_sim_te.lua:617` |
+| `launch_down_pst` | launch_down_pst | 0 | facing |  | around itself |  |  | TE | `moves_sim_te.lua:618` |
+| `launch_up_pre` | launch_up_pre, launch_up_loop | 0 | facing |  | around itself |  |  | TE | `moves_sim_te.lua:619` |
+| `launch_up_pre~jump` | launch_up_pre, launch_up_loop | 0 | facing |  | around itself · moves 1.0 |  |  | TE | `moves_sim_te.lua:620` |
+| `water_atk_pre` | water_atk_pre, water_atk, water_atk_pst | 27 | facing | 0 |  |  | Run | TE | `moves_sim_te.lua:621` |
 
-**โค้ดพิเศษที่อ้างถึง:** modmain.lua:960
+**Special code that names it:** modmain.lua:984
 
 <a id="tikiman"></a>
 
 ## tikiman
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:191`
+Data from: TE `moves_sim_te.lua:623`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 17 | target | 0 | ขนาด 1.25 |  |  | TE | `moves_sim_te.lua:191` |
+| `atk` | atk | 17 | target | 0 | scale 1.25 |  |  | TE | `moves_sim_te.lua:624` |
 
 <a id="toadstool"></a>
 
 ## toadstool — Toadstool
 
-แหล่งข้อมูล: เกม `moves_sim.lua:618`
+Data from: game `moves_sim.lua:621`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `attack_pound_pre` ▦ | attack_pound_pre, attack_pound_loop, attack_pound_pst | 36 | facing | 0 |  |  | pound_cd | เกม | `moves_sim.lua:619` |
+| `attack_pound_pre` ▦ | attack_pound_pre, attack_pound_loop, attack_pound_pst | 36 | facing | 0 |  |  | pound_cd | game | `moves_sim.lua:622` |
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `mushroombomb` | Boomshroom | ดีเลย์ 95 | เกม | `moves_sim.lua:85` |  |
+| `mushroombomb` | Boomshroom | delay 95 | game | `moves_sim.lua:85` |  |
 
 <a id="toadstool_dark"></a>
 
 ## toadstool_dark — Misery Toadstool
 
-แหล่งข้อมูล: เกม `moves_sim.lua:621`
+Data from: game `moves_sim.lua:624`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `attack_pound_pre` | attack_pound_pre, attack_pound_loop, attack_pound_pst | 36 | facing | 0 |  |  | pound_cd | เกม | `moves_sim.lua:622` |
+| `attack_pound_pre` | attack_pound_pre, attack_pound_loop, attack_pound_pst | 36 | facing | 0 |  |  | pound_cd | game | `moves_sim.lua:625` |
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `mushroombomb_dark` | Misery Boomshroom | ดีเลย์ 95 | เกม | `moves_sim.lua:86` |  |
+| `mushroombomb_dark` | Misery Boomshroom | delay 95 | game | `moves_sim.lua:86` |  |
+
+<a id="trapslug"></a>
+
+## trapslug
+
+Data from: TE `moves_sim_te.lua:626`
+
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
+|---|---|---|---|---|---|---|---|---|---|
+| `atk` | atk | 9 | target | 0 |  |  |  | TE | `moves_sim_te.lua:627` |
 
 <a id="treeguard"></a>
 
 ## treeguard
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:192`
+Data from: TE `moves_sim_te.lua:629`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 25 | target | 0 |  |  |  | TE | `moves_sim_te.lua:192` |
+| `atk` | atk | 25 | target | 0 |  |  |  | TE | `moves_sim_te.lua:630` |
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `warningshadow` |  | เคลื่อนที่ · อยู่นาน · ดีเลย์ 0 · ตีถึง 60 | TE | `moves_sim_te.lua:32` | predict.lua:3734 predict.lua:3749 |
+| `warningshadow` |  | moving · lasting · delay 0 · strikes until 60 | TE | `moves_sim_te.lua:58` | predict.lua:4062 predict.lua:4077 predict.lua:4096 |
 
-**โค้ดพิเศษที่อ้างถึง:** predict.lua:3741
+**Special code that names it:** predict.lua:4069
 
 <a id="tricktreatpigman"></a>
 
 ## tricktreatpigman
 
-แหล่งข้อมูล: UM `moves_sim_um.lua:425`
+Data from: UM `moves_sim_um.lua:454`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 13 | target | 0 |  |  |  | UM | `moves_sim_um.lua:426` |
-| `counter_atk` | counter_atk, charge_pre, charge_loop, charge_atk | 54 | target | 0 | ตามเป้า |  |  | UM | `moves_sim_um.lua:427` |
-| `counter_atk~counterattack_pre` | counter_atk, charge_pre, charge_loop, charge_atk | 54 | facing | 0 | ตามเป้า |  |  | UM | `moves_sim_um.lua:428` |
-| `paw_loop` | paw_loop, charge_pre, charge_loop, charge_atk | 74 | target | 0 | ตามเป้า |  |  | UM | `moves_sim_um.lua:429` |
-| `paw_pre` | paw_pre, paw_loop, charge_pre, charge_loop, … | 79 | target | 0 | ตามเป้า |  |  | UM | `moves_sim_um.lua:430` |
+| `atk` | atk | 13 | target | 0 |  |  |  | UM | `moves_sim_um.lua:455` |
+| `counter_atk` | counter_atk, charge_pre, charge_loop, charge_atk | 54 | target | 0 | follows target |  |  | UM | `moves_sim_um.lua:456` |
+| `counter_atk~counterattack_pre` | counter_atk, charge_pre, charge_loop, charge_atk | 54 | facing | 0 | follows target |  |  | UM | `moves_sim_um.lua:457` |
+| `paw_loop` | paw_loop, charge_pre, charge_loop, charge_atk | 74 | target | 0 | follows target |  |  | UM | `moves_sim_um.lua:458` |
+| `paw_pre` | paw_pre, paw_loop, charge_pre, charge_loop, … | 79 | target | 0 | follows target |  |  | UM | `moves_sim_um.lua:459` |
+| `were_atk_pre` | were_atk_pre, were_atk, halloween_atk_pst | 12 | target | 0 |  |  |  | UM | `moves_sim_um.lua:460` |
 
 <a id="twinofterror1"></a>
 
 ## twinofterror1 — Retinazor
 
-แหล่งข้อมูล: เกม `moves_sim.lua:624` · UM `moves_sim_um.lua:432`
+Data from: game `moves_sim.lua:627` · UM `moves_sim_um.lua:462`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `charge_pre` | charge_pre, charge_loop, charge_pst | 34 | facing | 11 | เคลื่อน 20.0 |  | charge_cd | เกม | `moves_sim.lua:625` |
-| `charge_pre~charge_pre` | charge_pre, charge_loop, charge_pst, taunt | 34 | facing | 105 | พุ่งเป็นขา · เคลื่อน 15.4 |  | charge_cd | เกม | `moves_sim.lua:626` |
-| `charge_pre~shoot_pre` | charge_pre, charge_loop, charge_pst, taunt | 34 | target | 34 | แยกด้วย eyeofterror_chargepulse | eyeofterror_laser, eyeofterror_laserempty | charge_cd | UM | `moves_sim_um.lua:433` |
-| `charge_pre~shoot_pre~2` | charge_pre, charge_loop, charge_pst | 34 | target | 50 | แยกด้วย eyeofterror_chargepulse | eyeofterror_laser, eyeofterror_laserempty | charge_cd | UM | `moves_sim_um.lua:434` |
-| `chomp` ▦ | chomp, taunt | 25 | facing | 0 |  |  |  | เกม | `moves_sim.lua:627` |
-| `shoot` | shoot | 11 | target | 11 |  | eyeofterror_laser, eyeofterror_laserempty |  | UM | `moves_sim_um.lua:435` |
+| `charge_pre` | charge_pre, charge_loop, charge_pst | 34 | facing | 11 | moves 20.0 |  | charge_cd | game | `moves_sim.lua:628` |
+| `charge_pre~charge_pre` | charge_pre, charge_loop, charge_pst, taunt | 34 | facing | 105 | charge legs · moves 15.4 |  | charge_cd | game | `moves_sim.lua:629` |
+| `charge_pre~shoot_pre` | charge_pre, charge_loop, charge_pst, taunt | 34 | target | 34 | told by eyeofterror_chargepulse | eyeofterror_laser, eyeofterror_laserempty | charge_cd | UM | `moves_sim_um.lua:463` |
+| `charge_pre~shoot_pre~2` | charge_pre, charge_loop, charge_pst | 34 | target | 50 | told by eyeofterror_chargepulse | eyeofterror_laser, eyeofterror_laserempty | charge_cd | UM | `moves_sim_um.lua:464` |
+| `chomp` ▦ | chomp, taunt | 25 | facing | 0 |  |  |  | game | `moves_sim.lua:630` |
+| `shoot` | shoot | 11 | target | 11 |  | eyeofterror_laser, eyeofterror_laserempty |  | UM | `moves_sim_um.lua:465` |
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `eyeofterror_laser` |  | ดีเลย์ 1 | UM | `moves_sim_um.lua:46` |  |
-| `eyeofterror_laserempty` |  | ดีเลย์ 0 | UM | `moves_sim_um.lua:47` |  |
+| `eyeofterror_laser` |  | delay 1 | UM | `moves_sim_um.lua:47` |  |
+| `eyeofterror_laserempty` |  | delay 0 | UM | `moves_sim_um.lua:48` |  |
 
-**โค้ดพิเศษที่อ้างถึง:** simmoves.lua:3200 simmoves.lua:3207
+**Special code that names it:** simmoves.lua:3411 simmoves.lua:3446
 
 <a id="twinofterror2"></a>
 
 ## twinofterror2 — Spazmatism
 
-แหล่งข้อมูล: เกม `moves_sim.lua:629` · UM `moves_sim_um.lua:437` · มือ-UM `moves_hand_um.lua:16`
+Data from: game `moves_sim.lua:632` · UM `moves_sim_um.lua:467` · hand-UM `moves_hand_um.lua:24`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `charge_pre` | charge_pre, charge_loop, charge_pst | 34 | facing | 11 | เคลื่อน 9.2 |  |  | เกม | `moves_sim.lua:630` |
-| `charge_pre~charge_pre` | charge_pre, charge_loop, charge_pst | 34 | facing | 93 | พุ่งเป็นขา · เคลื่อน 12.5 |  | charge_cd | เกม | `moves_sim.lua:631` |
-| `charge_pre~shoot_pre` | charge_pre, charge_loop, charge_pst | 34 | target | 34 | แยกด้วย eyeofterror_chargepulse |  | charge_cd | มือ-UM | `moves_hand_um.lua:17` |
-| `charge_pre~shoot_pre~2` | charge_pre, charge_loop, charge_pst | 34 | target | 34 | แยกด้วย eyeofterror_chargepulse |  | charge_cd | มือ-UM | `moves_hand_um.lua:18` |
-| `chomp` ▦ | chomp, taunt | 25 | facing | 0 |  |  |  | เกม | `moves_sim.lua:632` |
-| `shoot` | shoot | 11 | target | 11 |  | eyeofterror_laser, eyeofterror_laserempty |  | UM | `moves_sim_um.lua:438` |
+| `charge_pre` | charge_pre, charge_loop, charge_pst | 34 | facing | 11 | moves 9.2 |  |  | game | `moves_sim.lua:633` |
+| `charge_pre~charge_pre` | charge_pre, charge_loop, charge_pst | 34 | facing | 93 | charge legs · moves 12.5 |  | charge_cd | game | `moves_sim.lua:634` |
+| `charge_pre~shoot_pre` | charge_pre, charge_loop, charge_pst | 34 | target | 34 | told by eyeofterror_chargepulse |  | charge_cd | hand-UM | `moves_hand_um.lua:25` |
+| `charge_pre~shoot_pre~2` | charge_pre, charge_loop, charge_pst | 34 | target | 34 | told by eyeofterror_chargepulse |  | charge_cd | hand-UM | `moves_hand_um.lua:26` |
+| `chomp` ▦ | chomp, taunt | 25 | facing | 0 |  |  |  | game | `moves_sim.lua:635` |
+| `shoot` | shoot | 11 | target | 11 |  | eyeofterror_laser, eyeofterror_laserempty |  | UM | `moves_sim_um.lua:468` |
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `cursed_fire` |  | อยู่นาน · ดีเลย์ 15 | UM | `moves_sim_um.lua:37` |  |
-| `eyeofterror_fireball` |  | เคลื่อนที่ · ดีเลย์ 0 | UM | `moves_sim_um.lua:45` |  |
-| `eyeofterror_laser` |  | ดีเลย์ 1 | UM | `moves_sim_um.lua:46` |  |
-| `eyeofterror_laserempty` |  | ดีเลย์ 0 | UM | `moves_sim_um.lua:47` |  |
+| `cursed_fire` |  | lasting | hand-UM | `moves_hand_um.lua` | simmoves.lua:4621 |
+| `cursed_fire` |  | lasting · delay 15 | UM | `moves_sim_um.lua:38` | simmoves.lua:4621 |
+| `eyeofterror_fireball` |  | moving · delay 0 | UM | `moves_sim_um.lua:46` |  |
+| `eyeofterror_laser` |  | delay 1 | UM | `moves_sim_um.lua:47` |  |
+| `eyeofterror_laserempty` |  | delay 0 | UM | `moves_sim_um.lua:48` |  |
 
-**โค้ดพิเศษที่อ้างถึง:** simmoves.lua:3200
+**Special code that names it:** simmoves.lua:3411
 
 <a id="twister"></a>
 
 ## twister
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:193`
+Data from: TE `moves_sim_te.lua:632`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 33 | facing | 0 | ขนาด 1 |  |  | TE | `moves_sim_te.lua:193` |
+| `atk` | atk | 33 | facing | 0 | scale 1 |  |  | TE | `moves_sim_te.lua:633` |
 
-**โค้ดพิเศษที่อ้างถึง:** modmain.lua:916
+**Special code that names it:** modmain.lua:912 modmain.lua:940
 

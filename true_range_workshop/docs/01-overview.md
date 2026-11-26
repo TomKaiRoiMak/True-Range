@@ -1,56 +1,57 @@
-# 01 · ภาพรวมระบบ
+# 01 · Overview
 
-[← สารบัญ](README.md)
+[<- Contents](README.md)
 
-## ระบบมี 3 ส่วน
+## The system has 3 parts
 
 ```
 ┌────────────────────────┐   ┌───────────────────────────────┐   ┌───────────────────────────────┐
-│ ① ตัว mod (ในเกม)        │   │ ② สร้างข้อมูล (offline)          │   │ ③ ทดสอบ (offline + เกมจริง)     │
+│ ① The mod (in game)    │   │ ② Building data (offline)     │   │ ③ Testing (offline + real game)│
 │ true_range\            │◀──│ true_range_workshop\tools\    │   │ tr_testbench\  tr_lagjoin\     │
-│ วาดพื้นที่โจมตีทุกเฟรม      │   │ รันโค้ดเกมจริงทีละท่า            │   │ true_range_workshop\tests\     │
-│                        │   │ → ไฟล์ moves_sim*.lua          │   │ วัดว่าวาดถูกไหม ทุกเฟรม ทุกการโดน │
+│ draws attack areas     │   │ runs the game's own code,     │   │ true_range_workshop\tests\     │
+│ every frame            │   │ one move at a time            │   │ measures whether it's drawn    │
+│                        │   │ -> moves_sim*.lua files       │   │ right, every frame, every hit  │
 └────────────────────────┘   └───────────────────────────────┘   └───────────────────────────────┘
           ▲                                                                   │
-          └──────────── tools\install.ps1 (ผ่าน unit test ก่อน) คัดลอกเข้าเกม ◀────┘
+          └──── tools\install.ps1 (unit tests must pass first) copies into the game ◀──┘
 ```
 
-| ส่วน | ผลลัพธ์ | ใครใช้ |
+| Part | What it produces | Who uses it |
 |---|---|---|
-| ① mod | สิ่งที่ผู้เล่นได้ (Workshop: "True Range+" และ "True Range+ (Client)") | ผู้เล่น |
-| ② สร้างข้อมูล | "รูปท่า" ของบอสทุกตัว: ตีที่ช่องไหน เฟรมไหน เคลื่อนที่ยังไง | mod อ่านตอนเริ่มเกม |
-| ③ ทดสอบ | ตัวเลข: โดนแต่ไม่ได้วาด (missed), วาดแต่ไม่โดน (false), กระพริบ, กระโดด | ทีม — ใช้ตัดสินว่าแก้ถูก |
+| ① mod | What players get (Workshop: "True Range+" and "True Range+ (Client)") | players |
+| ② data | Every boss's "move shapes": which cells each move hits, on which frame, how it moves | the mod reads them at game start |
+| ③ tests | Numbers: hit but not drawn (missed), drawn but no hit (false), flicker, jumps | the team - to decide whether a fix is right |
 
-## หลักคิดของโปรเจกต์ (สำคัญกว่ารายละเอียดโค้ด)
+## How the project thinks (more important than code details)
 
-1. **ไม่เดา** — รูปท่ามาจากการรัน stategraph ของเกมจริง ถ้าวาดผิด ให้หาเฟรมจริงจาก log ก่อนแก้ ไม่แก้จากการอ่านโค้ดอย่างเดียว
-2. **วัดเป็นตัวเลขทั้งสองฝั่ง** — host (server) ด้วย replay และผู้เล่นที่มีแลคด้วย lag bench (เกมจริงต่อ server จริง)
-3. **บั๊กหนึ่งตัว = ทั้งคลาส** — เจอที่บอสหนึ่ง ให้หาว่ากฎข้อไหนผิด แล้วตรวจทุกบอสที่ใช้กฎเดียวกัน ไม่แก้เฉพาะตัว
-4. **ทุกกฎใหม่ปิดกลับได้** (`TR_OLD_xxx`) — เพื่อเทียบ A/B และย้อนได้ถ้าแย่ลง
-5. **บันทึกทุกอย่าง** — ผลวัด สิ่งที่ลองแล้วไม่เอา และเหตุผล ลงใน commit message ตามแม่แบบ ([VERIFY_PLAN §2](../VERIFY_PLAN.md))
+1. **Don't guess.** Move shapes come from running the game's real stategraphs. If something is drawn wrong, find the real frame in a log before fixing - don't fix from reading code alone.
+2. **Measure both sides as numbers.** The host (server) with replays, and a lagging player with the lag bench (the real game joined to a real server).
+3. **One bug = a whole class.** Found on one boss? Find which rule is wrong, then check every boss that uses the same rule. Don't fix just the one.
+4. **Every new rule can be turned off** (`TR_OLD_xxx`) - for A/B comparison, and to go back if it's worse.
+5. **Write everything down.** Measurements, what was tried and dropped, and why - in the commit message, by the template ([VERIFY_PLAN §2](../VERIFY_PLAN.md)).
 
-## ข้อมูลไหลยังไงในเกม (1 เฟรม)
+## How data flows in the game (one frame)
 
 ```
-modmain.lua           เลือกมอนที่จะวาด (Pick) + วงเขียนมือ (AGGRO ฯลฯ)
+modmain.lua           picks the monsters to draw (Pick) + hand-made rings (AGGRO etc.)
    │
    ▼
-predict.lua           Track: บอสเริ่มท่าไหน ถึงเฟรมไหน (ดูจากอนิเมชัน)
-   │                  Flash: วงเรืองแสงเตือนว่า cooldown ใกล้หมด
-   │                  Draw / DrawHazards: เลือกรูป ตำแหน่ง สี
+predict.lua           Track: which move a boss started, which frame it's on (from its animation)
+   │                  Flash: the glow warning that a cooldown is nearly over (off by default since 1.1.7)
+   │                  Draw / DrawHazards: picks the shape, position, colour
    ▼
-simmoves.lua          แปลงข้อมูลท่า → รูปบนพื้น ; ของที่ปล่อย (ลูกโยน, ของวิ่ง)
+simmoves.lua          turns move data into shapes on the ground; things put out (thrown, running)
    │
    ▼
-lines.lua             วางชิ้นภาพจริงลงพื้น (pool, กลุ่ม, Begin/End ต่อเฟรม)
+lines.lua             lays the actual pieces on the ground (pools, groups, Begin/End per frame)
 ```
 
-รายละเอียดแต่ละไฟล์: [03 โค้ดของ mod](03-mod-code.md)
+Each file in detail: [03 Mod code](03-mod-code.md)
 
-## Server vs Client — ทำไมต้องวัดสองแบบ
+## Server vs client - why measure both
 
-- **Host / ไม่มีถ้ำ** — เกมของผู้เล่นคือ server เอง ตำแหน่งที่เห็น = ตำแหน่งจริง
-- **ผู้เล่นที่ต่อ server** — เห็นมอนช้ากว่าจริง ~0.1–0.3 วินาที (network + interpolation)
-  mod จึงต้อง "วาดนำหน้า" ของที่เคลื่อนที่ (`SimMoves.LeadMoving`) และมีตัวเลือก Lag Compensation ของเกม (Predictive/None) ที่ต้องทดสอบทั้งสองแบบ
+- **Host / no caves** - the player's game is the server itself; what you see is where things really are.
+- **A player joined to a server** - sees monsters about 0.1-0.3 s late (network + interpolation).
+  So the mod has to "draw ahead" for moving things (`SimMoves.LeadMoving`), and the game's Lag Compensation option (Predictive/None) has to be tested both ways.
 
-replay offline จำลองได้แค่ส่วนหนึ่ง ตัวตัดสินฝั่ง client คือ **lag bench** ([05](05-testing.md))
+An offline replay can only model part of this. The judge on the client side is the **lag bench** ([05](05-testing.md)).

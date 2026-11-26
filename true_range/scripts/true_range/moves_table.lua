@@ -1,5 +1,5 @@
 -- Made by true_range_workshop/tools/build_tables.lua - not by hand. Where each move strikes
--- with its target at each place round it (REDESIGN.md): angle from the way the boss faced as
+-- with its target at each place round it (docs/04-data-pipeline.md, Tables): angle from the way the boss faced as
 -- the move began (degrees, round to the left), distance; frames from its first animation's start.
 -- like: as that row of it (dx, dz: moved on by so much, seen the same way)
 return {

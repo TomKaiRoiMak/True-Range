@@ -53,11 +53,11 @@ local function Lines(file)
 end
 
 local SOURCES = {
-    { file = "moves_sim", tag = "เกม" },
+    { file = "moves_sim", tag = "game" },
     { file = "moves_sim_um", tag = "UM" },
     { file = "moves_sim_te", tag = "TE" },
-    { file = "moves_hand", tag = "มือ" },
-    { file = "moves_hand_um", tag = "มือ-UM" },
+    { file = "moves_hand", tag = "hand" },
+    { file = "moves_hand_um", tag = "hand-UM" },
 }
 local mons, hazards, aliases = {}, {}, {}
 for _, s in ipairs(SOURCES) do
@@ -136,16 +136,16 @@ local function Travel(e)
 end
 local function Kind(e)
     local k = {}
-    if e.follow ~= nil then k[#k + 1] = "ตามเป้า" end
-    if e.leg ~= nil then k[#k + 1] = "พุ่งเป็นขา" end
-    if e.around ~= nil then k[#k + 1] = "รอบตัว" end
-    if e.lane ~= nil then k[#k + 1] = "เลน" end
-    if e.cone ~= nil then k[#k + 1] = "กรวย" end
-    if e.tell ~= nil then k[#k + 1] = "แยกด้วย " .. tostring(e.tell) end
-    if e.scale ~= nil then k[#k + 1] = "ขนาด " .. tostring(e.scale) end
-    if e.things_only then k[#k + 1] = "ตีด้วยของเท่านั้น" end
+    if e.follow ~= nil then k[#k + 1] = "follows target" end
+    if e.leg ~= nil then k[#k + 1] = "charge legs" end
+    if e.around ~= nil then k[#k + 1] = "around itself" end
+    if e.lane ~= nil then k[#k + 1] = "lane" end
+    if e.cone ~= nil then k[#k + 1] = "cone" end
+    if e.tell ~= nil then k[#k + 1] = "told by " .. tostring(e.tell) end
+    if e.scale ~= nil then k[#k + 1] = "scale " .. tostring(e.scale) end
+    if e.things_only then k[#k + 1] = "strikes only through things" end
     local far = Travel(e)
-    if far > .3 then k[#k + 1] = string.format("เคลื่อน %.1f", far) end
+    if far > .3 then k[#k + 1] = string.format("moves %.1f", far) end
     return table.concat(k, " · ")
 end
 local function Ref(src, line) return line ~= nil and string.format("`%s.lua:%d`", src.file, line) or ("`" .. src.file .. ".lua`") end
@@ -173,28 +173,28 @@ end
 local function HazRow(h)
     local x = type(h.h) == "table" and h.h or {}
     local k = {}
-    if x.moved then k[#k + 1] = "เคลื่อนที่" end
-    if x.lasting then k[#k + 1] = "อยู่นาน" end
-    if x.in_move then k[#k + 1] = "วาดกับท่าบอส" end
-    if x.lands then k[#k + 1] = "ตีตอนตก" end
-    if x.delay ~= nil then k[#k + 1] = "ดีเลย์ " .. tostring(x.delay) end
-    if x.strikes_until ~= nil then k[#k + 1] = "ตีถึง " .. tostring(x.strikes_until) end
+    if x.moved then k[#k + 1] = "moving" end
+    if x.lasting then k[#k + 1] = "lasting" end
+    if x.in_move then k[#k + 1] = "drawn with the boss move" end
+    if x.lands then k[#k + 1] = "strikes on landing" end
+    if x.delay ~= nil then k[#k + 1] = "delay " .. tostring(x.delay) end
+    if x.strikes_until ~= nil then k[#k + 1] = "strikes until " .. tostring(x.strikes_until) end
     local refs = code_refs[h.name] and table.concat(code_refs[h.name], " ") or ""
     return string.format("| `%s` | %s | %s | %s | %s | %s |", h.name, Esc(Name(h.name)), table.concat(k, " · "), h.src.tag, Ref(h.src, h.line), refs)
 end
 
 for _, L in ipairs(letters) do
     local f = assert(io.open(out .. "/" .. L .. ".md", "wb"))
-    f:write("# สารบัญมอน — " .. L:upper() .. "\n\n[← สารบัญทั้งหมด](README.md) · สร้างอัตโนมัติด้วย `tools\\make_catalog.ps1` — **อย่าแก้หน้านี้ด้วยมือ**\n\n")
-    f:write("คอลัมน์: **ตีเฟรม** = เฟรมแรกที่ตี (30 เฟรม/วินาที) · **เล็ง** = `target` หันตามเป้า / `facing` ตามที่บอสหัน · **lock** = เฟรมที่หยุดเล็ง · **แบบ** = ลักษณะพิเศษของท่า · **ที่อยู่** = ไฟล์ข้อมูล:บรรทัด (ใน `true_range/scripts/true_range/`)\n\n")
+    f:write("# Monster catalog - " .. L:upper() .. "\n\n[<- full index](README.md) · made by `tools\\make_catalog.ps1` - **don't edit this page by hand**\n\n")
+    f:write("Columns: **hit frame** = first frame it strikes (30 frames/s) · **aim** = `target` turns to its target / `facing` the way the boss faces · **lock** = frame it stops aiming · **kind** = the move's special traits · **where** = data file:line (in `true_range/scripts/true_range/`)\n\n")
     for _, m in ipairs(by_letter[L]) do
         local srcs = {}
         for _, s in ipairs(SOURCES) do if m.srcs[s.tag] then srcs[#srcs + 1] = s.tag .. (m.lines[s.tag] and (" `" .. s.file .. ".lua:" .. m.lines[s.tag] .. "`") or "") end end
         f:write(string.format('<a id="%s"></a>\n\n## %s%s\n\n', m.prefab, m.prefab, Name(m.prefab) ~= "" and (" — " .. Name(m.prefab)) or ""))
-        f:write("แหล่งข้อมูล: " .. table.concat(srcs, " · ") .. "\n\n")
-        if aliases[m.prefab] then f:write("วาดเหมือน: `" .. tostring(aliases[m.prefab]) .. "`\n\n") end
+        f:write("Data from: " .. table.concat(srcs, " · ") .. "\n\n")
+        if aliases[m.prefab] then f:write("Drawn as: `" .. tostring(aliases[m.prefab]) .. "`\n\n") end
         table.sort(m.rows, function(a, b) if a.move ~= b.move then return a.move < b.move end return a.src.file < b.src.file end)
-        f:write("| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |\n|---|---|---|---|---|---|---|---|---|---|\n")
+        f:write("| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |\n|---|---|---|---|---|---|---|---|---|---|\n")
         for _, r in ipairs(m.rows) do
             local e = r.e
             f:write(string.format("| `%s`%s | %s | %s | %s | %s | %s | %s | %s | %s | %s |\n", Esc(r.move), tabled[m.prefab .. "/" .. r.move] and " ▦" or "",
@@ -202,12 +202,12 @@ for _, L in ipairs(letters) do
                 Esc(e.cooldown or ""), r.src.tag, Ref(r.src, r.line)))
         end
         if haz_of[m.prefab] then
-            f:write("\n**ของที่ปล่อย**\n\n| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |\n|---|---|---|---|---|---|\n")
+            f:write("\n**Things it puts out**\n\n| thing | name | kind | source | where | code that names it |\n|---|---|---|---|---|---|\n")
             table.sort(haz_of[m.prefab], function(a, b) return a.name < b.name end)
             for _, h in ipairs(haz_of[m.prefab]) do f:write(HazRow(h) .. "\n") end
         end
         if code_refs[m.prefab] then
-            f:write("\n**โค้ดพิเศษที่อ้างถึง:** " .. table.concat(code_refs[m.prefab], " ") .. "\n")
+            f:write("\n**Special code that names it:** " .. table.concat(code_refs[m.prefab], " ") .. "\n")
         end
         f:write("\n")
     end
@@ -218,14 +218,14 @@ end
 local f = assert(io.open(out .. "/README.md", "wb"))
 local nmoves, nhaz = 0, #hazards
 for _, m in ipairs(list) do nmoves = nmoves + #m.rows end
-f:write("# สารบัญมอนและท่า\n\n[← เอกสารทีม](../README.md) · สร้างอัตโนมัติจากไฟล์ข้อมูล — **อย่าแก้ด้วยมือ** · สร้างใหม่: `powershell -File tools\\make_catalog.ps1`\n\n")
-f:write(string.format("มอน **%d** ตัว · ท่า **%d** รายการ · ของที่ปล่อย **%d** รายการ\n\n", #list, nmoves, nhaz))
-f:write("แหล่ง: **เกม** = `moves_sim.lua` (sim เกมปกติ) · **UM** = `moves_sim_um.lua` · **TE** = `moves_sim_te.lua` · **มือ** / **มือ-UM** = `moves_hand*.lua` (เขียนมือ) · ▦ = มีตาราง `moves_table.lua`\n\n")
-f:write("วิธีหา: กด Ctrl+F ชื่อ prefab หรือชื่อในเกม → คลิกไปหน้ามอน → คอลัมน์ **ที่อยู่** บอกไฟล์:บรรทัดของข้อมูล, **โค้ดพิเศษที่อ้างถึง** บอกจุดใน modmain/predict/simmoves ที่จัดการมอนตัวนั้นเป็นกรณีพิเศษ\n\n")
+f:write("# Monster and move catalog\n\n[<- docs](../README.md) · made from the data files - **don't edit by hand** · remake: `powershell -File tools\\make_catalog.ps1`\n\n")
+f:write(string.format("**%d** monsters · **%d** moves · **%d** things they put out\n\n", #list, nmoves, nhaz))
+f:write("Sources: **game** = `moves_sim.lua` (run offline from the base game) · **UM** = `moves_sim_um.lua` · **TE** = `moves_sim_te.lua` · **hand** / **hand-UM** = `moves_hand*.lua` (written by hand) · ▦ = has a `moves_table.lua` table\n\n")
+f:write("To find one: Ctrl+F the prefab or in-game name -> open its page -> **where** gives the data's file:line, **special code that names it** the places in modmain/predict/simmoves that treat that monster specially\n\n")
 local nav = {}
 for _, L in ipairs(letters) do nav[#nav + 1] = "[" .. L:upper() .. "](" .. L .. ".md)" end
 f:write(table.concat(nav, " · ") .. "\n\n")
-f:write("| prefab | ชื่อในเกม | แหล่ง | ท่า | ของที่ปล่อย | โค้ดพิเศษ |\n|---|---|---|---|---|---|\n")
+f:write("| prefab | in-game name | source | moves | things | special code |\n|---|---|---|---|---|---|\n")
 for _, m in ipairs(list) do
     local srcs = {}
     for _, s in ipairs(SOURCES) do if m.srcs[s.tag] then srcs[#srcs + 1] = s.tag end end
@@ -235,7 +235,7 @@ for _, m in ipairs(list) do
         #m.rows, haz_of[m.prefab] and #haz_of[m.prefab] or 0, code_refs[m.prefab] and #code_refs[m.prefab] or 0))
 end
 if haz_of["?"] then
-    f:write("\n## ของที่ปล่อยที่ข้อมูลไม่ได้ระบุเจ้าของ\n\n| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |\n|---|---|---|---|---|---|\n")
+    f:write("\n## Things with no owner in the data\n\n| thing | name | kind | source | where | code that names it |\n|---|---|---|---|---|---|\n")
     table.sort(haz_of["?"], function(a, b) return a.name < b.name end)
     for _, h in ipairs(haz_of["?"]) do f:write(HazRow(h) .. "\n") end
 end

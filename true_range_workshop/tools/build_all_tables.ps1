@@ -1,4 +1,4 @@
-# True Range: REDESIGN.md tables for every move run offline - each move split in $Parts pieces (its
+# True Range: the tables (docs/04-data-pipeline.md) for every move run offline - each move split in $Parts pieces (its
 # angles) and its deciding frame, each piece its own luajit, as many at once as there are cores
 # (a move to a process left the long ones running alone at the end); then put together, one process.
 #   powershell -File build_all_tables.ps1 [-Only boss,boss] [-Budget 240]

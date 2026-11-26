@@ -1,24 +1,24 @@
-# สารบัญมอน — J
+# Monster catalog - J
 
-[← สารบัญทั้งหมด](README.md) · สร้างอัตโนมัติด้วย `tools\make_catalog.ps1` — **อย่าแก้หน้านี้ด้วยมือ**
+[<- full index](README.md) · made by `tools\make_catalog.ps1` - **don't edit this page by hand**
 
-คอลัมน์: **ตีเฟรม** = เฟรมแรกที่ตี (30 เฟรม/วินาที) · **เล็ง** = `target` หันตามเป้า / `facing` ตามที่บอสหัน · **lock** = เฟรมที่หยุดเล็ง · **แบบ** = ลักษณะพิเศษของท่า · **ที่อยู่** = ไฟล์ข้อมูล:บรรทัด (ใน `true_range/scripts/true_range/`)
+Columns: **hit frame** = first frame it strikes (30 frames/s) · **aim** = `target` turns to its target / `facing` the way the boss faces · **lock** = frame it stops aiming · **kind** = the move's special traits · **where** = data file:line (in `true_range/scripts/true_range/`)
 
 <a id="jungletreeguard"></a>
 
 ## jungletreeguard
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:99`
+Data from: TE `moves_sim_te.lua:306`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 37 | target | 0 |  |  |  | TE | `moves_sim_te.lua:99` |
+| `atk` | atk | 37 | target | 0 |  |  |  | TE | `moves_sim_te.lua:307` |
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `warningshadow` |  | เคลื่อนที่ · อยู่นาน · ดีเลย์ 0 · ตีถึง 60 | TE | `moves_sim_te.lua:32` | predict.lua:3734 predict.lua:3749 |
+| `warningshadow` |  | moving · lasting · delay 0 · strikes until 60 | TE | `moves_sim_te.lua:58` | predict.lua:4062 predict.lua:4077 predict.lua:4096 |
 
-**โค้ดพิเศษที่อ้างถึง:** predict.lua:3741
+**Special code that names it:** predict.lua:4069
 

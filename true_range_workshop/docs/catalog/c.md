@@ -1,230 +1,232 @@
-# สารบัญมอน — C
+# Monster catalog - C
 
-[← สารบัญทั้งหมด](README.md) · สร้างอัตโนมัติด้วย `tools\make_catalog.ps1` — **อย่าแก้หน้านี้ด้วยมือ**
+[<- full index](README.md) · made by `tools\make_catalog.ps1` - **don't edit this page by hand**
 
-คอลัมน์: **ตีเฟรม** = เฟรมแรกที่ตี (30 เฟรม/วินาที) · **เล็ง** = `target` หันตามเป้า / `facing` ตามที่บอสหัน · **lock** = เฟรมที่หยุดเล็ง · **แบบ** = ลักษณะพิเศษของท่า · **ที่อยู่** = ไฟล์ข้อมูล:บรรทัด (ใน `true_range/scripts/true_range/`)
+Columns: **hit frame** = first frame it strikes (30 frames/s) · **aim** = `target` turns to its target / `facing` the way the boss faces · **lock** = frame it stops aiming · **kind** = the move's special traits · **where** = data file:line (in `true_range/scripts/true_range/`)
 
 <a id="catcoon"></a>
 
 ## catcoon — Catcoon
 
-แหล่งข้อมูล: เกม `moves_sim.lua:200` · UM `moves_sim_um.lua:144`
+Data from: game `moves_sim.lua:201` · UM `moves_sim_um.lua:157`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 16 | target | 0 |  |  |  | เกม | `moves_sim.lua:201` |
-| `atk` | atk | 16 | target | 0 |  |  |  | UM | `moves_sim_um.lua:145` |
-| `jump_atk` | jump_atk | 19 | target | 0 | ตามเป้า |  |  | เกม | `moves_sim.lua:202` |
-| `jump_atk` | jump_atk | 19 | target | 0 | ตามเป้า |  |  | UM | `moves_sim_um.lua:146` |
-| `jump_grab` | jump_grab | 31 | target | 0 |  |  |  | เกม | `moves_sim.lua:203` |
-| `jump_grab` | jump_grab | 31 | target | 0 |  |  |  | UM | `moves_sim_um.lua:147` |
-| `taunt_pre` | taunt_pre, taunt, taunt_pst, jump_atk | 43 | target | 0 | ตามเป้า |  |  | UM | `moves_sim_um.lua:148` |
+| `atk` | atk | 16 | target | 0 |  |  |  | game | `moves_sim.lua:202` |
+| `atk` | atk | 16 | target | 0 |  |  |  | UM | `moves_sim_um.lua:158` |
+| `jump_atk` | jump_atk | 19 | target | 0 | follows target |  |  | game | `moves_sim.lua:203` |
+| `jump_atk` | jump_atk | 19 | target | 0 | follows target |  |  | UM | `moves_sim_um.lua:159` |
+| `jump_grab` | jump_grab | 31 | target | 0 |  |  |  | game | `moves_sim.lua:204` |
+| `jump_grab` | jump_grab | 31 | target | 0 |  |  |  | UM | `moves_sim_um.lua:160` |
+| `taunt_pre` | taunt_pre, taunt, taunt_pst, jump_atk | 43 | target | 0 | follows target |  |  | UM | `moves_sim_um.lua:161` |
 
 <a id="cave_vent_mite"></a>
 
 ## cave_vent_mite — Geothermite
 
-แหล่งข้อมูล: เกม `moves_sim.lua:205`
+Data from: game `moves_sim.lua:206`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 20 | target | 0 |  |  |  | เกม | `moves_sim.lua:206` |
+| `atk` | atk | 20 | target | 0 |  |  |  | game | `moves_sim.lua:207` |
 
 <a id="charlie_boss"></a>
 
 ## charlie_boss — Shrouded Queen
 
-แหล่งข้อมูล: เกม `moves_sim.lua:208`
+Data from: game `moves_sim.lua:209`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `aoe` | aoe | 19 | facing | 0 |  |  |  | เกม | `moves_sim.lua:209` |
-| `castlift` | castlift | 33 | facing | 22 | ตีด้วยของเท่านั้น | charlie_boss_minion1, charlie_boss_minion2 |  | เกม | `moves_sim.lua:210` |
+| `aoe` | aoe | 19 | facing | 0 |  |  |  | game | `moves_sim.lua:210` |
+| `castlift` | castlift | 33 | facing | 22 | strikes only through things | charlie_boss_minion1, charlie_boss_minion2 |  | game | `moves_sim.lua:211` |
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `charlie_boss_minion1` |  | เคลื่อนที่ · ดีเลย์ 0 · ตีถึง 18 | เกม | `moves_sim.lua:57` | simmoves.lua:3177 |
-| `charlie_boss_minion2` |  | เคลื่อนที่ · ดีเลย์ 0 · ตีถึง 14 | เกม | `moves_sim.lua:58` | simmoves.lua:3178 |
-| `charlie_boss_projectile` | Swarming Horror | อยู่นาน · ดีเลย์ 0 | เกม | `moves_sim.lua:59` |  |
-| `charlie_boss_vines` |  | อยู่นาน · ดีเลย์ 0 | เกม | `moves_sim.lua:60` | simmoves.lua:3184 |
-| `charliearena_spike` | Dreadstone Outcrop | ดีเลย์ 29 | เกม | `moves_sim.lua:61` | simmoves.lua:3166 |
+| `charlie_boss_minion1` |  | moving · delay 0 · strikes until 18 | game | `moves_sim.lua:57` | simmoves.lua:42 simmoves.lua:3388 simmoves.lua:3522 simmoves.lua:3524 |
+| `charlie_boss_minion2` |  | moving · delay 0 · strikes until 14 | game | `moves_sim.lua:58` | simmoves.lua:43 simmoves.lua:3389 simmoves.lua:3522 simmoves.lua:3524 |
+| `charlie_boss_projectile` | Swarming Horror | lasting · delay 0 | game | `moves_sim.lua:59` |  |
+| `charlie_boss_vines` |  | lasting · delay 0 | game | `moves_sim.lua:60` | simmoves.lua:3395 |
+| `charliearena_spike` | Dreadstone Outcrop | delay 29 | game | `moves_sim.lua:61` | simmoves.lua:3377 |
+
+**Special code that names it:** simmoves.lua:3419 simmoves.lua:3539
 
 <a id="charlie_boss_runner"></a>
 
 ## charlie_boss_runner — Grim Harrier
 
-แหล่งข้อมูล: เกม `moves_sim.lua:212` · มือ `moves_hand.lua:51`
+Data from: game `moves_sim.lua:213` · hand `moves_hand.lua:66`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `attack` | attack | 16 | target | 6 | ตามเป้า |  |  | มือ | `moves_hand.lua:51` |
-| `attack_quick` | attack_quick | 11 | target | 6 | ตามเป้า |  |  | เกม | `moves_sim.lua:213` |
+| `attack` | attack | 16 | target | 6 | follows target |  |  | hand | `moves_hand.lua:66` |
+| `attack_quick` | attack_quick | 11 | target | 6 | follows target · moves 0.6 |  |  | game | `moves_sim.lua:214` |
 
-**โค้ดพิเศษที่อ้างถึง:** simmoves.lua:27
+**Special code that names it:** simmoves.lua:27
 
 <a id="cherrybulletbee"></a>
 
 ## cherrybulletbee — Bullet Hibeescus
 
-แหล่งข้อมูล: UM `moves_sim_um.lua:150`
+Data from: UM `moves_sim_um.lua:163`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 15 | target | 0 | ขนาด 0.9 |  |  | UM | `moves_sim_um.lua:151` |
+| `atk` | atk | 15 | target | 0 | scale 0.9 |  |  | UM | `moves_sim_um.lua:164` |
 
 <a id="chest_mimic_revealed"></a>
 
 ## chest_mimic_revealed — Ornery Chest
 
-แหล่งข้อมูล: เกม `moves_sim.lua:215`
+Data from: game `moves_sim.lua:216`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `attack` | attack, taunt_pre | 18 | target | 0 |  |  |  | เกม | `moves_sim.lua:216` |
-| `spawn` | spawn, taunt_pre | 38 | target | 0 |  |  |  | เกม | `moves_sim.lua:217` |
+| `attack` | attack, taunt_pre | 18 | target | 0 |  |  |  | game | `moves_sim.lua:217` |
+| `spawn` | spawn, taunt_pre | 38 | target | 0 |  |  |  | game | `moves_sim.lua:218` |
 
 <a id="chimp"></a>
 
 ## chimp — Random Chimp
 
-แหล่งข้อมูล: UM `moves_sim_um.lua:153`
+Data from: UM `moves_sim_um.lua:166`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 17 | target | 0 |  |  |  | UM | `moves_sim_um.lua:154` |
+| `atk` | atk | 17 | target | 0 |  |  |  | UM | `moves_sim_um.lua:167` |
 
 <a id="clayhoundb"></a>
 
 ## clayhoundb
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:56`
+Data from: TE `moves_sim_te.lua:164`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk, howl | 16 | target | 0 |  |  |  | TE | `moves_sim_te.lua:56` |
+| `atk_pre` | atk_pre, atk, howl | 16 | target | 0 |  |  |  | TE | `moves_sim_te.lua:165` |
 
 <a id="commonfish"></a>
 
 ## commonfish
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:57`
+Data from: TE `moves_sim_te.lua:167`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 10 | target | 0 | ขนาด 1 |  |  | TE | `moves_sim_te.lua:57` |
+| `atk` | atk | 10 | target | 0 | scale 1 |  |  | TE | `moves_sim_te.lua:168` |
 
 <a id="cookiecutter"></a>
 
 ## cookiecutter — Cookie Cutter
 
-แหล่งข้อมูล: เกม `moves_sim.lua:219` · TE `moves_sim_te.lua:58`
+Data from: game `moves_sim.lua:220` · TE `moves_sim_te.lua:170`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `hit` | hit, attack_loop, drill_pst | 25 | facing | 0 | เคลื่อน 11.1 |  |  | เกม | `moves_sim.lua:220` |
-| `hit` | hit, attack_loop, drill_pst | 25 | facing | 0 |  |  |  | TE | `moves_sim_te.lua:58` |
-| `jump_pre` | jump_pre, jumping, jump_pst_water | 28 | facing | 0 |  |  |  | เกม | `moves_sim.lua:221` |
+| `hit` | hit, attack_loop, drill_pst | 25 | facing | 0 | moves 11.1 |  |  | game | `moves_sim.lua:221` |
+| `hit` | hit, attack_loop, drill_pst | 25 | facing | 0 |  |  |  | TE | `moves_sim_te.lua:171` |
+| `jump_pre` | jump_pre, jumping, jump_pst_water | 28 | facing | 0 |  |  |  | game | `moves_sim.lua:222` |
 
 <a id="cozy_bunnyman"></a>
 
 ## cozy_bunnyman — Cozy Bunnyman
 
-แหล่งข้อมูล: เกม `moves_sim.lua:223`
+Data from: game `moves_sim.lua:224`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 13 | target | 0 | ขนาด 1.25 |  |  | เกม | `moves_sim.lua:224` |
-| `atk_object` | atk_object | 9 | target | 0 | ขนาด 1.25 |  |  | เกม | `moves_sim.lua:225` |
+| `atk` | atk | 13 | target | 0 | scale 1.25 |  |  | game | `moves_sim.lua:225` |
+| `atk_object` | atk_object | 9 | target | 0 | scale 1.25 |  |  | game | `moves_sim.lua:226` |
 
 <a id="crabking"></a>
 
 ## crabking — Crab King
 
-แหล่งข้อมูล: เกม `moves_sim.lua:227`
+Data from: game `moves_sim.lua:228`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `crabking_geyser_single` |  | อยู่นาน · ดีเลย์ 0 | UM | `moves_sim_um.lua:36` |  |
+| `crabking_geyser_single` |  | lasting · delay 0 | UM | `moves_sim_um.lua:37` |  |
 
 <a id="crabking_claw"></a>
 
 ## crabking_claw — Imposing Claw
 
-แหล่งข้อมูล: เกม `moves_sim.lua:228`
+Data from: game `moves_sim.lua:229`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 21 | facing | 0 | ขนาด 0.7 |  |  | เกม | `moves_sim.lua:229` |
+| `atk` | atk | 21 | facing | 0 | scale 0.7 |  |  | game | `moves_sim.lua:230` |
 
 <a id="crabking_mob"></a>
 
 ## crabking_mob — Crab Guard
 
-แหล่งข้อมูล: เกม `moves_sim.lua:231`
+Data from: game `moves_sim.lua:232`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk1` | atk1 | 18 | target | 0 |  |  |  | เกม | `moves_sim.lua:232` |
-| `atk_pre` ▦ | atk_pre, atk_loop, atk_pst | 14 | target | 14 |  |  |  | เกม | `moves_sim.lua:233` |
+| `atk1` | atk1 | 18 | target | 0 |  |  |  | game | `moves_sim.lua:233` |
+| `atk_pre` ▦ | atk_pre, atk_loop, atk_pst | 14 | target | 14 |  |  |  | game | `moves_sim.lua:234` |
 
 <a id="crabking_mob_knight"></a>
 
 ## crabking_mob_knight — Crab Knight
 
-แหล่งข้อมูล: เกม `moves_sim.lua:235`
+Data from: game `moves_sim.lua:236`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk1` | atk1 | 18 | target | 0 | ขนาด 1.7 |  |  | เกม | `moves_sim.lua:236` |
-| `atk_pre` | atk_pre, atk_loop, atk_pst | 14 | target | 14 |  |  |  | เกม | `moves_sim.lua:237` |
+| `atk1` | atk1 | 18 | target | 0 | scale 1.7 |  |  | game | `moves_sim.lua:237` |
+| `atk_pre` | atk_pre, atk_loop, atk_pst | 14 | target | 14 |  |  |  | game | `moves_sim.lua:238` |
 
 <a id="crawlinghorror"></a>
 
 ## crawlinghorror — Crawling Horror
 
-แหล่งข้อมูล: เกม `moves_sim.lua:239` · UM `moves_sim_um.lua:156`
+Data from: game `moves_sim.lua:240` · UM `moves_sim_um.lua:169`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk, taunt | 16 | target | 0 |  |  |  | เกม | `moves_sim.lua:240` |
-| `atk_pre~terrorattack` | atk_pre, atk, taunt | 16 | target | 0 |  |  |  | UM | `moves_sim_um.lua:157` |
+| `atk_pre` | atk_pre, atk, taunt | 16 | target | 0 |  |  |  | game | `moves_sim.lua:241` |
+| `atk_pre~terrorattack` | atk_pre, atk, taunt | 16 | target | 0 |  |  |  | UM | `moves_sim_um.lua:170` |
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `shadow_goo` | Shadow Ink | เคลื่อนที่ · ดีเลย์ 0 | UM | `moves_sim_um.lua:63` |  |
+| `shadow_goo` | Shadow Ink | moving · delay 0 | UM | `moves_sim_um.lua:66` |  |
 
 <a id="creepingfear"></a>
 
 ## creepingfear — Creeping Fear
 
-แหล่งข้อมูล: UM `moves_sim_um.lua:159`
+Data from: UM `moves_sim_um.lua:172`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk, taunt | 16 | target | 0 | ขนาด 1.2 |  |  | UM | `moves_sim_um.lua:160` |
+| `atk_pre` | atk_pre, atk, taunt | 16 | target | 0 | scale 1.2 |  |  | UM | `moves_sim_um.lua:173` |
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `uncompromising_shadow_projectile1_fx_fast` |  | ดีเลย์ 18 · ตีถึง 18 | UM | `moves_sim_um.lua:78` |  |
+| `uncompromising_shadow_projectile1_fx_fast` |  | delay 18 · strikes until 18 | UM | `moves_sim_um.lua:82` |  |
 
 <a id="crocodog"></a>
 
 ## crocodog
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:59`
+Data from: TE `moves_sim_te.lua:173`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk | 20 | target | 0 |  |  |  | TE | `moves_sim_te.lua:59` |
+| `atk_pre` | atk_pre, atk | 20 | target | 0 |  |  |  | TE | `moves_sim_te.lua:174` |
 

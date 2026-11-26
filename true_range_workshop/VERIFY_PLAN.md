@@ -1,83 +1,84 @@
-# True Range — เกณฑ์และกฎการตรวจ
+# True Range - what counts as fixed, and the rules
 
-หน้านี้สั้นโดยตั้งใจ: **อะไรนับว่าแก้แล้ว** และ **กฎที่ทุกคนใช้** เท่านั้น
+This page is short on purpose: **what counts as fixed** and **the rules everyone follows**, nothing else.
 
-| ต้องการ | ไปที่ |
+| You want | Go to |
 |---|---|
-| ผลวัด / เหตุผลของการแก้แต่ละครั้ง | `git log` (commit message ตามแม่แบบข้างล่าง) |
-| งานค้าง, สถานะเวอร์ชันนี้ | [docs/08-status.md](docs/08-status.md) |
-| บันทึกการวิเคราะห์เก่าทั้งหมด (16–28 ต.ค. 2026, ~3,300 บรรทัด) | [docs/history/](docs/history/README.md) (แยกตามหัวข้อ มีสารบัญ) — ค้นด้วยชื่อบอส/ชื่อสวิตช์ |
-| วิธีใช้เครื่องมือทดสอบ | [docs/05-testing.md](docs/05-testing.md) |
+| the measurements / reasons behind each fix | `git log` (commit messages follow the template below) |
+| open items, this version's status | [docs/08-status.md](docs/08-status.md) |
+| how to use the test tools | [docs/05-testing.md](docs/05-testing.md) |
+| an old commit hash cited in a note | [docs/history/hash_map.md](docs/history/hash_map.md) |
 
 ---
 
-## 1. อะไรนับว่า "แก้แล้ว"
+## 1. What counts as "fixed"
 
-ต้องครบทุกข้อ:
+All of these:
 
-1. **หาสาเหตุจากข้อมูลเกมจริง** — บอกได้ว่าเกิดเฟรมไหน ทำไม (lag bench `[tr_lagframe]`/`[tr_lagthing]`, trace ของ bench, ภาพจาก `pics.ps1`) ไม่ใช่จากการอ่านโค้ดอย่างเดียว
-2. **มีสวิตช์ `TR_OLD_xxx`** ปิดกลับได้ และใส่ชื่อในรายการสวิตช์ของ `tests\replay.lua` + `tests\replay_haz.lua`
-3. **A/B แล้วไม่ถดถอย** — replay (ใหม่ vs `TR_OLD_xxx`) บนชุดที่เกี่ยว ถ้ากฎกระทบหลายบอส → replay เต็ม
-   (สวิตช์ใน `modmain.lua` replay มองไม่เห็น — A/B ด้วย lag bench `-Old` แทน)
-4. **`install.ps1` ผ่าน** ("installed: ...") แล้ว `install_client.ps1`
-5. **ฝั่ง client** (ถ้าเป็นเรื่องแลค/ภาพ) — lag bench ก่อน/หลัง ด้วยตัวเลขเดียวกัน (NOT drawn, false, blinks, jumps/snap backs) — ต้องติดตั้งก่อน
-6. **patch notes** ทั้งสองไฟล์ + **commit** ตามแม่แบบ
+1. **The cause is found in real game data** - you can say which frame and why (lag bench `[tr_lagframe]`/`[tr_lagthing]`, bench traces, pictures from `pics.ps1`), not from reading code alone.
+2. **There's a `TR_OLD_xxx` switch** that turns it back, and its name is in the switch lists of `tests\replay.lua` + `tests\replay_haz.lua`.
+3. **A/B shows nothing got worse** - replay (new vs `TR_OLD_xxx`) on the sets it touches; if the rule affects many bosses -> a full replay.
+   (switches in `modmain.lua` are invisible to replay - A/B them with the lag bench's `-Old` instead)
+4. **`install.ps1` passes** ("installed: ..."), then `install_client.ps1`.
+5. **Client side** (if it's about lag/pictures) - lag bench before/after with the same numbers (NOT drawn, false, blinks, jumps/snap backs) - install first.
+6. **Patch notes** in both files + a **commit** by the template.
 
-"ลองแล้วไม่เอา" ก็ต้อง commit/บันทึกเหมือนกัน (ตัวเลขที่แย่ลง + ปิดไว้ด้วยสวิตช์ opt-in) — คนต่อไปจะได้ไม่ลองซ้ำ
+"Tried and dropped" is committed and written down the same way (the worse numbers + kept behind an opt-in switch) - so the next person doesn't try it again.
 
-## 2. แม่แบบ commit message
+## 2. Commit message template
 
 ```
-<บอส/ส่วน>: <แก้อะไร> (TR_OLD_xxx)
+<boss/part>: <what was fixed> (TR_OLD_xxx)
 
-ปัญหา:  <ผู้เล่นเห็นอะไร / ตัวเลขไหนผิด>
-สาเหตุ: <เฟรม/กฎที่ผิด พร้อมหลักฐาน: log, เวลา, ค่า>
-แก้:    <กฎใหม่ 1-2 บรรทัด>
-วัด:    <ก่อน → หลัง> (ชุดทดสอบ: replay 0805 / lag_xxx)
-ค้าง:   <สิ่งที่ยังไม่แน่ใจ ถ้ามี>
+Problem:  <what the player sees / which number is wrong>
+Cause:    <the wrong frame/rule, with evidence: log, time, value>
+Fix:      <the new rule in 1-2 lines>
+Measured: <before -> after> (test set: replay 1604 / lag_xxx)
+Left:     <anything still unsure, if any>
 ```
 
-ตัวอย่าง:
+Example:
 
 ```
 Ink Blight: landing ring held still after touchdown (TR_OLD_LANDSTOP)
 
-ปัญหา:  วงจุดตกขยับตอนลูกถึงพื้น
-สาเหตุ: 78/91 การขยับเกิด 2 เฟรมหลังแตะพื้น: s.stopped ทำให้ข้าม LANDKEEP ไปวาดที่ตำแหน่งจริง (.1–.4 off)
-แก้:    หยุดแล้ว + s.land ห่าง ≤ 1.5 → วาดที่ s.land
-วัด:    lag: ขยับ 0.84 → 0.13 ต่อลูก (กฎนี้อย่างเดียว) ; replay: missed/false เท่าเดิม
+Problem:  the landing ring moved as the ball reached the ground
+Cause:    78/91 of the moves came 2 frames after touchdown: s.stopped skipped LANDKEEP and drew at the real position (.1-.4 off)
+Fix:      stopped + s.land within 1.5 -> drawn at s.land
+Measured: lag: moved 0.84 -> 0.13 per ball (this rule alone); replay: missed/false unchanged
 ```
 
-## 3. กฎของทีม
+## 3. Team rules
 
-- **บั๊กหนึ่งตัว = คลาส** — หาว่ากฎไหนผิด แล้วตรวจทุกบอสที่ใช้กฎนั้น แก้ที่กฎ (sim / predict) ไม่ใช่ spec ของตัวเดียว
-- **ตัวตรวจใหม่ต้องผ่านการทดลองควบคุมก่อนเชื่อ** — รันกับของที่รู้ว่าผิด ต้องเห็นความต่าง
-- **ข้อมูลถูกอย่างเดียวไม่พอ** — ต้องวาดถูกด้วย (replay ผ่าน predict จริง)
-- **ห้ามแก้ไฟล์ที่ bench/replay/build กำลังอ่าน** — ถ้าเผลอ ให้รันใหม่
-- **ติดตั้ง = `install.ps1`** ผ่านก่อน แล้วค่อย `install_client.ps1`
-- **ไม่อัปโหลด Workshop เอง** · `tr_testbench` / `tr_lagjoin` ห้ามอัปโหลด · อัปโหลดจากต้นฉบับ `true_range\` เท่านั้น ไม่ใช่สำเนาในเกม (มี debug.txt) · `cluster_token.txt` ห้ามเผยแพร่
-- **ไม่แตะโลก/เซฟของผู้เล่นโดยไม่ถาม**
-- **เทียบ A/B บน log ชุดเดียวกัน** — รอบ bench ต่างกันให้ตัวเลขต่างกันได้เอง
-- **ตัวตัดสินภาพคือ `[tr_lagframe]` จากเกมจริง** — เครื่องมือจำลอง (proxy) ไม่ใช่ความจริง
-- **เกมอัปเดต = ข้อมูลเก่า** จนกว่าจะแตกโค้ดใหม่และ rebuild ([docs/04](docs/04-data-pipeline.md)) — `install.ps1` เตือน
-- **ใช้ทุก core** กับงานหนัก, เช็คจำนวน process ที่รันอยู่ก่อนเริ่ม, เช็คพื้นที่ D: (bench ไม่เริ่มถ้าเหลือ < 25 GB)
-- **ทดสอบในเกมโดยไม่ต้องให้เจ้าของเล่นเอง** — ใช้ lag bench + log + ภาพ
+- **One bug = a class** - find which rule is wrong, then check every boss that uses it. Fix the rule (sim / predict), not one boss's spec.
+- **A new checker must pass a control test before it's trusted** - run it on something known to be wrong; it must see the difference.
+- **Right data isn't enough** - it must be drawn right too (replay through the real predict).
+- **Don't edit files a bench/replay/build is reading** - if it slipped, run again.
+- **Installing = `install.ps1`** passing first, then `install_client.ps1`.
+- **Don't upload to the Workshop yourself** · `tr_testbench` / `tr_lagjoin` are never uploaded · upload from the source `true_range\` only, not the game's copy (it has debug.txt) · never publish `cluster_token.txt`.
+- **Don't touch a player's world/saves without asking.**
+- **Compare A/B on the same logs** - different bench runs give different numbers by themselves.
+- **The judge of pictures is `[tr_lagframe]` from the real game** - a simulating tool (proxy) isn't the truth.
+- **A game update = stale data** until the code is unpacked again and rebuilt ([docs/04](docs/04-data-pipeline.md)) - `install.ps1` warns.
+- **Use every core** for heavy work, check how many processes are already running first, check free space on the bench drive (the bench won't start under 25 GB).
+- **Test in game without asking the owner to play** - use the lag bench + logs + pictures.
+- **Commit as the noreply address** (`134504790+TomKaiRoiMak@users.noreply.github.com`), never a personal email.
 
-### อายุของสวิตช์ `TR_OLD_xxx` (ตอนนี้ ~100 ตัว)
+### How long `TR_OLD_xxx` switches live (~100 now)
 
-กฎที่ผ่านเวอร์ชันที่อัปโหลดแล้ว 1 เวอร์ชัน โดยไม่มีรายงานปัญหา และผ่าน replay เต็ม/lag bench → **ลบสวิตช์และโค้ดเก่าตอนเริ่มเวอร์ชันถัดไป** (ไม่ลบกลางทาง)
-สวิตช์ opt-in ที่ "ลองแล้วไม่เอา" (`TR_LEADEASE`, `TR_LEADGROW`) ลบพร้อมกัน
+A rule that has been through one uploaded version with no reported problem, and passed a full replay / lag bench -> **remove the switch and the old code when the next version starts** (not part way through).
+Opt-in switches for things "tried and dropped" (`TR_LEADEASE`, `TR_LEADGROW`) are removed at the same time.
 
-## 4. คลาสปัญหาที่เคยเจอ (ตรวจทุกบอสเมื่อแตะกฎเหล่านี้)
+## 4. Problem classes seen before (check every boss when touching these rules)
 
-| คลาส | ตัวอย่าง | ตรวจด้วย |
+| Class | Example | Check with |
 |---|---|---|
-| เข้า state โดยไม่ส่งเป้า / lock จากของที่ปล่อย | หลายบอส (แก้ใน sim) | bench lock จริง |
-| รัศมีกลางตัว vs ขอบตัว (FindEntities ไม่นับตัวเป้า) | ลาวา moonmaw 2.2 จากกลาง | อ่านโค้ดเกม + bench |
-| scale (hitrange, ความเร็ว) | catcoon UM: range 4/1.5 | lint SetRange × scale |
-| ท่าพิเศษ (วาร์ป, ขา, ของหมุน, เปลี่ยนท่ากลางทาง) | Umbral วาร์ป/optic blast, Rock Master chain dash | `_land`, `_chain_last` + lag bench |
-| ท่าที่เริ่มด้วยอนิเมชันเดียวกัน | Twins เลเซอร์ ↔ พุ่ง | tell/from + bench FALSE |
-| ของโยน: ประมาณจุดตก | Ink Blight | `lag_land.ps1`, `lagthing_to_haz.ps1` |
-| แลค: วาดตามหลัง/นำเกิน/วาร์ป | beam, lavae, hands | lag bench jumps/snap backs/NOT drawn |
-| ภาพกระพริบ/ช่องว่างระหว่างท่า | วงเตือน Umbral | `lag_frames.ps1` |
-| สิ่งประดิษฐ์ของ testbench (ไม่ใช่บั๊ก) | ย้ายฉาก, state time freeze, ย้ายตัวผู้เล่น | ดู trace ก่อนสรุป |
+| a state entered with no target passed / lock from a thing put out | many bosses (fixed in sim) | bench real lock |
+| radius from the middle vs from the body's edge (FindEntities doesn't count the target's body) | Moonmaw's lava 2.2 from the middle | read the game's code + bench |
+| scale (hit range, speed) | UM catcoon: range 4/1.5 | lint SetRange × scale |
+| special moves (teleport, legs, spinning things, changing move part way) | Umbral teleport/optic blast, Rock Master chain dash | `_land`, `_chain_last` + lag bench |
+| moves that start with the same animation | Twins laser <-> charge | tell/from + bench FALSE |
+| thrown things: guessing the landing spot | Ink Blight | `lag_land.ps1`, `lagthing_to_haz.ps1` |
+| lag: drawn behind / led too far / teleports | beam, lavae, hands | lag bench jumps/snap backs/NOT drawn |
+| flicker / gaps between moves | Umbral's warning ring | `lag_frames.ps1` |
+| testbench artefacts (not bugs) | scene moves, state time freeze, player moved | read the trace before concluding |

@@ -157,7 +157,7 @@ function ModData.Apply(enabled)
     local c0, m0 = os.clock(), collectgarbage("count")
     local was_loaded = package.loaded["true_range/moves_sim"] ~= nil
     local data = require("true_range/moves_sim")
-    -- (REDESIGN.md's tables were run with the game's code alone: a move the mod lays anew has none -
+    -- (the tables (docs/04-data-pipeline.md) were run with the game's code alone: a move the mod lays anew has none -
     -- the game's table drawn for the mod's move was the game's blow, not the mod's: UM Treeguard's
     -- cone drawn all round, 2026-10-18)
     local tab_ok, tables = pcall(require, "true_range/moves_table")

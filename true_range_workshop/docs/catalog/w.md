@@ -1,249 +1,255 @@
-# สารบัญมอน — W
+# Monster catalog - W
 
-[← สารบัญทั้งหมด](README.md) · สร้างอัตโนมัติด้วย `tools\make_catalog.ps1` — **อย่าแก้หน้านี้ด้วยมือ**
+[<- full index](README.md) · made by `tools\make_catalog.ps1` - **don't edit this page by hand**
 
-คอลัมน์: **ตีเฟรม** = เฟรมแรกที่ตี (30 เฟรม/วินาที) · **เล็ง** = `target` หันตามเป้า / `facing` ตามที่บอสหัน · **lock** = เฟรมที่หยุดเล็ง · **แบบ** = ลักษณะพิเศษของท่า · **ที่อยู่** = ไฟล์ข้อมูล:บรรทัด (ใน `true_range/scripts/true_range/`)
+Columns: **hit frame** = first frame it strikes (30 frames/s) · **aim** = `target` turns to its target / `facing` the way the boss faces · **lock** = frame it stops aiming · **kind** = the move's special traits · **where** = data file:line (in `true_range/scripts/true_range/`)
 
 <a id="wagboss_robot"></a>
 
 ## wagboss_robot — W.A.R.B.O.T.
 
-แหล่งข้อมูล: เกม `moves_sim.lua:646`
+Data from: game `moves_sim.lua:649`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_leap_pre` | atk_leap_pre, atk_leap, atk_leap_pst | 82 | facing | 78 |  |  | leap_cd | เกม | `moves_sim.lua:647` |
-| `atk_signal_pre` ▦ | atk_signal_pre, atk_signal_loop, atk_signal_pst | 98 | target |  | ตามเป้า | wagboss_beam_fx | orbitalstrike_cd | เกม | `moves_sim.lua:648` |
-| `atk_squish` | atk_squish | 27 | facing | 0 |  |  |  | เกม | `moves_sim.lua:649` |
-| `taunt` | taunt | 13 | facing | 0 |  |  | tantrum_cd | เกม | `moves_sim.lua:650` |
-| `taunt2_pre` | taunt2_pre, taunt2_loop, taunt2_pst | 58 | facing | 0 |  |  | tantrum_cd | เกม | `moves_sim.lua:651` |
+| `atk_leap_pre` | atk_leap_pre, atk_leap, atk_leap_pst | 82 | facing | 78 |  |  | leap_cd | game | `moves_sim.lua:650` |
+| `atk_signal_pre` ▦ | atk_signal_pre, atk_signal_loop, atk_signal_pst | 98 | target |  | follows target | wagboss_beam_fx | orbitalstrike_cd | game | `moves_sim.lua:651` |
+| `atk_squish` | atk_squish | 27 | facing | 0 |  |  |  | game | `moves_sim.lua:652` |
+| `taunt` | taunt | 13 | facing | 0 |  |  | tantrum_cd | game | `moves_sim.lua:653` |
+| `taunt2_pre` | taunt2_pre, taunt2_loop, taunt2_pst | 58 | facing | 0 |  |  | tantrum_cd | game | `moves_sim.lua:654` |
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `wagboss_beam_fx` |  | อยู่นาน · ดีเลย์ 34 | เกม | `moves_sim.lua:100` |  |
-| `wagboss_missile` | Thermalock Missile | เคลื่อนที่ · ดีเลย์ 114 | เกม | `moves_sim.lua:101` |  |
+| `wagboss_beam_fx` |  | lasting · delay 34 | game | `moves_sim.lua:100` |  |
+| `wagboss_missile` | Thermalock Missile | moving · delay 114 | game | `moves_sim.lua:101` |  |
+
+**Special code that names it:** simmoves.lua:3429 simmoves.lua:3668
 
 <a id="wagdrone_flying"></a>
 
 ## wagdrone_flying — Warbler
 
-แหล่งข้อมูล: เกม `moves_sim.lua:653`
+Data from: game `moves_sim.lua:656`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk, atk_pst | 44 | target | 0 |  | wagdrone_projectile_fx |  | เกม | `moves_sim.lua:654` |
+| `atk_pre` | atk_pre, atk, atk_pst | 44 | target | 0 |  | wagdrone_projectile_fx |  | game | `moves_sim.lua:657` |
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `wagdrone_projectile_fx` |  | ดีเลย์ 32 | เกม | `moves_sim.lua:102` |  |
+| `wagdrone_projectile_fx` |  | delay 32 | game | `moves_sim.lua:102` |  |
 
 <a id="wagdrone_rolling"></a>
 
 ## wagdrone_rolling — Terramite
 
-แหล่งข้อมูล: เกม `moves_sim.lua:656`
+Data from: game `moves_sim.lua:659`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
 
 <a id="walrus"></a>
 
 ## walrus — MacTusk
 
-แหล่งข้อมูล: เกม `moves_sim.lua:657`
+Data from: game `moves_sim.lua:660` · hand
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 20 | target | 20 |  |  |  | เกม | `moves_sim.lua:657` |
+| `atk` | atk | 20 | target | 20 |  |  |  | game | `moves_sim.lua:660` |
+| `atk_dart` | atk_dart | 20 | target | 20 |  |  |  | hand | `moves_hand.lua` |
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `um_bear_trap` | Snap-Trap | อยู่นาน · ดีเลย์ 0 | UM | `moves_sim_um.lua:65` |  |
+| `um_bear_trap` | Snap-Trap | lasting · delay 0 | UM | `moves_sim_um.lua:69` |  |
+| `um_bear_trap_projectile` |  | moving | hand-UM | `moves_hand_um.lua` |  |
 
 <a id="wanawanatiki"></a>
 
 ## wanawanatiki
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:195`
+Data from: TE `moves_sim_te.lua:638`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 13 | target | 0 |  |  |  | TE | `moves_sim_te.lua:195` |
+| `atk` | atk | 13 | target | 0 |  |  |  | TE | `moves_sim_te.lua:639` |
+| `were_atk_pre` | were_atk_pre, were_atk, were_atk_pst | 16 | target | 0 |  |  |  | TE | `moves_sim_te.lua:640` |
 
 <a id="warg"></a>
 
 ## warg — Varg
 
-แหล่งข้อมูล: เกม `moves_sim.lua:658`
+Data from: game `moves_sim.lua:661`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 11 | target | 0 |  |  |  | เกม | `moves_sim.lua:659` |
+| `atk` | atk | 11 | target | 0 |  |  |  | game | `moves_sim.lua:662` |
 
 <a id="warglet"></a>
 
 ## warglet — Varglet
 
-แหล่งข้อมูล: เกม `moves_sim.lua:661`
+Data from: game `moves_sim.lua:664`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk | 16 | target | 0 | ขนาด 1.5 |  |  | เกม | `moves_sim.lua:662` |
+| `atk_pre` | atk_pre, atk | 16 | target | 0 | scale 1.5 |  |  | game | `moves_sim.lua:665` |
 
 <a id="watercrocodog"></a>
 
 ## watercrocodog
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:196`
+Data from: TE `moves_sim_te.lua:642`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk | 20 | target | 0 |  |  |  | TE | `moves_sim_te.lua:196` |
+| `atk_pre` | atk_pre, atk | 20 | target | 0 |  |  |  | TE | `moves_sim_te.lua:643` |
 
 <a id="waterplant"></a>
 
 ## waterplant — Sea Weed
 
-แหล่งข้อมูล: เกม `moves_sim.lua:664`
+Data from: game `moves_sim.lua:667`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `waterplant_projectile` |  | เคลื่อนที่ · ดีเลย์ 0 · ตีถึง 30 | เกม | `moves_sim.lua:105` |  |
+| `waterplant_projectile` |  | moving · delay 0 · strikes until 30 | game | `moves_sim.lua:105` |  |
 
 <a id="weevole"></a>
 
 ## weevole
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:197`
+Data from: TE `moves_sim_te.lua:645`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `leap_attack` | leap_attack, taunt | 18 | target | 0 | ตามเป้า |  |  | TE | `moves_sim_te.lua:197` |
+| `leap_attack` | leap_attack, taunt | 18 | target | 0 | follows target |  |  | TE | `moves_sim_te.lua:646` |
 
 <a id="whale_blue"></a>
 
 ## whale_blue
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:198`
+Data from: TE `moves_sim_te.lua:648`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk | 25 | target | 0 |  |  |  | TE | `moves_sim_te.lua:198` |
+| `atk_pre` | atk_pre, atk | 25 | target | 0 |  |  |  | TE | `moves_sim_te.lua:649` |
 
 <a id="whale_bluefinal"></a>
 
 ## whale_bluefinal
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:199`
+Data from: TE `moves_sim_te.lua:651`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk | 25 | target | 0 |  |  |  | TE | `moves_sim_te.lua:199` |
+| `atk_pre` | atk_pre, atk | 25 | target | 0 |  |  |  | TE | `moves_sim_te.lua:652` |
 
 <a id="whale_white"></a>
 
 ## whale_white
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:200`
+Data from: TE `moves_sim_te.lua:654`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk | 25 | target | 0 | ขนาด 1.25 |  |  | TE | `moves_sim_te.lua:200` |
+| `atk_pre` | atk_pre, atk | 25 | target | 0 | scale 1.25 |  |  | TE | `moves_sim_te.lua:655` |
 
 <a id="wicker_tentacle"></a>
 
 ## wicker_tentacle — Sickly Tentacle
 
-แหล่งข้อมูล: UM `moves_sim_um.lua:519`
+Data from: UM `moves_sim_um.lua:549`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_loop` | atk_loop, atk_idle | 7 | target | 0 |  |  |  | UM | `moves_sim_um.lua:520` |
-| `atk_pre` | atk_pre, atk_loop, atk_idle | 32 | target | 0 |  |  |  | UM | `moves_sim_um.lua:521` |
+| `atk_loop` | atk_loop, atk_idle | 7 | target | 0 |  |  |  | UM | `moves_sim_um.lua:550` |
+| `atk_pre` | atk_pre, atk_loop, atk_idle | 32 | target | 0 |  |  |  | UM | `moves_sim_um.lua:551` |
 
 <a id="wildbeaver"></a>
 
 ## wildbeaver
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:201`
+Data from: TE `moves_sim_te.lua:657`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk | 9 | target | 0 |  |  |  | TE | `moves_sim_te.lua:201` |
+| `atk_pre` | atk_pre, atk | 9 | target | 0 |  |  |  | TE | `moves_sim_te.lua:658` |
 
 <a id="wildbeaverguard"></a>
 
 ## wildbeaverguard
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:202`
+Data from: TE `moves_sim_te.lua:660`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk | 9 | target | 0 |  |  |  | TE | `moves_sim_te.lua:202` |
+| `atk_pre` | atk_pre, atk | 9 | target | 0 |  |  |  | TE | `moves_sim_te.lua:661` |
 
 <a id="wildbore"></a>
 
 ## wildbore
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:203`
+Data from: TE `moves_sim_te.lua:663`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 13 | target | 0 |  |  |  | TE | `moves_sim_te.lua:203` |
-| `charge_atk` | charge_atk | 12 | target | 0 |  |  |  | TE | `moves_sim_te.lua:203` |
+| `atk` | atk | 13 | target | 0 |  |  |  | TE | `moves_sim_te.lua:664` |
+| `charge_atk` | charge_atk | 12 | target | 0 |  |  |  | TE | `moves_sim_te.lua:665` |
+| `were_atk_pre` | were_atk_pre, were_atk, were_atk_pst | 16 | target | 0 |  |  |  | TE | `moves_sim_te.lua:666` |
 
 <a id="wildboreguard"></a>
 
 ## wildboreguard
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:204`
+Data from: TE `moves_sim_te.lua:668`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 13 | target | 0 |  |  |  | TE | `moves_sim_te.lua:204` |
-| `charge_atk` | charge_atk | 12 | target | 0 |  |  |  | TE | `moves_sim_te.lua:204` |
+| `atk` | atk | 13 | target | 0 |  |  |  | TE | `moves_sim_te.lua:669` |
+| `charge_atk` | charge_atk | 12 | target | 0 |  |  |  | TE | `moves_sim_te.lua:670` |
 
 <a id="wildboreking"></a>
 
 ## wildboreking
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:205`
+Data from: TE `moves_sim_te.lua:672`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `death` | death | 20 | facing | 0 |  |  |  | TE | `moves_sim_te.lua:205` |
-| `jump` | jump, walk_loop | 30 | facing | 0 | พุ่งเป็นขา |  | GroundPound | TE | `moves_sim_te.lua:205` |
-| `standup` | standup | 10 | facing | 0 |  |  | GroundPound | TE | `moves_sim_te.lua:205` |
+| `death` | death | 20 | facing | 0 |  |  |  | TE | `moves_sim_te.lua:673` |
+| `jump` | jump, walk_loop | 30 | facing | 0 | charge legs |  | GroundPound | TE | `moves_sim_te.lua:674` |
+| `standup` | standup | 10 | facing | 0 |  |  | GroundPound | TE | `moves_sim_te.lua:675` |
 
 <a id="woodlegs1"></a>
 
 ## woodlegs1
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:206`
+Data from: TE `moves_sim_te.lua:677`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 13 | target | 0 |  |  |  | TE | `moves_sim_te.lua:206` |
+| `atk` | atk | 13 | target | 0 |  |  |  | TE | `moves_sim_te.lua:678` |
 
 <a id="worm"></a>
 
 ## worm — Depths Worm
 
-แหล่งข้อมูล: เกม `moves_sim.lua:665`
+Data from: game `moves_sim.lua:668`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 25 | target | 0 |  |  |  | เกม | `moves_sim.lua:666` |
-| `atk_pre` | atk_pre, atk | 50 | target | 0 |  |  |  | เกม | `moves_sim.lua:667` |
+| `atk` | atk | 25 | target | 0 |  |  |  | game | `moves_sim.lua:669` |
+| `atk_pre` | atk_pre, atk | 50 | target | 0 |  |  |  | game | `moves_sim.lua:670` |
 

@@ -1,70 +1,71 @@
-# 03 · โค้ดของ mod (ในเกม)
+# 03 · Mod code (in game)
 
-[← สารบัญ](README.md)
+[<- Contents](README.md)
 
-ต้นฉบับ: `true_range\` · ทุกไฟล์ใน `scripts\true_range\`
+Source: `true_range\` · every file in `scripts\true_range\`
 
-## แผนที่ไฟล์
+## File map
 
-| ไฟล์ | ขนาด | หน้าที่ | แก้บ่อย |
+| File | Size | Job | Changed often |
 |---|---|---|---|
-| `modmain.lua` | 134 KB | ประตูหลัก: เลือกมอน (`Pick`), วงเขียนมือ (`AGGRO`, `AGGRO_WHILE`, `ANYWHERE`, `DARTS`), วงตัวผู้เล่น/เพื่อน, ตรวจ "โดนตอนอยู่ในวงไหม" | ✔ |
-| `predict.lua` | 240 KB | ติดตามท่าบอส + ตัดสินใจรูป/ตำแหน่ง/สี | ✔✔ |
-| `simmoves.lua` | 294 KB | วาดรูปท่าและของที่ปล่อยจากข้อมูล, ประมาณจุดตก, LeadMoving | ✔✔ |
-| `lines.lua` | 45 KB | ชิ้นภาพ: pool, กลุ่ม (group), Begin/End ต่อเฟรม | |
-| `telegraph.lua` | 18 KB | วงเส้นขอบ (`Circle`) และวงจากข้อมูลที่ "เรียนรู้" | |
-| `learn.lua` | 41 KB | เรียนระยะจากการโดนจริง (มอนที่ไม่มีข้อมูล) | |
-| `moddata.lua` | 5 KB | โหลดข้อมูล + ผสมข้อมูลของ mod อื่น (UM, Tropical Experience) | |
-| `ranges.lua`, `rings.lua` | | ระยะโจมตีพื้นฐาน, วงตัว | |
-| `silhouettes.lua`, `triangulate.lua` | | เงาบอส, แบ่งรูปเป็นสามเหลี่ยม | |
-| `settings.lua`, `settingsscreen.lua`, `render.lua` | | ตัวเลือกผู้เล่น (โหมดเรืองแสง/รูปทรง ฯลฯ) | |
-| `profiler.lua`, `allocwatch.lua`, `probe.lua` | | วัดประสิทธิภาพ/ดีบัก | |
+| `modmain.lua` | 144 KB | entry point: picks monsters (`Pick`), hand-made rings (`AGGRO`, `AGGRO_WHILE`, `ANYWHERE`, `DARTS`), your/friends' rings, the "were you inside a drawn area when hit" check, Ctrl + settings key (all off) | ✔ |
+| `predict.lua` | 270 KB | tracks bosses' moves + decides shape/position/colour | ✔✔ |
+| `simmoves.lua` | 350 KB | draws move shapes and things put out from the data, works out where thrown things land, LeadMoving | ✔✔ |
+| `lines.lua` | 47 KB | the pieces: pools, groups, Begin/End per frame, per-part opacity (`Lines.opacity`) | |
+| `telegraph.lua` | 20 KB | outline rings (`Circle`, solid or dotted - `ring_dash`) and rings from "learned" data | |
+| `learn.lua` | 41 KB | learns reach from real hits (monsters with no data) | |
+| `moddata.lua` | 5 KB | loads the data + merges other mods' data (UM, Tropical Experience) | |
+| `ranges.lua`, `rings.lua` | | basic attack ranges, body rings | |
+| `silhouettes.lua`, `triangulate.lua` | | boss silhouettes, splitting shapes into triangles | |
+| `settings.lua`, `settingsscreen.lua`, `render.lua` | | player settings (opacity, dotted rings, which monsters...) and the in-game window; render switches | |
+| `profiler.lua`, `allocwatch.lua`, `probe.lua` | | performance measuring / debugging | |
 
-ไฟล์ข้อมูล (`moves_*.lua`, `thing_sources.lua`) อธิบายใน [04](04-data-pipeline.md)
+The data files (`moves_*.lua`, `thing_sources.lua`) are described in [04](04-data-pipeline.md).
 
-## predict.lua — จุดสำคัญ
+## predict.lua - key parts
 
-| ฟังก์ชัน | ทำอะไร |
+| Function | What it does |
 |---|---|
-| `Track(ent, moves, now, ...)` | ดูอนิเมชันปัจจุบัน → บอสเริ่มท่าไหน (`a.move`, `a.t0` = เวลาเริ่มตามเวลาอนิเมชัน) แยกท่าที่เริ่มเหมือนกันด้วย tell/from/far |
-| `Flash(ent, moves, r, a)` | วงเรืองแสงเตือน cooldown (ข้อมูล cooldown มาจาก server: `r.cds`, `r.at`) — มีการค้างความสว่าง/จางออกกันกระพริบ |
-| `Predict.Draw(ents, ...)` | ทุกเฟรม: Track → วาดท่าของบอสแต่ละตัว |
-| `Predict.DrawHazards(ents, ...)` | ทุกเฟรม: วาดของที่ปล่อย (เรียก `SimMoves.DrawHazard`) |
-| `LandSpot`, สาขา `_land` | ท่าที่เขียนพิเศษ (Umbral Abomination: วาร์ป, optic blast) — วาดรอบเป้า / รอบ beam จริง |
+| `Track(ent, moves, now, ...)` | looks at the current animation -> which move the boss started (`a.move`, `a.t0` = start time by animation time); moves that start alike are told apart by tell/from/far |
+| `Flash(ent, moves, r, a)` | the cooldown warning glow (cooldowns come from the server: `r.cds`, `r.at`) - holds brightness / fades out to avoid flicker. Off by default (`render.lua` `cooldown = false`) |
+| `Predict.Draw(ents, ...)` | every frame: Track -> draw each boss's move |
+| `Predict.DrawHazards(ents, ...)` | every frame: draw things put out (calls `SimMoves.DrawHazard`) |
+| `LandSpot`, the `_land` branch | specially written moves (Umbral Abomination: teleport, optic blast; Klaus' chomp) - drawn round the target / round the real beam |
 
-## simmoves.lua — จุดสำคัญ
+## simmoves.lua - key parts
 
-| ส่วน | ทำอะไร |
+| Part | What it does |
 |---|---|
-| `SimMoves.Draw(entry, x, z, rot, ...)` | วาดรูปท่าจากข้อมูล (cells/maps/path) |
-| `SimMoves.DrawHazard(ent, ...)` | ของที่ปล่อย: ลูกโยน (fit ความสูง → จุดตก, `_land_wait`, `_land_hold`, `_land_soon`), ของวิ่ง, ของวางนิ่ง |
-| `SimMoves.LeadMoving(ent, x, z, now)` | วาดนำหน้าของที่เคลื่อนที่ (ชดเชยแลคฝั่ง client) — ไม่ทำงานบน host |
-| `SimMoves._land`, `_tail`, `_chain_last` | ตารางกรณีพิเศษต่อบอส |
-| `SimMoves.Glow`, `DrawDisc` | วงเตือน, วงกลมทึบ |
-| `SimMoves.UnionDraw`, `LaneDraw` | วาดของกลมหลายชิ้นรวมกัน, เลนของกลุ่ม |
+| `SimMoves.Draw(entry, x, z, rot, ...)` | draws a move's shape from the data (cells/maps/path) |
+| `SimMoves.DrawHazard(ent, ...)` | things put out: thrown (fit the height -> landing spot, `_land_wait`, `_land_hold`, `_land_soon`), running, lying still |
+| `SimMoves.LeadMoving(ent, x, z, now)` | draws moving things ahead (makes up for client lag) - does nothing on the host |
+| `SimMoves._land`, `_tail`, `_chain_last`, `_lanes_of` | per-boss special cases |
+| `SimMoves.Glow`, `DrawDisc` | warning ring, filled circle |
+| `SimMoves.UnionDraw`, `LaneDraw` | many round things drawn as one, a group's lanes |
 
-> ⚠ **simmoves.lua ชนเพดาน 200 local ของ Lua แล้ว** — ห้ามเพิ่ม `local` ระดับไฟล์ใหม่ ให้ใช้ `SimMoves.xxx` แทน
-> และ compile-check ทุกครั้ง: `luajit -bl ..\true_range\scripts\true_range\simmoves.lua > $null`
-> (แผน: แยกเป็นโมดูลหลังปล่อย 1.1.6 — ดู [08](08-status.md))
+> ⚠ **simmoves.lua is at Lua's limit of 200 locals** - don't add new file-level `local`s, use `SimMoves.xxx` instead,
+> and compile-check every time: `luajit -bl ..\true_range\scripts\true_range\simmoves.lua > $null`
+> (plan: split it into modules - see [08](08-status.md))
 
-## modmain.lua — ข้อควรระวัง
+## modmain.lua - watch out
 
-- environment ของ modmain **ไม่มี** `tonumber, setmetatable, getmetatable, rawget, rawset, pcall, xpcall, select, next, unpack, error, os, io, debug, package, _G` ฯลฯ (รายการเต็ม: `MISSING` ใน `tools\modenv_check.lua`) — ต้องใช้ `GLOBAL.xxx` ถ้าลืม เกมจะ crash ตอนโหลด (`install.ps1` ตรวจให้)
-  (`pairs`, `ipairs`, `print`, `string`, `math`, `table` ใช้ได้)
-- ตัวแปร global ที่ไม่ได้ประกาศทำ DST crash — อ่านสวิตช์แบบนี้:
-  - ใน `modmain.lua`: `GLOBAL.rawget(GLOBAL, "TR_OLD_X")`
-  - ใน `scripts\true_range\*.lua`: `rawget(_G, "TR_OLD_X")`
+- modmain's environment **lacks** `tonumber, setmetatable, getmetatable, rawget, rawset, pcall, xpcall, select, next, unpack, error, os, io, debug, package, _G` and more (full list: `MISSING` in `tools\modenv_check.lua`) - use `GLOBAL.xxx`. Forget it and the game crashes on load (`install.ps1` checks for you).
+  (`pairs`, `ipairs`, `print`, `string`, `math`, `table` are fine)
+- An undeclared global variable crashes DST - read switches like this:
+  - in `modmain.lua`: `GLOBAL.rawget(GLOBAL, "TR_OLD_X")`
+  - in `scripts\true_range\*.lua`: `rawget(_G, "TR_OLD_X")`
+- A mod RPC's `false` argument arrives as `nil` - send `1`/`0`.
 
-## ตัวเลือกดีบัก (global ที่ mod อ่าน)
+## Debug switches (globals the mod reads)
 
-| Global | ผล |
+| Global | Effect |
 |---|---|
-| `TR_OLD_xxx` | ปิดกฎใหม่ข้อนั้น กลับเป็นแบบเดิม (มี ~100 ตัว ดูคอมเมนต์ใกล้จุดที่ใช้) |
-| `TR_DEBUG` | พิมพ์ log ละเอียด (เปิดเองเมื่อมี `debug.txt`) |
-| `TR_LANDWOB`, `TR_GAP`, `TR_JUMP` | ตัวนับสำหรับ replay (ความนิ่งของจุดตก, ช่องว่าง, การกระโดด) |
-| `TR_LEADEASE`, `TR_LEADGROW` | การนำหน้าแบบทดลองที่ **ลองแล้วไม่เอา** (ปิดอยู่) |
+| `TR_OLD_xxx` | turns that new rule off, back to the old behaviour (~100 of them, see the comments where each is used) |
+| `TR_DEBUG` | detailed log lines (on by itself when `debug.txt` is there) |
+| `TR_LANDWOB`, `TR_GAP`, `TR_JUMP` | counters for replays (how still landing spots are, gaps, jumps) |
+| `TR_LEADEASE`, `TR_LEADGROW` | experimental leading that was **tried and dropped** (off) |
 
-## รูปแบบคอมเมนต์ในโค้ด
+## Comment style in the code
 
-คอมเมนต์ในโค้ดเขียนเป็นภาษาอังกฤษแบบเล่าเหตุ: *อะไรเกิดขึ้น, บอสตัวไหน, วัดได้เท่าไร, วันที่, ชื่อสวิตช์*
-เช่น `-- (... the Ink Blights' balls, 78 of 91 moves ..., 2026-10-28. TR_OLD_LANDSTOP)` — เขียนตามแบบนี้เพื่อให้คนต่อไปรู้ว่าทำไม
+Comments are written in English and tell the why: *what happened, which boss, what was measured, the date, the switch name*.
+E.g. `-- (... the Ink Blights' balls, 78 of 91 moves ..., 2026-10-28. TR_OLD_LANDSTOP)` - write them this way so the next person knows why.

@@ -1,45 +1,64 @@
-# สารบัญมอน — I
+# Monster catalog - I
 
-[← สารบัญทั้งหมด](README.md) · สร้างอัตโนมัติด้วย `tools\make_catalog.ps1` — **อย่าแก้หน้านี้ด้วยมือ**
+[<- full index](README.md) · made by `tools\make_catalog.ps1` - **don't edit this page by hand**
 
-คอลัมน์: **ตีเฟรม** = เฟรมแรกที่ตี (30 เฟรม/วินาที) · **เล็ง** = `target` หันตามเป้า / `facing` ตามที่บอสหัน · **lock** = เฟรมที่หยุดเล็ง · **แบบ** = ลักษณะพิเศษของท่า · **ที่อยู่** = ไฟล์ข้อมูล:บรรทัด (ใน `true_range/scripts/true_range/`)
+Columns: **hit frame** = first frame it strikes (30 frames/s) · **aim** = `target` turns to its target / `facing` the way the boss faces · **lock** = frame it stops aiming · **kind** = the move's special traits · **where** = data file:line (in `true_range/scripts/true_range/`)
 
 <a id="ice_deer"></a>
 
 ## ice_deer
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:96`
+Data from: TE `moves_sim_te.lua:296`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 12 | target | 0 |  |  |  | TE | `moves_sim_te.lua:96` |
+| `atk` | atk | 12 | target | 0 |  |  |  | TE | `moves_sim_te.lua:297` |
 
 <a id="icedeerclops"></a>
 
 ## icedeerclops
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:97`
+Data from: TE `moves_sim_te.lua:299`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 34 | target | 16 | ขนาด 1.65 · ตีด้วยของเท่านั้น | deerclops_icespike_fx |  | TE | `moves_sim_te.lua:97` |
-| `throw` | throw | 60 | facing | 30 | ขนาด 1.65 | deerclops_icelance_ping_fx, deerclops_impact_circle_fx |  | TE | `moves_sim_te.lua:97` |
+| `atk` | atk | 34 | target | 16 | scale 1.65 · strikes only through things | deerclops_icespike_fx |  | TE | `moves_sim_te.lua:300` |
+| `throw` | throw | 60 | facing | 30 | scale 1.65 | deerclops_icelance_ping_fx, deerclops_impact_circle_fx |  | TE | `moves_sim_te.lua:301` |
 
-**ของที่ปล่อย**
+**Things it puts out**
 
-| ของ | ชื่อ | แบบ | แหล่ง | ที่อยู่ | โค้ดที่อ้างถึง |
+| thing | name | kind | source | where | code that names it |
 |---|---|---|---|---|---|
-| `deerclops_icelance_ping_fx` |  | วาดกับท่าบอส · ดีเลย์ 30 · ตีถึง 30 | TE | `moves_sim_te.lua:13` |  |
-| `deerclops_icespike_fx` |  | ดีเลย์ 0 · ตีถึง 3 | TE | `moves_sim_te.lua:14` |  |
-| `deerclops_impact_circle_fx` |  | อยู่นาน · ดีเลย์ 0 | TE | `moves_sim_te.lua:15` |  |
+| `deerclops_icelance_ping_fx` |  | drawn with the boss move · delay 30 · strikes until 30 | TE | `moves_sim_te.lua:39` |  |
+| `deerclops_icespike_fx` |  | delay 0 · strikes until 3 | TE | `moves_sim_te.lua:40` |  |
+| `deerclops_impact_circle_fx` |  | lasting · delay 0 | TE | `moves_sim_te.lua:41` |  |
+
+<a id="icehound"></a>
+
+## icehound — Ice Hound
+
+Data from: hand-UM `moves_hand_um.lua:74`
+
+Drawn as: `hound`
+
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
+|---|---|---|---|---|---|---|---|---|---|
+| `atk_pre` |  |  |  |  |  |  |  | hand-UM | `moves_hand_um.lua:80` |
+| `atk_pre~quickattack` | atk_pre |  |  | 24 |  |  |  | hand-UM | `moves_hand_um.lua:74` |
+
+**Things it puts out**
+
+| thing | name | kind | source | where | code that names it |
+|---|---|---|---|---|---|
+| `glacialhound_icespike` | Ice Spike | delay 0 · strikes until 3 | UM | `moves_sim_um.lua:52` |  |
 
 <a id="icehoundb"></a>
 
 ## icehoundb
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:98`
+Data from: TE `moves_sim_te.lua:303`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk_pre` | atk_pre, atk | 16 | target | 0 |  |  |  | TE | `moves_sim_te.lua:98` |
+| `atk_pre` | atk_pre, atk | 16 | target | 0 |  |  |  | TE | `moves_sim_te.lua:304` |
 

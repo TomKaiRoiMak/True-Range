@@ -1,27 +1,27 @@
-# สารบัญมอน — Y
+# Monster catalog - Y
 
-[← สารบัญทั้งหมด](README.md) · สร้างอัตโนมัติด้วย `tools\make_catalog.ps1` — **อย่าแก้หน้านี้ด้วยมือ**
+[<- full index](README.md) · made by `tools\make_catalog.ps1` - **don't edit this page by hand**
 
-คอลัมน์: **ตีเฟรม** = เฟรมแรกที่ตี (30 เฟรม/วินาที) · **เล็ง** = `target` หันตามเป้า / `facing` ตามที่บอสหัน · **lock** = เฟรมที่หยุดเล็ง · **แบบ** = ลักษณะพิเศษของท่า · **ที่อยู่** = ไฟล์ข้อมูล:บรรทัด (ใน `true_range/scripts/true_range/`)
+Columns: **hit frame** = first frame it strikes (30 frames/s) · **aim** = `target` turns to its target / `facing` the way the boss faces · **lock** = frame it stops aiming · **kind** = the move's special traits · **where** = data file:line (in `true_range/scripts/true_range/`)
 
 <a id="yeti"></a>
 
 ## yeti
 
-แหล่งข้อมูล: TE `moves_sim_te.lua:207`
+Data from: TE `moves_sim_te.lua:680`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `attack1` | attack1 | 21 | facing | 0 |  |  |  | TE | `moves_sim_te.lua:207` |
-| `attack2` | attack2 | 12 | target | 0 |  |  |  | TE | `moves_sim_te.lua:207` |
+| `attack1` | attack1 | 21 | facing | 0 |  |  |  | TE | `moves_sim_te.lua:681` |
+| `attack2` | attack2 | 12 | target | 0 |  |  |  | TE | `moves_sim_te.lua:682` |
 
 <a id="yots_worm"></a>
 
 ## yots_worm — Gilded Depths Worm
 
-แหล่งข้อมูล: เกม `moves_sim.lua:669`
+Data from: game `moves_sim.lua:672`
 
-| ท่า | อนิเมชัน | ตีเฟรม | เล็ง | lock | แบบ | ของที่ปล่อย | cooldown | แหล่ง | ที่อยู่ |
+| move | animations | hit frame | aim | lock | kind | things put out | cooldown | source | where |
 |---|---|---|---|---|---|---|---|---|---|
-| `atk` | atk | 25 | target | 0 |  |  |  | เกม | `moves_sim.lua:670` |
+| `atk` | atk | 25 | target | 0 |  |  |  | game | `moves_sim.lua:673` |
 

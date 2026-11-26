@@ -1,84 +1,85 @@
-# 07 · อ้างอิง
+# 07 · Reference
 
-[← สารบัญ](README.md)
+[<- Contents](README.md)
 
-## เครื่องมือที่ใช้บ่อย (`true_range_workshop\`)
+## Common tools (`true_range_workshop\`)
 
-### ติดตั้ง / ตรวจ
+### Install / check
 
-| คำสั่ง | ทำอะไร |
+| Command | What it does |
 |---|---|
-| `tools\install.ps1 [-Src <dir>] [-SkipTests]` | ตรวจ + ทดสอบ + คัดลอก mod เข้าเกม |
-| `tools\install_client.ps1 [-Src <dir>]` | สร้างตัว Client จากต้นฉบับเดียวกัน |
-| `tools\hand_check.ps1` | ท่าเขียนมือยังชี้ของที่มีในเกม |
-| `tools\modenv_check.lua` | modmain ไม่ใช้ของที่ mod env ไม่มี |
-| `tools\nomove_check.lua` | ท่าที่เกมมีแต่ข้อมูลไม่มี |
-| `tools\make_catalog.ps1` | สร้าง [สารบัญมอนและท่า](catalog/README.md) จากไฟล์ข้อมูล |
+| `tools\install.ps1 [-Src <dir>] [-SkipTests]` | checks + tests + copies the mod into the game |
+| `tools\install_client.ps1 [-Src <dir>]` | makes the Client build from the same source |
+| `tools\hand_check.ps1` | hand-written moves still point to things that exist in the game |
+| `tools\modenv_check.lua` | modmain uses nothing the mod environment lacks |
+| `tools\nomove_check.lua` | moves the game has but the data doesn't |
+| `tools\make_catalog.ps1` | makes the [monster and move catalog](catalog/README.md) from the data files |
 
-### ทดสอบ
+### Testing
 
-| คำสั่ง | ทำอะไร |
+| Command | What it does |
 |---|---|
-| `tools\run_bench.ps1` | testbench (ดู [05](05-testing.md)) |
-| `tools\run_lag.ps1` | lag bench (เกมจริง) |
-| `tests\bench_replay.ps1` | replay ทั้งชุดเป็นตาราง |
-| `tests\replay.lua`, `tests\replay_haz.lua` | replay บอส / ของที่ปล่อย (รายไฟล์) |
-| `tests\pics.ps1` | ภาพของสิ่งที่วาด ณ เวลาที่กำหนด |
-| `tools\lag_frames.ps1`, `lag_land.ps1`, `lagthing_to_haz.ps1` | วิเคราะห์ log ของ lag bench |
-| `tools\never_force.ps1` | สร้างไฟล์บังคับ state จากรายการ NEVER |
-| `tools\went_table.ps1 [-Dir <ผล replay>]` | ท่าพุ่งทุกตัว: ระยะพุ่งจริง vs ข้อมูล (แยกมีเป้า/ไม่มี) — หาท่าที่วาดยาว/สั้นเกิน |
+| `tools\run_bench.ps1` | testbench (see [05](05-testing.md)) |
+| `tools\run_lag.ps1` | lag bench (the real game) |
+| `tests\bench_replay.ps1` | replays a whole set into a table |
+| `tests\replay.lua`, `tests\replay_haz.lua` | replays a boss / things put out (one file) |
+| `tests\pics.ps1` | pictures of what was drawn at given times |
+| `tools\lag_frames.ps1`, `lag_land.ps1`, `lagthing_to_haz.ps1`, `move_tree.lua` | analyse lag bench logs |
+| `tools\never_force.ps1` | makes a state-forcing file from the NEVER list |
+| `tools\went_table.ps1 [-Dir <replay results>]` | every charge: how far it really goes vs the data (with/without a target) - finds charges drawn too long/short |
 
-### สร้างข้อมูล
+### Building data
 
-| คำสั่ง | ทำอะไร |
+| Command | What it does |
 |---|---|
-| `tools\sim_moves.lua` | รัน stategraph ของบอส offline |
-| `tools\build_um.ps1`, `build_te.ps1`, `build_all_tables.ps1`, `build_all_follow.ps1` | สร้างไฟล์ข้อมูลทั้งชุด |
-| `tools\mod_scripts.ps1 -Mod <id> -Name <n>` | โค้ดเกม + โค้ด mod ซ้อนกัน (`game_scripts_<n>`) |
-| `tools\anim_lengths.ps1` | ความยาวอนิเมชันทุกตัว |
-| `tools\verify.ps1` | แตกโค้ดเกมใหม่เมื่อ `scripts.zip` เปลี่ยน + ตรวจรวม |
+| `tools\sim_moves.lua` | runs a boss's stategraph offline |
+| `tools\build_um.ps1`, `build_te.ps1`, `build_all_tables.ps1`, `build_all_follow.ps1` | build whole data files |
+| `tools\mod_scripts.ps1 -Mod <id> -Name <n>` | the game's code + a mod's code laid over it (`game_scripts_<n>`) |
+| `tools\anim_lengths.ps1` | every animation's length |
+| `tools\verify.ps1` | unpacks the game's code again when `scripts.zip` changes + overall checks |
 
-### ดูแลดิสก์
+### Disk
 
-| คำสั่ง | ทำอะไร |
+| Command | What it does |
 |---|---|
-| `tools\prune_bench_logs.ps1 [-Apply]` | แสดง (หรือย้ายไปถังขยะ) log เก่า — เก็บ baseline + 2 รอบเต็มล่าสุด + 2 วันล่าสุด |
+| `tools\prune_bench_logs.ps1 [-Apply]` | lists (or moves to the trash) old logs - keeps the baselines + the last 2 full runs + the last 2 days |
 
-## สวิตช์ที่ควรรู้ (จากงาน 1.1.6)
+## Switches worth knowing
 
-ทุกตัวตั้งเป็น global (`TR_OLD_X=1` ใน env ของ replay) = กลับไปแบบเดิม · ดูคอมเมนต์ข้างโค้ดสำหรับรายละเอียด/ตัวเลข
+Each is a global (`TR_OLD_X=1` in a replay's env) = back to the old behaviour. See the comment next to the code for details and numbers.
 
-| สวิตช์ | กฎ |
+| Switch | Rule |
 |---|---|
-| `TR_OLD_LANDSTOP`, `LANDKEEP`, `LANDHOLD`, `LANDWAIT`, `AIRSTILL` | ลูกโยน: จุดตกนิ่ง, ไม่วาดกลางอากาศ |
-| `TR_OLD_GLOWPULSE`, `GLOWGRACE`, `GLOWOVERLAP`, `GLOWHOLD`, `GLOWAFTERMOVE` | วงเตือน cooldown ไม่กระพริบ |
-| `TR_OLD_LANDAT`, `LANDLOOSE`, `LANDTILL`, `LAND2` | Umbral optic blast/วาร์ป วาดที่ beam/เป้าจริง |
-| `TR_OLD_LEADTP`, `LEADTPSTEP`, `LEADSTOP` | LeadMoving: ไม่นำตอนวาร์ป/ตอนหยุด |
-| `TR_OLD_CHAINLAST` | Rock Master: ครั้งสุดท้ายของ chain dash |
-| `TR_OLD_WENT` | ท่าพุ่งที่ล็อกจุดตอนหยุดเล็ง: วาดจุดตกตามระยะที่บอสตัวนั้นพุ่งจริงในเกมนี้ (แยกมีเป้า/ไม่มีเป้า) — Klaus มีเป้าพุ่ง 8.5 ไม่ใช่ 15 |
-| `TR_OLD_WORMPOUND` | หนอน: วง pound รอบกองดิน (0 ดาเมจ) ไม่วาด |
-| `TR_OLD_WORMDIRT` (modmain) | หนอน: วงกองดินเฉพาะตอนหัวโผล่/ท่อนผ่าน |
-| `TR_OLD_HUNTSTICK` (modmain) | บอสค้างในรายการวาด .3 s หลังไล่ |
+| `TR_OLD_LANDSTOP`, `LANDKEEP`, `LANDHOLD`, `LANDWAIT`, `AIRSTILL` | thrown things: a still landing spot, nothing drawn mid-air |
+| `TR_OLD_GLOWPULSE`, `GLOWGRACE`, `GLOWOVERLAP`, `GLOWHOLD`, `GLOWAFTERMOVE` | the cooldown warning glow doesn't flicker (the glow itself is off by default) |
+| `TR_OLD_LANDAT`, `LANDLOOSE`, `LANDTILL`, `LAND2` | Umbral optic blast/teleport drawn at the real beam/target |
+| `TR_OLD_LEADTP`, `LEADTPSTEP`, `LEADSTOP` | LeadMoving: no leading while teleporting/stopping |
+| `TR_OLD_CHAINLAST` | Rock Master: the last dash of a chain |
+| `TR_OLD_WENT` | charges that lock their spot when they stop aiming: the landing drawn as far as that boss really charges in this game (with/without a target) - Klaus with a target charges 8.5, not 15 |
+| `TR_OLD_WORMPOUND` | worm: no pound ring round dirt mounds (0 damage) |
+| `TR_OLD_WORMDIRT` (modmain) | worm: dirt-mound rings only while its head comes up / a segment passes |
+| `TR_OLD_HUNTSTICK` (modmain) | a boss kept in the draw list .3 s after it stops hunting |
+| `TR_OLD_QUEENTURN`, `TR_OLD_MINIONRING` | Shrouded Queen: swipe lanes turn with her hidden aim; her shadows drawn round themselves |
+| `TR_BENCH_OLD_*` | testbench-side switches |
 
-> สวิตช์ที่มีป้าย (modmain) replay มองไม่เห็น — A/B ด้วย `run_lag.ps1 -Old "..."`
-| `TR_BENCH_OLD_*` | สวิตช์ฝั่ง testbench |
+> Switches marked (modmain) are invisible to replay - A/B them with `run_lag.ps1 -Old "..."`.
 
-## คำศัพท์
+## Terms
 
-| คำ | ความหมาย |
+| Term | Meaning |
 |---|---|
-| **move / ท่า** | การโจมตีหนึ่งแบบของบอส (ระบุด้วยอนิเมชันแรก) |
-| **hazard / ของที่ปล่อย / thing** | entity ที่บอสสร้างแล้วทำดาเมจ (ลูกไฟ หนาม beam) — `_hazards` ในข้อมูล |
-| **sim** | การรันโค้ดเกมจริงแบบ offline เพื่อสร้างรูปท่า |
-| **share / lane** | หน่วยงานของ testbench: 1 server = 1 share, แบ่งเป็นหลายเลน (บอสหลายตัวพร้อมกัน ห่างกัน) |
-| **scene / ฉาก** | หนึ่งครั้งที่บอสเริ่มท่า + ผู้เล่นถูกวางตามแบบทดสอบ |
-| **missed** | โดน แต่ไม่ได้วาดคลุม |
-| **false / drawn-in-no-strike** | วาดคลุม แต่ไม่โดน |
-| **NOT drawn** | (lag bench) missed ฝั่ง client |
-| **NEVER** | ท่าในข้อมูลที่ bench ไม่เคยเห็นตี |
-| **blink** | ภาพของเจ้าของหนึ่งหาย 1–3 เฟรมแล้วกลับ |
-| **jump / snap back** | รูปกระโดดไกลในเฟรมเดียว / กระโดดแล้วกลับ |
-| **Predictive / None** | ตัวเลือก Lag Compensation ของเกม (pred=1 / pred=0) |
-| **LeadMoving** | วาดนำหน้าของที่เคลื่อนที่ ชดเชยที่ client เห็นช้า |
+| **move** | one kind of a boss's attack (named by its first animation) |
+| **hazard / thing** | an entity a boss makes that deals damage (fireball, spike, beam) - `_hazards` in the data |
+| **sim** | running the game's real code offline to build move shapes |
+| **share / lane** | the testbench's units: 1 server = 1 share, split into lanes (several bosses at once, far apart) |
+| **scene** | one time a boss starts a move + the player placed by the test pattern |
+| **missed** | hit, but nothing drawn over you |
+| **false / drawn-in-no-strike** | drawn over you, but no hit |
+| **NOT drawn** | (lag bench) missed on the client |
+| **NEVER** | a move in the data the bench never saw strike |
+| **blink** | one owner's picture gone 1-3 frames, then back |
+| **jump / snap back** | the shape jumps far in one frame / jumps and comes back |
+| **Predictive / None** | the game's Lag Compensation option (pred=1 / pred=0) |
+| **LeadMoving** | drawing moving things ahead, to make up for the client seeing them late |
 | **UM / TE** | Uncompromising Mode / Tropical Experience |
-| **ASBOSS** | การโดนจากของที่ปล่อย แต่ท่าของบอสวาดคลุมไว้แล้ว (ไม่นับพลาด) |
+| **ASBOSS** | a hit from a thing the boss put out, but already covered by the boss's own move (not counted as missed) |
