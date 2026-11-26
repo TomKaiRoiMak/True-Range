@@ -33,7 +33,7 @@ In game: **O** opens the settings (opacity of each part, dotted rings, which mon
 
 You need Don't Starve Together, [LuaJIT 2.1](https://luajit.org) on your PATH and Windows PowerShell 5.1. See [docs/02-setup.md](true_range_workshop/docs/02-setup.md).
 
-- **Paths are hard-coded** for the original machine (`D:\Games Manager\...` for the game, `Documents\Klei\DoNotStarveTogether\900782082\...` for clusters). Search `tools\` and `tests\` for `Games Manager` and `900782082` and change them to yours.
+- **The game's path is hard-coded** for the original machine (`D:\Games Manager\...`). Search `tools\` and `tests\` for `Games Manager` and change it to yours. Your Klei account folder (`Documents\Klei\DoNotStarveTogether\<number>`) is found by itself; set `DST_KLEI_ACCOUNT` if you have several.
 - The game's own scripts are not in the repo: they're unpacked from your game into `true_range_workshop/tests/work/` (see the setup doc).
 - Never commit a `cluster_token.txt` - `.gitignore` keeps them out.
 

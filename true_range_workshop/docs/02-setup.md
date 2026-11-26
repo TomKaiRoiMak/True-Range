@@ -25,11 +25,11 @@
 | `D:\Work\Coding\dont starve\tr_lagjoin\` | mod ทดสอบฝั่ง client (เข้าเกมเอง, บันทึกทุกเฟรม) |
 | `D:\Games Manager\Games\steamapps\common\Don't Starve Together\` | เกม (`mods\true_range` คือสำเนาที่เกมอ่านจริง) |
 | `D:\Games Manager\Games\steamapps\workshop\content\322330\3193922031\` | Uncompromising Mode (รวม `postinit\`) |
-| `Documents\Klei\DoNotStarveTogether\900782082\Cluster_4\` | ตั้งค่า world/mod (UM) ที่ bench และ lag bench คัดลอกไปใช้ |
-| `Documents\Klei\DoNotStarveTogether\900782082\Cluster_17\cluster_token.txt` | token ของ server ที่ lag bench คัดลอกไปใช้ — **ความลับ** |
+| `Documents\Klei\DoNotStarveTogether\<บัญชี>\Cluster_4\` | ตั้งค่า world/mod (UM) ที่ bench และ lag bench คัดลอกไปใช้ |
+| `Documents\Klei\DoNotStarveTogether\<บัญชี>\Cluster_17\cluster_token.txt` | token ของ server ที่ lag bench คัดลอกไปใช้ — **ความลับ** |
 | `Documents\Klei\DoNotStarveTogether\client_log.txt` | log ของเกม (ที่ mod และ lag bench เขียน) |
 
-> path เหล่านี้ฝังอยู่ในสคริปต์ราว 25 ไฟล์ — ถ้าเครื่องคุณต่าง ให้ค้นทั้ง `Games Manager` และ `900782082` ใน `tools\` กับ `tests\` แล้วแก้ให้ครบ
+> path เหล่านี้ฝังอยู่ในสคริปต์ราว 25 ไฟล์ — ถ้าเครื่องคุณต่าง ให้ค้น `Games Manager` ใน `tools\` กับ `tests\` แล้วแก้ให้ครบ - ส่วนโฟลเดอร์บัญชี Klei (`<บัญชี>`) สคริปต์หาเอง (โฟลเดอร์ตัวเลขที่ client_save ใหม่สุด) หรือตั้ง `DST_KLEI_ACCOUNT`
 
 ### โฟลเดอร์อื่นใน `D:\Work\Coding\dont starve\` (ไม่ใช่ True Range)
 

@@ -18,7 +18,15 @@ $dev = Split-Path -Parent $root
 $game = 'D:\Games Manager\Games\steamapps\common\Don''t Starve Together'
 $ugc = 'D:\Games Manager\Games\steamapps\workshop'
 $klei = Join-Path $env:USERPROFILE 'Documents\Klei\DoNotStarveTogether'
-$userCluster = Join-Path $klei '900782082\Cluster_4'
+# (your Klei account's folder under Documents\Klei\DoNotStarveTogether: $env:DST_KLEI_ACCOUNT, else the only
+# numbered folder there - the one with the newest client_save if there are several)
+$account = $env:DST_KLEI_ACCOUNT
+if (-not $account) {
+    $account = Get-ChildItem $klei -Directory | Where-Object { $_.Name -match '^\d+$' } |
+        Sort-Object { (Get-Item (Join-Path $_.FullName 'client_save') -ErrorAction SilentlyContinue).LastWriteTime } -Descending |
+        Select-Object -First 1 -ExpandProperty Name
+}
+$userCluster = Join-Path $klei "$account\Cluster_4"
 $store = Join-Path $root 'tests\work\bench_server'
 $conf = Join-Path $store 'bench_conf'
 $noBom = New-Object System.Text.UTF8Encoding $false
@@ -73,7 +81,7 @@ Remove-Item Env:BENCH_LIST -ErrorAction SilentlyContinue
 if ($tag.Length -gt 60) { $env:BENCH_LIST = $Bosses; $tag = "tr_bench+lag:@list" }
 [IO.File]::WriteAllText((Join-Path $conf "$name\cluster.ini"), "[GAMEPLAY]`ngame_mode = survival`nmax_players = 2`npvp = false`npause_when_empty = false`n`n[NETWORK]`ncluster_name = $tag`noffline_cluster = false`nlan_only_cluster = true`ncluster_password =`ntick_rate = $TickRate`n`n[MISC]`nconsole_enabled = true`n`n[SHARD]`nshard_enabled = false`n", $noBom)
 [IO.File]::WriteAllText((Join-Path $master 'server.ini'), "[NETWORK]`nserver_port = $Port`n`n[SHARD]`nis_master = true`n`n[STEAM]`nauthentication_port = 8810`nmaster_server_port = 27110`n", $noBom)
-$token = Join-Path $klei '900782082\Cluster_17\cluster_token.txt'
+$token = Join-Path $klei "$account\Cluster_17\cluster_token.txt"
 if (Test-Path $token) { Copy-Item $token (Join-Path $conf "$name\cluster_token.txt") -Force }
 $lvl = Join-Path $userCluster 'Master\leveldataoverride.lua'
 if (Test-Path $lvl) { Copy-Item $lvl (Join-Path $master 'leveldataoverride.lua') -Force }

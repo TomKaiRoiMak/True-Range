@@ -11,7 +11,16 @@ $root = Split-Path -Parent $here
 $dev = Split-Path -Parent $root
 $game = 'D:\Games Manager\Games\steamapps\common\Don''t Starve Together'
 $ugc = 'D:\Games Manager\Games\steamapps\workshop'
-$userCluster = Join-Path $env:USERPROFILE 'Documents\Klei\DoNotStarveTogether\900782082\Cluster_4'
+$klei = Join-Path $env:USERPROFILE 'Documents\Klei\DoNotStarveTogether'
+# (your Klei account's folder under Documents\Klei\DoNotStarveTogether: $env:DST_KLEI_ACCOUNT, else the only
+# numbered folder there - the one with the newest client_save if there are several)
+$account = $env:DST_KLEI_ACCOUNT
+if (-not $account) {
+    $account = Get-ChildItem $klei -Directory | Where-Object { $_.Name -match '^\d+$' } |
+        Sort-Object { (Get-Item (Join-Path $_.FullName 'client_save') -ErrorAction SilentlyContinue).LastWriteTime } -Descending |
+        Select-Object -First 1 -ExpandProperty Name
+}
+$userCluster = Join-Path $klei "$account\Cluster_4"
 $store = Join-Path $root 'tests\work\bench_server'
 $conf = Join-Path $store 'bench_conf'
 $noBom = New-Object System.Text.UTF8Encoding $false
